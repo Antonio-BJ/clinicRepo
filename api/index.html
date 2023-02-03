@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+   <link rel="shortcut icon" sizes="16x16 24x24 32x32 48x48 64x64" href="http://medicavial.net/mvnuevo/favicon.ico">
+  <link rel="apple-touch-icon" sizes="57x57" href="http://medicavial.net/mvnuevo/favicon-57.png">
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="http://medicavial.net/mvnuevo/favicon-57.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="http://medicavial.net/mvnuevo/favicon-72.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="http://medicavial.net/mvnuevo/favicon-114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="http://medicavial.net/mvnuevo/favicon-120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="http://medicavial.net/mvnuevo/favicon-144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="http://medicavial.net/mvnuevo/favicon-152.png">
+  <meta name="application-name" content="mvnuevo MV">
+  <meta name="msapplication-TileImage" content="http://medicavial.net/mvnuevo/favicon-144.png">
+  <meta name="msapplication-TileColor" content="#2A2A2A" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Registro Médica Vial | Unidades Propias</title>
+  <link rel='stylesheet' href='modules/agenda/jquery-ui.min.css'/>
+  <link rel="stylesheet" href="lib/bootstrap.min.css" />
+  <link rel="stylesheet" href="lib/font-awesome.min.css" />
+  <link rel="stylesheet" href="lib/animate.css" />
+  <link rel="stylesheet" href="lib/angular-wizard.min.css" />
+  <link rel="stylesheet" href="lib/datepicker.css" />
+  <link rel="stylesheet" href="lib/ekko-lightbox.min.css" />
+  <link rel="stylesheet" href="lib/datatables.bootstrap.min.css"/>
+  <link rel="stylesheet" href="lib/dataTables.colReorder.css"/>
+  <link rel="stylesheet" href="lib/dataTables.colVis.css"/>
+  <link rel="stylesheet" href="lib/dataTables.tableTools.css"/>
+  <link rel="stylesheet" href="lib/barcode.css" />
+  <link rel="stylesheet" href="css/dashboard/dashboard.css" />
+  <link rel="stylesheet" href="css/themes/blue.css" />
+  <link rel="stylesheet" href="css/animaciones.css" />
+  <link rel="stylesheet"  href="modules/agenda/fullcalendar.css" />
+  <link rel="stylesheet" href="modules/ngDialog.min.css" />
+  <link rel="stylesheet" href="modules/ngDialog-theme-default.min.css" />
+  <link rel="stylesheet" href="modules/ngDialog-theme-plain.min.css" />
+  <link rel="stylesheet" href="modules/angular-notify.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/default.css" />
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/misEstilos.css">
+  <script src="lib/prefixfree.min.js"></script>
+  <!--[if lt IE 9]>
+      <script>
+          location.href="http://www.medicavial.net/mvnuevo/navegadorviejo.html";
+      </script>
+  <![endif]-->
+</head>
+<body class="ng-cloak">
+    <div id="page-wrapper" ng-class="{'active': toggle, 'oculto':cerrar}">
+
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper" ng-show="username">
+        <ul class="sidebar">
+          <li class="sidebar-main">
+            <a href="" ng-click="toggleSidebar()">
+              MedicaVial
+              <span class="menu-icon glyphicon glyphicon-transfer"></span>
+            </a>
+          </li>
+          <li class="sidebar-title"><span>MENU</span></li>
+          <li class="sidebar-list">
+            <a href="#/home">Inicio <span class="menu-icon fa fa-home"></span></a>
+          </li>
+          <li class="sidebar-list" ng-show="permisos.Per_registro=='S'">
+            <a href="#/registro">Registro de Paciente<span class="menu-icon glyphicon glyphicon-folder-open"></span></a>
+          </li>
+         <li class="sidebar-list" ng-show="permisos.Per_busca == 'S'&&permisos.Per_buscarUnidades ==''">
+            <a href="#/busqueda">Búsqueda <span class="menu-icon glyphicon glyphicon-search"></span></a>
+          </li>
+          <li class="sidebar-list" ng-show="permisos.Per_buscarUnidades =='S'&&permisos.Per_busca == ''">
+            <a href="#/busqueda/unidad">Búsqueda X Unidad<span class="menu-icon glyphicon glyphicon-search"></span></a>
+          </li>         
+          <li  class="sidebar-list" ng-show="permisos.Per_busca == 'S'&&permisos.Per_buscarUnidades =='S'"><a href=""  ng-click="bus = !bus"> Búsqueda <span class="menu-icon" ng-class="{'glyphicon glyphicon-chevron-right': bus, 'glyphicon glyphicon-chevron-down': !bus}"></span></a></li>
+              <div collapse="bus" style="background:#001a30;">  
+                  <li class="sidebar-list" ng-show="permisos.Per_busca == 'S'&&permisos.Per_buscarUnidades =='S'">
+                    <a href="#/busqueda">Búsqueda <span class="menu-icon glyphicon glyphicon-search"></span></a>
+                  </li>
+                  <li class="sidebar-list" ng-show="permisos.Per_busca == 'S'&&permisos.Per_buscarUnidades =='S'">
+                    <a href="#/busqueda/unidad">Búsqueda X Unidad<span class="menu-icon glyphicon glyphicon-search"></span></a>
+                  </li>
+              </div>  
+          <li  class="sidebar-list"><a href=""  ng-click="admin = !admin"> Solicitudes <span class="menu-icon" ng-class="{'glyphicon glyphicon-chevron-right': admin, 'glyphicon glyphicon-chevron-down': !admin}"></span></a></li>
+              <div collapse="admin" style="background:#001a30;">  
+                  <li class="sidebar-list" ng-hide="cordinacion == 1">
+                    <a href="#/solicitud" ng-click="cargar()">Nueva Solicitud <span class="menu-icon glyphicon glyphicon-send"></span></a>
+                  </li>
+                  <li class="sidebar-list">
+                    <a href="#/solicitudes">Sol. Pendientes<span class="menu-icon glyphicon glyphicon-tasks"></span></a>
+                  </li>
+              </div>   
+          <li class="sidebar-list">
+                    <a href="" data-toggle="modal"  data-target="#Insidencias">Agregar incidencias <span class="menu-icon glyphicon glyphicon-arrow-up"></span></a>
+                  </li> 
+          <li class="sidebar-list" ng-show="usrLogin=='algo'">
+                    <a href="" data-toggle="modal" data-target="#InsidenciasAdjunto">Incidencia con Adjunto<span class="menu-icon glyphicon glyphicon-arrow-up"></span></a>
+                  </li> 
+          <li  class="sidebar-list"><a href=""  ng-click="docs = !docs"> Ayuda <span class="menu-icon" ng-class="{'glyphicon glyphicon-chevron-right': docs, 'glyphicon glyphicon-chevron-down': !docs}"></span></a></li>
+              <div collapse="docs" style="background:#001a30;">  
+                  <li class="sidebar-list">
+                    <a href="#/material">Documentos de Apoyo <span class="menu-icon glyphicon glyphicon-list-alt"></span></a>
+                  </li>
+                  <li class="sidebar-list">
+                    <a href="#/directorio">Directorio <span class="menu-icon glyphicon glyphicon-book"></span></a>
+                  </li>
+                  <li class="sidebar-list">
+                    <a href="#/enDirecto">En directo <span class="menu-icon glyphicon glyphicon-thumbs-up"></span></a>
+                  </li>
+              </div> 
+
+          <li  class="sidebar-list" ng-show="permisos.Per_cabina =='S'"><a href=""  ng-click="adminis = !adminis"> Administración <span class="menu-icon" ng-class="{'glyphicon glyphicon-chevron-right': adminis, 'glyphicon glyphicon-chevron-down': !adminis}"></span></a></li>
+              <div collapse="adminis" style="background:#001a30;">  
+                  <li class="sidebar-list" ng-show="permisos.Per_cabina =='S'">
+                    <a href="#/avisos">Subir aviso <span class="menu-icon glyphicon glyphicon-arrow-up"></span></a>
+                  </li>                  
+              </div> 
+              
+          <li  class="sidebar-list" ng-show="permisos.Per_cabina =='S'"><a href=""  ng-click="imagenes = !imagenes"> Imagenes de ayuda <span class="menu-icon" ng-class="{'glyphicon glyphicon-chevron-right': imagenes, 'glyphicon glyphicon-chevron-down': !imagenes}"></span></a></li>
+              <div collapse="imagenes" style="background:#001a30;">  
+                  <li class="sidebar-list">
+                    <a href="" data-toggle="modal" ng-show="permisos.Per_cabina =='S'" data-target="#Imagen1">Imagen 1 <span class="menu-icon glyphicon glyphicon-arrow-up"></span></a>
+                  </li> 
+                  <li class="sidebar-list">
+                    <a href="" data-toggle="modal" ng-show="permisos.Per_cabina =='S'" data-target="#Imagen2">Imagen 2 <span class="menu-icon glyphicon glyphicon-arrow-up"></span></a>
+                  </li> 
+              </div> 
+           <li class="sidebar-list" ng-show="uniClave==8||uniClave==3">
+            <a href="#/calendario">Agenda de citas<span class="menu-icon glyphicon glyphicon-folder-open"></span></a>
+          </li> 
+           <li class="sidebar-list" ng-show="permisos.Per_FactExp=='S'">
+            <a href="#/facturaExpress">Facturación Express<span class="menu-icon glyphicon glyphicon-folder-open"></span></a>
+          </li> 
+          <li class="sidebar-list" ng-show="permisos.Per_registro=='S'" >
+            <a href="#/reportes">Reportes<span class="menu-icon glyphicon glyphicon-folder-open"></span></a>
+          </li>
+            <li class="sidebar-list" ng-show="permisos.Per_cabina =='S'">
+            <a href="#/reporteQualitas">Reporte Qualitas<span class="menu-icon glyphicon glyphicon-folder-open"></span></a>
+          </li>
+
+          <li class="sidebar-list" ng-show="permisos.Per_cabina =='S'">
+            <a href="#/listadoSinDoc">Sin Documentación<span class="menu-icon glyphicon glyphicon-folder-open"></span></a>
+          </li> 
+          <li class="sidebar-list" ng-show="permisos.Per_registro=='S'||permisos.Per_NotaMedica=='S'">
+            <a href="#/estatusMedico" >Disponibilidad Médico<span class="menu-icon glyphicon glyphicon-folder-open"></span></a>
+          </li>   
+          <!--<li class="sidebar-list" ng-show="permisos.Per_registro=='S'">
+            <a href="" data-toggle="modal"  data-target="#crearMembresia">Crear Membresía<span class="menu-icon glyphicon glyphicon-folder-open"></span></a>
+          </li>-->             
+         
+          <!--<li class="sidebar-list">
+            <a href="http://registro.medicavial.com.mx">Vista Tradicional <span class="menu-icon glyphicon glyphicon-time"></span></a>
+          </li>-->
+          <!-- 
+          <li class="sidebar-list">
+            <a href="#/home">Reportes <span class="menu-icon glyphicon glyphicon-signal"></span></a>
+          </li>
+          <li class="sidebar-list">
+            <a href="#/home">Incidencias <span class="menu-icon glyphicon glyphicon-plus-sign"></span></a>
+          </li>
+          <li ng-show="administrador" class="sidebar-list">
+            <a href=""  ng-click="admin = !admin"> Administrador <span class="menu-icon" ng-class="{'glyphicon glyphicon-chevron-right': admin, 'glyphicon glyphicon-chevron-down': !admin}"></span>
+            </a>
+          </li>
+          <div collapse="admin">  
+              <li class="sidebar-list">
+                <a href="#/usuarios"> Usuarios <span class="menu-icon fa fa-users"></a>
+              </li>
+          </div> -->
+
+          <li class="sidebar-title separator"><span>Accesos</span></li>
+
+          <li class="sidebar-list">
+            <a href="http://www.medicavial.com.mx" target="_blank">MedicaVial <span class="menu-icon">MV</span></a>
+          </li>
+          <!-- <li class="sidebar-list">
+            <a href="#" target="_blank">Reportes Estadisticos <span class="menu-icon fa fa-bar-chart-o"></span></a>
+          </li> -->
+        </ul>
+        <div class="sidebar-footer">           
+            <div class="col-xs-6">
+              <a href="#/about" target="_blank">
+                Acerca de..
+              </a>
+            </div>
+            <div class="col-xs-6">
+              <a href="#/soporte">
+                Soporte
+              </a>
+            </div>
+        </div>
+      </div>
+      <!-- Header Bar -->
+      <div class="row header" ng-class="{'active': toggle, 'oculto':cerrar}" ng-show="username">
+        <div class="col-xs-12 border-bottom">
+          <div class="meta pull-left">
+            <div class="page">
+              Registro Médica Vial
+            </div>
+            <div class="breadcrumb-links">
+             <!-- <div style="font-size:12px;color:red">
+              Actalización. Favor de borrar el historial de su navegador y reiniciar el sistema <br>para poder ver reflejados los cambios.
+              </div>
+              -->
+            </div>
+            
+          </div>
+          <div class="user pull-right">
+            <div class="item dropdown">
+              <a href="#" class="dropdown-toggle">
+                <img ng-src="imgs/avatar.jpg">
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li class="dropdown-header">
+                  Usuario <br>
+                  <div class="visible-xs">
+                      <strong>Nombre del Usuario</strong>
+                  </div>
+                </li>
+                <li class="divider"></li>
+                <li class="link">
+                  <a href="#/perfil">
+                    Perfil
+                  </a>
+                </li>
+                <li class="link">
+                  <a href="#/aperturaExp">
+                    Registro de Paciente
+                  </a>
+                </li>
+                <li class="link">
+                  <a href="#/solicitud">
+                    Nueva Solicitud
+                  </a>
+                </li>
+                <li class="divider"></li>
+                <li class="link">
+                  <a href="" ng-click="logout()">
+                    Cerrar Sesion
+                  </a>
+                </li>
+              </ul>               
+            </div>
+            <div class="usuario hidden-xs">
+              {{username}}
+            </div>
+            <div class="item dropdown">
+             <a href="#" class="dropdown-toggle">
+                <i class="fa fa-bell-o"></i>
+                <div class="label label-danger">{{noAviso}}</div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li class="dropdown-header">
+                  Notificationes
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="#/solicitudes">Solicitudes Pendientes</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>      
+
+      <!-- End Header Bar -->
+      <!-- End Sidebar -->
+      <div id="content-wrapper">
+        <div class="page-content">
+
+
+          <div class="contenedor">
+            <div ng-view class="paginas"></div>  
+          </div>
+          
+             <div class="modal fade" id="Insidencias" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Incidencias</h4>
+                </div>
+                <div class="modal-body">
+                  <form ng-submit="guardaInsidencia()">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="input-group">                
+                        <label class="input-group-addon">Tipo de incidencia:</label>
+                        <select   style="width:100%" ng-model="incidencias.tipo" class= "form-control" class="form-control" required>
+                            <option value=""> * Seleccione </option>
+                            <option value="1">Equipo Rx</option>
+                            <option value="2">Personal</option>
+                            <option value="3">Equipo de Computo</option>
+                            <option value="4">Sistema</option>                            
+                            <option value="5">Medicamentos</option>                          
+                            <option value="6">Ortesis</option>                              
+                            <option value="7">Médico Tratante</option>                              
+                            <option value="8">Cabina</option>
+                            <option value="9">Rehabilitación</option>   
+                            <option value="10">Normatividad</option>                              
+                            <option value="11">Mantenimiento</option>                              
+                            <option value="12">Otro</option>                                
+                        </select>
+                      </div>                                         
+                    </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-group">                
+                          <label class="input-group-addon">Severidad:</label>
+                            <select   style="width:100%" ng-model="incidencias.severidad" class= "form-control" class="form-control" required>
+                                <option value=""> * Seleccione </option>
+                                <option value="1">Baja</option>
+                                <option value="2">Regular</option>
+                                <option value="3">Alta</option>                          
+                            </select>
+                        </div>                                         
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-group">                
+                          <label class="input-group-addon">Observaciones:</label>
+                          <textarea class="form-control" name="" id="" cols="30" rows="3" ng-model="incidencias.observaciones"></textarea>
+                        </div>                                         
+                      </div>
+                    </div>                    
+                    <div class="row" ng-show="msjTel">
+                       <div class="col-md-12">
+                          <div  class="validacion">
+                              Los campos son obligatorios
+                          </div>
+                       </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-12">
+                            <div ng-show="cargador1" align="center">
+                                    <img ng-src="imgs/cargador.gif">
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row" ng-show="msjIncidencia">
+                       <div class="col-md-12">
+                          <div  class="alert alert-success" >
+                              La incidencia se agregó correctamente.
+                          </div>
+                       </div>
+                     </div>                     
+                  </div>
+                
+                <div class="modal-footer">                  
+                  <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+                  <button ng-disabled="btnEnvio" type="submit" class="btn btn-info">Agregar</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+<div class="modal fade" id="InsidenciasAdjunto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Incidencias con adjunto</h4>
+                </div>
+                <div class="modal-body">
+                  <form ng-submit="guardaInsidenciaAdjunto()">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="input-group">                
+                        <label class="input-group-addon">Tipo de incidencia:</label>
+                        <select   style="width:100%" ng-model="incidencias.tipo" class= "form-control" class="form-control" required>
+                            <option value=""> * Seleccione </option>
+                            <option value="1">Equipo Rx</option>
+                            <option value="2">Personal</option>
+                            <option value="3">Equipo de Computo</option>
+                            <option value="4">Sistema</option>                            
+                            <option value="5">Medicamentos</option>                          
+                            <option value="6">Ortesis</option>                              
+                            <option value="7">Médico Tratante</option>                              
+                            <option value="8">Cabina</option>
+                            <option value="9">Rehabilitación</option>   
+                            <option value="10">Normatividad</option>                              
+                            <option value="11">Mantenimiento</option>                              
+                            <option value="12">Otro</option>                                
+                        </select>
+                      </div>                                         
+                    </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-group">                
+                          <label class="input-group-addon">Severidad:</label>
+                            <select   style="width:100%" ng-model="incidencias.severidad" class= "form-control" class="form-control" required>
+                                <option value=""> * Seleccione </option>
+                                <option value="1">Baja</option>
+                                <option value="2">Regular</option>
+                                <option value="3">Alta</option>                          
+                            </select>
+                        </div>                                         
+                      </div>
+                    </div>
+                    <div class="row" ng-hide="cargadorArchivo">
+                      <div class="col-md-12">
+                        <div class="input-group">                
+                          <label class="input-group-addon">Adjunto:</label>
+                          <input class="form-control" type="file" ng-file-select="onFileSelect_xml($files)">  
+                        </div>                                         
+                      </div>
+                    </div> 
+                    <div class="row" ng-show="cargadorArchivo">
+                        <div class="col-md-12">
+                            <div align="center">
+                                    <img ng-src="imgs/cargador.gif">
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-group">                
+                          <label class="input-group-addon">Observaciones:</label>
+                          <textarea class="form-control" name="" id="" cols="30" rows="3" ng-model="incidencias.observaciones"></textarea>
+                        </div>                                         
+                      </div>
+                    </div>                                        
+                    <div class="row" ng-show="msjTel">
+                       <div class="col-md-12">
+                          <div  class="validacion">
+                              Los campos son obligatorios
+                          </div>
+                       </div>
+                     </div>
+                     <div class="row" ng-show="cargador1">
+                        <div class="col-md-12">
+                            <div  align="center">
+                                    <img ng-src="imgs/cargador.gif">
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row" ng-show="msjIncidencia">
+                       <div class="col-md-12">
+                          <div  class="alert alert-success" >
+                              La incidencia se agregó correctamente.
+                          </div>
+                       </div>
+                     </div>                     
+                  </div>
+                
+                <div class="modal-footer">                  
+                  <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+                  <button ng-disabled="btnEnvio" type="submit" class="btn btn-info">Agregar</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+                    <!-- MODAL CREAR MEMBRESÍA               ---------------------------------------------------------------->
+
+<div class="modal fade" id="crearMembresia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Generar Membresía</h4>
+        </div>
+        <div class="modal-body"> 
+        <form  ng-submit="generarMembresia()">
+              <div align="center" ng-show="verForm">
+                <div class="row">
+                <div class="col-md-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">Nombre: </span>
+                    <input type="text" class="form-control" ng-model="nombreMembresia"  id="tipo" name="tipo" required>
+                  </div>
+                  </div>
+                </div>
+                <div class="row">
+                <div class="col-md-12" align="center">
+                  <input  type="submit" class="btn btn-primary lg"  value="Generar Membresía" /> 
+                  </div>
+                  </div>
+              </div> 
+        </form>
+                <div align="left" ng-hide="verForm">
+          <div style="border:1px solid #3f81ba">
+            <label for="" style="font-size:25px; color:#3f81ba">Nombre: <b>{{membresiaCreada.mem_nombre}}</b></label><br>
+            <label for="" style="font-size:25px; color:#3f81ba">Folio: <b>{{membresiaCreada.mem_folio}} - {{membresiaCreada.mem_serie}}</b></label><br>
+            <label for="" style="font-size:25px; color:#3f81ba">Vigencia: <b>{{membresiaCreada.mem_vigencia}}</b></label>
+          </div>
+                </div>
+                <div class="row" ng-show='cargadorMem'> 
+                <div class="col-md-12">
+                  <div ng-show="cargador" align="center" style="hight:10em;">
+                    <img ng-src="imgs/cargador.gif">
+                  </div>
+                </div>
+            </div>        
+        </div>
+        <div class="modal-footer">          
+          <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+          
+        </div>
+        </div>      
+      </div>
+    </div>
+
+<!-- FIN DE MODAL PARA CREAR MEMBRESÍA  ---------------------------------------------------------------->
+
+
+            <div class="modal fade" id="Imagen1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Imagen 1</h4>
+                </div>
+                <div class="modal-body">
+                <img src="imgs/imagen1.jpg" style="width:100%; height:100%">               
+                </div>                               
+                </form>
+              </div>
+            </div>
+          </div>
+
+           <div class="modal fade" id="Imagen2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Imagen 1</h4>
+                </div>
+                <div class="modal-body">
+                <img src="imgs/imagen2.jpg" style="width:100%; height:100%">               
+                </div>                               
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+
+            
+          <!-- End Main Content -->
+        </div><!-- End Page Content -->
+      </div><!-- End Content Wrapper -->
+    </div><!-- End Page Wrapper -->
+
+    <script src="lib/html2canvas.js"></script>
+    <script src="lib/jquery.min.js"></script>
+    <script src="modules/agenda/moment.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>  
+    <script src="lib/jquery.dataTables.min.js"></script>
+    <script src="lib/dataTables.colReorder.js"></script>
+    <script src="lib/dataTables.colVis.js"></script>
+    <script src="lib/dataTables.tableTools.js"></script>
+    <script src="modules/angular-file-upload-shim.min.js"></script>   
+    <script src="lib/angular.min.js"></script> 
+    <script src="modules/agenda/calendar.js"></script>    
+    <script src="modules/agenda/fullcalendar.js"></script>    
+    <script src="modules/agenda/gcal.js"></script> 
+    <script src='modules/agenda/lang-all.js'></script>      
+    <script src="lib/jspdf.debug.js"></script>
+    <script src="lib/jspdf.plugin.addhtml.js"></script>
+    <script src="lib/qrcode.min.js"></script>
+    <script src="lib/angular-qr.min.js"></script>
+    <script src="lib/barcodeGenerator.js"></script>
+    <script src="lib/moment-with-langs.min.js"></script>
+    <script src="lib/bootstrap-datetimepicker.min.js"></script>
+    <script src="lib/bootstrap-tooltip.js"></script>
+    <script src="lib/bootstrap-confirmation.js"></script>
+    <script src="lib/bootstrap-popover.js"></script>
+    <script src="lib/lodash.js"></script>
+    <script src="lib/ekko-lightbox.min.js"></script>
+    <script src="modules/angular-datatables.min.js"></script>
+    <script src="modules/ng-bootstrap-tpls.min.js"></script>
+    <script src="modules/angular-animate.min.js"></script>
+    <script src="modules/angular-webstorage.min.js"></script>
+    <script src="modules/angular-cookies.min.js"></script>
+    <script src="modules/angular-route.min.js"></script>
+    <script src="modules/angular-wizard.min.js"></script>
+    <script src="modules/angular-messages.min.js"></script>
+    <script src="modules/angular-deckgrid.min.js"></script>
+    <script src="modules/angular-file-upload.min.js"></script>
+    <script src="modules/ngDialog.min.js"></script>
+    <script src="modules/angular-idle.min.js"></script>
+    <script src="modules/angular-notify.js"></script>
+    <script src="modules/bumpbox-2.0.1-min.js"></script>
+    <script src="modules/mootools.js"></script>
+    <script src="modules/flowplayer.min.js"></script>    
+    <script src="modules/angular-sanitize.js"></script>    
+    <script src="modules/Common.js"></script>
+    <script src="modules/agenda/angular-spinner.js"></script> 
+    <script src="modules/angularjs-dropdown-multiselect.js "></script>     
+    <script src="app/app.js"></script>
+    <script src="app/directives/cargando.js"></script>
+    <script src="app/directives/textos.js"></script>
+    <script src="app/directives/ng-radial-gauge-dir.js"></script>
+    <script src="app/services/d3-serv.js"></script>
+    <script src="app/controllers/solicitudCtrl.js"></script>
+    <script src="app/controllers/loginCtrl.js"></script>
+    <script src="app/controllers/homeCtrl.js"></script>
+    <script src="app/controllers/aperturaExpCtrl.js"></script>
+    <script src="app/controllers/productoCtrl.js"></script>
+    <script src="app/controllers/registraCtrl.js"></script>
+    <script src="app/controllers/portadaCtrl.js"></script>
+    <script src="app/controllers/busquedaCtrl.js"></script>
+    <script src="app/controllers/documentosCtrl.js"></script>
+    <script src="app/controllers/historiaClinicaCtrl.js"></script>
+    <script src="app/controllers/signosVitalesCtrl.js"></script>
+    <script src="app/controllers/signosVitalesSubCtrl.js"></script>
+    <script src="app/controllers/notaMedicaCtrl.js"></script>
+    <script src="app/controllers/subsecuenciaCtrl.js"></script>
+    <script src="app/controllers/subsecuenciaListadoCtrl.js"></script>
+    <script src="app/controllers/rehabilitacionCtrl.js"></script>
+    <script src="app/controllers/rehabilitacionFormCtrl.js"></script>
+    <script src="app/controllers/reciboParticularCtrl.js"></script>
+    <script src="app/controllers/solicitudFacturaCtrl.js"></script>
+    <script src="app/controllers/digitalizacionCtrl.js"></script>
+    <script src="app/controllers/cambioUnidadCtrl.js"></script>
+    <script src="app/controllers/constanciaCtrl.js"></script>
+    <script src="app/controllers/enDirectoCtrl.js"></script>
+    <script src="app/controllers/avisosCtrl.js"></script>
+    <script src="app/controllers/calendarioCtrl.js"></script>
+    <script src="app/controllers/facturaExpressCtrl.js"></script>
+    <script src="app/controllers/reportesCtrl.js"></script>
+    <script src="app/controllers/registroCtrl.js"></script>
+    <script src="app/controllers/reporteQualitasCtrl.js"></script>
+    <script src="app/controllers/convenioCtrl.js"></script>
+    <script src="app/controllers/infoConvenioCtrl.js"></script>
+    <script src="app/controllers/listadoSinDocCtrl.js"></script>
+    <script src="app/controllers/estatusMedicoCtrl.js"></script>
+    <script src="app/controllers/notaSoapCtrl.js"></script>
+</body>
+</html>

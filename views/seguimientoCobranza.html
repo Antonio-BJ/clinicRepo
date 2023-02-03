@@ -1,0 +1,447 @@
+
+<div ng-init="init()">
+<div align="center"> 
+  <h3>Seguimiento de Cobranza</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+       <div class="panel-heading">
+          <div class="panel-title">Búsqueda de recibos</div>
+       </div>
+
+
+
+    <div class="row " ng-hide="verBusquedaAvanzada">
+    	<form ng-submit="buscarPorFecha()">
+    		<div class="col-md-4">
+    	        <div class="input-group" style="width: 100%">
+    	            <span>Fecha Inicial:</span>
+    	             <input type="text" ng-model="parametrosBusqueda.fechaIni" id="fechaIni" class="form-control" data-date-format="YYYY-MM-DD" mayusculas>
+    	        </div>   
+    		</div>
+    		<div class="col-md-4">
+    	        <div class="input-group" style="width: 100%">
+    	            <span>Fecha Final:</span>
+    	             <input type="text" ng-model="parametrosBusqueda.fechaFin" id="fechaFin" class="form-control" data-date-format="YYYY-MM-DD" mayusculas>
+    	        </div> 
+    		</div>	
+    		<div class="col-md-4">
+    			<input class="btn btn-info btn-lg" type="submit" value="Buscar" style="margin-top: 0.8em;">
+    		</div>
+    	</form>
+    </div>
+
+    <div class="row" ng-hide="verBusquedaAvanzada">
+      <div class="col-md-12">
+          <a style="cursor:pointer" ng-click='verBusquedaAvanzada=true'>Búsqueda avanzada</a>
+      </div>
+    </div>
+    <div class="row mianimacion" ng-show="verBusquedaAvanzada">
+    	<div class="col-md-3">
+            <div class="input-group" style="width: 100%">
+                <span>Folio de recibo:</span>
+                 <input type="text" ng-model="parametrosBusqueda.folioRecibo" class="form-control" mayusculas>
+            </div>   
+    	</div>
+    	<div class="col-md-3">
+            <div class="input-group" style="width: 100%">
+                <span>Folio de MédicaVial:</span>
+                 <input type="text" ng-model="parametrosBusqueda.folioMV" class="form-control" mayusculas>
+            </div> 
+    	</div>
+    	<div class="col-md-3">
+            <div class="input-group" style="width: 100%">
+                <span>Nombre del paciente:</span>
+                 <input type="text" ng-model="parametrosBusqueda.nombre" class="form-control" mayusculas>
+            </div> 
+    	</div>
+    	<div class="col-md-3">
+    		<input class="btn btn-info btn-lg" type="button" value="Buscar" style="margin-top: 0.8em;" ng-click="busquedaAvanzada()">
+    	</div>
+    </div>
+    <div class="row" ng-show="verBusquedaAvanzada">
+      <div class="col-md-12">
+          <a style="cursor:pointer" ng-click='verBusquedaAvanzada=false'>Búsqueda por fechas</a>
+      </div>
+    </div>
+
+    <div class="row" ng-show="trabajando==true">
+    	<div class="col-md-12" align="center">
+    		<img src="imgs/cargador3.gif" width="6%">
+    	</div>
+    </div>
+    </div>
+  </div>
+</div>
+<div>
+<!-- 	
+	<div class="row" style="margin:auto;">
+		<div class="col-md-12">
+			<table class="table table-hover table-responsive">
+			    <thead>
+			      	<tr>
+				        <th>Recibo</th>
+				        <th>Fecha de emisión</th>
+				        <th>Folio MV</th>
+				        <th>Total</th>
+				        <th>Cliente</th>
+				        <th>Método de pago</th>
+				        <th>Observaciones</th>
+			      	</tr>
+			    </thead>
+			    <tbody>
+			      	<tr ng-repeat="x in recibos">
+				        <td>{{x.Recibo_cont}}</td>
+				        <td>{{x.Recibo_fecExp}}</td>
+				        <td>{{x.Exp_folio}}</td>
+				        <td>{{x.Recibo_total | currency}}</td>
+				        <td>{{x.Exp_completo}}</td>
+				        <td>{{x.metodo | uppercase}}</td>
+				        <td>{{x.Recibo_obsCancel}}</td>
+			      	</tr>
+			    </tbody>
+			</table>
+		</div>
+	</div>
+ -->
+<div class="row" ng-show="listadoRecibos">                     
+                     <div class="col-md-12">
+                        <div class="panel panel-default">
+                           <div class="panel-heading">
+                              <div class="panel-title">Folios encontrados</div>
+                           </div>
+                           <!-- START list group-->
+                           <div class="list-group">
+                              <!-- START list group item-->
+                              <div class="list-group-item"  >
+                                  
+
+                                 <div class="media" >
+                                 	<div class="pull-left">
+
+                                    <table class="table table-responsive">
+                                        <tr>
+                                          <th style="width: 10%">
+                                            Estatus cobranza
+                                          </th>
+                                          <th style="width: 30%">
+                                            Nombre
+                                          </th>
+                                          <th style="width: 10%">
+                                            Folio
+                                          </th>
+                                          <th style="width: 10%">
+                                            Recibo
+                                          </th>
+                                          <th style="width: 10%">
+                                            Total
+                                          </th>
+                                          <th style="width: 15%">
+                                            Fecha
+                                          </th>
+                                          <th style="width: 20%">
+                                            Aplicado
+                                          </th>
+                                          <th style="width: 10%">
+                                            Estatus recibo
+                                          </th>
+                                        </tr>
+
+                                         <tr ng-repeat="listado in listadoRecibos">
+                                          <td>
+
+                                          <div class="item dropdown">
+                                          <div style="cursor:pointer" ng-if="listado.COBRANZA==1" class="dropdown-toggle">
+                                              <img style="cursor:pointer" src="imgs/cobranza/amarilla.png" alt="Image"  width="40" height="40" type="button"> 
+                                            </div>
+                                            <div style="cursor:pointer" ng-if="listado.COBRANZA==0" class="dropdown-toggle" >
+                                              <img style="cursor:pointer" src="imgs/cobranza/blanca.png" alt="Image"   width="40" height="40"   type="button" > 
+                                              
+                                            </div>
+                                            
+                                            <div  style="cursor:pointer" ng-if="listado.COBRANZA==2" class="dropdown-toggle">
+                                              <img style="cursor:pointer" src="imgs/cobranza/roja.png" alt="Image"  width="40" height="40" type="button"> 
+                                            </div>                                           
+                                          <ul class="dropdown-menu dropdown-menu-left">                                                                                   
+                                            <li class="link">
+                                              <div style="cursor:pointer" class="dropdown-toggle" >
+                                                <img style="cursor:pointer" src="imgs/cobranza/blanca.png" alt="Image" class="img-thumbnail" alt="Cinque Terre" width="50" height="80"  class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-click="cambiarEstatusCobranza(0,listado.SERIE,listado.CONT)">
+                                                <img style="cursor:pointer" src="imgs/cobranza/amarilla.png" alt="Image" class="img-thumbnail" alt="Cinque Terre" width="50" height="80" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-click="cambiarEstatusCobranza(1,listado.SERIE,listado.CONT)">
+                                                <img style="cursor:pointer" src="imgs/cobranza/roja.png" alt="Image" class="img-thumbnail" alt="Cinque Terre" width="50" height="80" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-click="cambiarEstatusCobranza(2,listado.SERIE,listado.CONT)">                                               
+                                              </div>
+                                            </li>                                                                                      
+                                          </ul>               
+                                        </div>
+                                            
+                                          </td>
+                                           <td >
+                                              {{listado.NOMBRE}}
+                                           </td>
+                                           <td >
+                                             {{listado.FOLIO}}
+                                           </td>
+                                           <td >
+                                             {{listado.RECIBO}}
+                                           </td>
+                                           <td >
+                                             {{listado.TOTAL}}
+                                           </td>
+                                           <td >
+                                             {{listado.FECHA}}
+                                           </td>
+                                            <td >                                             
+                                             <div ng-if="listado.APLICADO==0&&listado.CANCELADO==0">
+                                               <button class="btn btn-primary btn-sm" ng-click="abreModalAplicacion(listado.SERIE,listado.CONT)">Aplicar</button>
+                                             </div>
+                                             <div ng-if="listado.APLICADO>0&&listado.CANCELADO==0">
+                                               {{listado.APLICADO}}
+                                               <button class="btn btn-info btn-sm" ng-click="abreModalAplicacion(listado.SERIE,listado.CONT)">seguir Aplicando</button>
+                                             </div>
+                                             <div ng-if="listado.CANCELADO==1">
+                                               <div class="alert alert-danger">Cancelado</div>
+                                             </div>
+                                           </td>
+                                           <td>
+                                              <div ng-if="listado.CANCELADO==0">                                                
+                                                <a href="">
+                                                   <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Cancelar folio">
+                                                      <em class="fa fa-circle fa-stack-2x text-danger"></em>
+                                                      <em class="fa fa-close fa-stack-1x fa-inverse text-white"></em>
+                                                   </span>
+                                                 </a>
+                                              </div>
+                                              <div ng-if="listado.CANCELADO==1">                                                
+                                                <a href="">
+                                                   <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Activar folio">
+                                                      <em class="fa fa-circle fa-stack-2x text-success"></em>
+                                                      <em class="fa fa-check fa-stack-1x fa-inverse text-white"></em>
+                                                   </span>
+                                                 </a>  
+                                              </div>                                                                                        
+                                           </td>
+                                         </tr>
+                                       </table>                                                                                   
+                                    </div>                                                                                                                                               
+                                 </div>
+                              </div>
+                              <!-- END list group item-->                                                            
+                           </div>
+                           <!-- END list group-->
+                           <!-- START panel footer-->
+                           <div class="panel-footer clearfix">
+                              <a href="#" class="pull-left">
+                                 <small></small>
+                              </a>
+                           </div>
+                           <!-- END panel-footer-->
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row" ng-show="mensaje"> 
+                      <div class="col-md-12">
+                          <div class="alert alert-warning">
+                              No se encontro información
+                           </div>
+                       </div>
+                  </div>
+
+
+
+                  <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-lg">
+
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Aplicar</h4>
+                        </div>
+                        <div class="modal-body">
+                                      <div class="row" ng-hide="recibos">
+                                        <div class="col-md-12" align="center">
+                                          <img src="imgs/cargador3.gif" width="6%">
+                                        </div>
+                                      </div>
+
+                                      <div class="row mianimacion" ng-show="recibos" >
+                                          <div class="col-md-12" >
+                                            {{recibos.nombre}}
+                                            <table  class="table table-bordered">
+                                              <tbody>
+                                                <tr>
+                                                  <td> <b>Recibo #</b> </td>
+                                                  <td style="width:35%">{{recibos.Recibo_serie}}{{recibos.Recibo_cont}}</td>
+
+                                                  <td> <b>Importe:</b> </td>
+                                                  <td style="width:35%">{{recibos.Recibo_total | currency}}</td>
+                                                </tr>
+                                                <tr>
+                                                  <td> <b>Fecha de emisión:</b> </td>
+                                                  <td style="width:35%">{{recibos.Recibo_fecExp}}</td>
+
+                                                  <td> <b>Emitido por:</b> </td>
+                                                  <td style="width:35%">{{recibos.Usu_nombre | uppercase}}</td>
+                                                </tr>
+                                                <tr>
+                                                  <td> <b>Folio MV:</b> </td>
+                                                  <td style="width:35%">{{recibos.Exp_folio}}</td>
+
+                                                  <td> <b>Método de pago:</b> </td>
+                                                  <td style="width:35%">{{recibos.metodo | uppercase}}</td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </div>    
+                                        </div>
+                                        <div class="row mianimacion" ng-show="recibos">
+                                                <div class="panel panel-primary" >
+                                                    <div class="panel-heading" ng-show="datosRecibo.total>datosRecibo.aplicado">
+                                                      <h2   align="center">Total: <span style="font-size: 30px"> <b>{{datosRecibo.total}} </b> Aplicado: <b> {{datosRecibo.aplicado}}</b></span></h2>              
+                                                    </div>
+                                                    <div class="panel-heading panel-success" ng-show="datosRecibo.total==datosRecibo.aplicado">             
+                                                      <h2 ng-show="datosRecibo.total==datosRecibo.aplicado" class="alert alert-success"  align="center">Aplicado: <span style="font-size: 30px"> <b>{{datosRecibo.aplicado}} </b> de <b> {{datosRecibo.total}}</b></span></h2>
+                                                    </div>
+                                                    <div class="panel-body">              
+                                                    <div class="row mianimacion">
+                                                      <form name="formAplicacionParticulares" ng-submit="guardarAplicacion()" novalidate>
+                                                        <div class="col-md-12">                   
+                                                                        <div class="form-group">                                   
+                                                                            <div class="col-sm-2">
+                                                                              <label class="control-label">Aplicar</label>
+                                                                <input type="number" step="any" min="1" max="{{datosRecibo.total-datosRecibo.aplicado}}"  name="monto" ng-model="aplicacion.monto" placeholder="$" class="form-control" required> 
+                                                                <div class="validacion" role="alert" ng-if="interacted(formAplicacionParticulares.monto)" ng-messages="formAplicacionParticulares.monto.$error">
+                                                                            <div ng-message="required">campo requerido</div>
+                                                                <div ng-message="number">valor numérico</div>
+                                                                <div ng-message="max">no puede ser mayor al faltante ({{datosRecibo.total-datosRecibo.aplicado}})</div>
+                                                                <div ng-message="min">valor mayor a $1</div>                       
+                                                                            </div>      
+                                                              </div>
+
+                                                              <div class="col-sm-2">
+                                                                              <div class="form-group">
+                                                                              <label>Fecha de cobro:</label>                        
+                                                                              <input type="text"  data-date-viewmode="years" data-date-format="YYYY-MM-DD"  class= "form-control" name="fecCobro" id="fecCobro" ng-model="aplicacion.fecCobro" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" value="{{aplicacion.fecCobro}}" required mayusculas ng-pattern="/^(\d{4})-(\d{2})-(\d{2})$/">
+                                                                              <div class="alert alert-danger" role="alert" ng-if="interacted(formAplicacionParticulares.fecCobro)" ng-messages="formAplicacionParticulares.fecCobro.$error">
+                                                                                <div ng-message="required">Se requiere el valor de la fecha de nacimiento</div>
+                                                                                <div ng-message="pattern">Formato incorrecto (aaaa-mm-dd)</div>
+                                                                              </div>
+                                                                          </div>          
+                                                              </div>
+                                                              <div class="col-sm-3">
+                                                                              <label class="control-label">Referencia</label>
+                                                                      
+                                                                <textarea name="referencia" placeholder="" ng-model="aplicacion.referencia" class="form-control" required mayusculas></textarea>
+                                                                <div class="validacion"  role="alert" ng-if="interacted(formAplicacionParticulares.referencia)" ng-messages="formAplicacionParticulares.referencia.$error">
+                                                                            <div ng-message="required">campo requerido</div>                          
+                                                                            </div>  
+                                                              </div>
+                                                              <div class="col-sm-3">
+                                                                              <label class="control-label">Observaciones</label>                    
+                                                                <textarea ng-model="aplicacion.observaciones" placeholder="" class="form-control" mayusculas></textarea>      
+                                                              </div>
+                                                              <div class="col-md-2 text-center" style="padding-top: 1em">
+                                                                <input type="submit" name="guardaAplicacion" id="guardaAplicacion" class="btn btn-primary" value="Aplicar">
+                                                              </div>
+                                                                        </div>                             
+                                                        </div>
+                                                      </form>
+                                                    </div>
+                                                    <div ng-show="cargador" class="row"> 
+                                                                      <div class="col-md-12">
+                                                                        <div  align="center">
+                                                                          <img ng-src="imgs/cargadorCuadro.gif">
+                                                                        </div>
+                                                                      </div>
+                                                                  </div>  
+                                                    <div class="row mianimacion" ng-show="listadoAplicaciones.length>0">
+                                                      <div class="col-md-12">
+                                                        <table class="table table-bordered table-hover">
+                                                          <tr>
+                                                            <th>
+                                                              #
+                                                            </th>
+                                                            <th>
+                                                              Fecha
+                                                            </th>
+                                                            <th>
+                                                              Saldo
+                                                            </th>
+                                                            <th>
+                                                              Aplicado
+                                                            </th>
+                                                            <th>
+                                                              Usuario
+                                                            </th>
+                                                            <th>
+                                                              Referencia
+                                                            </th>
+                                                            <th>
+                                                              Cancelar
+                                                            </th>
+                                                          </tr>
+                                                          <tr ng-repeat="aplicacion in listadoAplicaciones">
+                                                            <td>
+                                                              {{$index + 1}}
+                                                            </td>
+                                                            <td>
+                                                              {{aplicacion.RPA_fecreg}}
+                                                            </td>
+                                                            <td>
+                                                              {{aplicacion.RPA_monto}}
+                                                            </td>
+                                                            <td>
+                                                              {{aplicacion.RPA_aplicado}}
+                                                            </td>
+                                                            <td>
+                                                              {{aplicacion.Usu_login}}
+                                                            </td>
+                                                            <td>
+                                                              {{aplicacion.RPA_referencia}}
+                                                            </td>
+                                                            <td>
+                                                              <a href="" ng-click="borrarAplicacion(aplicacion.RPA_id)">
+                                                                                   <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="borrar">
+                                                                                      <em class="fa fa-circle fa-stack-2x text-success"></em>
+                                                                                      <em class="fa fa-check fa-stack-1x fa-inverse text-white"></em>
+                                                                                   </span>
+                                                                                 </a>
+                                                            </td>
+                                                          </tr>
+                                                        </table>  
+                                                      </div>
+                                                    </div>                        
+                                                  </div>  
+                                                </div>
+                                              </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>	
+
+</div>
+</div>
+<script type="text/javascript">
+       $('#fechaIni').datetimepicker({
+
+        pickDate: true,                 //en/disables the date picker
+        pickTime: false,                 //en/disables the time picker     
+        showToday: true,                 //shows the today indicator
+        language:'es'                  //sets language locale        
+    });
+
+       $('#fechaFin').datetimepicker({
+
+        pickDate: true,                 //en/disables the date picker
+        pickTime: false,                 //en/disables the time picker     
+        showToday: true,                 //shows the today indicator
+        language:'es'                  //sets language locale        
+    });
+
+    $('.dropdown-toggle').dropdown();
+ </script>

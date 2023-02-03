@@ -1,0 +1,203 @@
+<!-- Vista INFORME DE REHABILITACION by Samuel -->
+<!-- Mayo 2016 -->
+<div ng-init="inicio()">	
+	<form name="guardarInformeRehab" ng-submit="guardaInformeRehab()" onSubmit="this.reset()">
+		<div class="panel panel-primary" >
+			<div class="panel-heading">
+		      <h2 align="center">Informe de Rehabilitación</h2>
+		    </div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-10" style="margin:auto;">
+						<h4>Folio: {{folio}}</h4>
+						<h4>Paciente: {{nombre}}</h4>
+						<br>
+					</div>
+
+					<div class="col-md-2" align="right">
+						<a href="#/documentos"><img src="imgs/back.png" width="45" title="Regresar"></a>
+					</div>
+
+					<div class="col-md-4">
+						<div class="input-group">
+						  <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user-md" aria-hidden="true"></i></span>
+						  <input type="text" class="form-control" placeholder="MÉDICO TRATANTE" ng-model="infRehab.medico" value="{{inconcluso.medico}}" mayusculas required>
+						</div>
+						<br>
+						<div class="input-group">
+						  <span class="input-group-addon" id="basic-addon1"><b>@</b></span>
+						  <input type="email" class="form-control" placeholder="EMAIL DEL MÉDICO" ng-model="infRehab.emailMedico" required>
+						</div>
+					</div>
+				</div>
+
+				<br>
+				<div class="input-group" style="width:90%; margin: auto;">
+					<div class="row">
+						<div class="col-md-6">
+							<h4>Diagnóstico Inicial:</h4>
+							<textarea class="form-control" ng-model="infRehab.diagnosticoInicial" rows="3" value="{{inconcluso.infRehab_DiagnosticoInicial}}" mayusculas required></textarea>
+						</div>
+
+						<div class="col-md-6">
+							<h4>Valoración Inicial:</h4>
+							<textarea class="form-control" ng-model="infRehab.valInicial" rows="3" value="{{inconcluso.infRehab_valoracionInicial}}" mayusculas></textarea>
+						</div>
+					</div>
+
+					<br><br>
+
+					<div class="row">
+						<div class="col-md-6">
+							<h4>Tratamiento recibido en clínica:</h4>
+							<textarea class="form-control" ng-model="infRehab.tratamientoPrevio" rows="3" value="{{inconcluso.tratamientoPrevio}}" mayusculas></textarea>
+							<br><br>
+						</div>
+
+						<div class="col-md-6">
+							<h4>Terapéutica por emplear:</h4>
+							<textarea class="form-control" ng-model="infRehab.tratamientoRehab" rows="3" value="{{inconcluso.infRehab_tratamientoRehab}}" mayusculas></textarea>
+							<br><br>
+						</div>
+					</div>
+
+					<br><br>
+
+					<div class="row">
+						<div class="col-md-6">
+							<h4>Areas trabajadas:</h4>
+							<textarea class="form-control" ng-model="infRehab.areasTrabajadas" rows="3" value="{{inconcluso.areasTrabajadas}}" mayusculas></textarea>
+							<br><br>
+						</div>
+
+						<div class="col-md-6">
+							<h4>Observaciones:</h4>
+							<textarea class="form-control" ng-model="infRehab.observaciones" rows="3" value="{{inconcluso.infRehab_obs}}" mayusculas></textarea>
+							<br><br>
+						</div>
+					</div>
+
+					<br><br>
+
+					<div class="row">
+						<div class="col-md-4">
+							<h4>Sesiones totales:</h4>
+							<input type="number" class="form-control" ng-model="infRehab.sesionesRequiere" placeholder="* Número de sesiones" min="1">
+							<br><br>
+						</div>
+
+						<div class="col-md-4">
+							<h4>Sesiones tomadas:</h4>
+							<input type="number" class="form-control" ng-model="infRehab.sesionesTomadas" placeholder="* Número de sesiones" disabled>
+							<br><br>
+						</div>
+
+						<div class="col-md-4">
+							<h4>Sesiones por tomar:</h4>
+							<input type="number" class="form-control" ng-model="infRehab.sesionesAdicionales" value="{{infRehab.sesionesRequiere-infRehab.sesionesTomadas}}" placeholder="* Número de sesiones" disabled>
+							<br><br>
+						</div>
+					</div>
+
+<!-- 					<div class="row">
+						<div class="col-md-4">
+							<h4>Sesiones que requiere:</h4>
+							<input type="text" class="form-control" ng-model="infRehab.sesionesRequiere" value="{{inconcluso.sesionesRequeridas}}" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="* Número de sesiones">
+							<br><br>
+						</div>
+
+						<div class="col-md-4">
+							<h4>Sesiones tomadas:</h4>
+							<input type="text" class="form-control" ng-model="infRehab.sesionesTomadas" value="{{inconcluso.sesionesTomadas}}" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="* Número de sesiones">
+							<br><br>
+						</div>
+
+						<div class="col-md-4">
+							<h4>Sesiones adicionales:</h4>
+							<input type="text" class="form-control" ng-model="infRehab.sesionesAdicionales" value="{{inconcluso.sesionesAdicionales}}" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="* Número de sesiones">
+							<br><br>
+						</div>
+					</div> -->
+
+					<br><br>
+
+					<div class="row" ng-show="finalizarInforme==false">
+						<div class="col-md-12" align="center">
+							<button type="submit" class="btn btn-info btn-lg" ng-show="inconcluso=='false'" ng-disabled="trabajando==true">Guardar</button><br>
+							<button type="submit" class="btn btn-warning btn-lg" ng-show="inconcluso!='false'" ng-disabled="trabajando==true">Actualizar</button>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12" style="text-align:right">
+                           <div class="form-group">
+                              <div class="col-lg-offset-2 col-lg-10">
+                                 <div class="checkbox c-checkbox">
+                                    Concluir Informe de Rehabilitación
+                                    <label>
+                                       <input type="checkbox" ng-model="finalizarInforme">
+                                       <span class="fa fa-check"></span>
+                                	</label>
+                                 </div>
+                              </div>
+                           </div>
+						</div>
+					</div>
+
+					<div ng-show="finalizarInforme==true">
+						<div class="row">
+							<div class="col-md-12">
+								<h4>Valoración Final:</h4>
+								<textarea class="form-control" ng-model="infRehab.valFinal" rows="3" value="{{inconcluso.infRehab_valoracionFinal}}" mayusculas></textarea>
+								<br><br>
+							</div>
+						</div>
+
+						<br>
+
+						<div class="row">
+							<div class="col-md-12"  align="center">
+								<button type="submit" class="btn btn-success btn-lg" ng-disabled="trabajando==true">Concluir Informe de Rehabilitación</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="row" align="center">
+						<img src="imgs/cargador3.gif" width="5%" ng-show="trabajando==true">
+					</div>
+					<br>
+				</div>
+			</div>
+		</div>
+	</form>
+<br>
+
+
+<!-- MODAL DE CONFIRMACIÓN -->
+	<div class="modal fade" id="confirmacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Confimación</h4>
+	      </div>
+	      <div class="modal-body">
+	        <h3>¡LOS DATOS HAN SIDO GUARDADOS!</h3>
+	        	<br>
+						<h5>Folio: {{folio}}</h5>
+						<h5>Paciente: {{nombre}}</h5>
+						<h5>Médico tratante: {{infRehab.medico}}</h5>
+	      </div>
+	      <div class="modal-footer">
+	      	<img src="imgs/cargador3.gif" width="5%" ng-show="trabajando==true">
+	        <button type="button" class="btn btn-info" ng-click="imprimeNota()" ng-disabled="trabajando==true">Imprimir Nota</button>
+	        <!-- <button type="button" class="btn btn-info" ng-click="imprimeNota()" ng-disabled="bloqueoBoton==true">Imprimir Nota</button> -->
+	        <button type="button" class="btn btn-primary" ng-click="irDocumentos()" ng-disabled="trabajando==true">Aceptar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+<!-- MODAL DE CONFIRMACIÓN -->
+
+
+</div>

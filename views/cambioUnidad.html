@@ -1,0 +1,175 @@
+<style type="text/css">
+	
+	.button {
+    -moz-appearance: button;
+    /* Firefox */
+    -webkit-appearance: button;
+    /* Safari and Chrome */
+    padding: 10px;
+    margin: 10px;
+    width: 100px;
+}
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 200px;
+    height: 65px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
+.dragover {
+    border: 5px dashed blue;
+}
+</style>
+
+
+<div class="container" style="width: 100%"> 
+
+
+
+<div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title" align="center">Cambio de Unidad para el folio <b>{{folio}}</b></h3>
+      </div>
+      <div class="panel-body">
+        
+<!--                   inicio contenedor de formulario                              -->
+
+
+        <div class="container" style="width:100%">
+                <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="container" style="width:100%;">
+                    <fieldset ng-disabled="formCambio">
+                        <form name="formularios.formCambioU" ng-submit="enviaDatos()" novalidate >
+                                
+
+                                <div class="row" align="center">
+                                    <div class="col-xs-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Unidad Origen: </span>     
+                                            <label class="form-control">{{origen}}</label>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Unidad Actual: </span>     
+                                            <label class="form-control">{{actual}}</label>                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-8 col-xs-offset-2">
+                                        <div id="msj1">
+                                            
+                                        </div>
+                                    </div>                          
+                                </div>                                
+                                <div class="row" align="center">
+                                    <div class="col-xs-6 ">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Quien Solicita: </span>     
+                                            <input class="form-control" type="text" id="quienSol" ng-model="cambio.quienSol" name="quienSol" required>
+                                        </div>
+                                        <div class="validacion" role="alert" ng-if="interacted(formularios.formCambioU.quienSol)" ng-messages="formularios.formCambioU.quienSol.$error">
+                                            <div ng-message="required">campo requerido</div>
+                                        </div>
+                                    </div> 
+                                    <div class="col-xs-6">                             
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Quien Autoriza: </span>                                         
+                                            <select id="quienAuto" ng-model="cambio.quienAuto" class="form-control" name="quienAuto" required ng-options="quien.Usu_login as quien.Usu_nombre for quien in quienAut" mayusculas>
+                                            <option value="">
+                                                Seleccione
+                                            </option>                                            
+                                        </select>
+                                        </div>
+                                        <div class="validacion" role="alert" ng-if="interacted(formularios.formCambioU.quienAuto)" ng-messages="formularios.formCambioU.quienAuto.$error">
+                                            <div ng-message="required">campo requerido</div>
+                                        </div>
+                                    </div>                          
+                                </div>
+                                                      
+                                <div class="row" align="center">                                            
+                                    <div class="col-xs-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Unidad Destino: </span>                                         
+                                            <select class="form-control" ng-model="cambio.unidad" id="unidad" name="unidad" required  ng-options="uniDes.Uni_clave as uniDes.Uni_nombrecorto for uniDes in uniDestino" mayusculas>
+                                                <option value="">
+                                                    Seleccione
+                                                </option>                                                
+                                            </select>
+                                        </div>
+                                        <div class="validacion" role="alert" ng-if="interacted(formularios.formCambioU.unidad)" ng-messages="formularios.formCambioU.unidad.$error">
+                                            <div ng-message="required">campo requerido</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Motivo: </span>                                         
+                                            <select class="form-control" ng-model="cambio.motivo" id="motivo" name="motivo" required ng-options="motiv.id_motivo as motiv.motivo for motiv in motivo" mayusculas>
+                                                <option value="">
+                                                    Seleccione
+                                                </option>                                               
+                                            </select>
+                                        </div> 
+                                        <div class="validacion" role="alert" ng-if="interacted(formularios.formCambioU.motivo)" ng-messages="formularios.formCambioU.motivo.$error">
+                                            <div ng-message="required">campo requerido</div>
+                                        </div> 
+                                    </div>
+                                </div>
+                               
+                                <div class="row">                                           
+                                    <div class="col-xs-6">
+                                        <div class="input-group" align="left">
+                                            <span class="input-group-addon">Diagn&oacute;ostico: </span>                                        
+                                            <textarea class="form-control" ng-model="cambio.diagnostico" rows="2" style="width:100%" id="diagnostico" name="diagnostico" required></textarea>
+                                        </div>
+                                        <div class="validacion" role="alert" ng-if="interacted(formularios.formCambioU.diagnostico)" ng-messages="formularios.formCambioU.diagnostico.$error">
+                                            <div ng-message="required">campo requerido</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">                          
+                                        <div class="input-group" align="left">
+                                            <span class="input-group-addon">Observaciones: </span>                                                                  
+                                            <textarea   class="form-control" rows="2" style="width:100%" id="observaciones" ng-model="cambio.observaciones" name="observaciones"></textarea>
+                                        </div>
+                                    </div>
+                                </div>                                                                            
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-6" align="right">
+                                        <input type="submit" id="enviaCambioU" name="enviaCambioU" class='btn btn-primary' value="Cambiar unidad">
+                                    </div>        
+                                </div>        
+                        </form>
+                        </fieldset>
+
+                        <div class="row">
+                            <div class="col-md-3 " align="left">
+                                <button class='btn btn-primary' ng-click="irDocumentos()">Documentos</button>
+                            </div>                              
+                        </div>      
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div ng-show="cambioUnidad" style="width:100%">
+                                    <div class="alert alert-success">El cambio de unidad se hizo correctamente</div>
+                                </div>
+                            </div>        
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div ng-show="cargador" align="center">
+                                        <img ng-src="imgs/cargador.gif">
+                                </div>
+                            </div>                            
+                        </div>    
+                </div><!-- End panel-body -->
+            </div><!-- End panel panel-default -->    
+        </div><!-- END container -->
+
+
+<!--                    fin de contenedor de formulario                             -->
+    </div>
+  </div>
+ 
+</div>

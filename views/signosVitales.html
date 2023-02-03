@@ -1,0 +1,21 @@
+<div class="container" style="width: 100%">     
+<br>
+	<div class="panel panel-primary">
+    <div style="width:100%; background:gray;color:white">
+			<h2>Signos Vitales <b><label>{{folio}}</label></b></h2>
+		</div>
+		<div class="Panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<wizard on-finish="finished()" hide-indicators="true">
+             
+              <wz-step title="S. Vitales">
+               <ng-include src="'views/signosVitales/vitales.html'"></ng-include>
+              </wz-step>
+                          </wizard>
+					</div>
+				</div>
+			
+		</div>
+	</div>
+</div>

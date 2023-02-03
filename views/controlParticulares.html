@@ -1,0 +1,112 @@
+<div ng-init="inicio()">		
+		<div class="panel panel-primary" >
+		    <div class="panel-heading">
+		      <h3  align="center">Control de Pacientes Particulares</h3>
+		    </div>
+		    <div class="panel-body">
+				
+				<div class="row mianimacion" >
+					<div class="panel panel-primary" >
+					    
+					    <div class="panel-body">							
+							
+							<div ng-show="cargador" class="row"> 
+                                <div class="col-md-12">
+                                  <div  align="center">
+                                    <img ng-src="imgs/cargadorCuadro.gif">
+                                  </div>
+                                </div>
+                            </div>  
+							<div class="row mianimacion" ng-show="listadoMedicos">
+								<div class="col-md-12" ng-repeat="medico in listadoMedicos | unique: 'unidad'" style="width: 100%">				
+										<div class="row">
+											<div class="col-md-12" ><h3>Unidad: {{medico.unidad}}</h3></div>											
+										</div>
+										<div class="row">
+											<div class="panel panel-info">
+												<div class="panel-heading" style="height: 2em; padding-top: .5em; padding-bottom: 1em; margin: .5em">
+													<h5 class="panel-title">
+														<a>
+															<div class="col-md-2">#</div>
+															<div class="col-md-4">Médico</div>
+															<div class="col-md-2">Por día</div>
+															<div class="col-md-2">Por mes</div>
+															<div class="col-md-2">por año</div>	
+														</a>
+													</h5>
+												</div>												
+											</div>
+																				
+										</div>
+										<div class="panel-group" id="accordion">
+											<accordion>
+											    <accordion-group ng-repeat="(key, valor) in listadoMedicos | filter: key.unidad=medico.unidad" >
+											      <accordion-heading >
+											      <div style=" padding-bottom: 1em;" ng-click="verDetalle(valor.Usu_login,valor.POR_DIA)">
+											        <div class="col-md-2">{{$index+1}}</div>
+																<div class="col-md-4">{{valor.medico}}</div>
+																<div class="col-md-2">{{valor.POR_DIA}}</div>
+																<div class="col-md-2">{{valor.POR_MES}}</div>
+																<div class="col-md-2">{{valor.POR_ANIO}}</div>	
+													</div>
+											      </accordion-heading>
+											      <div class="panel-body">
+															<div class="row" ng-show="cargador1">
+																<div class="col-md-12" align="center">
+																	<div>
+																		<img ng-src="imgs/cuadrito.gif">
+																	</div>
+																</div>
+															</div>
+															<div class="row" ng-show="msj">
+																<div class="col-md-12" align="center">
+																	<div class="alert alert-warning">
+																		Sin pacientes atendidos
+																	</div>
+																</div>
+															</div>
+															<accordion>
+															    <accordion-group ng-repeat="valores in doc">
+															      <accordion-heading>
+															<div class="row" ng-click="verRecibos(valores.Exp_folio)">
+																<div class="col-md-3">
+																	{{valores.Exp_folio}}
+																</div>
+																<div class="col-md-6">
+																	{{valores.Exp_completo}}
+																</div>
+																<div class="col-md-3">
+																	{{valores.Not_fechaReg}}
+																</div>
+															</div>
+																</accordion-heading>
+															 	<table ng-show="listaRecibos" class="table table-condensed">
+															 		<tr>
+															 			<th>Folio MV</th>
+															 			<th>Folio Recibo</th>
+															 			<th>Importe</th>
+															 		</tr>
+															 		<tr ng-repeat="valores in listaRecibos">
+															 			<td>{{valores.Exp_folio}}</td>
+															 			<td>{{valores.Recibo_serie}}{{valores.Recibo_cont}}</td>
+															 			<td>{{valores.Recibo_total}}</td>
+															 		</tr>
+															 	</table>
+															 	<div class="alert alert-warning" ng-show="msjRecibos">
+																		No existen recibos para este folio
+																</div>
+
+															</accordion-group>
+															</accordion>
+														</div>
+											    </accordion-group>    
+										  	</accordion>    									
+									</div>															
+							</div>												
+						</div>	
+					</div>
+				</div>
+			</div>	
+		</div>
+</div>	
+</div>

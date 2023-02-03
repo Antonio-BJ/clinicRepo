@@ -1,0 +1,813 @@
+<!-- AUTHOR:  DESARROLANDO ANA DC -->
+
+<style type="text/css">
+
+  .left{
+
+    text-align: left;
+
+    width: fit-content;
+
+  }
+
+
+
+.table-scroll {
+
+  position: relative;
+
+  width:100%;
+
+  z-index: 1;
+
+  margin: auto;
+
+  overflow: auto;
+
+  height: 350px;
+
+}
+
+.table-scroll table {
+
+  width: 100%;
+
+  min-width: 1280px;
+
+  margin: auto;
+
+  border-collapse: separate;
+
+  border-spacing: 0;
+
+}
+
+.table-wrap {
+
+  position: relative;
+
+}
+
+.table-scroll th,
+
+.table-scroll td {
+
+  padding: 5px 10px;
+
+  border: 1px solid #30426A;
+
+  background: #fff;
+
+  vertical-align: top;
+
+}
+
+.table-scroll thead th {
+
+  background: #30426A;
+
+  color: #fff;
+
+  position: -webkit-sticky;
+
+  position: sticky;
+
+  top: 0;
+
+}
+
+
+
+.table-scroll tfoot,
+
+.table-scroll tfoot th,
+
+.table-scroll tfoot td {
+
+  position: -webkit-sticky;
+
+  position: sticky;
+
+  bottom: 0;
+
+  background: #30426A;
+
+  color: #fff;
+
+  z-index:4;
+
+}
+
+
+
+th:first-child {
+
+  position: -webkit-sticky;
+
+  position: sticky;
+
+  left: 0;
+
+  z-index: 2;
+
+  background: #30426A;
+
+}
+
+thead th:first-child,
+
+tfoot th:first-child {
+
+  z-index: 5;
+
+}
+
+</style>
+
+<div class = "panel panel-primary">
+
+   <div class = "panel-heading">
+
+      Detalle del Recibo {{recibo}}
+
+   </div>
+
+   
+
+   <div class = "panel-body">
+
+	   <div class="col-md-12" >
+
+			<table  class="table table-bordered">
+
+				<tbody>
+
+					<tr>
+
+						<td> <b>Recibo #</b> </td>
+
+						<td style="width:35%">{{recibo}}</td>
+
+
+
+						<td> <b>Importe:</b> </td>
+
+						<td style="width:35%">{{datos.Recibo_total | currency}}</td>
+
+					</tr>
+
+					<tr>
+
+						<td> <b>Fecha de emisión:</b> </td>
+
+						<td style="width:35%">{{datos.Recibo_fecExp}}</td>
+
+
+
+						<td> <b>Emitido por:</b> </td>
+
+						<td style="width:35%">{{datos.Usu_nombre | uppercase}}</td>
+
+					</tr>
+
+					<tr>
+
+						<td> <b>Folio MV:</b> </td>
+
+						<td style="width:35%">{{datos.Exp_folio}}</td>
+
+
+
+						<td> <b>Método de pago:</b> </td>
+
+						<td style="width:35%">{{datos.metodo | uppercase}}</td>
+
+					</tr>
+
+					<tr>
+
+						<td> <b>Unidad:</b> </td>
+
+						<td style="width:35%">{{datos.unidad}}</td>
+
+
+
+					</tr>
+
+				</tbody>
+
+			</table>
+
+		</div>	
+
+      
+
+   </div>
+
+</div>
+
+
+
+<div class="row" ng-show="trabajando==true">
+
+	<div class="col-md-12" align="center">
+
+		<img src="imgs/cargador3.gif" width="6%">
+
+	</div>
+
+</div>
+
+
+
+<hr>
+
+<!-- 
+
+<div class="row">
+
+	<div class="col-md-12" align="right">
+
+	  <input type="checkbox" name="" value="1" ng-model="pan" ng-change="actCol()">No Identificados
+
+	</div>
+
+</div>
+
+<br>
+ -->
+
+ <!-- BUSQUEDA X FECHA EN COBROS -->
+
+	<form name="icobro" ng-submit="enviaParametros()">
+		<br>
+		<div class="row">
+			<div class="col-md-4">
+          <div class="input-group ">
+              <span>Fecha inicial:</span>
+              <input type="text" ng-model="reporteIt.fechaIni" name="fecha1" id="fecha1" class= "form-control" data-date-format="YYYY-MM-DD" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" required>
+          </div>                         
+      </div>
+
+      <div class="col-md-4">
+          <div class="input-group ">
+              <span>Fecha final:</span>
+              <input type="text" ng-model="reporteIt.fechaFin" name="fecha2" id="fecha2" class= "form-control" data-date-format="YYYY-MM-DD" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" required>
+          </div>  
+      </div>
+
+			<div class="col-md-4" align="left">
+        <br>
+				<div class="input-group" style="width:100%">
+            <button type="Submit" class="btn btn-primary btn-md">Buscar</button>
+        </div>  
+			</div>
+		</div>
+	</form>
+
+
+<!-- Inicia tabla de cobros -->
+  <div class="row" ng-show="cargador">
+    <div class="col-md-12">
+      <div  align="center">
+        <img ng-src="imgs/cargador.gif">
+      </div>
+    </div>
+  </div>
+<div class="row">
+
+	<!-- <div class="col-md-{{colun}}"> -->
+
+		<div  class="panel panel-primary"  style="width: 90%; margin: auto;">
+
+	    	   <div class = "panel-heading">
+
+			      Cobros Identificados
+
+			   </div>
+
+		      <div  id="table-scroll" class="table-scroll">
+
+		        <table  id="tabla" class="main-table" style="width: 100%">
+
+		        	<thead>
+
+			          <tr> 
+
+			            <th scope="col">
+			            	<input type="checkbox"  toggle-checkbox toggle-checkbox-list="listado" toggle-checkbox-property="listadoCobros" name="selectedTodo[]" value="{{ listado }}" ng-checked="selection.indexOf(listadoCobros) > -1" ng-click="toggleSelection(listadoCobros)">  
+			            </th>         
+			            <th scope="col"><b>Clave</b></th>
+
+			            <th scope="col"><b>Saldo Inicial</b></th>
+
+			            <th scope="col"><b>Saldo x Aplicar</b></th>
+
+			            <th scope="col"><b>Referencia Bancaria</b></th>
+
+			            <th scope="col"><b>Fecha Banco</b></th>   
+			          </tr>
+<!-- 			          <tr colspan="6">
+                     <input id="buscar" type="text" class="form-control" placeholder="Busqueda" />
+                </tr>  --> 
+			        </thead>
+
+			        <tbody>
+
+			          <tr ng-repeat="listado in listadoCobros">
+
+			            <td>
+
+			            	
+
+							<input type="checkbox"  toggle-checkbox toggle-checkbox-list="listado" toggle-checkbox-property="listado" name="selectedTodo[]" value="{{ listado }}" ng-checked="selection.indexOf(listadoCobros) > -1" ng-click="toggleSelection(listado)"> 
+
+			            </td>                         
+
+			            <td style="color: #aaa">{{listado.COB_claveint}}</td>
+
+			            <td >{{listado.COB_saldoinicial | currency }}</td>
+
+			            <td >{{listado.COB_saldo | currency}}</td>
+
+			            <td >{{listado.COB_relacionBancaria}}</td>
+
+			            <td >{{listado.COB_fechaRegistroCobro}}</td>
+
+			          </tr>
+
+			      </tbody>
+
+		        </table>
+
+		      </div>
+
+	    </div>
+
+   <!-- </div> -->
+
+   
+
+<!--    <div class="col-md-{{colun}}" ng-show="noIden">
+
+		<div  class="panel panel-primary"  style="width: 90%; margin: auto;">
+
+	    	   <div class = "panel-heading">
+
+			      Cobros no Identificados
+
+			   </div>
+
+		      <div  id="table-scroll" class="table-scroll">
+
+		        <table  id="main-table" class="main-table" style="width: 100%">
+
+		        	<thead>
+
+			          <tr> 
+
+			            <th scope="col">
+
+
+
+			            	<input type="checkbox"  toggle-checkbox toggle-checkbox-list="listado" toggle-checkbox-property="listadoCobros" name="selectedTodo[]" value="{{ listado }}" ng-checked="selection.indexOf(listadoCobros) > -1" ng-click="toggleSelection(listadoCobros)">  
+
+			            </th>         
+
+			            <th scope="col"><b>Clave</b></th>
+
+			            <th scope="col"><b>Referencia Bancaria</b></th>
+
+			            <th scope="col"><b>Fecha Banco</b></th>         
+
+			            <th scope="col"><b>Saldo Inicial</b></th>
+
+			            <th scope="col"><b>Saldo x Aplicar</b></th>
+
+
+
+			          </tr>
+
+			        </thead>
+
+			        <tbody>
+
+			          <tr ng-repeat="listado in listadoCobros">
+
+			            <td>
+
+			            	
+
+							<input type="checkbox"  toggle-checkbox toggle-checkbox-list="listado" toggle-checkbox-property="listado" name="selectedTodo[]" value="{{ listado }}" ng-checked="selection.indexOf(listadoCobros) > -1" ng-click="toggleSelection(listado)"> 
+
+			            </td>                         
+
+			            <td style="color: #aaa">{{listado.COB_claveint}}</td>
+
+			            <td >{{listado.COB_relacionBancaria}}</td>
+
+			            <td >{{listado.COB_fechaRegistroCobro}}</td>
+
+			            <td >{{listado.COB_saldoinicial | currency }}</td>
+
+			            <td >{{listado.COB_saldo | currency}}</td>
+
+
+
+			          </tr>
+
+			      </tbody>
+
+		        </table>
+
+		      </div>
+
+	    </div>
+
+	</div>
+ -->
+</div>
+
+<br>
+
+<div class="row">
+
+
+
+	<div class="col-md-12" align="center">
+
+		<button type="button" class="btn btn-primary btn-lg"  ng-click="enviaAplicacion()" >Aplicar</button>
+
+	</div>
+
+	
+
+</div>
+
+          
+
+<!-- Ventana de App -->
+
+
+
+<div class="modal fade" id="ventanaApp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+
+
+	  <div class="modal-dialog modal-lg">
+
+	    <div class="modal-content">
+
+	      <div class="modal-header">
+
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+
+
+		        <h4 class="modal-title" id="myModalLabel">Ventana de Aplicación de Recibo</h4>
+
+
+
+	      </div>
+
+  		  <div class="modal-body"> 
+
+
+
+					<div class="panel panel-primary" >
+
+					    <div class="panel-heading">
+
+					    	<h4>Recibo x Aplicar: <span style="font-size: 30px"><b>{{datosRecibo.serie}}{{datosRecibo.folRecibo}}</span> </b>
+
+					    		Total del Recibo : <span style="font-size: 30px"><b>{{datosRecibo.total | currency}}</span> </b>
+
+					    	</h4>
+
+					      <h2   align="center">
+
+					      	Cobro: <span style="font-size: 30px"><b>{{datosRecibo.totalcobro | currency}}</span> </b> 
+
+					      	Restante del Recibo: <span style="font-size: 30px"> <b>{{datosRecibo.restanteRec | currency}} </span></b> 
+
+					      	Aplicado: <span style="font-size: 30px"> <b>{{datosRecibo.aplicado| currency}}</b></span></h2>					     
+
+					    </div>
+
+					    <div class="panel-body">							
+
+							<div class="row mianimacion">
+
+								<!-- <form name="formAplicacionParticulares" ng-submit="guardarAplicacion()" novalidate> -->
+
+									<div class="col-md-12">										
+
+					            <div class="form-group">		
+
+
+
+					            	<div class="col-sm-2">
+
+			                           		<div class="form-group">
+
+								                        <label>Fecha de cobro:</label>                        
+
+								                        <input type="text"  data-date-viewmode="years" data-date-format="YYYY-MM-DD"  class= "form-control" name="fecCobro" id="fecCobro" ng-model="aplicacion.fecCobro" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" value="{{aplicacion.fecCobro}}" required mayusculas ng-pattern="/^(\d{4})-(\d{2})-(\d{2})$/">
+
+								                        <div class="alert alert-danger" role="alert" ng-if="interacted(formAplicacionParticulares.fecCobro)" ng-messages="formAplicacionParticulares.fecCobro.$error">
+
+								                          <div ng-message="required">Se requiere el valor de la fecha de nacimiento</div>
+
+								                          <div ng-message="pattern">Formato incorrecto (aaaa-mm-dd)</div>
+
+								                        </div>
+
+								                    </div>          
+
+												</div>		                           
+
+			                    <div class="col-sm-2">
+
+			                           				<label class="control-label">Aplicar</label>
+
+													<input type="number" step="any" min="1"  name="monto" ng-model="aplicacion.monto"  class="form-control" required>			
+
+												</div>
+
+
+
+												<div class="col-sm-3">
+
+
+
+													<label class="control-label">Comisión</label>
+
+													<input type="number" step="any" min="1"  name="monto" ng-model="aplicacion.comision"  class="form-control" required>	
+
+
+
+												</div>
+
+<!-- 												<div class="col-sm-3">
+
+			                           				<label class="control-label">Referencia</label>
+
+																
+
+													<textarea name="referencia" placeholder="" ng-model="aplicacion.referencia" class="form-control" required mayusculas></textarea>
+
+													<div class="validacion"  role="alert" ng-if="interacted(formAplicacionParticulares.referencia)" ng-messages="formAplicacionParticulares.referencia.$error">
+
+							                        <div ng-message="required">campo requerido</div>                          
+
+							                        </div>	
+
+												</div> -->
+
+												<div class="col-sm-2">
+
+			                    <label class="control-label">Total</label>
+
+													<input type="number" name="monto" ng-model="aplicacion.totalapp" class="form-control" disabled  required>	
+
+		
+
+												</div>
+
+												<div class="col-sm-3">
+
+			                    <label class="control-label">Observaciones</label>										
+
+													<textarea ng-model="aplicacion.observaciones" placeholder="" class="form-control" mayusculas></textarea>			
+
+												</div>
+
+												<div class="col-md-2 text-center" style="padding-top: 1em">
+
+													<input type="button" name="guardaAplicacion" id="guardaAplicacion" class="btn btn-primary" value="Aplicar" ng-click="guardarAplicacion()">
+
+												</div>
+
+					                        </div>					                   
+
+									</div>
+
+								<!-- </form> -->
+
+							</div>
+
+<!-- 							<div ng-show="cargador" class="row"> 
+
+                                <div class="col-md-12">
+
+                                  <div  align="center">
+
+                                    <img ng-src="imgs/cargadorCuadro.gif">
+
+                                  </div>
+
+                                </div>
+
+                            </div>   -->
+
+							<div class="row mianimacion" ng-show="listadoAplicaciones.length>0">
+
+								<div class="col-md-12">
+
+									<table class="table table-bordered table-hover">
+
+										<tr>
+
+											<td>
+
+												#
+
+											</td>
+
+											<td>
+
+												Fecha
+
+											</td>
+
+											<td>
+
+												Saldo
+
+											</td>
+
+											<td>
+
+												Aplicado
+
+											</td>
+
+											<td>
+
+												Usuario
+
+											</td>
+
+											<td>
+
+												Referencia
+
+											</td>
+
+											<td>
+
+												Cancelar
+
+											</td>
+
+										</tr>
+
+										<tr ng-repeat="aplicacion in listadoAplicaciones">
+
+											<td>
+
+												{{$index + 1}}
+
+											</td>
+
+											<td>
+
+												{{aplicacion.RPA_fecreg}}
+
+											</td>
+
+											<td>
+
+												{{aplicacion.RPA_monto}}
+
+											</td>
+
+											<td>
+
+												{{aplicacion.RPA_aplicado}}
+
+											</td>
+
+											<td>
+
+												{{aplicacion.Usu_login}}
+
+											</td>
+
+											<td>
+
+												{{aplicacion.RPA_referencia}}
+
+											</td>
+
+											<td>
+
+												<a href="" ng-click="borrarAplicacion(aplicacion.RPA_id)">
+
+			                                       <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="borrar">
+
+			                                          <em class="fa fa-circle fa-stack-2x text-success"></em>
+
+			                                          <em class="fa fa-check fa-stack-1x fa-inverse text-white"></em>
+
+			                                       </span>
+
+			                                     </a>
+
+											</td>
+
+										</tr>
+
+									</table>	
+
+								</div>
+
+							</div>												
+
+						</div>	
+
+					</div>
+
+
+
+     	  </div>
+
+
+
+     	  <div class="modal-footer">	      	
+
+
+
+	        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+
+	       
+
+	      </div> 
+
+	    </div>
+
+        </div>
+
+</div>
+
+
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+
+       $('#fecCobro').datetimepicker({
+
+
+
+        pickDate: true,                 //en/disables the date picker
+
+        pickTime: false,                 //en/disables the time picker     
+
+        showToday: true,                 //shows the today indicator
+
+        language:'es'                  //sets language locale        
+
+    });
+
+
+
+    $('#fecha1').datetimepicker({         
+
+        pickTime: false,                 //en/disables the time picker            
+
+        language:'es'                  //sets language locale
+
+    });
+
+        $('#fecha2').datetimepicker({         
+
+        pickTime: false,                 //en/disables the time picker            
+
+        language:'es'                  //sets language locale
+
+    });
+
+
+    // var busqueda = document.getElementById('buscar');
+    // var table = document.getElementById("tabla").tBodies[0];
+ 
+    // buscaTabla = function(){
+    //   texto = busqueda.value.toLowerCase();
+    //   var r=0;
+    //   while(row = table.rows[r++])
+    //   {
+    //     if ( row.innerText.toLowerCase().indexOf(texto) !== -1 )
+    //       row.style.display = null;
+    //     else
+    //       row.style.display = 'none';
+    //   }
+    // }
+
+    // busqueda.addEventListener('keyup', buscaTabla);
+
+
+
+ </script>

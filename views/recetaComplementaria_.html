@@ -1,0 +1,549 @@
+<div class="row semiTitulo" >
+        <label >Receta Complementaria</label>    
+    </div> 
+    <div class="bordeSemititulo">             
+
+          <br>          
+          <div class="row" ng-show="alergias">
+            <div class="col-md-12">
+             <div class="alert alert-danger"> <label style="color:#ba3f44; font-size:14px"><b>Alergias:</b> {{alergias}} </label></div>
+            </div>
+          </div>           
+      <div class="cajaInputArriba">        
+            <label>Medicamentos</label>              
+      </div>
+      <div class="bordeInput">
+      <div ng-hide="recargarMed">         
+          <div class="row">
+            <div class="col-md-12">           
+            <div align="center">
+              <button class="btn btn-primary ln" ng-click="botonRecargaMed()">Recargar</button>
+            </div>
+                  </div>        
+          </div>
+    </div>            
+                        <!-- Modal -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Agregar Medicamentos</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form ng-submit="agregaMedAlternativo()">
+                                    <div class="row">
+                                      <div class="col-md-12">
+                                        <div style="width:100%" class="input-group">  
+                                        <label>Medicamento:</label>                    
+                                        <input   type="text" ng-model="medAlter.medicamento"  class="form-control" id="numTel" name="numTel" required>                                         
+                                        </div> 
+                                      </div>                                        
+                                      </div>
+                                      <div class="row">
+                                      <div class="col-md-2">
+                                        <div style="width:100%" class="input-group">  
+                                        <label>Cantidad:</label>                    
+                                        <input  type="number" ng-model="medAlter.cantidad"  class="form-control" id="numTel" name="numTel" >                                         
+                                        </div> 
+                                      </div>  
+                                      <div class="col-md-8">  
+                                        <div  style="width:100%"class="input-group">  
+                                        <label>Indicaciones:</label>                    
+                                        <input  type="text" style="width:100%" ng-model="medAlter.indicaciones"  class="form-control" id="numTel" name="numTel" required>                                         
+                                        </div>
+                                        </div>
+                                      <div class="col-md-2">
+                                        <div style="padding-top:1.8em">  
+                                        <button type="submit" class="btn btn-info">Agregar</button>
+                                        </div>
+                                        </div> 
+                                      </div>
+                                      </form> 
+                                      <div class="row" ng-show="msjTel">
+                                         <div class="col-md-12">
+                                            <div  class="validacion">
+                                                Los campos son obligatorios
+                                            </div>
+                                         </div>
+                                       </div> 
+                                       <div class="row" ng-show="mensajevacio">
+                                         <div class="col-md-12">
+                                            <div  class="validacion">
+                                                Debes agregar por lo menos 1 medicamento
+                                            </div>
+                                         </div>
+                                       </div> 
+                                      <div class="row" ng-show="sumaMed">
+                                         <div class="col-md-12">
+                                           <table ng-hide="sumaMed==null" class="table table-striped table-hover">
+                                            <tr>
+                                              <th width="10%"><b>#</b></th>
+                                              <th width="40%"><b>cantidad</b></th>
+                                              <th width="40%"><b>Medicamento</b></th>
+                                              <th width="40%"><b>Indicaciones</b></th>                  
+                                              <th width="10%"><b>Eliminar</b></th>                  
+                                            </tr>
+                                            <tr ng-repeat="medics in sumaMed">  
+                                            <td>{{medics.cont}}</td>         
+                                              <td>{{medics.cantidad}}</td>                                  
+                                              <td>{{medics.medicamento}}</td>
+                                              <td>{{medics.indicaciones}}</td>
+                                              <td><input type="button" ng-click="eliminaTelefono($index+1)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+                                            </tr>
+                                          </table>                                            
+                                         </div>
+                                       </div> 
+                                        <div ng-show="cargadorModalMed">          
+                                          <div class="row">
+                                            <div class="col-md-12">           
+                                            <div align="center">
+                                              <img ng-src="imgs/cargador.gif">
+                                            </div>
+                                                  </div>        
+                                          </div>
+                                        </div>
+                                          
+                                    </div>
+                                  
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+                                    <button ng-disabled="cargadorModalMed" type="button" class="btn btn-default" ng-click="guardarMedicamentosAlternativos()" >Guardar</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>                
+        
+      <form name="formularios.medicSymio" ng-submit="guardaMedicamentoSymio()" novalidate>
+        
+        <div ng-show="cargadorMed&&recargarMed&&verListaSumAlter">          
+          <div class="row">
+            <div class="col-md-12">           
+            <div align="center">
+              <img ng-src="imgs/cargador.gif">
+            </div>
+                  </div>        
+          </div>
+        </div>
+        <div ng-hide="cargadorMed">         
+          <div class="row" >
+          <div class="col-md-7">
+            <div class="input-group" style="width:100%">                       
+                <span class="input-group-addon">Medicamento</span>
+              <select class="form-control" ng-model="med.sustAct" style="width:100%;" name="sustAct" id="sustAct" ng-change="seleccionaMedicamentos(med.sustAct)" ng-options="medSymio.Clave_producto as medSymio.Descripcion for medSymio in lisMedSymio | filter:filtraMedicamentosVacios()" required>
+                <option value="" > - Seleccione - </option>             
+              </select>
+            </div>
+                  <div class="validacion" role="alert" ng-if="interacted11(formularios.medicSymio.sustAct)" ng-messages="formularios.medicSymio.sustAct.$error">
+                    <div ng-message="required">campo requerido</div>            
+                  </div>                                            
+          </div>        
+                    
+          <div class="col-md-5" style="height:100%,width:100%">         
+            <div class="input-group" style="width:100%">                       
+                <span class="input-group-addon">Presentación: </span>           
+              <input  class="form-control" type="text" id="presentacion" name="presentacion" ng-disabled="true" ng-model="med.presentacion" required > 
+                  </div>
+                  <div class="validacion" role="alert" ng-if="interacted11(formularios.medicSymio.presentacion)" ng-messages="formularios.medicSymio.presentacion.$error">
+                    <div ng-message="required">campo requerido</div>            
+                  </div>          
+          </div>
+                
+          </div><!-- End row --> 
+
+          <div class="row">         
+            <div class="col-md-3" style="vertical-align:middle;" align="right">                 
+            <div class="input-group">          
+              <span  class="input-group-addon"><span class="badge" ng-show="med.sustAct" >{{med.stock}}</span> cantidad: </span>
+              <input type="number" ng-model="med.cantidad" id="cantidad" name="cantidad" class="form-control" required>
+            </div>
+            <div class="validacion" role="alert" ng-if="interacted11(formularios.medicSymio.cantidad)" ng-messages="formularios.medicSymio.cantidad.$error">
+              <div ng-message="required">campo requerido</div>
+              <div ng-message="number">campo numérico</div>            
+            </div>
+            <div class="validacion" ng-show="validaStock">
+                    <div align='center'>Excediste el stock</div>            
+                  </div>              
+          </div>  
+            <div class="col-md-9" style="vertical-align:middle;" align="right">                 
+              <div class="input-group">
+                <span class="input-group-addon">Posología: </span>
+                <textarea class="form-control" ng-model="med.posologia" rows="1" id="posologia" name="posologia" style="resize:none;" required=""></textarea>
+              </div>
+              <div class="validacion" role="alert" ng-if="interacted11(formularios.medicSymio.posologia)" ng-messages="formularios.medicSymio.posologia.$error">
+                <div ng-message="required">campo requerido</div>            
+              </div>        
+            </div>                    
+          </div> 
+                         
+          <div class="row" >
+            <div class="col-md-3" ng-hide="listaMedicamentosSymio.length>0||listaMedicamentosSymioAlternativo>0">
+                <div >
+                  <div class="checkbox c-checkbox">
+                      <label>
+                         <input type="checkbox" name="checkSiguiente" id="checkMed" ng-model="checkMed"  ng-click="botonHabilita1()">
+                         <span class="fa fa-check"></span> Sin medicamentos</label>
+                   </div>                  
+                </div>
+            </div> 
+            <div class="col-md-9" style="vertical-align:middle;" align="right">          
+              <input type="submit" class="btn btn-success" value="Agregar">
+            </div>                    
+          </div>                                      
+          <div class="row" ng-show="cargador">             
+            <div class="col-md-12">
+              <div  align="center">
+                <img ng-src="imgs/cargador.gif">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div ng-show="listaMedicamentosSymio.length>0" class="mianimacion">
+                 <table id="TablaAlergias" width="100%" class="table table-striped table-hover">
+                  <tr>
+                    <th width="40%"><b>Medicamento</b></th>
+                    <th width="40%"><b>Posología<b/></th>
+                    <th width="10%"><b>cantidad<b/></th>
+                    <th width="10%"><b>Eliminar</b></th>
+                  </tr>
+                  <tr ng-repeat="med in listaMedicamentosSymio">
+                    <td>{{med.NS_descripcion}}</td>
+                    <td>{{med.NS_posologia}}</td>
+                    <td>{{med.NS_cantidad}}</td>
+                    <td><input type='button' class="btn btn-danger btn-xs" ng-click='eliminarMedicamentoSymio(med.id_reserva,med.NS_id)' value='Eliminar'></td>
+                  </tr>
+                  </table>
+              </div>
+            </div>
+          </div>         
+        </div>
+        <div class="row" ng-hide="verListaSumAlter">
+          <div class="col-md-12">
+            <div ng-show="listaMedicamentosSymioAlternativo" class="mianimacion">
+               <table id="TablaAlergias" width="100%" class="table table-striped table-hover">
+                <tr>
+                  <th width="10%"><b>Cantidad</b></th>
+                  <th width="50%"><b>Medicamento<b/></th>
+                  <th width="40%"><b>Posología<b/></th>                  
+                </tr>
+                <tr ng-repeat="med in listaMedicamentosSymioAlternativo">
+                  <td>{{med.NsumAl_Cantidad}}</td>
+                  <td>{{med.NsumAl_medicamento}}</td>
+                  <td>{{med.NsumAl_posologia}}</td>                  
+                </tr>
+                </table>
+            </div>
+          </div>
+        </div> 
+                          
+      </form>
+      </div>  
+      <br>    
+      <br>    
+      <div class="cajaInputArriba">        
+            <label>Ortesis</label>              
+      </div>
+      <div class="bordeInput">      
+        <div ng-hide="recargarOrt">         
+              <div class="row">
+                <div class="col-md-12">           
+                <div align="center">
+                  <button class="btn btn-primary ln" ng-click="botonRecargaOrt()">Recargar Ortesis</button>
+                </div>
+                      </div>        
+              </div>
+        </div>               
+                    <!-- Modal -->
+                              <div class="modal fade" id="myModalOrt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Agregar Ortesis</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form ng-submit="agregaOrtAlternativo()">
+                                    <div class="row">
+                                      <div class="col-md-12">
+                                        <div style="width:100%" class="input-group">  
+                                        <label>Ortesis:</label>                    
+                                        <input   type="text" ng-model="ortAlter.ortesis"  class="form-control" id="numTel" name="numTel" required>                                         
+                                        </div> 
+                                      </div>                                        
+                                      </div>
+                                      <div class="row">
+                                      <div class="col-md-2">
+                                        <div style="width:100%" class="input-group">  
+                                        <label>Cantidad:</label>                    
+                                        <input  type="number" ng-model="ortAlter.cantidad"  class="form-control" id="numTel" name="numTel" >                                         
+                                        </div> 
+                                      </div>  
+                                      <div class="col-md-8">  
+                                        <div  style="width:100%"class="input-group">  
+                                        <label>Indicaciones:</label>                    
+                                        <input  type="text" style="width:100%" ng-model="ortAlter.indicaciones"  class="form-control" id="numTel" name="numTel" required>                                         
+                                        </div>
+                                        </div>
+                                      <div class="col-md-2">
+                                        <div style="padding-top:1.8em">  
+                                        <button type="submit" class="btn btn-info">Agregar</button>
+                                        </div>
+                                        </div> 
+                                      </div>
+                                      </form> 
+                                      <div class="row" ng-show="msjTel">
+                                         <div class="col-md-12">
+                                            <div  class="validacion">
+                                                Los campos son obligatorios
+                                            </div>
+                                         </div>
+                                       </div> 
+                                       <div class="row" ng-show="mensajevacio">
+                                         <div class="col-md-12">
+                                            <div  class="validacion">
+                                                Debes agregar por lo menos 1 medicamento
+                                            </div>
+                                         </div>
+                                       </div> 
+                                      <div class="row" ng-show="sumaMed">
+                                         <div class="col-md-12">
+                                           <table ng-hide="sumaMed==null" class="table table-striped table-hover">
+                                            <tr>
+                                              <th width="10%"><b>#</b></th>
+                                              <th width="40%"><b>cantidad</b></th>
+                                              <th width="40%"><b>Ortesis</b></th>
+                                              <th width="40%"><b>Indicaciones</b></th>                  
+                                              <th width="10%"><b>Eliminar</b></th>                  
+                                            </tr>
+                                            <tr ng-repeat="ortes in sumaOrt">  
+                                            <td>{{ortes.cont}}</td>         
+                                              <td>{{ortes.cantidad}}</td>                                  
+                                              <td>{{ortes.ortesis}}</td>
+                                              <td>{{ortes.indicaciones}}</td>
+                                              <td><input type="button" ng-click="eliminaTelefono($index+1)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+                                            </tr>
+                                          </table>                                            
+                                         </div>
+                                       </div> 
+                                        <div ng-show="cargadorModalMed">          
+                                          <div class="row">
+                                            <div class="col-md-12">           
+                                            <div align="center">
+                                              <img ng-src="imgs/cargador.gif">
+                                            </div>
+                                                  </div>        
+                                          </div>
+                                        </div>
+                                          
+                                    </div>
+                                  
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+                                    <button ng-disabled="cargadorModalMed" type="button" class="btn btn-default" ng-click="guardarOrtesisAlternativos()" >Guardar</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> 
+         
+      <div ng-show="cargadorOrt&&recargarOrt&&verListaOrtAlter">          
+      <div class="row">
+        <div class="col-md-12">           
+          <div align="center">
+            <img ng-src="imgs/cargador.gif">
+          </div>
+        </div>        
+      </div>
+    </div>
+      <div ng-hide="cargadorOrt">
+        <form name="formularios.orteSymio" ng-submit="guardaOrtesisSymio()" novalidate>
+          <div class="row">
+          <div class="col-md-4">
+            <div class="input-group" style="width:100%">                       
+                <span class="input-group-addon">Ortesis: </span>
+              <select class="form-control" ng-model="ortesisSym.ortSymio" style="width:100%;" name="ortSymio" id="ortSymio" required ng-options="ortesis.Clave_producto as ortesis.Descripcion for ortesis in lisrtOrtSymio | filter:filtraOrtesisVacios()"
+                 ng-change="seleccionaOrtesis(ortesisSym.ortSymio)">
+                <option value="" > - Seleccione - </option>             
+              </select>
+                  </div>
+                  <div class="validacion" role="alert" ng-if="interacted12(formularios.orteSymio.ortSymio)" ng-messages="formularios.orteSymio.ortSymio.$error">
+                    <div ng-message="required">campo requerido</div>            
+                  </div>
+                  <br>
+                      
+          </div>                
+          <div class="col-md-3" style="height:100%,width:100%" align="right">         
+            <div class="input-group" style="vertical-align:middle;" >
+              <span class="input-group-addon"><span class="badge" ng-show="ortesisSym.ortSymio">{{ortesisSym.stock}} </span> cantidad: </span>
+              <input type="number" class="form-control" name="cantidad"  ng-model="ortesisSym.cantidad" required="">
+            </div>
+            <div class="validacion" role="alert" ng-if="interacted12(formularios.orteSymio.cantidad)" ng-messages="formularios.orteSymio.cantidad.$error">
+                    <div ng-message="required">campo requerido</div>            
+                  </div>
+                  <div class="validacion" ng-show="validaStockOrtesisSym">
+                    <div align='center'>Excediste el stock</div>            
+                  </div>            
+          </div>
+          <div class="col-md-5" style="height:100%,width:100%" align="right">         
+            <div class="input-group" >
+              <span class="input-group-addon">Indicaciones: </span>
+              <textarea class="form-control" ng-model="ortesisSym.indicaciones" rows="2" id="indicaciones" name="indicaciones" style="resize:none;" required=""></textarea>
+            </div>
+            <div class="validacion" role="alert" ng-if="interacted12(formularios.orteSymio.indicaciones)" ng-messages="formularios.orteSymio.indicaciones.$error">
+                    <div ng-message="required">campo requerido</div>            
+                  </div>                                              
+          </div>    
+          </div><!-- End row --> 
+          <div class="row" >
+            <div class="col-md-6" ng-hide="listaOrtesisSymio.length>0||listaOrtesisSymioAlternativo.length>0">
+              <div >                            
+                <div class="checkbox c-checkbox">
+                    <label>
+                       <input type="checkbox" name="checkSiguiente" id="checkOrt" ng-model="checkOrt" ng-click="botonHabilita2()">
+                       <span class="fa fa-check"></span>  Sin ortesis</label>
+                </div>    
+                </div>
+              </div>
+            <div class="col-md-6" align="right">
+                  <input align="left" type="submit" class="btn btn-success" value="Agregar">               
+            </div>
+          </div>   
+          <div class="row"> 
+                  <div class="col-md-12">
+                    <div ng-show="cargador1" align="center">
+                      <img ng-src="imgs/cargador.gif">
+                    </div>
+                  </div>
+          </div>              
+          <div class="row">
+          <div class="col-md-12">
+            <div ng-show="listaOrtesisSymio.length>0" class="mianimacion">
+              <table id="TablaAlergias" width="100%" class="table table-striped table-hover">
+                <tr>                  
+                  <th width="40%"><b>Ortesis<b/></th>             
+                  <th width="40%"><b>Indicaciones<b/></th>
+                  <th width="10%"><b>Cantidad</b></th>
+                  <th width="10%"><b>Eliminar</b></th>
+                </tr>
+                <tr ng-repeat="ortesis in listaOrtesisSymio">
+                 
+                  <td>{{ortesis.NS_descripcion}}</td>                
+                  <td>{{ortesis.NS_posologia}}</td>
+                  <td>{{ortesis.NS_cantidad}}</td>
+                  <td><input type='button' class="btn btn-danger btn-xs" ng-click='eliminarOrtesisSymio(ortesis.id_reserva,ortesis.NS_id, ortesis.id_item)' value='Eliminar'></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          </div>                    
+        </form> 
+      </div>
+      <div class="row" ng-hide="verListaOrtAlter">
+          <div class="col-md-12">
+            <div ng-show="listaOrtesisSymioAlternativo" class="mianimacion">
+               <table id="TablaAlergias" width="100%" class="table table-striped table-hover">
+                <tr>
+                  <th width="10%"><b>Cantidad</b></th>
+                  <th width="50%"><b>Ortesis<b/></th>
+                  <th width="40%"><b>Posología<b/></th>                  
+                </tr>
+                <tr ng-repeat="ort in listaOrtesisSymioAlternativo">
+                  <td>{{ort.NortAl_Cantidad}}</td>
+                  <td>{{ort.NortAl_ortesis}}</td>
+                  <td>{{ort.NortAl_posologia}}</td>                  
+                </tr>
+                </table>
+            </div>
+          </div>
+      </div> 
+      </div>
+      <br>
+      <form name="formularios.indica" ng-submit="guardaIndicaciones()" novalidate>
+        <div class="cajaInputArriba">        
+            <label>Indicaciones</label>              
+        </div>
+        <div class="bordeInput">
+        <div class="row">
+        <div class="col-md-5">
+          <div class="input-group" style="width:100%">                       
+              <span class="input-group-addon">Indicaciones Generales: </span>
+            <select class="form-control" ng-model="indicacion.indicacion" style="width:100%;" name="tipoSumin" id="tipoSumin" ng-options="indicacion.Ind_nombre as indicacion.Ind_nombre for indicacion in listaIndicacion" ng-change="verIndicacionCam()">
+              <option value="" > - Seleccione - </option>             
+            </select>
+            </div>
+         </div>
+         <div class="col-md-5">     
+            <div class="input-group" style="width:100%">            
+            <textarea class="form-control" ng-model="indicacion.obs" rows="3" id="obs" name="obs" style="resize:none;" required></textarea>
+          </div>
+          <div class="validacion" role="alert" ng-if="interacted8(formularios.indica.obs)" ng-messages="formularios.indica.obs.$error">
+              <div ng-message="required">campo requerido</div>            
+            </div>
+            <div class="validacion" ng-show="msjPalabraProhiInd">
+              <div >Está utilzando una palabra prohibida <b>(INCAPACIDAD)</b></div>            
+            </div>  
+
+        </div>        
+              
+        <div class="col-md-2" align="right">         
+        
+            <input type="submit" class="btn btn-success" value="Agregar">       
+        </div>        
+        </div><!-- End row --> 
+        <div class="row"> 
+                <div class="col-md-12">
+                  <div ng-show="cargador2" align="center">
+                    <img ng-src="imgs/cargador.gif">
+                  </div>
+                </div>
+            </div>          
+        <div class="row">
+        <div class="col-md-12">
+          <div ng-show="listaIndicAgreg" class="mianimacion">
+             <table id="TablaAlergias" width="100%" class="table table-striped table-hover">
+              <tr>
+                
+                <th width="80%"><b>Indicaciones<b/></th>
+                <th width="20%"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-repeat="indic in listaIndicAgreg">               
+                <td>{{indic.Nind_obs}}</td>
+                <td><input type='button' class="btn btn-danger btn-xs" ng-click='eliminarIndicacion(indic.Nind_clave)' value='Eliminar'></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        </div>
+        </div>              
+      </form> 
+      <br>
+      <div class="row">
+        <div class="col-md-12" align="right">
+          <input ng-disabled="siguienteMed==true||siguienteOrt==true" type="button" ng-click="imprimirReceta()" class="btn btn-primary btn-lg" value="Guardar receta">
+        </div>
+    </div>            
+  </div>  
+
+  
+
+  <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+         
+          <h4 class="modal-title" id="exampleModalLabel">Receta Complementaria</h4>
+        </div>
+        <div class="modal-body">
+          <form id="motivoReceta" name="motivoReceta" ng-submit="guardarMotivo()">
+            <div class="form-group">
+              <label for="recipient-name" class="form-control-label">Motivo:</label>
+              <input type="text" class="form-control" id="recipient-name" ng-model="motivo" required>
+            </div>            
+          </form>
+        </div>
+        <div class="modal-footer">          
+          <button type="submit" form="motivoReceta" class="btn btn-primary">Siguiente</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,86 @@
+<div ng-init="inicio()">	
+	<form name="notaSoap" ng-submit="guardarSoap()" onSubmit="this.reset()">
+		<div class="panel panel-primary" >
+			<div class="panel-heading">
+		      <h2 align="center">Nota SOAP</h2>
+		    </div>
+			<div class="panel-body">
+
+				<div class="input-group" style="width:60%; margin: auto;">
+					<div class="row">
+						<h4>App:</h4>
+						<textarea class="form-control" ng-model="soap.appSoap" placeholder="App" rows="3" required mayusculas style="resize:none"></textarea>
+						<br><br>&nbsp;
+					</div>
+
+					<div class="row">
+						<h4>Apx:</h4>
+						<textarea class="form-control" ng-model="soap.apxSoap" placeholder="Apx" rows="3" required mayusculas style="resize:none"></textarea>
+						<br><br>&nbsp;
+					</div>
+
+					<div class="row">
+						<h4>Subjetivos:</h4>
+						<textarea class="form-control" ng-model="soap.subjetivo" placeholder="subjetivos" rows="3" required mayusculas style="resize:none"></textarea>
+						<br><br>&nbsp;
+					</div>
+
+					<div class="row">
+						<h4>Objetivos:</h4>
+						<textarea class="form-control" ng-model="soap.objetivo" placeholder="objetivos" rows="3" required mayusculas style="resize:none"></textarea>
+						<br><br>&nbsp;
+					</div>
+
+					<div class="row">
+						<h4>Análisis:</h4>
+						<textarea class="form-control" ng-model="soap.analisis" placeholder="Análisis" rows="3" required mayusculas style="resize:none"></textarea >
+						<br><br>&nbsp;
+					</div>
+
+					<div class="row">
+						<h4>Plan:</h4>
+						<textarea class="form-control" ng-model="soap.pronostico" placeholder="Plan" rows="3" required mayusculas style="resize:none"></textarea>
+						<br><br>&nbsp;
+					</div>
+					<div class="row" ng-show="cargador">					
+		                    <div align="center">
+		                            <img ng-src="imgs/cargador.gif">
+		                    </div>		               
+		            </div>
+					<div class="row" align="center">
+						<br><br>&nbsp;
+						<button type="submit" class="btn btn-primary btn-lg" name="guardarSoap" id="guardarSoap">Guardar</button>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</form>
+
+
+
+<!-- MODAL DE CONFIRMACIÓN -->
+	<div class="modal fade" id="confirmacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Confimación</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<br>
+	        ¡Los datos han sido enviados!
+	        <br><br>
+	      </div>
+	      <div class="modal-footer">
+	        <!--  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  -->
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+<!-- MODAL DE CONFIRMACIÓN -->
+
+
+</div>

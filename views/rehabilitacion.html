@@ -1,0 +1,217 @@
+<div class="container" style="width: 100%">     
+<br>
+	<div class="panel panel-primary">
+    <div style="width:100%; background:gray;color:white">
+    <div class="row">
+      <div class="col-md-1" style="padding-top:1.2em" ng-show="regresar">
+        <button ng-click="regresaWizard()" style="background:transparent; border:0px"><img src="imgs/flecha.jpg" width="35" height="35" class="img-circle" /></button>
+      </div>
+    
+			<h2 style="padding-left:2%;">Solicitud de Rehabilitación <b><label>{{folio}}</label></b></h2>
+    </div>
+		</div>                                
+
+		<div class="Panel-body">
+				<div class="row">
+					<div class="col-md-12">
+					  <ul class="nav nav-tabs">
+                 <li class="active">
+                     <a data-target="#tab-one"  data-toggle="tab">Datos del paciente</a>
+                 </li>
+                 <li >
+                     <a data-target="#tab-two" ng-click="verDatosAcc()" data-toggle="tab">Datos del Accidente</a>
+                 </li>
+                 <li >
+                     <a data-target="#tab-three" ng-click="verExpdiente()"  data-toggle="tab">Expediente</a>
+                 </li>
+             </ul>
+            <div class="tab-content">
+              <div id="tab-one" class="tab-pane active">
+                 <table class="table table-bordered table-hover" ng-hide="cargador">
+                    <thead>
+                        <tr>
+                            <td>Folio: <b>{{folio}}</b></td>
+                            <td>Nombre: <b>{{nombre}}</b></td>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Aseguradora: <b>{{datos.cia}}</b></td>
+                            <td>Siniestro: <b>{{datos.sin}}</b></td>
+                            <td>Póliza: <b>{{datos.pol}}</b></td>
+                            <td>Reporte: <b>{{datos.rep}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Fecha nacimiento:</td>
+                            <td><b>{{datos.fecnac}}</b></td>
+                            <td>Edad: <b>{{datos.anios}} años {{datos.meses}} meses</b></td>
+                            <td>Sexo: <b>{{datos.sexo}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Tipo de Trabajo: </td>
+                            <td><b>{{datos.ocu}}</b></td>
+                            <td>Estado Civil:</td>
+                            <td><b>{{datos.edoC}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Teléfono: </td>
+                            <td><b>{{datos.tel}}</b></td>
+                            <td>Email:</td>
+                            <td><b>{{datos.mail}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Observaciones Religiosas: </td>
+                            <td><b>{{datos.obs}}</b></td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row" ng-show='cargador'> 
+                <div class="col-md-12">
+                  <div ng-show="cargador" align="center" style="hight:10em;">
+                    <img ng-src="imgs/cargador.gif">
+                  </div>
+                </div>
+            </div>   
+              </div>
+              <div id="tab-two" class="tab-pane">
+                  <div class="row"> 
+                <div class="col-md-12">
+                  <table class="table table-bordered table-hover" ng-hide="cargador">
+                    <thead>
+                        <tr>
+                            <td>Fecha de siniestro: <b>{{acc.fecSin}}</b></td>
+                            <td>Fecha de primera atención: <b>{{acc.fecAtn}}</b></td>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">Medico de primera atencion:  <b>{{acc.doc}}</b></td>                                                        
+                        </tr>
+                        <tr>
+                            <td colspan="2">Diagnóstico Actual: 
+                            <b>{{acc.diag}}</b></td>                            
+                        </tr>                        
+                    </tbody>
+                </table>
+                  <div ng-show="cargador" align="center" style="hight:10em;">
+                    <img ng-src="imgs/cargador.gif">
+                  </div>
+                </div>
+            </div>   
+              </div>
+              <div id="tab-three" class="tab-pane">
+              <div class="row"> 
+                <div class="col-md-6">
+                  <table class="table table-bordered table-hover" ng-hide="cargador">
+                    <thead>
+                        <tr>
+                            <th><b>Primera Atención</b></th>                            
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-show="nota">
+                            <td><a ng-click="imprimirNota()">  Nota Médica</a></td> 
+                        <tr ng-hide="nota">
+                            <td>Nota Médica</td>
+                        </tr>                                                       
+                        </tr>
+                        <tr>
+                            <td><a ng-click="imprimirNota()"> Historia Clínica</a></td>                            
+                        </tr>                        
+                    </tbody>
+                </table>                  
+                </div>
+                <div class="col-md-6">
+                  <table class="table table-bordered table-hover" ng-hide="cargador">
+                    <thead>
+                        <tr>
+                            <th><b>Subsecuencias:</b></th>                                                      
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="sub in subsec">
+                            <td><a ng_click="imprimirSubList(sub.Sub_cons)"> Subsecuencia {{sub.Sub_cons}} </a></td>                                                        
+                        </tr>                                          
+                    </tbody>
+                </table>
+                  
+                </div>
+                <div class="col-md-12">
+                    <div ng-show="cargador" align="center" style="hight:10em;">
+                      <img ng-src="imgs/cargador.gif">
+                  </div>
+                </div>
+            </div>   
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                    <div class="panel-heading">Datos del Pase a Rehabilitación</div>
+                      <div class="Panel-body">
+                      <fieldset ng-disabled="formu">
+                          <form name="formularios.paseRehab" ng-submit="guardaPase()" novalidate> 
+                              <br><br>                           
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="input-group">
+                                    <span class="input-group-addon">Rehabilitaciones aproximadas: </span>
+                                    <input type="number" class="form-control" ng-model="formReah.noSes" rows="4" id="noSes" name="noSes" required>
+                                  </div>
+                                  <div class="validacion" role="alert" ng-if="interacted(formularios.paseRehab.noSes)" ng-messages="formularios.paseRehab.noSes.$error">
+                                    <div ng-message="required">campo requerido</div>
+                                    <div ng-message="number">valor numérico</div>            
+                                  </div>
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-6">
+                                 <div class="input-group">
+                                  <span class="input-group-addon">Observaciones previas <br> a Rehabilitación: </span>
+                                  <textarea class="form-control" ng-model="formReah.obs" rows="4" id="obs" name="obs" style="resize:none;" mayusculas></textarea>
+                                </div>   
+                                </div>
+                                <div class="col-md-6">
+                                 <div class="input-group">
+                                  <span class="input-group-addon">Diagnóstico previo <br> a Rehabilitación:</span>
+                                  <textarea class="form-control" ng-model="formReah.diag" rows="4" id="diag" name="diag" style="resize:none;" required mayusculas></textarea>
+                                </div>
+                                <div class="validacion" role="alert" ng-if="interacted(formularios.paseRehab.diag)" ng-messages="formularios.paseRehab.diag.$error">
+                                    <div ng-message="required">campo requerido</div>                                    
+                                  </div>   
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-show="cargador1" align="center" style="hight:10em;">
+                                      <img ng-src="imgs/cargador.gif">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">                                                          
+                                <div class="col-md-2 col-md-offset-10">
+                                  <input type="submit" class="btn btn-primary" value="Guardar">
+                                </div>
+                              </div>                           
+                          </form>
+                          </fieldset>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <input type="button" class="btn btn-primary" ng-click="irDocumentos()" value="Documentos"> 
+                      </div>  
+                    </div>
+
+                </div>
+              </div>
+
+            </div>
+				  </div>
+		    </div>
+    </div>
+  </div>

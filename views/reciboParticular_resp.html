@@ -1,0 +1,449 @@
+
+<div class="container" style="width:90%">
+    
+    
+        <div class="panel panel-default" ng-hide="cargador">
+        <div class="panel-heading">
+        	<div class="row">
+        		<div class="col-xs-8">
+        			<label style="font-size:20px"><b>Formato de recibo</b></label>
+        		</div>
+        		<div class="col-xs-4" align="right" ng-show="sinRecibos">
+        			<input type="button" class="btn btn-primary" value="Reimprimir" data-toggle="modal" data-target="#Reimprimir">
+        		</div>
+            </div>
+        </div><!-- End panel-heading -->
+        
+        <div class="panel-body">
+	       <!-- 	Inicio de formulario de recibo normal							  -->
+<div style="width:100%;"  class="container">	            				
+						<div class="row">
+							<div class="col-xs-6">
+								<img src="imgs/logos/mv.jpg" style="widht:30%; height=30%">
+							</div>
+							<div class="col-xs-6" align="right">							
+                            	<i>Expedici&oacute;n: </i><b>{{datos.fecExp}}</b>
+                            	<input type="hidden" name="fecha" id="fecha" value="">	                        	
+                            	<input type="hidden" id="fol" name="fol" value="">
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-xs-6">							
+	                            
+							</div>
+							<div class="col-xs-6" align="right">
+								<i>Folio MV: </i><b>{{datos.folMv}}</b>
+							</div>
+						</div>						
+						<div class="row">
+							<div class="col-xs-6">							
+	                         	<i>Paciente: </i>
+	                            <b>{{datos.pac}}</b>                       
+							</div>
+							<div class="col-xs-6" align="right">
+								<i>Fecha atenci&oacute;n: </i>
+	                            <b>{{datos.fecAt}}</b>
+							</div>
+						</div>						
+						<div class="row">
+							<div class="col-xs-12">							
+	                 			<i>Items</i>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-xs-12">							
+	                 			<div class="panel panel-default">
+									    <div class="panel-body">
+									    <fieldset ng-disabled="formu">
+									       <form name="formularios.formItem" ng-submit="guardaItem()" novalidate>
+									            <div class="row">                
+									                <div class="col-xs-3">
+									                    <div class="input-group">
+									                        <label>Familia </label>
+									                        <input type="hidden" id="folRec" name="folRec" value="<? echo $cveRecibo?>">
+									                        <input type="hidden" id="fol" name="fol" value="<?echo $fol?>">                                    
+									                        <select class="form-control" name="familia" id="familia" ng-model='items.fam' ng-change="selectItem()" ng-options="fam.Tip_clave as fam.Tip_nombre for fam in famItems" required>
+									                            <option value=""> *Selecciona</option>
+									                            
+									                        </select>                                                              
+									                    </div>
+									                </div> 
+									                <div class="col-xs-3">
+									                    <div class="input-group" width="100%">
+									                        <label>Item </label>
+									                                                     
+									                        <div id="selectItem" width="100%" ng-hide="cargador1">
+									                            <select class="form-control" style="width:100%" name="item" ng-model="items.item" id="item" ng-options="item.ite_cons+'/'+item.ite_precio+'/'+item.permiso as item.ite_item for item in listItems" ng-change="ponerPrecio()" required mayusculas>
+									                                <option value=""> * Selecciona  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</option>                                
+									                            </select> 
+									                        </div>
+
+									                       
+													              <div ng-show="cargador1" align="center" style="hight:10em;">
+													                <img ng-src="imgs/cargador.gif">
+													              </div>
+													                                                                           
+									                    </div>
+									                    <div class="validacion" role="alert" ng-if="interacted(formularios.formItem.item)" ng-messages="formularios.formItem.item.$error">
+											              <div ng-message="required">campo requerido</div>            
+											            </div>
+									                </div> 
+									                <div class="col-xs-2">
+									                    <div class="input-group">
+									                        <label>Descuento</label> 
+									                        <input type="hidden" id="folRec" name="folRec" value="<? echo $cveRecibo?>">
+									                        <input type="hidden" id="fol" name="fol" value="<?echo $fol?>">                                              
+									                        <input type="text" id="descuento" class="form-control solonum" ng-model="items.descuento" maxlength="3" name="descuento" placeholder="%" value="0" ng-disabled="Descuento">                                                    
+
+									                    </div>
+									                    <div align="center" ng-show="porMayor">
+									                    	<label style="color:red" >máximo 100%</label>
+									                    </div>
+									                </div>
+									                <div class="col-xs-2">
+									                    <div class="input-group">
+									                        <label>Precio</label>                                        
+									                        <input type="text" id="precio" class="form-control" name="precio" ng-model='items.precio' placeholder="$" disabled>                                                    
+									                    </div>
+									                </div>               
+									                <div class="col-xs-2" align="right" style="padding-top:1.8em">
+									                    <div class="input-group">                                            
+									                        <input  type="submit"  class="btn btn-success" value="Agregar Item">                        
+									                    </div>
+									                </div>
+									            </div>      
+									          
+									            <div class="row">
+									                <div class="col-xs-12">
+									                    <div id="mensaje" style="display:none;">
+									                        
+									                    </div>
+									                </div>
+									            </div>
+									            <div class="row" ng-show="verListadoItems">
+									                <div class="col-xs-12">
+									                    <div id="listaItemsRec" >
+									                        <table id="TablaAlergias" align="center"  width="100%" style='font-size:13px' class="table table-striped table-hover table-condensed">
+															  <tr>          
+															       <th width="10%"><b>C&oacute;digo Registro</b></th>
+															       <th width="10%"><b>C&oacute;digo MV</b></th>
+															       <th width="20%"><b>Producto</b></th>         
+															       <th width="20%"><b>Descripci&oacute;n</b></th>
+															       <th width="15%"><b>Presentaci&oacute;n</b></th>
+															       <th width="5%"><b>Descuento</b></th>
+															       <th width="10%"><b>Precio</b></th>      
+															        <th width="10%"><b>Eliminar</b></th>
+															  </tr>
+															  		 <tr ng-repeat="listIt in sumaItems">  
+															           	<td>{{listIt.cveItem}}</td>
+														                <td>{{listIt.cveMV}}</td>
+														                <td>{{listIt.item}}</td>
+														               	<td>{{listIt.desc}}</td>   
+														                <td>{{listIt.pres}}</td> 
+														                <td align='center'>{{listIt.descuento}}%</td>
+														               <td>{{listIt.precio}}</td>
+														                <td><input type='button' class='btn btn-danger btn-xs'  ng-click='eliminarItemRec($index)' value='Eliminar'>
+																	  </tr>
+
+																		 <tr>
+																		  <td colspan='6' align='right'>Subtotal</td>
+																		                <td>$ {{subtotal}}</td>
+																	            <td></td>
+																		  </tr>
+																		   <tr>
+																		  <td colspan='6' align='right'>Descuento</td>
+														                <td>$ {{descuento}}</td>
+															              <td></td>
+																		 </tr>
+																		<tr>
+																	               <td colspan='6' align='right'>Total</td>
+														                <td><b>$ {{total}}</b></td>
+														              <td></td>
+																</tr>	
+
+															  </table>
+									                    </div>
+									                </div>
+									            </div>
+									            <div class="row">
+													<div class="col-xs-12">	
+														<div ng-show="cargador2" align="center" style="hight:10em;">
+											                <img ng-src="imgs/cargador.gif">
+											              </div>
+													</div>
+												</div>		
+									        </form>
+									        </fieldset>
+									    </div>
+									</div>
+							</div>
+						</div>																				
+
+						<form name="formularios.formRecibo" ng-submit="guardaRecibo()" novalidate>			
+
+						<div class="row">
+			                <div class="col-md-3 col-md-offset-9" align="right">
+			                    <input type="hidden" id="items1" name="items1"> 
+			                     <input type="hidden" name="fec" id="fec" ng-model="datosRec.fec">  
+		                         <input type="hidden" ng-model="datosRec.folRec">                           
+			                </div>        
+			            </div> 		
+						<div class="row" >
+			                <div class="col-xs-5"> 
+			                    <div class="input-group">
+			                        <span class="input-group-addon">M&eacute;todo de pago: </span> 
+			                           
+			                        <select class="form-control" ng-disabled="formu" ng-model="datosRec.fPago" name="fPago" id="fPago" required ng-change="cechaMetodoPago()" mayusculas>
+			                            <option value=""> *Selecciona</option>
+			                            <option value="1">Efectivo</option>
+			                            <option value="2">Tarjeta de cr&eacute;dito</option>
+			                            <option value="3">Tarjeta de d&eacute;bito</option>
+			                            <option value="4">Transferencia</option>
+			                            <option value="6">AMEX</option>
+			                            <option value="7">Múltiple</option>
+			                            <option value="5">Cheque</option>
+			                        </select>    
+			                        
+			                    </div>
+			                    <div class="validacion" role="alert" ng-if="interacted1(formularios.formRecibo.fPago)" ng-messages="formularios.formRecibo.fPago.$error">
+				              	<div ng-message="required">campo requerido</div>
+				              	</div>		               
+	        				</div>
+	        				<div class="col-xs-5"> 
+			                    <div class="input-group">
+			                        <span class="input-group-addon">M&eacute;dico: </span>                 
+			                        <select class="form-control" ng-model='datosRec.medico' name="medico" id="medico" ng-options="medico.Med_clave as medico.Med_nombre+' '+medico.Med_paterno+' '+medico.Med_materno for medico in medicos" required mayusculas>
+			                            <option value=''> *Selecciona</option>
+			                            
+			                        </select>    
+			                        
+			                    </div>
+			                    <div class="validacion" role="alert" ng-if="interacted1(formularios.formRecibo.medico)" ng-messages="formularios.formRecibo.medico.$error">
+				              	<div ng-message="required">campo requerido</div>
+				              	</div>			               
+	        				</div>  
+	        				<div class="col-md-2" align="right" ng-hide="verDatosTarjeta||verDatosMultiple">
+			                    <input type="submit" ng-disabled="formu" class='btn btn-primary' value="Guardar e Imprimir">
+			                </div> 
+        				</div>
+
+        				<div class="row" ng-show="verDatosTarjeta">
+			                <div class="col-xs-5"> 
+			                     <div class="input-group">
+			                        <span class="input-group-addon">Banco:</span> 
+			                        <input type="text" class="form-control" ng-model="datosRec.banco" name="banco" id="banco" ng-required="verDatosTarjeta">   	                        
+			                    </div>
+			                    <div class="validacion" role="alert" ng-if="interacted1(formularios.formRecibo.banco)" ng-messages="formularios.formRecibo.banco.$error">
+				              	<div ng-message="required">campo requerido</div>
+				              	</div>		                
+
+	        				</div>
+	        				<div class="col-xs-5"> 
+			                    <div class="input-group">
+			                        <span class="input-group-addon">últimos 4 digitos:</span> 
+			                        <input type="number" class="form-control" maxlength="4" minlength="4" ng-model="datosRec.terminacion" name="terminacion" id="terminacion" ng-required="verDatosTarjeta" >   	                        
+			                    </div>
+			                    <div class="validacion" role="alert" ng-if="interacted1(formularios.formRecibo.terminacion)" ng-messages="formularios.formRecibo.terminacion.$error">
+				              	<div ng-message="required">campo requerido</div>				              	
+				              	<div ng-message="minlength">deben ser 4 dígitos</div>
+				              	<div ng-message="maxlength">deben ser 4 dígitos</div>
+	        					</div>
+	        					</div>  
+	        				<div class="col-md-2" align="right">
+			                    <input type="submit" ng-disabled="formu" class='btn btn-primary' value="Guardar e Imprimir">
+			                </div> 
+        				</div>  
+        				<div class="row" ng-show="verDatosMultiple">
+        					<div class="col-xs-12"> 
+								<div class="alert alert-danger" align="justify" style="font-size:16px">Favor de especificar los diferentes montos y metodos de pago con los que se cubrió este recibo. Es importante señalar la terminación en el caso de las tarjetas bancarias y verificar que la suma sea correcta.</div>
+        					</div>
+        				</div>
+        				<div class="row" ng-show="verDatosMultiple">
+			                <div class="col-xs-10"> 			                	
+			                     <div class="input-group">
+			                        <span class="input-group-addon">Observaciones:</span> 
+			                        <textarea class="form-control" ng-model="datosRec.observaciones" name="obs" id="obs" ng-required="verDatosMultiple" style="resize: none" mayusculas></textarea>   	                        
+			                    </div>
+			                    <div class="validacion" role="alert" ng-if="interacted1(formularios.formRecibo.obs)" ng-messages="formularios.formRecibo.obs.$error">
+				              	<div ng-message="required">Necesitas detallar el método de pago multiple</div>
+				              	</div>		                
+
+	        				</div>	        				
+	        				<div class="col-md-2" align="right">
+			                    <input type="submit" ng-disabled="formu" class='btn btn-primary' value="Guardar e Imprimir">
+			                </div> 
+        				</div>      				        				
+        				
+			            </form> 
+			    <div class="row" ng-show='cargadorEnvia'> 
+		            <div class="col-md-12">
+		              <div align="center" style="hight:10em;">
+		                <img ng-src="imgs/cargador.gif">
+		              </div>
+		            </div>
+		        </div>     				              
+			          
+			                   	        		        	
+	            <div class="row" ng-show="mensaje">
+	                <div class="col-md-12">
+	                    <div id="respuesta" >
+	                        <div class="alert alert-success">Tienes que agregar por lo menos un Item</div>
+	                    </div>
+	                </div>        
+	            </div> 
+	            <div class="row" ng-show="guardado">
+	                <div class="col-md-12">
+	                    <div id="respuesta" >
+	                        <div class="alert alert-success">Guardado Correctamente</div>
+	                    </div>
+	                </div>        
+	            </div> 
+	            <div class="row" ng-show='cargador3'> 
+		            <div class="col-md-12">
+		              <div align="center" style="hight:10em;">
+		                <img ng-src="imgs/cargador.gif">
+		              </div>
+		            </div>
+		        </div>  
+	          	<div class="row" >
+	            	<div class="col-md-3 " align="left">
+	                    <button class='btn btn-primary' ng-click="irDocumentos()">Documentos</button>
+	                </div>			                    
+	            </div>       
+	    </div><!-- End panel-body -->
+    </div><!-- End panel panel-default --> 
+
+    <div class="modal fade" id="Reimprimir" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				   <form name="agreAddendum" ng-submit="guardaAddendum()" novalidate>
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Reimprimir recibo</h4>
+					      </div>
+					      <div class="modal-body">
+				       		
+							    
+								    <div ng-repeat="recibo in listarecibos" align="center">
+								    	<div class="row" style="padding-top:1.5em">
+								    		<div class="col-md-4">
+									    		<label for="" style="font-size:20px">Recibo No. <b>{{recibo.Recibo_serie}}{{recibo.Recibo_cont}}</b></label>
+									    	</div>
+									    	<div class="col-md-8" align="right">									    
+											<div class="pull-right" ng-hide="recibo.Recibo_cancelado==1||recibo.Recibo_solCancel==1">
+			                                    <a href="" ng-click="abreModalCancelacion(recibo.Recibo_cont)">
+			                                       <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Cancelar recibo">
+			                                          <em class="fa fa-circle fa-stack-2x text-danger"></em>
+			                                          <em class="fa fa-close fa-stack-1x fa-inverse text-white"></em>
+			                                       </span>
+			                                     </a>
+		                                    </div>
+		                                    <div class="pull-right" ng-show="recibo.Recibo_cancelado==1&&recibo.Recibo_solCancel==1">
+			                                    <a href="">
+			                                       <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Recibo cancelado">
+			                                          <em class="fa fa-circle fa-stack-2x text-success"></em>
+			                                          <em class="fa fa-check fa-stack-1x fa-inverse text-white"></em>
+			                                       </span>
+			                                     </a>
+		                                    </div>
+		                                    <div class="pull-right" ng-show="recibo.Recibo_solCancel==1&&recibo.Recibo_cancelado==0">
+			                                    <a href="">
+			                                       <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Solicitud enviada">
+			                                          <em class="fa fa-circle fa-stack-2x text-primary"></em>
+			                                          <em class="fa fa-envelope-o fa-stack-1x fa-inverse text-white"></em>
+			                                       </span>
+			                                     </a>
+		                                    </div>
+		                                    <div class="pull-right">
+			                                    <a href="" ng-click="reimprimirRecibo(recibo.Recibo_cont, recibo.Recibo_serie)">
+			                                       <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Imprimir recibo">
+			                                          <em class="fa fa-circle fa-stack-2x text-success"></em>
+			                                          <em class="fa fa-print fa-stack-1x fa-inverse text-white"></em>
+			                                       </span>
+			                                     </a>
+		                                    </div>
+
+									    	</div>
+									    </div>
+								    </div> 							     								     	
+						   
+						  </div> 
+			        
+				      
+				      <div class="modal-footer">				      
+				        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>				        
+				      </div>
+				      </div>
+				    </div>
+
+				    </form>
+				  </div>
+				</div>
+
+</div><!-- END container -->
+<div class="row" ng-show='cargador'> 
+		            <div class="col-md-12">
+		              <div ng-show="cargador" align="center" style="hight:10em;">
+		                <img ng-src="imgs/cargador.gif">
+		              </div>
+		            </div>
+		        </div>  
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel">Solicitud de cancelación para el folio <b>{{folioModal}}</b></h4>
+					      </div>
+					      <div class="modal-body">
+					        <div class="container" style="width:100%;" id="verFormato">
+									<div class="panel panel-primary">    								      
+								      <div class="panel-body">
+								      
+									<form name="enviaSolCancelacion" id="enviaSolCancelacion" ng-submit="enviaSolCancelRecibo(folioModal)">												
+										<br>
+										<div class="row" id="campoFol">
+											<div class="col-md-12" align="left">
+												<div class="input-group">
+								              <span class="input-group-addon">Motivo de cancelaci&oacute;n:</span> 
+								               <input type="text" class="form-control" name="motivo" ng-model="datosCancelacion.motivoC" id="motivo" required mayusculas>        
+								            </div>
+											</div>				            
+										</div>																											
+										<div class="row" id="campoObs">
+											<div class="col-md-12" align="left">
+												<div class="input-group">
+								              <span class="input-group-addon">Observaciones:</span> 
+								               <input type="text" class="form-control" name="Obs" ng-model="datosCancelacion.observaciones" id="Obs" mayusculas>        
+								            </div>
+											</div>				            
+										</div>											
+										<div class="row" id="campoObs">
+											<div class="col-md-12" align="left">
+												<div id="resultado">
+													
+												</div>
+											</div>				            
+										</div>	
+										<div class="row" ng-show="cargador">
+						  		  			<div class='col-md-12' align="center">				           
+					                            <img ng-src="imgs/cargador.gif">                                                 
+								          	</div>    
+						  		  		</div>	 									
+									</form>
+									</div>
+								</div>
+					        </div>
+					      
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+					        <input type="Submit" class="btn btn-primary" id="botonEnvio" form="enviaSolCancelacion"  value="Enviar solicitud" />
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					<!--    fin del modal   -->
+				</div>      
+</div>

@@ -1,0 +1,37 @@
+<div class="container" style="width:100%">
+  <form  ng-submit="guardarLesionAdmin()" name="formularios.lesAdmin" novalidate>
+        <div class="row" >           
+        <div class="col-md-12">
+          <div class="cajaInputArriba">
+                <span style="font-size:18px">Lesión Principal Codificada:</span>
+          </div>
+            <div class="row bordeInput">                    
+          <div class="col-md-6">
+              <div  class="input-group cajaInputcompleto" style="width:100%">
+                <span><b>CIE-10</b></span>                          
+                   <select   ng-model="lesionAdmin.lesionCodificada" name="lesCie10" class="form-control" ng-options="lesionCod.CIE_cve as lesionCod.CIE_cve+'-'+lesionCod.CIE_descripcion for lesionCod in listadoLesionesModuloCodificado" ng-required="listadoLesionesModuloCodificado">
+                    <option value=""> *Selecciona</option>                
+                  </select>            
+                </div>
+                <div class="validacion" role="alert" ng-if="interacted13(formularios.lesAdmin.lesCie10)" ng-messages="formularios.lesAdmin.lesCie10.$error">
+                      <div ng-message="required">campo requerido</div>            
+                </div>  
+          </div>
+          </div>             
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-12" align="right">
+              <input type="submit" ng-disabled="!lesionAdmin.lesionCodificada" class="btn btn-primary btn-lg" value="Siguiente">
+        </div>
+      </div>
+     </form>
+  <br><br><br>
+  <div class="row"> 
+        <div class="col-md-12">
+            <div ng-show="cargador1" align="center">
+              <img ng-src="imgs/cargador.gif">
+            </div>
+        </div>
+    </div>          
+</div>

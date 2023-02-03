@@ -1,0 +1,784 @@
+<div class="row" align="center" width="90%" ng-init="inicio()">
+<form name="entregaTurno" ng-submit="enviaDatos()">
+	<div class="col-md-12" align="left">
+		<h2>ENTREGA DE TURNO ÁREA DE RECEPCIÓN</h2>
+		<!-- <h4>{{username}}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{{CurrentDate | date:'dd / MMMM / yyyy - h:mm a'}}</h4> -->
+
+		<div class="row" align="center" ng-show="cargadorInicio==true">
+			<br><br>
+			<i class="fa fa-spinner fa-spin fa-3x fa-fw text-primary"></i>
+		</div>
+
+		<br>
+
+		<div class="row" ng-hide="cargadorInicio==true">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="input-group" style="width:100%">
+				            <span>Turno que entrega: </span>
+				            <select name="turnoEntrega" id="turnoEntrega" ng-model="entrega.turnoEntrega" class="form-control" ng-options="turnos.id_turno as turnos.nombre_turno for turnos in listaTurnos" required>
+				            	<option value=""> * Seleccione </option>
+				            </select>
+				        </div>  
+					</div>
+
+					<div class="col-md-4">
+						<div class="input-group" style="width:100%">
+				            <span>Turno que recibe: </span>
+				            <select name="turnoRecibe" id="turnoRecibe" ng-model="entrega.turnoRecibe" class="form-control" ng-options="turnos.id_turno as turnos.nombre_turno for turnos in listaTurnos" required>
+				            	<option value=""> * Seleccione </option>
+				            </select>
+				        </div>  
+					</div>
+
+					<div class="col-md-4">
+						<div class="input-group" style="width:100%">
+				            <span>Recepcionista del siguiente turno: </span>
+				            <select name="sigRecepcion" id="sigRecepcion" ng-model="entrega.usuRecibe" class="form-control" ng-options="users.Usu_login as users.Usu_nombre for users in listadoUsuarios" required>
+				            	<option value=""> * Seleccione </option>
+				            </select>
+				        </div>  
+					</div>
+				</div>
+
+				<hr>
+
+				<div class="row">
+					<div class="col-md-8">
+						<table class="table table-hover">
+							<tr class="alert-info">
+								<th width="40%">
+									<h4>CHECKLIST ÁREA DE TRABAJO</h4>
+									<h5 style="font-size: 0.9em;">Deje marcados los criterios que consideres correctos. Desmarque aquellos que no sean correctos</h5>
+								</th>
+								<th width="20%" style="text-align:center">Conectado</th>
+								<th width="20%" style="text-align:center">Funcionando</th>
+								<th width="20%" style="text-align:center">Limpio</th>
+							</tr>
+
+							<tr>
+								<td>COMPUTADORA</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.compuConectado">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.compuFuncionando">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.compuLimpio">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+							</tr>
+
+							<tr>
+								<td>IMPRESORA</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.impresoraConectado">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.impresoraFuncionando">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.impresoraLimpio">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+							</tr>
+
+							<tr>
+								<td>SCANNER</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.scannerConectado">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.scannerFuncionando">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.scannerLimpio">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+							</tr>
+
+							<tr>
+								<td>COPIADORA</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.copiadoraConectado">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.copiadoraFuncionando">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.copiadoraLimpio">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+							</tr>
+
+							<tr>
+								<td>IMPRESORA ZEBRA</td>
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.impBnConectado">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.impBnFuncionando">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.impBnLimpio">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+							</tr>
+
+							<tr>
+								<td>TELÉFONO</td>
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.telConectado">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.telFuncionando">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.telLimpio">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+							</tr>
+
+							<tr>
+								<td>T.V.</td>
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.tvConectado">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.tvFuncionando">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.tvLimpio">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+							</tr>
+
+							<tr>
+								<td>AIRE ACONDICIONADO</td>
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.aireConectado">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.aireFuncionando">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.aireLimpio">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+							</tr>
+
+							<tr>
+								<td>MAQUINA BOTANAS</td>
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.botanaConectado">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.botanaFuncionando">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+
+								<td>
+								    <div class="checkbox c-checkbox">
+								        <label>
+								           <input type="checkbox" ng-model="entrega.botanaLimpio">
+								           <span class="fa fa-check"></span>
+								        </label>
+								    </div>
+								</td>
+							</tr>
+						</table>
+					</div>
+
+					<div class="col-md-4">
+						<br><br><br><br>
+						<div class="input-group" style="width:100%">
+				            <span>Observaciones: </span>
+				            <textarea class="form-control" rows="5" ng-model="entrega.obsArea" placeholder="* Comentarios acerca del área de trabajo" mayusculas></textarea>
+				        </div>
+					</div>
+				</div>
+
+				<hr>
+
+				<div class="row">
+					<div class="col-md-7">
+						<table class="table table-hover">
+							<tr class="alert-info">
+								<th width="50%"><h4>CONTROLES</h4></th>
+								<th width="25%" style="text-align:center">Si</th>
+								<th width="25%" style="text-align:center">No</th>
+							</tr>
+
+							<tr>
+								<td>T.V.</td>
+
+								<td>
+			                        <div class="form-group">
+		                              	<div class="radio c-radio"  align="center">
+		                                	<label>
+			                                    <input type="radio" name="controlTV" ng-model="entrega.controlTV" value="1">
+			                                    <span class="fa fa-circle"></span>
+											</label>
+		                              	</div>
+			                        </div>
+								</td>
+
+								<td>
+			                        <div class="form-group">
+		                              	<div class="radio c-radio" align="center">
+		                                	<label>
+			                                    <input type="radio" name="controlTV" ng-model="entrega.controlTV" value="0">
+			                                    <span class="fa fa-circle"></span>
+											</label>
+		                              	</div>
+			                        </div>
+								</td>
+							</tr>
+
+							<tr>
+								<td>AIRE</td>
+
+								<td>
+			                        <div class="form-group">
+		                              	<div class="radio c-radio"  align="center">
+		                                	<label>
+			                                    <input type="radio" name="controlAire" ng-model="entrega.controlAire" value="1">
+			                                    <span class="fa fa-circle"></span>
+											</label>
+		                              	</div>
+			                        </div>
+								</td>
+
+								<td>
+			                        <div class="form-group">
+		                              	<div class="radio c-radio" align="center">
+		                                	<label>
+			                                    <input type="radio" name="controlAire" ng-model="entrega.controlAire" value="0">
+			                                    <span class="fa fa-circle"></span>
+											</label>
+		                              	</div>
+			                        </div>
+								</td>
+							</tr>
+
+							<tr>
+								<td>LLAVES</td>
+
+								<td>
+			                        <div class="form-group">
+		                              	<div class="radio c-radio"  align="center">
+		                                	<label>
+			                                    <input type="radio" name="controlLlaves" ng-model="entrega.controlLlaves" value="1">
+			                                    <span class="fa fa-circle"></span>
+											</label>
+		                              	</div>
+			                        </div>
+								</td>
+
+								<td>
+			                        <div class="form-group">
+		                              	<div class="radio c-radio" align="center">
+		                                	<label>
+			                                    <input type="radio" name="controlLlaves" ng-model="entrega.controlLlaves" value="0">
+			                                    <span class="fa fa-circle"></span>
+											</label>
+		                              	</div>
+			                        </div>
+								</td>
+							</tr>
+						</table>
+					</div>
+
+					<div class="col-md-5">
+						<div class="input-group" style="width:100%">
+							<br><br>
+				            <span>Observaciones: </span>
+				            <textarea class="form-control" rows="3" ng-model="entrega.obsControles" placeholder="* Comentarios acerca de los controles" mayusculas></textarea>
+				        </div>
+					</div>
+				</div>
+
+				<hr>
+
+				<div class="row">
+					<div class="col-md-7">						
+						<div class="row alert-info">
+							<h4>&nbsp;&nbsp;&nbsp;CAJA CHICA</h4>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="input-group" style="width:100%">
+						            <span>Fondo de caja: </span>
+						            <input type="text" class="form-control" ng-model="entrega.fondoCaja" placeholder="$" required>
+						        </div>
+							</div>
+
+							<div class="col-md-4">
+								<div class="input-group" style="width:100%">
+						            <span>Efectivo en caja: </span>
+						            <input type="text" class="form-control" ng-model="entrega.efectivoCaja" placeholder="$" required>
+						        </div>
+							</div>
+
+							<div class="col-md-4">
+								<div class="input-group" style="width:100%">
+						            <span>Vales y recibos: </span>
+						            <input type="text" class="form-control" ng-model="entrega.valesRecibos" placeholder="$" required>
+						        </div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-5">
+						<div class="input-group" style="width:100%">
+							<br>
+				            <span>Observaciones: </span>
+				            <textarea class="form-control" rows="3" ng-model="entrega.obsCaja" placeholder="* Comentarios acerca de la caja" mayusculas></textarea>
+				        </div>
+					</div>
+				</div>
+
+				<hr>
+
+				<div class="row">
+					<div class="col-md-7">						
+						<div class="row alert-info">
+							<h4>&nbsp;&nbsp;&nbsp;PARTICULARES</h4>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="input-group" style="width:100%">
+						            <span>Efectivo: </span>
+						            <input type="number" class="form-control" ng-model="entrega.efectivoPart" placeholder="$" required>
+						        </div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="input-group" style="width:100%">
+						            <span>Tarjeta: </span>
+						            <input type="number" class="form-control" ng-model="entrega.tarjetaPart" placeholder="$" required>
+						        </div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="input-group" style="width:100%">
+						            <span>Total: </span>
+						            <input type="number" class="form-control" ng-model="entrega.totalPart" placeholder="$" required>
+						        </div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="input-group" style="width:100%">
+						            <span>Folios: </span>
+						            <input type="number" class="form-control" ng-model="entrega.foliosPart" required>
+						        </div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-5">
+						<div class="input-group" style="width:100%">
+							<br><br>
+				            <span>Cierre de terminal (por turno): </span>
+	                        <div class="form-group">
+                              	<div class="radio c-radio">
+                                	Si
+                                	<label>
+	                                    <input type="radio" name="cierreTerminal" ng-model="entrega.cierreTerminal" value="1" required>
+	                                    <span class="fa fa-circle"></span>
+									</label>
+
+									&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                	No
+                                	<label>
+	                                    <input type="radio" name="cierreTerminal" ng-model="entrega.cierreTerminal" value="0" required>
+	                                    <span class="fa fa-circle"></span>
+									</label>
+                              	</div>
+	                        </div>
+				        </div>
+					</div>
+				</div>
+
+				<hr>
+
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-hover">
+							<tr>
+								<th colspan="5" class="alert-info">
+									<h4>REPORTES DE ASEGURADORAS</h4>
+								</th>
+							</tr>
+
+							<tr class="alert-info">
+								<th width="20%">&nbsp;</th>
+								<th colspan="2" width="40%" style="text-align: center"><b>INGRESADOS</b><br>(Por turno)</th>
+								<th colspan="2" width="40%" style="text-align: center"><b>ENVIADOS</b><br>(Envía Turno Nocturno antes de las 7:00 am, verifica Turno Matutino)</th>
+							</tr>
+
+							<tr>
+								<td>ABA</td>
+								<td>
+			                        <div class="form-group">
+		                              	<div class="radio c-radio"  align="center">
+		                              		Si
+		                                	<label>
+			                                    <input type="radio" name="ingresadosABA" ng-model="entrega.ingresadosABA" value="1" required>
+			                                    <span class="fa fa-circle"></span>
+											</label>
+		                              	</div>
+			                        </div>
+								</td>
+
+								<td>
+			                        <div class="form-group">
+		                              	<div class="radio c-radio" align="center">
+		                              		No
+		                                	<label>
+			                                    <input type="radio" name="ingresadosABA" ng-model="entrega.ingresadosABA" value="0" required>
+			                                    <span class="fa fa-circle"></span>
+											</label>
+		                              	</div>
+			                        </div>
+								</td>
+
+								<td>
+			                        <div class="form-group">
+		                              	<div class="radio c-radio"  align="center">
+		                              		Si
+		                                	<label>
+			                                    <input type="radio" name="enviadosABA" ng-model="entrega.enviadosABA" value="1" required>
+			                                    <span class="fa fa-circle"></span>
+											</label>
+		                              	</div>
+			                        </div>
+								</td>
+
+								<td>
+			                        <div class="form-group">
+		                              	<div class="radio c-radio" align="center">
+		                              		No
+		                                	<label>
+			                                    <input type="radio" name="enviadosABA" ng-model="entrega.enviadosABA" value="0" required>
+			                                    <span class="fa fa-circle"></span>
+											</label>
+		                              	</div>
+			                        </div>
+								</td>
+							</tr>
+
+							<tr>
+								<td>ATLAS ESC.</td>
+								<td>
+			                        <div class="form-group">
+		                              	<div class="radio c-radio"  align="center">
+		                              		Si
+		                                	<label>
+			                                    <input type="radio" name="ingresadosAtlas" ng-model="entrega.ingresadosAtlas" value="1" required>
+			                                    <span class="fa fa-circle"></span>
+											</label>
+		                              	</div>
+			                        </div>
+								</td>
+
+								<td>
+			                        <div class="form-group">
+		                              	<div class="radio c-radio" align="center">
+		                              		No
+		                                	<label>
+			                                    <input type="radio" name="ingresadosAtlas" ng-model="entrega.ingresadosAtlas" value="0" required>
+			                                    <span class="fa fa-circle"></span>
+											</label>
+		                              	</div>
+			                        </div>
+								</td>
+
+								<td>
+			                        <div class="form-group">
+		                              	<div class="radio c-radio"  align="center">
+		                              		Si
+		                                	<label>
+			                                    <input type="radio" name="enviadosAtlas" ng-model="entrega.enviadosAtlas" value="1" required>
+			                                    <span class="fa fa-circle"></span>
+											</label>
+		                              	</div>
+			                        </div>
+								</td>
+
+								<td>
+			                        <div class="form-group">
+		                              	<div class="radio c-radio" align="center">
+		                              		No
+		                                	<label>
+			                                    <input type="radio" name="enviadosAtlas" ng-model="entrega.enviadosAtlas" value="0" required>
+			                                    <span class="fa fa-circle"></span>
+											</label>
+		                              	</div>
+			                        </div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+				<hr>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row alert-info">
+							<div class="col-md-12">
+								<h4>&nbsp;&nbsp;&nbsp;EXPEDIENTES</h4>
+							</div>
+						</div>
+
+						<br>
+
+						<div class="row">
+							<div class="col-md-3">
+								<div class="input-group" style="width:100%">
+						            <span>Total de expedientes en turno: </span>
+						            <input type="number" class="form-control" placeholder="0" ng-model="entrega.totalExpedientes" required>
+						        </div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="input-group" style="width:100%">
+						            <span>Expedientes digitalizados en sistema: </span>
+						            <input type="number" class="form-control" placeholder="0" ng-model="entrega.expDigitalizados" required>
+						        </div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="input-group" style="width:100%">
+						            <span>Expedientes incompletos: </span>
+						            <input type="number" class="form-control" placeholder="0" ng-model="entrega.expIncompletos" required>
+						        </div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="input-group" style="width:100%">
+						            <span>Justificación: </span>
+						            <input type="text" class="form-control" placeholder="* Justificación" ng-model="entrega.expJustificacion" required mayusculas>
+						        </div>
+							</div>
+						</div>
+
+						<br>
+
+						<div class="row">
+							<div class="col-md-4">
+								<div class="input-group" style="width:100%">
+						            <span>Expedientes en proceso de atención: </span>
+						            <input type="number" class="form-control" placeholder="0" ng-model="entrega.expProceso" required>
+						        </div>
+
+						    </div>
+
+						    <div class="col-md-4">
+								<div class="input-group" style="width:100%">
+						            <span>Incidencias: </span>
+						            <input type="number" class="form-control" placeholder="0" ng-model="entrega.incidencias" required>
+						        </div>
+						    </div>
+
+						    <div class="col-md-4">
+								<div class="input-group" style="width:100%">
+						            <span>Pendientes: </span>
+						            <input type="number" class="form-control" placeholder="0" ng-model="entrega.pendientes" required>
+						        </div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<br><br>
+
+				<div class="row">
+					<div class="col-md-12" align="center">
+						<button type="submit" class="btn btn-primary btn-lg">Enviar e imprimir</button>
+						<br><br><br>
+						<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color: #097BAC" ng-show="cargadorEnvio==true"></i>
+					</div>
+				</div>
+
+				<br><br>
+
+			</div>
+		</div>
+
+		<br>
+
+	</div>
+</form>
+</div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalConfirmacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+        <h4 class="modal-title" id="myModalLabel">Confirmación</h4>
+      </div>
+      <div class="modal-body">
+        Se ha registrado correctamente el cambio de turno
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="pdfCambioTurno()">Imprimir formato</button>
+        <button type="button" class="btn btn-primary" ng-click="irHome()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>

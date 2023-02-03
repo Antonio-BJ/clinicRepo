@@ -1,0 +1,165 @@
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+      <meta charset="utf-8">
+      <title>Recibe Webhooks Beepquest</title>
+      <link rel="stylesheet" href="css/ajx-json-styles.css">
+
+    
+      <script>
+        function buscaSuscripcion() {
+          $.ajax({
+            url: 'https://api.beepquest.com/v1/subscription',
+            type: 'GET',
+            headers: {
+              'BQAPPTOK': '1ES2KuN4FKmwWoeBbUSjb3ZCxWYEL34WUp6ZWvm0'
+            },
+            dataType:"json",
+            success: function(data) {
+              console.log(data);
+            },
+            error: function(jqXHR, textStatus, error) {
+              alert( "error: " + error);
+            }
+          });
+        }
+      </script>
+      <script>
+        function buscaModulos() {
+          $.ajax({
+            url: 'https://api.beepquest.com/v1/subscription/question-modules',
+            type: 'GET',
+            headers: {
+              'BQAPPTOK': '1ES2KuN4FKmwWoeBbUSjb3ZCxWYEL34WUp6ZWvm0'
+            },
+            dataType:"json",
+            success: function(data) {
+              console.log(data);
+            },
+            error: function(jqXHR, textStatus, error){
+              alert( "error: " + error);
+            }
+          });
+        }
+      </script> 
+      <script>
+        function respuestasBeep1() {
+          $.ajax({
+            url: 'https://api.beepquest.com/v1/question-module-answers',
+            method: 'GET',
+            headers: {
+              'BQAPPTOK': '1ES2KuN4FKmwWoeBbUSjb3ZCxWYEL34WUp6ZWvm0',
+              'BQMODTOK': '2kGmYEmCsScjKyww8nLVQMLkT0fjkBOxmISqNRDB'
+            },
+            data:{users:'aalonso@medicavial.com.mx',initialDate:'2022-02-28', finalDate:'2022-03-30',limit:'10',skip:0},
+            dataType:"json",
+            success: function(data) {
+              console.log(data);
+            },
+            error: function(jqXHR, textStatus, error) {
+              alert( "error: " + textStatus);
+            }
+          });
+        }
+      </script> 
+      <script>
+        function respuestasBeep2() {
+          $.ajax({
+            url: 'https://api.beepquest.com/v1/question-module-answers',
+            method: 'GET',
+            headers: {
+              'BQAPPTOK': '1ES2KuN4FKmwWoeBbUSjb3ZCxWYEL34WUp6ZWvm0',
+              'BQMODTOK': 'nXjYQprCifhzj2CvxsMpLcWWffW09kyDaSLO2Od7'
+            },
+            data:{users:'aalonso@medicavial.com.mx',initialDate:'2022-02-28', finalDate:'2022-03-30',limit:'10',skip:0},
+            dataType:"json",
+            success: function(data) {
+              console.log(data);
+            },
+            error: function(jqXHR, textStatus, error) {
+              alert( "error: " + textStatus);
+            }
+          });
+        }
+      </script> 
+
+      <script>
+        function respuestasBeep3() {
+          $.ajax({
+            url: 'https://api.beepquest.com/v1/question-module-answers',
+            method: 'GET',
+            headers: {
+              'BQAPPTOK': '1ES2KuN4FKmwWoeBbUSjb3ZCxWYEL34WUp6ZWvm0',
+              'BQMODTOK': 'oZPOBrxu3WQNJt5OMl9LlSMtTxJI9fkaWkaokALJ                            '
+            },
+            data:{users:'aalonso@medicavial.com.mx',initialDate:'2022-02-28', finalDate:'2022-03-30',limit:'10',skip:0},
+            dataType:"json",
+            success: function(data) {
+              console.log(data);
+            },
+            error: function(jqXHR, textStatus, error) {
+              alert( "error: " + textStatus);
+            }
+          });
+        }
+      </script>    
+      <script>
+        function modResp() {
+          $.ajax({
+           url: 'https://api.beepquest.com/v1/question-module-answers/621d1de6dd4835080092352c',
+           method: 'GET',
+           headers: {
+            'BQAPPTOK': '1ES2KuN4FKmwWoeBbUSjb3ZCxWYEL34WUp6ZWvm0',
+            'BQMODTOK': 'nXjYQprCifhzj2CvxsMpLcWWffW09kyDaSLO2Od7'
+                        },
+            dataType:"json",
+            success: function(data) {
+              console.log(data);
+            },
+            error: function(jqXHR, textStatus, error) {
+              alert( "error: " + textStatus);
+            }
+          });
+        }
+      </script>    
+      <script>
+        function visita() {
+          $.ajax({
+            url: 'https://api.beepquest.com/v1/visit-answers',
+            method: 'GET',
+            headers: {
+              'BQAPPTOK': '1ES2KuN4FKmwWoeBbUSjb3ZCxWYEL34WUp6ZWvm0',
+              'BQVISTOK': 'ZcgqlRNlMOqtyfX56RSQYnvzdJm8ZpcGL0xBZwOl'
+            },
+            data:{users:'aalonso@medicavial.com.mx',initialDate:'2022-02-28', finalDate:'2022-03-28',limit:'10',skip:0},
+            dataType:"json",
+            success: function(data) {
+              console.log(data.list);
+            },
+            error: function(jqXHR, textStatus, error) {
+              alert( "error: " + textStatus);
+            }
+          });
+        }
+      </script> 
+
+
+
+
+      <!-- "6196b24bb932d60566d95bd1" -->
+    </head>
+    <body>
+
+      <div id="raw_json"></div>
+
+      <button onclick="buscaSuscripcion();">Busca Suscripción Beepquest</button>
+      <button onclick="buscaModulos();">Busca Modulos Beepquest</button>
+      <button onclick="respuestasBeep1();">Busca Respuestas Beepquest_1</button>
+      <button onclick="respuestasBeep2();">Busca Respuestas Beepquest_2</button>
+      <button onclick="respuestasBeep2();">Busca Respuestas Beepquest_3</button>
+      <button onclick="modResp();">Modulo Respuestas Beepquest</button>
+      <button onclick="visita();">visita</button>
+
+    </body>
+    </html>

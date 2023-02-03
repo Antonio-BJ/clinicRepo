@@ -1,0 +1,598 @@
+<div class="container" style="width: 100%"> 
+    
+ <div class="panel panel-primary">
+    <div class="panel-heading">
+    	<label>Elige Producto</label>
+    </div> 
+</div>
+  	<div class="Panel-body">
+	  	<div class="row" ng-show="clave== 7 || clave== 8 || clave== 20 || clave==33">
+	  	<div class="col-md-4" ng-hide="clave==7&&zona==6||clave==7&&localidad==77||clave==7&&localidad==47||clave==7&&localidad==16">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(1)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Vial a cualquier suceso provocado por una colisión repentina y súbita entre dos vehículos automotores o con otra cosa o persona, dando lugar a una lesión corporal de terceros y/o ocupante del o los vehículos involucrados">
+
+				<img ng-src="imgs/producto/av.jpg"/>
+				<label>ACCIDENTE VIAL</label>
+			</a>
+	  	</div>
+	  	<div class="col-md-4" ng-show="clave==7&&zona==6||clave==7&&localidad==77||clave==7&&localidad==47||clave==7&&localidad==16">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(9)">
+
+				<img ng-src="imgs/producto/av+.jpg"/>
+				<label>NO QUIRÚRGICO</label>
+			</a>
+	  	</div>
+	  	<div class="col-md-4" ng-show="clave==7&&zona==23 || clave==8&& cveUnidad==2 || clave== 8">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(2);" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Personal a cualquier suceso que es provocado por una acción violenta y repentina ocacionada por un agente externo involuntario y que da lugar a una lesión corporal. En este caso el accidente se puede presentar en tiendas departamentales oficinas, eventos deportivos, entre otros.">
+				<img ng-src="imgs/producto/ap.jpg"/>
+				<label>ACCIDENTE PERSONAL</label>
+			</a>
+	  	</div>
+	  	<div class="col-md-4" ng-show="clave==20">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(2);" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Personal a cualquier suceso que es provocado por una acción violenta y repentina ocacionada por un agente externo involuntario y que da lugar a una lesión corporal. En este caso el accidente se puede presentar en tiendas departamentales oficinas, eventos deportivos, entre otros.">
+				<img ng-src="imgs/producto/ap.jpg"/>
+				<label>ACCIDENTE PERSONAL</label>
+			</a>
+	  	</div>
+	  	<div class="col-md-4" ng-show="clave==8">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(16);" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="DAÑOS">
+				<img ng-src="imgs/producto/dn.jpg"/>
+				<label>DAÑOS</label>
+			</a>
+	  	</div>
+	  	<div class="col-md-4" ng-hide="clave==20||clave==33">
+	  		<a  href="" ng-click="registraLesionado(3);">
+	    		<img ng-src="imgs/producto/es.jpg"/>
+	    		<label>SOLO ESTUDIOS</label>
+	    	</a>
+		  </div>
+		  <div class="col-md-4" ng-show="clave==20">
+			<a  data-dismiss="modal" href="" ng-click="registraLesionado(4);" >
+			  <img ng-src="imgs/producto/rh.jpg"/>
+			  <label>SOLO REHABILITACION</label>
+		  </a>
+		</div>	 
+	  	<!--<div class="col-md-4" ng-show="clave==20||clave==33">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(8);" >
+				<img ng-src="imgs/producto/sn.jpg"/>
+				<label>SEGUNDO NUEVO</label>
+			</a>
+	  	</div>-->
+	  	<div class="col-md-4" ng-show="clave==7&&zona==6">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(13);" >
+				<img ng-src="imgs/producto/rh.jpg"/>
+				<label>REHABILITACIÓN QUIRÚRGICO</label>
+			</a>
+	  	</div>	 	
+	  </div>
+	  <div class="row" ng-show="(clave==3&&localidad==18)||(clave==3&&localidad==19)||(clave==3&&localidad==81)">
+  		<div class="col-md-6">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(9)">
+				<img ng-src="imgs/producto/av+.jpg"/>
+				<label>NO QUIRÚRGICO</label>
+			</a>
+	  	</div>	  		  		  
+	  </div>
+	  <!--<div class="row" ng-show="clave== 7 || clave== 8">
+	  	<div class="col-md-4" ng-hide="clave==7">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(8)">
+				<img ng-src="imgs/producto/sn.jpg"/>
+				<label>SEGUNDO NUEVO</label>
+			</a>
+	  	</div>	  	  
+	  </div>-->
+
+	  <!--<div class="row" ng-show="clave== 3&&zona==6">
+	  	<div class="col-md-4" ng-hide="clave==7">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(8)">
+				<img ng-src="imgs/producto/sn.jpg"/>
+				<label>SEGUNDO NUEVO</label>
+			</a>
+	  	</div>	  	  
+	  </div>-->
+	  
+	  <!--<div class="row" ng-show="clave == 19">
+	  	<div class="col-md-4" ng-hide="zona==6">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(1)">
+				<img ng-src="imgs/producto/av.jpg"/>
+				<label>ACCIDENTE VIAL</label>
+			</a>
+	  	</div>
+	  	<div class="col-md-4" ng-show="zona==6">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(9)">
+				<img ng-src="imgs/producto/av+.jpg"/>
+				<label>ACCIDENTE VIAL</label>
+			</a>
+	  	</div>
+	  	-->
+
+	  	<div class="row" ng-show="clave == 18 || (clave == 1 && cveUnidad==4)">
+		  	<div class="col-md-6">
+		  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(1)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Vial a cualquier suceso provocado por una colisión repentina y súbita entre dos vehículos automotores o con otra cosa o persona, dando lugar a una lesión corporal de terceros y/o ocupante del o los vehículos involucrados">
+					<img ng-src="imgs/producto/av.jpg"/>
+					<label>ACCIDENTE VIAL</label>
+				</a>
+		  	</div>
+		  	<div class="col-md-6">
+		  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(2)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Personal a cualquier suceso que es provocado por una acción violenta y repentina ocacionada por un agente externo involuntario y que da lugar a una lesión corporal. En este caso el accidente se puede presentar en tiendas departamentales oficinas, eventos deportivos, entre otros.">
+					<img ng-src="imgs/producto/ap.jpg"/>
+					<label>ACCIDENTE PERSONAL</label>
+				</a>
+		  	</div>	 
+		  	<!--<div class="col-md-4">
+		  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(8)">
+					<img ng-src="imgs/producto/sn.jpg"/>
+					<label>SEGUNDO NUEVO</label>
+				</a>
+		  	</div>-->	  	  	
+		  </div>
+		  
+
+		  <div class="row" ng-show="clave == 31 || clave == 76 || clave == 78 || clave == 79 || clave == 80 || clave == 83">
+			<div class="col-md-6">
+				<a  data-dismiss="modal"  href="" ng-click="registraLesionado(2)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Personal a cualquier suceso que es provocado por una acción violenta y repentina ocacionada por un agente externo involuntario y que da lugar a una lesión corporal. En este caso el accidente se puede presentar en tiendas departamentales oficinas, eventos deportivos, entre otros.">
+				  <img ng-src="imgs/producto/ap.jpg"/>
+				  <label>ACCIDENTE PERSONAL</label>
+			  </a>
+			</div>	 
+			<!--<div class="col-md-4">
+				<a  data-dismiss="modal"  href="" ng-click="registraLesionado(8)">
+				  <img ng-src="imgs/producto/sn.jpg"/>
+				  <label>SEGUNDO NUEVO</label>
+			  </a>
+			</div>-->	  	  	
+		</div>
+
+
+	  	<div class="row" ng-show="clave == 56 || clave == 74">	  
+		  	<div class="col-md-4" >
+		  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(4);" >
+					<img ng-src="imgs/producto/rh.jpg"/>
+					<label>SOLO REHABILITACION</label>
+				</a>
+		  	</div>	  	 	 
+	  	</div>		  
+	  	<div class="row" ng-show="clave == 19">
+	  	<div class="col-md-6">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(1)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Vial a cualquier suceso provocado por una colisión repentina y súbita entre dos vehículos automotores o con otra cosa o persona, dando lugar a una lesión corporal de terceros y/o ocupante del o los vehículos involucrados">
+				<img ng-src="imgs/producto/av.jpg"/>
+				<label>ACCIDENTE VIAL</label>
+			</a>
+		  </div>	
+		  
+		  
+
+	  	<!--{<div class="col-md-4" >
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(5);" >
+				<img ng-src="imgs/producto/rh.jpg"/>
+				<label>SOLO REHABILITACION (ZIMA)</label>
+			</a>
+	  	</div>-->
+	  	<!--<div class="col-md-4">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(8)">
+				<img ng-src="imgs/producto/sn.jpg"/>
+				<label>SEGUNDO NUEVO</label>
+			</a>
+	  	</div>-->	  	  	
+	  </div>
+	  
+	  <div class="row" ng-show="clave==11&&localidad==47">
+	  	<div class="col-md-6">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(9)">
+				<img ng-src="imgs/producto/av+.jpg"/>
+				<label>NO QUIRÚRGICO</label>
+			</a>
+	  	</div>
+	  </div>
+
+	  <div class="row" ng-show="clave==4">
+	  	<div class="col-md-4" ng-hide="zona==6">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(1)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Vial a cualquier suceso provocado por una colisión repentina y súbita entre dos vehículos automotores o con otra cosa o persona, dando lugar a una lesión corporal de terceros y/o ocupante del o los vehículos involucrados">
+				<img ng-src="imgs/producto/av.jpg"/>
+				<label>ACCIDENTE VIAL</label>
+			</a>
+	  	</div>
+	  	<div class="col-md-4" ng-show="zona==6">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(9)">
+				<img ng-src="imgs/producto/av+.jpg"/>
+				<label>NO QUIRÚRGICO</label>
+			</a>
+	  	</div>		  	
+	  	<div class="col-md-4">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(15);">
+				<img ng-src="imgs/producto/ae.jpg"/>
+				<label>ACCIDENTE ESCOLAR</label>
+			</a>
+	  	</div>	
+	  	<div class="col-md-4">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(16)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Personal a cualquier suceso que es provocado por una acción violenta y repentina ocacionada por un agente externo involuntario y que da lugar a una lesión corporal. En este caso el accidente se puede presentar en tiendas departamentales oficinas, eventos deportivos, entre otros.">
+				<img ng-src="imgs/producto/dn.jpg"/>
+				<label>DAÑOS</label>
+			</a>
+	  	</div>	 
+	  	<!--<div class="col-md-4">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(8)">
+				<img ng-src="imgs/producto/sn.jpg"/>
+				<label>SEGUNDO NUEVO</label>
+			</a>
+	  	</div>-->	  	  	
+	  </div>
+
+	  	<div class="row" ng-show="clave==21">
+		  	<div class="col-md-6">
+		  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(16)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Personal a cualquier suceso que es provocado por una acción violenta y repentina ocacionada por un agente externo involuntario y que da lugar a una lesión corporal. En este caso el accidente se puede presentar en tiendas departamentales oficinas, eventos deportivos, entre otros.">
+					<img ng-src="imgs/producto/dn.jpg"/>
+					<label>DAÑOS</label>
+				</a>
+		  	</div>	 
+		  	<!--<div class="col-md-4">
+		  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(8)">
+					<img ng-src="imgs/producto/sn.jpg"/>
+					<label>SEGUNDO NUEVO</label>
+				</a>
+		  	</div>-->	  	  	
+	  </div>
+
+	  <div class="row" ng-show="clave == 9">
+	  	<div class="col-md-4">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(1)" class="red-tooltip" tooltip-placement="bottom" tooltip-trigger tooltip="Accidentes viales.  Consulta inicial, subsecuencias, rehabilitación, medicamentos, rayos x, ortesis">
+				<img ng-src="imgs/producto/av.jpg"/>
+				<label>ACCIDENTE VIAL</label>
+			</a>
+	  	</div>
+	  	<!-- <div class="col-md-4" ng-show="zona==31">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(6);" >
+				<img ng-src="imgs/producto/sq.jpg"/>
+				<label>SUBSECUENCIA QUIRURGICA</label>
+			</a>
+	  	</div> -->
+	  	<div class="col-md-4" ng-show="zona==31">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(4);" class="red-tooltip" tooltip-placement="bottom" tooltip-trigger tooltip="Valoracion solo ortopedia, 5 sesiones de rehabilitación. No incluye subsecuencia medica de la cirugía ni medicamento ni ortesis ni rayos x ">
+				<img ng-src="imgs/producto/rh.jpg"/>
+				<label>SOLO REHABILITACION </label>
+			</a>
+	  	</div>	 	
+	  	<div class="col-md-4" ng-show="zona==31">	  		
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(7);" class="red-tooltip" tooltip-placement="bottom" tooltip-trigger tooltip="Accidente Vial. Primera atención UPAEP, paciente ambulatorio Hospitalario no quirurgico.">
+				<img ng-src="imgs/producto/sn.jpg"/>
+				<label>SUBSECUENCIA NO QUIRURGICA</label>
+			</a>
+	  	</div>	
+	  	<!--<div class="col-md-4">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(8)">
+				<img ng-src="imgs/producto/sn.jpg"/>
+				<label>SEGUNDO NUEVO</label>
+			</a>
+	  	</div>-->   	
+	  </div>
+	  <!--<div class="row" ng-show="(cveUnidad==1||cveUnidad==2||cveUnidad==3||cveUnidad==184||cveUnidad==45)&&(!accPersonal)">
+	  	<div class="col-md-4">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(1)">
+				<img ng-src="imgs/producto/av.jpg"/>
+				<label>ACCIDENTE VIAL</label>
+			</a>
+	  	</div>
+	  	<div class="col-md-4">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(2);" >
+				<img ng-src="imgs/producto/ap.jpg"/>
+				<label>ACCIDENTE PERSONAL</label>
+			</a>
+	  	</div>	
+	  	<div class="col-md-4">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(8);" >
+				<img ng-src="imgs/producto/sn.jpg"/>
+				<label>SEGUNDO NUEVO</label>
+			</a>
+	  	</div>	   	
+	  </div>-->
+	  <div class="row" ng-show="clave==51">
+	  	<div class="col-md-4">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(1)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Vial a cualquier suceso provocado por una colisión repentina y súbita entre dos vehículos automotores o con otra cosa o persona, dando lugar a una lesión corporal de terceros y/o ocupante del o los vehículos involucrados">
+				<img ng-src="imgs/producto/av.jpg"/>
+				<label>ACCIDENTE VIAL</label>
+			</a>
+	  	</div>
+	  	<div class="col-md-4">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(2);" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Personal a cualquier suceso que es provocado por una acción violenta y repentina ocacionada por un agente externo involuntario y que da lugar a una lesión corporal. En este caso el accidente se puede presentar en tiendas departamentales oficinas, eventos deportivos, entre otros.">
+				<img ng-src="imgs/producto/ap.jpg"/>
+				<label>ACCIDENTE PERSONAL</label>
+			</a>
+	  	</div>	
+	  	<div class="col-md-4">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(4);" >
+				<img ng-src="imgs/producto/rh.jpg"/>
+				<label>SOLO REHABILITACION </label>
+			</a>
+	  	</div>	   	
+	  </div>
+	  <div class="row" ng-show="clave==45">
+	  	<div class="col-md-6">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(1)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Vial a cualquier suceso provocado por una colisión repentina y súbita entre dos vehículos automotores o con otra cosa o persona, dando lugar a una lesión corporal de terceros y/o ocupante del o los vehículos involucrados">
+				<img ng-src="imgs/producto/av.jpg"/>
+				<label>ACCIDENTE VIAL</label>
+			</a>
+	  	</div>
+	  	<div class="col-md-6">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(4);" >
+				<img ng-src="imgs/producto/rh.jpg"/>
+				<label>SOLO REHABILITACION </label>
+			</a>
+	  	</div>	  
+	  	<!--<div class="col-md-4">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(8)">
+				<img ng-src="imgs/producto/sn.jpg"/>
+				<label>SEGUNDO NUEVO</label>
+			</a>
+	  	</div>-->
+	  	 	
+	  </div>
+	  <div class="row" ng-show="clave==6">
+	  	<div class="col-md-4">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(1)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Vial a cualquier suceso provocado por una colisión repentina y súbita entre dos vehículos automotores o con otra cosa o persona, dando lugar a una lesión corporal de terceros y/o ocupante del o los vehículos involucrados">
+				<img ng-src="imgs/producto/av.jpg"/>
+				<label>ACCIDENTE VIAL</label>
+			</a>
+	  	</div>
+	  	<div class="col-md-4" ng-show="cveUnidad==1||cveUnidad==3||cveUnidad==8||cveUnidad==184||cveUnidad==2">
+	  		<a  data-dismiss="modal" href="" ng-click="detalleProducto(2);" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como accidente a cualquier suceso que es provocado por una acción violenta y repentina ocasionada por un agente externo involuntario y que da lugar a una lesión. <br> En este caso el accidente se puede presentar dentro de las instalaciones de las instituciones educativas, las cuales ya cuentan con esta cobertura de seguro para cada uno de los alumnos, personal docente y administrativo.">
+				<img ng-src="imgs/producto/ap.jpg"/>
+				<label>ACCIDENTE PERSONAL
+				</label>
+			</a>
+	  	</div>	
+	  	<div class="col-md-4" >
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(4);" >
+				<img ng-src="imgs/producto/rh.jpg"/>
+				<label>SOLO REHABILITACION </label>
+			</a>
+	  	</div>	  
+	  	<!--<div class="col-md-4">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(8)">
+				<img ng-src="imgs/producto/sn.jpg"/>
+				<label>SEGUNDO NUEVO</label>
+			</a>
+	  	</div>-->
+	  	 	
+	  </div>
+	   <div class="row" ng-show="clave==65">
+	  	<div class="col-md-4">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(2);" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Personal a cualquier suceso que es provocado por una acción violenta y repentina ocacionada por un agente externo involuntario y que da lugar a una lesión corporal. En este caso el accidente se puede presentar en tiendas departamentales oficinas, eventos deportivos, entre otros.">
+				<img ng-src="imgs/producto/ap.jpg"/>
+				<label>ACCIDENTE PERSONAL</label>
+			</a>
+	  	</div>
+	  </div>
+	  <div class="row" ng-show="clave==651">
+	  	<div class="col-md-4">	  		
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(4);" >
+				<img ng-src="imgs/producto/rh.jpg"/>
+				<label>SOLO REHABILITACION</label>
+			</a>		  	
+	  	</div>
+	  </div>
+	  <div class="row" ng-show="clave==55 ||  clave==68">
+	  	<div class="col-md-4">	  		
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(4);" >
+				<img ng-src="imgs/producto/rh.jpg"/>
+				<label>SOLO REHABILITACION</label>
+			</a>		  	
+	  	</div>
+	  </div>
+
+	  <div class="row" ng-show="clave==58">	  	
+	  	<div class="col-md-4" >
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(15);" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como accidente a cualquier suceso que es provocado por una acción violenta y repentina ocasionada por un agente externo involuntario y que da lugar a una lesión. <br> En este caso el accidente se puede presentar dentro de las instalaciones de las instituciones educativas, las cuales ya cuentan con esta cobertura de seguro para cada uno de los alumnos, personal docente y administrativo.">
+				<img ng-src="imgs/producto/ae.jpg"/>
+				<label>ACCIDENTE ESCOLAR
+				</label>
+			</a>
+	  	</div>	
+	  </div>
+
+	  <div class="row" ng-show="clave==14">
+	  	
+	  	<div class="col-md-4">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(1)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Vial a cualquier suceso provocado por una colisión repentina y súbita entre dos vehículos automotores o con otra cosa o persona, dando lugar a una lesión corporal de terceros y/o ocupante del o los vehículos involucrados">
+				<img ng-src="imgs/producto/av.jpg"/>
+				<label>ACCIDENTE VIAL</label>
+			</a>
+	  	</div>
+	  	<div class="col-md-4">
+	  		<a  data-dismiss="modal" href="" ng-click="registraLesionado(2);" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Personal a cualquier suceso que es provocado por una acción violenta y repentina ocacionada por un agente externo involuntario y que da lugar a una lesión corporal. En este caso el accidente se puede presentar en tiendas departamentales oficinas, eventos deportivos, entre otros.">
+				<img ng-src="imgs/producto/ap.jpg"/>
+				<label>ACCIDENTE PERSONAL</label>
+			</a>
+		  </div>
+		  <div class="col-md-4" >
+				<a  data-dismiss="modal" href="" ng-click="registraLesionado(4);" >
+				  <img ng-src="imgs/producto/rh.jpg"/>
+				  <label>SOLO REHABILITACION </label>
+			  </a>
+			</div>	
+	  </div>
+
+	  <div class="row" ng-show="clave==59 || clave==63">
+	  	
+	  	<div class="col-md-4">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(16)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Personal a cualquier suceso que es provocado por una acción violenta y repentina ocacionada por un agente externo involuntario y que da lugar a una lesión corporal. En este caso el accidente se puede presentar en tiendas departamentales oficinas, eventos deportivos, entre otros.">
+				<img ng-src="imgs/producto/dn.jpg"/>
+				<label>DAÑOS</label>
+			</a>
+	  	</div>	 
+	  </div>
+
+	  <div class="row" ng-show="clave==12">
+
+		<div class="col-md-6">
+				<a  data-dismiss="modal"  href="" ng-click="registraLesionado(1)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Vial a cualquier suceso provocado por una colisión repentina y súbita entre dos vehículos automotores o con otra cosa o persona, dando lugar a una lesión corporal de terceros y/o ocupante del o los vehículos involucrados">
+					<img ng-src="imgs/producto/av.jpg"/>
+					<label>ACCIDENTE VIAL</label>
+				</a>
+		</div>
+	  	
+		<div class="col-md-6">
+			<a  data-dismiss="modal"  href="" ng-click="registraLesionado(16)" >
+			  <img ng-src="imgs/producto/dn.jpg"/>
+			  <label>DAÑOS</label>
+		  </a>
+		</div>
+			 
+	</div>
+	  
+
+
+	  <div class="row" ng-hide="clave == 12 || clave == 19 ||clave == 9  || clave == 7 || clave == 8||cia==51||clave==45 || cia==20 || clave==33 || clave==4||clave==6||clave==55||(clave==3&&localidad==18)||(clave==3&&localidad==19)||(clave==3&&localidad==81)||clave==20||clave==18||clave == 56||clave == 58||clave == 59||clave==11&&localidad==47||clave==7&&zona==6||clave==7&&localidad==77||clave==7&&localidad==47||clave==7&&localidad==16||clave==14||clave==63 || clave==65 || clave==651 || clave == 31 || clave == 68 || (clave == 1 && cveUnidad==4) || clave == 74 || clave == 76 || clave == 78 || clave == 79 || clave == 80 || clave == 83">
+	  	<div class="col-md-6">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(1)" class="red-tooltip" tooltip-placement="right" tooltip-trigger tooltip="Se define como Accidente Vial a cualquier suceso provocado por una colisión repentina y súbita entre dos vehículos automotores o con otra cosa o persona, dando lugar a una lesión corporal de terceros y/o ocupante del o los vehículos involucrados">
+				<img ng-src="imgs/producto/av.jpg"/>
+				<label>ACCIDENTE VIAL</label>
+			</a>
+	  	</div>	  	
+	  	<!--<div class="col-md-6">
+	  		<a  data-dismiss="modal"  href="" ng-click="registraLesionado(8)">
+				<img ng-src="imgs/producto/sn.jpg"/>
+				<label>SEGUNDO NUEVO</label>
+			</a>
+	  	</div>-->	  	  	
+	  </div>
+	 
+	</div>
+
+
+	<div class="modal fade" id="anahuac" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Anáhuac</h4>
+	      </div>
+	      <div class="modal-body">
+	          <ul>
+	            <li>Personas de la universidad Anahuac dirigidos por Prevem Seguros.</li>
+	            <li>La persona se debe identificar con credencial vigente de la universidad  sobre la que tomaremos una fotocopia para nuestro expediente.</li>
+	            <li>Deberá llenar el aviso de accidente que se imprimirá con la portada, el cuestionario y el aviso de privacidad.</li>
+	            <li>Todas las personas de este convenio deben de pagar un deducible de $550 de coaseguro y deducible para poder recibir atención</li>
+	            <li>En caso de que nos soliciten comprobante sobre el deducible solo podemos otorgar recibo simple del mismo, si el paciente solicita uno con carecter fiscal deberá comunicarse a Prevem seguros.</li>
+	            <li>Nuestro expediente de operaciones deberá contar con los documentos acostumbrados:
+	            	<ul>
+	            		<li>Cuestionario de atencion firmado</li>
+	            		<li>Nota médica firmada por el médico y por el lesionado</li>
+	            		<li>Copia de credencial de la Universidad</li>
+	            		<li>Aviso de accidente</li>
+	            		<li>Aviso de privacidad firmado</li>
+	            	</ul>
+	            </li>
+	            <li>Cualquier duda comunicarse a cabina MédicaVial <b>01 800 999 1222</b></li>	            	            
+	          </ul>
+	      </div>
+	      <div class="modal-footer">	        
+	        <button type="button" class="btn btn-primary" class="close" data-dismiss="modal" aria-label="Close">Aceptar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="modal fade" id="metlife" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">METLIFE</h4>
+	      </div>
+	      <div class="modal-body">
+	          <p>A partir del día 22 de enero de 2019 recibiremos pacientes de Metlife a rehabilitacíón. Favor de validar la identidad del paciente cotejando y resguardando copia de su identificación oficial y de su credencial de gastos médicos mayores de Metlife</p>
+	          <p>Adicionalmente verificar que la orden de atención que presenta indique el diagnóstico por el que nos lo envían así como cantidad a cobrar por concepto de deducible y/o coaseguro mismos que deberán registrarse en sistema. Este documento también debe de indicar las sesiones de rehabilitación que otorgaremos.</p>
+	          <p>Si lo anterior no se cumple o se generara alguna duda por favor comunicarse con José Luis Suárez al movil 55-80-27-44-02. </p>
+	      </div>
+	      <div class="modal-footer">	        
+	        <button type="button" class="btn btn-primary" class="close" data-dismiss="modal" aria-label="Close">Aceptar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="modal fade" id="prevem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">PREVEM - CARTA REHABILITACIÓN</h4>
+	      </div>
+	      <div class="modal-body">
+	      	ejemplo de carta de rehabilitacion 
+	      	<div align="center">
+	      		<img src="imgs/carta_rehabilitacion.jpg" width="500">
+	      	</div >
+	      	<br>
+	      	<div class="row">
+	      		<div class="col-md-offset-1 col-md-10">
+			      	<p>
+			      		Verificar identidad de la persona, resguardar copia id.
+			      	</p>
+			      	<p>
+			      		No podemos atender después de 30 días de expedición de carta.
+			      	</p>
+			      	<p>
+			      		En caso de presentarse lo anterior contactar con José Luis Suárez.
+			      	</p>
+			      	<p>
+			      		Si una persona en rehabilitación no acude a sus citas en 2 semanas se considera abandono. mandar correo a cat@medicavial.com.mx, alopez@medicavial.com.mx, nolvera@medicavial.com.mx, jls@medicavial.com.mx.	      	
+			      	</p>
+			      	<p>
+			      		La carta indica si se debe cobrar deducible y/o coaseguro.
+			      	</p>
+			      	<p>
+			      		En caso de que el lesionado requiera comprobante se dará un recibo de sistema que le lesionado podrá canjear en linea para factura.
+			      	</p>
+			      	<p>
+			      		<b>José Luis Suárez movil: (55)-80-27-44-02  <br>
+			      			email: jsuarez@medicavial.com.mx</b>
+			      	</p>
+		      	</div>
+	      	</div>
+	      </div>
+	      <div class="modal-footer">	        
+	        <button type="button" class="btn btn-primary" class="close" data-dismiss="modal" aria-label="Close">Aceptar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="modal fade" id="hir" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  <h4 class="modal-title" id="myModalLabel">HIR</h4>
+			</div>
+			<div class="modal-body">
+				
+				<br>
+				<div class="row">
+					<div class="col-md-offset-1 col-md-10">
+						<p>
+							Favor de validar la identidad del paciente cotejando y resguardando copia de su identificación oficial.
+						</p>
+						<p>
+							Para poder brindar una mejor atención al paciente, favor de comunicarte a nuestro call center ya que el proceso a seguir es que desde ahí se haga la comunicación al CAT de HIR Seguros para validar Folio y Deducible, hasta ese momento se podrá continuar con la atención.
+						</p>
+						<p>
+							El paciente, deberá llenar el formato de atención de HIR Siniestros, así como el cuestionario de atención.
+						</p>
+						<p>
+							Si lo anterior no se cumple o se generara alguna duda por favor comunicarse con José Luis Suárez.
+						</p>						
+						<p>
+							<b>José Luis Suárez movil: (55)-80-27-44-02  <br>
+								email: jsuarez@medicavial.com.mx</b>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">	        
+			  <button type="button" class="btn btn-primary" class="close" data-dismiss="modal" aria-label="Close">Aceptar</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+</div>

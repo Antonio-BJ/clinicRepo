@@ -1,0 +1,669 @@
+<h2>Historia Clínica para Rehabilitación</h2>
+
+<!-- PRIMERA PARTE -->
+<div class="panel panel-primary" style="width: 90%; margin: auto;">
+  <div class="panel-heading">
+    <h4>Antecedentes personales patológicos</h4>
+  </div>
+  <div class="panel-body">
+
+    <table class="table table-hover">
+      <tr class="alert-info">
+        <th width="40%">ENFERMEDAD</th>
+        <th width="20%">¿LO PADECE?</th>
+        <th width="40%">TIEMPO</th>
+      </tr>
+
+      <tr>
+        <td>Diabetes</td>
+        <td>
+          <div class="form-group">
+            <label class="radio-inline c-radio">
+                <input id="inlineradio1" type="radio" name="diabetes" value="1" ng-model="histClinicaReh.diabetes">
+                <span class="fa fa-circle"></span>Si
+            </label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <label class="radio-inline c-radio">
+                <input id="inlineradio2" type="radio" name="diabetes" value="0" ng-model="histClinicaReh.diabetes">
+                <span class="fa fa-circle"></span>No
+            </label>
+          </div>
+        </td>
+        <td>
+          <div class="input-group">
+            <input type="number" class="form-control" min="0" max="150" ng-model="histClinicaReh.aniosDiabetes" ng-disabled="histClinicaReh.diabetes==0">
+            <span class="input-group-addon">Años</span>
+            <input type="number" class="form-control" min="0" max="11" ng-model="histClinicaReh.mesesDiabetes" ng-disabled="histClinicaReh.diabetes==0">
+            <span class="input-group-addon">Meses</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Hipertensión arterial</td>
+        <td>
+          <div class="form-group">
+                    <label class="radio-inline c-radio">
+                        <input id="inlineradio1" type="radio" name="hipertension" value="1" ng-model="histClinicaReh.hipertension">
+                        <span class="fa fa-circle"></span>Si
+                    </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <label class="radio-inline c-radio">
+                        <input id="inlineradio2" type="radio" name="hipertension" value="0" ng-model="histClinicaReh.hipertension">
+                        <span class="fa fa-circle"></span>No
+                    </label>
+              </div>
+        </td>
+        <td>
+          <div class="input-group">
+            <input type="number" class="form-control" aria-describedby="basic-addon2" min="0" max="150" ng-model="histClinicaReh.aniosHipertension" ng-disabled="histClinicaReh.hipertension==0">
+            <span class="input-group-addon">Años</span>
+            <input type="number" class="form-control" aria-describedby="basic-addon2" min="0" max="11" ng-model="histClinicaReh.mesesHipertension" ng-disabled="histClinicaReh.hipertension==0">
+            <span class="input-group-addon">Meses</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Marcapasos</td>
+        <td>
+          <div class="form-group">
+                    <label class="radio-inline c-radio">
+                        <input id="inlineradio1" type="radio" name="marcapasos" value="1" ng-model="histClinicaReh.marcapasos">
+                        <span class="fa fa-circle"></span>Si
+                    </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <label class="radio-inline c-radio">
+                        <input id="inlineradio2" type="radio" name="marcapasos" value="0" ng-model="histClinicaReh.marcapasos">
+                        <span class="fa fa-circle"></span>No
+                    </label>
+              </div>
+        </td>
+
+        <td>
+          <div class="input-group">
+            <input type="number" class="form-control" aria-describedby="basic-addon2" min="0" max="150" ng-model="histClinicaReh.aniosMarcapasos" ng-disabled="histClinicaReh.marcapasos==0">
+            <span class="input-group-addon">Años</span>
+              <input type="number" class="form-control" aria-describedby="basic-addon2" min="0" max="11" ng-model="histClinicaReh.mesesMarcapasos" ng-disabled="histClinicaReh.marcapasos==0">
+            <span class="input-group-addon">Meses</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Cáncer de piel / Radioterapia</td>
+        <td>
+          <div class="form-group">
+                    <label class="radio-inline c-radio">
+                        <input id="inlineradio1" type="radio" name="radioterapia" value="1" ng-model="histClinicaReh.radioterapia">
+                        <span class="fa fa-circle"></span>Si
+                    </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <label class="radio-inline c-radio">
+                        <input id="inlineradio2" type="radio" name="radioterapia" value="0" ng-model="histClinicaReh.radioterapia">
+                        <span class="fa fa-circle"></span>No
+                    </label>
+              </div>
+        </td>
+
+        <td>
+          <div class="input-group">
+            <input type="number" class="form-control" aria-describedby="basic-addon2" min="0" max="150" ng-model="histClinicaReh.aniosRadioterapia" ng-disabled="histClinicaReh.radioterapia==0">
+            <span class="input-group-addon">Años</span>
+            <input type="number" class="form-control" aria-describedby="basic-addon2" min="0" max="11" ng-model="histClinicaReh.mesesRadioterapia" ng-disabled="histClinicaReh.radioterapia==0">
+            <span class="input-group-addon">Meses</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Crisis epilépticas</td>
+        <td>
+          <div class="form-group">
+                    <label class="radio-inline c-radio">
+                        <input id="inlineradio1" type="radio" name="epilepsia" value="1" ng-model="histClinicaReh.epilepsia">
+                        <span class="fa fa-circle"></span>Si
+                    </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <label class="radio-inline c-radio">
+                        <input id="inlineradio2" type="radio" name="epilepsia" value="0" ng-model="histClinicaReh.epilepsia">
+                        <span class="fa fa-circle"></span>No
+                    </label>
+              </div>
+        </td>
+
+        <td>
+          <div class="input-group">
+            <input type="number" class="form-control" aria-describedby="basic-addon2" min="0" max="150" ng-model="histClinicaReh.aniosEpilepsia" ng-disabled="histClinicaReh.epilepsia==0">
+            <span class="input-group-addon">Años</span>
+            <input type="number" class="form-control" aria-describedby="basic-addon2" min="0" max="11" ng-model="histClinicaReh.mesesEpilepsia" ng-disabled="histClinicaReh.epilepsia==0">
+            <span class="input-group-addon">Meses</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Piel sensible</td>
+        <td>
+          <div class="form-group">
+                    <label class="radio-inline c-radio">
+                        <input id="inlineradio1" type="radio" name="pielSensible" value="1" ng-model="histClinicaReh.pielSensible">
+                        <span class="fa fa-circle"></span>Si
+                    </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <label class="radio-inline c-radio">
+                        <input id="inlineradio2" type="radio" name="pielSensible" value="0" ng-model="histClinicaReh.pielSensible">
+                        <span class="fa fa-circle"></span>No
+                    </label>
+              </div>
+        </td>
+
+        <td>
+          <div class="input-group">
+            <input type="number" class="form-control" aria-describedby="basic-addon2" min="0" max="150" ng-model="histClinicaReh.aniosPielSensible" ng-disabled="histClinicaReh.pielSensible==0">
+            <span class="input-group-addon">Años</span>
+            <input type="number" class="form-control" aria-describedby="basic-addon2" min="0" max="11" ng-model="histClinicaReh.mesesPielSensible" ng-disabled="histClinicaReh.pielSensible==0">
+            <span class="input-group-addon">Meses</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Lupus / AR</td>
+        <td>
+          <div class="form-group">
+                    <label class="radio-inline c-radio">
+                        <input id="inlineradio1" type="radio" name="lupus" value="1" ng-model="histClinicaReh.lupus">
+                        <span class="fa fa-circle"></span>Si
+                    </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <label class="radio-inline c-radio">
+                        <input id="inlineradio2" type="radio" name="lupus" value="0" ng-model="histClinicaReh.lupus">
+                        <span class="fa fa-circle"></span>No
+                    </label>
+              </div>
+        </td>
+
+        <td>
+          <div class="input-group">
+            <input type="number" class="form-control" aria-describedby="basic-addon2" min="0" max="150" ng-model="histClinicaReh.aniosLupus" ng-disabled="histClinicaReh.lupus==0">
+            <span class="input-group-addon">Años</span>
+            <input type="number" class="form-control" aria-describedby="basic-addon2" min="0" max="11" ng-model="histClinicaReh.mesesLupus" ng-disabled="histClinicaReh.lupus==0">
+            <span class="input-group-addon">Meses</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Intervenciones Quirúrgicas<br>tipo Ortopédico</td>
+        <td>
+          <div class="form-group">
+                    <label class="radio-inline c-radio">
+                        <input id="inlineradio1" type="radio" name="intervenciones" value="1" ng-model="histClinicaReh.intervenciones">
+                        <span class="fa fa-circle"></span>Si
+                    </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <label class="radio-inline c-radio">
+                        <input id="inlineradio2" type="radio" name="intervenciones" value="0" ng-model="histClinicaReh.intervenciones">
+                        <span class="fa fa-circle"></span>No
+                    </label>
+              </div>
+        </td>
+
+        <td>
+          <div class="input-group">
+            <input type="number" class="form-control" aria-describedby="basic-addon2" min="0" max="150" ng-model="histClinicaReh.aniosIntervenciones" ng-disabled="histClinicaReh.intervenciones==0">
+            <span class="input-group-addon">Años</span>
+            <input type="number" class="form-control" aria-describedby="basic-addon2" min="0" max="11" ng-model="histClinicaReh.mesesIntervenciones" ng-disabled="histClinicaReh.intervenciones==0">
+            <span class="input-group-addon">Meses</span>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<hr>
+
+<!-- SEGUNDA PARTE -->
+<div class="panel panel-primary" style="width: 90%; margin: auto;">
+  <div class="panel-heading">
+    <h4>Diagnóstico Inicial</h4>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-4">
+        <label>Diagnóstico inicial:</label>
+            <textarea class="form-control" rows="5" ng-model="histClinicaReh.diagInicial"></textarea>
+      </div>
+
+      <div class="col-md-4">
+        <label>Valoración inicial:</label>
+            <textarea class="form-control" rows="5" ng-model="histClinicaReh.valInicial"></textarea>
+      </div>
+
+      <div class="col-md-4">
+        <label>Tratamientos Previos:</label>
+            <textarea class="form-control" rows="5" ng-model="histClinicaReh.tratamientosPrevios"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- TERCER PARTE -->
+<div class="panel panel-primary" style="width: 90%; margin: auto;">
+  <div class="panel-heading">
+    <h4>Rangos de Movilidad</h4>
+  </div>
+  <div class="panel-body">
+<!--     <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="input-group">
+              <span class="input-group-addon">REGIÓN</span>
+              <input type="text" class="form-control" ng-model="histClinicaReh.region" mayusculas>
+            </div>
+            <div role="alert" style="color: red; font-size:0.9em;">
+              {{error1}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+<!--     <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="input-group">
+                <span class="input-group-addon">Flexión</span>
+                <input type="number" class="form-control" min="0" max="360" ng-model="histClinicaReh.flexion">
+                <span class="input-group-addon">°</span>
+            </div>
+            <div role="alert" style="color: red; font-size:0.9em;">
+              {{error2}}
+            </div>
+          </div>
+
+          <div class="col-md-10">
+            <div class="input-group">
+                <span class="input-group-addon">Extensión</span>
+                <input type="number" class="form-control" min="0" max="360" ng-model="histClinicaReh.extension">
+                <span class="input-group-addon">°</span>
+            </div>
+            <div role="alert" style="color: red; font-size:0.9em;">
+              {{error3}}
+            </div>
+          </div>
+
+          <div class="col-md-10">
+            <div class="input-group">
+                <span class="input-group-addon">Lateralización</span>
+                <input type="number" class="form-control" min="0" max="360" ng-model="histClinicaReh.lateralizacion">
+                <span class="input-group-addon">°</span>
+            </div>
+            <div role="alert" style="color: red; font-size:0.9em;">
+              {{error4}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="input-group">
+                <span class="input-group-addon">Rotación Interna</span>
+                <input type="number" class="form-control" min="0" max="360" ng-model="histClinicaReh.rotInterna">
+                <span class="input-group-addon">°</span>
+            </div>
+            <div role="alert" style="color: red; font-size:0.9em;">
+              {{error5}}
+            </div>
+          </div>
+
+          <div class="col-md-10">
+            <div class="input-group">
+                <span class="input-group-addon">Rotación Externa</span>
+                <input type="number" class="form-control" min="0" max="360" ng-model="histClinicaReh.rotExterna">
+                <span class="input-group-addon">°</span>
+            </div>
+            <div role="alert" style="color: red; font-size:0.9em;">
+              {{error6}}
+            </div>
+          </div>
+
+          <div class="col-md-10" align="center">
+            <div class="input-group">
+              <button class="btn btn-info" ng-click="guardaRangos()" ng-disabled="rangos==true">Guardar Región</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="row">
+      <div class="col-md-12" align="center">
+        <table class="table table-hover table-condensed">
+          <tr style="font-size: 0.83em;">
+            <!-- <th>#</th> -->
+            <th>Región</th>
+            <th>Flexión</th>
+            <th>Extensión</th>
+            <th>Lat.</th>
+            <th>Rot-Int</th>
+            <th>Rot-Ext</th>
+            <th>Abducción</th>
+            <th>Aducción</th>
+            <th>Rotaciones</th>
+            <th>Pronación</th>
+            <th>Supinación</th>
+            <th>Incl.</th>
+            <th>Radial</th>
+            <th>Cubital</th>
+            <th>Inversión</th>
+            <th>Eversión</th>
+            <th></th>
+          </tr>
+
+          <tr ng-repeat="x in listaRangos" ng-show="listaRangos">
+            <!-- <td>{{$index+1}}</td> -->
+            <td>{{x.RM_region | uppercase}}</td>
+            <td><span ng-hide="x.RM_flexion==0">{{x.RM_flexion}}°</span></td>
+            <td><span ng-hide="x.RM_extension==0">{{x.RM_extension}}°</span></td>
+            <td><span ng-hide="x.RM_lateralizacion==0">{{x.RM_lateralizacion}}°</span></td>
+            <td><span ng-hide="x.RM_rotInterna==0">{{x.RM_rotInterna}}°</span></td>
+            <td><span ng-hide="x.RM_rotExterna==0">{{x.RM_rotExterna}}°</span></td>
+            <td><span ng-hide="x.RM_abduccion==0">{{x.RM_abduccion}}°</span></td>
+            <td><span ng-hide="x.RM_aduccion==0">{{x.RM_aduccion}}°</span></td>
+            <td><span ng-hide="x.RM_rotaciones==0">{{x.RM_rotaciones}}°</span></td>
+            <td><span ng-hide="x.RM_pronacion==0">{{x.RM_pronacion}}°</span></td>
+            <td><span ng-hide="x.RM_supinacion==0">{{x.RM_supinacion}}°</span></td>
+            <td><span ng-hide="x.RM_inclinaciones==0">{{x.RM_inclinaciones}}°</span></td>
+            <td><span ng-hide="x.RM_desvRadial==0">{{x.RM_desvRadial}}°</span></td>
+            <td><span ng-hide="x.RM_desvCubital==0">{{x.RM_desvCubital}}°</span></td>
+            <td><span ng-hide="x.RM_inversion==0">{{x.RM_inversion}}°</span></td>
+            <td><span ng-hide="x.RM_eversion==0">{{x.RM_eversion}}°</span></td>
+            <td><button class="btn btn-danger btn-xs" ng-click="quitarRango(x.RM_id)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
+          </tr>
+
+          <tr>
+            <td colspan="17" style="text-align: center">
+              <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalRangos">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                Agregar rangos de movilidad
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+<!-- TERMINAN CAMBIOS -->
+  </div>
+</div>
+
+<hr>
+
+<!-- CUARTA PARTE -->
+<div class="panel panel-primary" style="width: 90%; margin: auto;">
+  <div class="panel-heading">
+    <h4>Pruebas</h4>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-2">
+        Escala Visual Análoga: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+
+      <div class="col-md-10">
+        <div class="form-group">
+          <label class="radio-inline c-radio">
+              <input id="inlineradio1" type="radio" value="1" ng-model="histClinicaReh.tipoDolor">
+              <span class="fa fa-circle"></span>En Reposo
+          </label>
+          <label class="radio-inline c-radio">
+              <input id="inlineradio2" type="radio" value="2" ng-model="histClinicaReh.tipoDolor">
+              <span class="fa fa-circle"></span>En Movimiento
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-10 col-md-offset-2">
+              <div class="form-group">
+                <div ng-show="histClinicaReh.tipoDolor==1 || histClinicaReh.tipoDolor==2">
+                    <label class="radio-inline c-radio">
+                        <input id="inlineradio1" type="radio" name="escalaDolor" value="1" ng-model="histClinicaReh.escalaDolor">
+                        <span class="fa fa-circle"></span>1
+                    </label>
+                    <label class="radio-inline c-radio">
+                      <input id="inlineradio2" type="radio" name="escalaDolor" value="2" ng-model="histClinicaReh.escalaDolor">
+                      <span class="fa fa-circle"></span>2
+                  </label>
+
+                    <label class="radio-inline c-radio">
+                      <input id="inlineradio2" type="radio" name="escalaDolor" value="3" ng-model="histClinicaReh.escalaDolor">
+                      <span class="fa fa-circle"></span>3
+                  </label>
+
+                  <label class="radio-inline c-radio">
+                      <input id="inlineradio1" type="radio" name="escalaDolor" value="4" ng-model="histClinicaReh.escalaDolor">
+                      <span class="fa fa-circle"></span>4
+                  </label>
+
+                    <label class="radio-inline c-radio">
+                      <input id="inlineradio2" type="radio" name="escalaDolor" value="5" ng-model="histClinicaReh.escalaDolor">
+                      <span class="fa fa-circle"></span>5
+                  </label>
+
+                    <label class="radio-inline c-radio">
+                      <input id="inlineradio2" type="radio" name="escalaDolor" value="6" ng-model="histClinicaReh.escalaDolor">
+                      <span class="fa fa-circle"></span>6
+                  </label>
+
+                    <label class="radio-inline c-radio">
+                      <input id="inlineradio2" type="radio" name="escalaDolor" value="7" ng-model="histClinicaReh.escalaDolor">
+                      <span class="fa fa-circle"></span>7
+                  </label>
+
+                  <label class="radio-inline c-radio">
+                      <input id="inlineradio1" type="radio" name="escalaDolor" value="8" ng-model="histClinicaReh.escalaDolor">
+                      <span class="fa fa-circle"></span>8
+                  </label>
+
+                    <label class="radio-inline c-radio">
+                      <input id="inlineradio2" type="radio" name="escalaDolor" value="9" ng-model="histClinicaReh.escalaDolor">
+                      <span class="fa fa-circle"></span>9
+                  </label>
+
+                    <label class="radio-inline c-radio">
+                      <input id="inlineradio2" type="radio" name="escalaDolor" value="10" ng-model="histClinicaReh.escalaDolor">
+                      <span class="fa fa-circle"></span>10
+                  </label>
+                </div>
+              </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-md-7">
+              <div class="form-group">
+                Examen manual muscular: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <label class="radio-inline c-radio">
+                      <input id="inlineradio1" type="radio" name="exMuscular" value="1/5" ng-model="histClinicaReh.examenMuscular">
+                      <span class="fa fa-circle"></span>1/5
+                  </label>
+
+                    <label class="radio-inline c-radio">
+                      <input id="inlineradio2" type="radio" name="exMuscular" value="2/5" ng-model="histClinicaReh.examenMuscular">
+                      <span class="fa fa-circle"></span>2/5
+                  </label>
+
+                    <label class="radio-inline c-radio">
+                      <input id="inlineradio2" type="radio" name="exMuscular" value="3/5" ng-model="histClinicaReh.examenMuscular">
+                      <span class="fa fa-circle"></span>3/5
+                  </label>
+
+                  <label class="radio-inline c-radio">
+                      <input id="inlineradio1" type="radio" name="exMuscular" value="4/5" ng-model="histClinicaReh.examenMuscular">
+                      <span class="fa fa-circle"></span>4/5
+                  </label>
+
+                    <label class="radio-inline c-radio">
+                      <input id="inlineradio2" type="radio" name="exMuscular" value="5/5" ng-model="histClinicaReh.examenMuscular">
+                      <span class="fa fa-circle"></span>5/5
+                  </label>
+                </div>
+      </div>
+
+      <div class="col-md-5">
+              <div class="form-group">
+                Marcha y postura: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <label class="radio-inline c-radio">
+                      <input id="inlineradio1" type="radio" name="i-radio" value="1" ng-model="histClinicaReh.marchaPostura">
+                      <span class="fa fa-circle"></span>Si aplica
+                  </label>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                    <label class="radio-inline c-radio">
+                      <input id="inlineradio2" type="radio" name="i-radio" value="0" ng-model="histClinicaReh.marchaPostura">
+                      <span class="fa fa-circle"></span>No aplica
+                  </label>
+                </div>
+                
+                <br>
+
+                <div class="form-group" ng-show="histClinicaReh.marchaPostura==1">
+        <label>Observaciones de marcha y postura:</label>
+            <textarea class="form-control" rows="2"  maxlength="255" ng-model="histClinicaReh.obsMarchaPostura"></textarea>
+                </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-md-6">
+        Evaluación de Actividades de la Vida Diaria:
+        <div class="row">
+          <div class="col-md-3">
+                     <div class="checkbox c-checkbox">
+                        <label>
+                           <input type="checkbox" ng-model="histClinicaReh.banho" ng-true-value="1" ng-false-value="0">
+                           <span class="fa fa-check"></span>Bañarse</label>
+                     </div>
+          </div>
+
+          <div class="col-md-3">
+                     <div class="checkbox c-checkbox">
+                        <label>
+                           <input type="checkbox" ng-model="histClinicaReh.comida" ng-true-value="1" ng-false-value="0">
+                           <span class="fa fa-check"></span>Comer</label>
+                     </div>
+          </div>
+
+          <div class="col-md-3">
+                     <div class="checkbox c-checkbox">
+                        <label>
+                           <input type="checkbox" ng-model="histClinicaReh.trabajo" ng-true-value="1" ng-false-value="0">
+                           <span class="fa fa-check"></span>Trabajar</label>
+                     </div>
+          </div>
+
+          <div class="col-md-3">
+                     <div class="checkbox c-checkbox">
+                        <label>
+                           <input type="checkbox" ng-model="histClinicaReh.vestirse" ng-true-value="1" ng-false-value="0">
+                           <span class="fa fa-check"></span>Vestirse</label>
+                     </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label>Observaciones AVD:</label>
+            <textarea class="form-control" rows="2" maxlength="255" ng-model="histClinicaReh.obsAVD"></textarea>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-md-12">
+        <label>Estado Actual (emocional y laboral):</label>
+            <textarea class="form-control" rows="3"  maxlength="255" ng-model="histClinicaReh.estadoActual"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br><br><br>
+
+<div class="row">
+  <div class="col-md-12" align="center">
+<!--    <button type="submit" class="btn btn-primary btn-lg" ng-click="printHCR()">
+      Imprimir HCR
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+    <button class="btn btn-success btn-lg" ng-click="continuarRh()" >Continuar a la Rehabilitación</button>
+  </div>
+</div>
+
+
+<br><br><br><br>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalRangos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form id="formRangos" ng-submit="guardaRangos(userForm.$valid)" novalidate>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Rangos de movilidad</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-4">
+              <select class="form-control" id="selRango" ng-model="histClinicaReh.region" ng-options="x.id_region as x.nombre_region for x in listaRegiones" ng-required="histClinicaReh.region==null || histClinicaReh.region==''">
+                  <option value=""> * Seleccione Región </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-10">
+              <ng-include src="'views/rehabilitacion/rangosCervical.html'" ng-show="histClinicaReh.region==1"></ng-include>
+              <ng-include src="'views/rehabilitacion/rangosDorsal.html'" ng-show="histClinicaReh.region==2"></ng-include>
+              <ng-include src="'views/rehabilitacion/rangosLumbar.html'" ng-show="histClinicaReh.region==3"></ng-include>
+              <ng-include src="'views/rehabilitacion/rangosHombro.html'" ng-show="histClinicaReh.region==4"></ng-include>
+              <ng-include src="'views/rehabilitacion/rangosCodo.html'" ng-show="histClinicaReh.region==5"></ng-include>
+              <ng-include src="'views/rehabilitacion/rangosMunheca.html'" ng-show="histClinicaReh.region==6"></ng-include>
+              <ng-include src="'views/rehabilitacion/rangosCadera.html'" ng-show="histClinicaReh.region==7"></ng-include>
+              <ng-include src="'views/rehabilitacion/rangosTobillo.html'" ng-show="histClinicaReh.region==8"></ng-include>
+              <ng-include src="'views/rehabilitacion/rangosRodilla.html'" ng-show="histClinicaReh.region==9"></ng-include>
+              <ng-include src="'views/rehabilitacion/rangosOtros.html'" ng-show="histClinicaReh.region==10"></ng-include>
+            </div>
+
+            <div class="col-md-2">
+              <div class="row" ng-show="rangos==true">
+                <div class="col-md-12" align="center">
+                  <img src="imgs/cargador.gif">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar Rango</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

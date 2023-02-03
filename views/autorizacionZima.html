@@ -1,0 +1,310 @@
+<div ng-init="inicio()">
+		<div class="panel panel-primary" >
+		    <div class="panel-heading">
+		     	<h4>Autorizaciones Zima</h4>
+		    </div>
+				<div class="row" ng-hide="1==1">
+					<div class="col-md-12">
+						<div class="gridStyle" ng-grid="myOptions"></div>
+					</div>
+				</div>
+				<br>
+				<form ng-submit="buscarAutorizacion()">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-4">
+								<div class="input-group">
+						      <div class="input-group-addon">No. de Autorización</div>
+						      <input type="text" ng-model="noAutorizacion" class="form-control btn-block" placeholder="Autorización">
+						    </div>
+							</div>
+							<div class="col-md-4">
+								<div class="input-group">
+						      <div class="input-group-addon">Folio Zima</div>
+						      <input type="text" ng-model="folioZima" class="form-control" placeholder="Folio">
+						    </div>
+							</div>
+							<div class="col-md-2">
+								<button type="submit" class="btn btn-primary btn-block">Buscar</button>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="row paginas" ng-show="autDetalle">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							<table class="table table-bordered">
+								<tr>
+									<th colspan="2">
+										Detalle de autorización
+									</th>
+									<th align="right">
+										Folio Zima: {{autDetalle.autorizacion.REG_folio}}
+									</th>
+								</tr>
+								<tr>
+									<td>No. de Autorización: {{autDetalle.autorizacion.Aut_clave}}</td>
+									<td>Nombre: {{autDetalle.autorizacion.nombre}}</td>
+									<td>Unidad de tratamiento: {{autDetalle.autorizacion.UNI_nomCorto}}</td>
+								</tr>
+								<tr>
+									<td>Bloques: {{autDetalle.autorizacion.Aut_bloques}}</td>
+									<td>Sesiones: {{autDetalle.autorizacion.Aut_sesiones}}</td>
+									<td>Solicita: {{autDetalle.autorizacion.Aut_solicita}}</td>
+								</tr>
+								<tr>
+									<td>Diagnóstico: {{autDetalle.autorizacion.Aut_dx}}</td>
+									<td>Observaciones: {{autDetalle.autorizacion.Aut_obs}}</td>
+									<td>Fecha Aut: {{autDetalle.autorizacion.Aut_fecreg}}</td>
+								</tr>
+								<tr>
+									<td colspan="3" align="right">
+											<button ng-show="autDetalle.noRehab.contador>0" type="button" name="button" ng-click="verRehabilitaciones()" class="btn btn-primary">Imprimir Rehabilitaciones</button>
+											<button type="button" name="button" class="btn btn-primary" data-toggle="modal" data-target="#mySoportes">Subir Soportes</button>
+											<button type="button" name="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Formato de Rehabilitación</button>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="row" ng-show="mensaje">
+					<div class="col-md-12 text-md-center" align="center">
+						  <label style="width:100%" class="alert alert-warning">{{mensaje}}</label>
+					</div>
+				</div>
+				<div class="row" ng-show="cargador">
+					<div class="col-md-12 text-md-center" align="center">
+						  <img ng-src="imgs/cargadorCuadro.gif">
+					</div>
+				</div>
+				<!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog modal-lg" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Rehabilitacion {{noAutori}} de {{autDetalle.autorizacion.Aut_sesiones}}</h4>
+				      </div>
+				      <div class="modal-body">
+								<div class="row">
+                <div class="col-md-12">
+                    <form name="formRehabilitacion" id="formRehabilitacion" ng-submit="guardaRehabilitacion()">
+                        <br>
+                        <div class="row">
+                          <div class="col-md-6">
+														<div class="form-group">
+														  <label for="tTerapia">Tipo de terapia:</label>
+															<input type="text" name="" ng-model="rehabilitacionForm.tipo" class="form-control" id="tTerapia" required>
+														</div>
+                          </div>
+                          <div class="col-md-3">
+                           <div class="form-group">
+														<label for="escala">Escala de dolor:</label>
+                            <select  class="form-control" ng-model="rehabilitacionForm.escala"  id="escala" name="escala" required >
+                                      <option value="">Seleccione</option>
+                                      <option value="1">1</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
+                                      <option value="4">4</option>
+                                      <option value="5">5</option>
+                                      <option value="6">6</option>
+                                      <option value="7">7</option>
+                                      <option value="8">8</option>
+                                      <option value="9">9</option>
+                                      <option value="10">10</option>
+                            </select>
+                          </div>
+                          </div>
+                           <div class="col-md-3">
+                           <div class="form-group">
+														<label for="mejoria">Escala de mejoría:</label>
+                            <select  class="form-control" ng-model="rehabilitacionForm.mejoria"  id="mejoria" name="mejoria" style="resize:none;" required >
+                                      <option value="">Seleccione</option>
+                                      <option value="1">1</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
+                                      <option value="4">4</option>
+                                      <option value="5">5</option>
+                                      <option value="6">6</option>
+                                      <option value="7">7</option>
+                                      <option value="8">8</option>
+                                      <option value="9">9</option>
+                                      <option value="10">10</option>
+                            </select>
+                          </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                              <div class="form-group">
+														<label for="criterios">Criterios de Waddell:</label>
+                            <textarea class="form-control" ng-model="rehabilitacionForm.criterios" rows="4" id="criterios" name="criterios" style="resize:none;" mayusculas></textarea>
+                          </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+														<label for="observa">Observaciones:</label>
+                            <textarea class="form-control" ng-model="rehabilitacionForm.observa" rows="4" id="observa" name="observa" style="resize:none;" mayusculas required></textarea>
+                          </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-6">
+                              <div class="form-group">
+															<label for="duracion">Duración de la rehabilitación:</label>
+                              <input type="number" class="form-control" ng-model="rehabilitacionForm.duracion"  id="duracion" name="duracion" required>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+																<label class="col-sm-7 control-label">El paciente acudió a su cita anterior:</label>
+			                           <div class="col-sm-5">
+			                              <label class="radio-inline c-radio">
+			                                 <input type="radio"  name='acudio' id='acudio' value='S' ng-model="rehabilitacionForm.acudio" required ng-checked="rehabilitacionForm.acudio== S" checked>
+			                                 <span class="fa fa-circle"></span>Si</label>
+			                              <label class="radio-inline c-radio">
+			                                 <input type="radio"  name='acudio' id='acudio' value='N' ng-model="rehabilitacionForm.acudio" required>
+			                                 <span class="fa fa-circle"></span>No</label>
+			                           </div>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                              <div ng-show="cargador1" align="center" style="hight:10em;">
+                                <img ng-src="imgs/cargador.gif">
+                            </div>
+                          </div>
+                        </div>
+                    </form>
+                </div>
+              </div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				        <button type="submit" form="formRehabilitacion" class="btn btn-primary">Guardar</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+
+				<!-- Modal para soportes-->
+				<div class="modal fade" id="mySoportes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog modal-lg" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Soportes de Rehabilitacion para el folio <b>{{folioZima}}</b></h4>
+				      </div>
+				      <div class="modal-body">
+								<form ng-submit="guardaDigital()" >
+									<div class="row" style="width:100%">
+											<div class="col-md-5" align="left">
+
+													<div class="form-group">
+	                           <div class="col-sm-12">
+	                              <input type="file" ng-file-select="onFileSelect_xml($files)" data-classbutton="btn btn-default" data-classinput="form-control inline" class="filestyle form-control" required>
+	                           </div>
+	                        </div>
+													<div class="progress" style="width:97%">
+																<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: {{progressBar}}%">
+																	<span>{{progressBar}}%</span>
+																</div>
+													</div>
+											</div>
+											 <div class="col-md-4" align="left">
+												 <textarea class="form-control" rows="3" placeholder="Observaciones" ng-model="rx.inter" mayusculas></textarea>
+											</div>
+											 <div class="col-md-1" align="center">
+													<input type="submit" class="btn btn-primary" value="Guardar">
+											</div>
+									</div>
+									</form>
+											<!--fin del row principal-->
+									<div class="row" ng-show="cargador1">
+											<div class="col-md-12">
+												<div  align="center">
+													<img ng-src="imgs/cargadorCuadro.gif">
+												</div>
+											</div>
+									</div>
+									 <div class="row">
+											<div class="col-md-12">
+												<div ng-show="msjerror" align="center">
+													<div class="alert alert-warning">No se pudo subir el archivo. revise la extención y tamaño del archivo</div>
+												</div>
+											</div>
+									</div>
+									<div class="row mianimacion" ng-show="listaDigitales">
+										<div class="col-md-3 mianimacion"  ng-repeat="listadoRx in listaDigitales" align="center">
+												<div align="right">
+													<a href="" ng-click="eliminaDigital(listadoRx.Arc_cons,listadoRx.Arc_tipo)"><span class="glyphicon glyphicon-remove-sign"></span></a>
+												</div>
+												<a data-toggle="modal"  data-target="#{{listadoRx.Arc_cons}}" href="" id="mylink">
+													<img class="img-responsive img-thumbnail" alt="Cinque Terre" src="../../registro/{{listadoRx.Arc_Archivo}}" >
+												</a>
+												<div class="modal fade" id="{{listadoRx.Arc_cons}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+													<div class="modal-dialog modal-lg">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+																<h4 class="modal-title" id="myModalLabel">{{listadoRx.Arc_Archivo}}</h4>
+															</div>
+															<div class="modal-body">
+
+															<img ng-src="../../registro/{{listadoRx.Arc_Archivo}}" style="width:100%; height:100%">
+															</div>
+															<div class="modal-footer" align="left">
+																	 Interpretacion: <b>{{listadoRx.Arc_interRX}}</b>
+															</div>
+														</div>
+													</div>
+												</div>
+										</div>
+									</div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				        <button type="submit" form="formRehabilitacion" class="btn btn-primary">Guardar</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+
+				<div class="modal fade" id="listadoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog modal-lg" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Listado de rehabilitaciones</h4>
+				      </div>
+				      <div class="modal-body">
+				      	<div class="row">
+				      		<div class="col-md-12">
+				      			aqui va el listado
+				      		</div>
+				      	</div>
+
+				     </div>
+				     <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				        <button type="submit" form="formRehabilitacion" class="btn btn-primary">Guardar</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+
+		</div>
+</div>
+<script type="text/javascript">
+       $('#fecha1').datetimepicker({
+        pickTime: false,                 //en/disables the time picker
+        language:'es'                  //sets language locale
+    });
+        $('#fecha2').datetimepicker({
+        pickTime: false,                 //en/disables the time picker
+        language:'es'                  //sets language locale
+    });
+</script>

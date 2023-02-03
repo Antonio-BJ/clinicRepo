@@ -1,0 +1,91 @@
+
+<div class="container" style="width: 100%"> 
+	
+	<div class="panel panel-primary">
+  		<div class="panel-heading">
+    		<h3 class="panel-title" align="center"><b>Diagnóstico</b></h3>
+  		</div><!-- End panel-heading -->
+  		<div class="panel-body">
+  		<form name="formularios.diagnos" ng-submit="guardaDiagnostico()" novalidate>
+    		<div class="row">
+				<div class="col-md-6">
+					<div class="input-group" style="width:100%">											 
+						  <li class="list-group-item list-group-item-info">Categoría</li>					  					
+	    		 		<div style="height:15em; overflow: scroll; width:100%; overflow-x: hidden;">
+				 			<div  ng-hide="cargador2" class="list-group" id="tooltip-ex">					  
+							  <a href="" ng-repeat="diag in listaDiagnostico" class="list-group-item element" tooltip-placement="right" tooltip-trigger tooltip="{{diag.DX_diagnostico}}" ng-click="despliegaDiagnosticos(diag.DX_clave)">{{diag.DX_abreviatura}}</a>					  
+							</div>
+				          <div ng-show="cargador2" align="center">
+				          	<br><br><br><br><br>
+				            <img ng-src="imgs/cargador.gif">
+				          </div>				        					
+						</div>
+		            </div>
+				</div> 
+				<div class="col-md-6">
+					<div class="input-group" style="width:100%">											 
+						  <li class="list-group-item list-group-item-info">Diagnóstico</li>					  					
+	    		 		<div style="height:15em; overflow: scroll; width:100%; overflow-x: hidden;">
+				 			<div ng-hide="cargador" class="list-group" id="tooltip-ex">					  
+							  <a href="" ng-repeat="diagnos in listaDiagnostics" class="list-group-item element" tooltip-placement="left" tooltip-trigger tooltip="{{diagnos.DxS_diagnos}}" ng-dblclick="agregaDiagnostico(diagnos.DxS_diagnos)">{{diagnos.DxS_cveDiag}}</a>					  
+							</div>	
+							<div ng-show="cargador" align="center">
+								<br><br><br><br><br>
+				            	<img ng-src="imgs/cargador.gif">
+				          </div>						
+						</div>
+		            </div>		            
+				</div>    
+			</div>
+			<br>
+			<div class="row"> 
+				<div class="col-md-12">
+					<label for="" class="alert alert-danger">
+						Para evitar posibles repercusiones legales sobre el médico tratante, le recomendamos evitar agregar términos como "policontundido" u otros términos ambigüos. 
+					</label>
+				</div>  		
+				<div class="col-md-12">					
+					<div class="input-group">
+						<span class="input-group-addon">Diagnostico a este momento: </span>
+						<textarea class="form-control" ng-model="diagnostico.diagnostico" rows="4" id="obs" name="diagnostico" style="resize:none;" required mayusculas></textarea>
+					</div>
+					<div class="validacion" role="alert" ng-if="interacted5(formularios.diagnos.diagnostico)" ng-messages="formularios.diagnos.diagnostico.$error">
+		              <div ng-message="required">campo requerido</div>            
+		            </div>
+		            <div class="validacion" ng-show="msjPalabraProhi">
+		              <div >Está utilzando una palabra prohibida <b>(POLICONTUNDIDO, POLITRAUMATIZADO, POSIBLE)</b></div>            
+		            </div>
+				</div>
+			</div>
+			
+			<div class="row">   
+				<div class="col-md-12">					
+					<div class="input-group">
+						<span class="input-group-addon">Observaciones: </span>
+						<textarea class="form-control" ng-model="diagnostico.obs" rows="4" id="obs" name="obs" style="resize:none;" ></textarea>
+					</div>
+				</div>
+				
+    		</div><!-- End row -->      		
+    		<div class="row"> 
+                <div class="col-md-12">
+                  <div ng-show="cargador1" align="center">
+                    <img ng-src="imgs/cargador.gif">
+                  </div>
+                </div>
+            </div>  	
+		
+    		<div class="row">
+	 			<div class="col-md-2 col-md-offset-10">
+	 				<input type="submit" class="btn btn-primary" value="Siguiente">
+	 			</div>
+    		</div> 
+    	</form>				    	
+  		</div><!-- End panel-body -->
+	</div><!-- End panel panel-default -->
+	
+	
+	<div id="resultadoPMR">		
+	</div>
+</div><!-- End container -->
+

@@ -1,0 +1,334 @@
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"> -->
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+<!-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
+<!-- <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> -->
+
+<div class="row">
+<!-- AUTHOR: SAMUEL RAMIREZ -->
+<!-- CONTINUA DESARROLANDO ANA DC -->
+<h3>COBRANZA PARTICULARES</h3>
+
+<h4>Búsqueda de recibos</h4>
+<br>
+
+<div class="row">
+	<div class="col-md-3">
+        <div class="input-group" style="width: 100%">
+            <span>Folio de recibo:</span>
+             <input type="text" ng-model="parametrosBusqueda.folioRecibo" class="form-control" mayusculas>
+        </div>   
+	</div>
+<!-- 	<div class="col-md-3">
+        <div class="input-group" style="width: 100%">
+            <span>Folio de MédicaVial:</span>
+             <input type="text" ng-model="parametrosBusqueda.folioMV" class="form-control" mayusculas>
+        </div> 
+	</div>
+	<div class="col-md-3">
+        <div class="input-group" style="width: 100%">
+            <span>Nombre del paciente:</span>
+             <input type="text" ng-model="parametrosBusqueda.nombre" class="form-control" mayusculas>
+        </div>
+	</div> --> 
+	<div class="col-md-3">
+		<input class="btn btn-info btn-lg" type="button" value="Buscar" style="margin-top: 0.8em;" ng-click="buscarDatos()">
+	</div>
+</div>
+
+<div class="row" ng-show="trabajando==true">
+	<div class="col-md-12" align="center">
+		<img src="imgs/cargador3.gif" width="6%">
+	</div>
+</div>
+
+<hr>
+
+<div>
+<!-- 	
+	<div class="row" style="margin:auto;">
+		<div class="col-md-12">
+			<table class="table table-hover table-responsive">
+			    <thead>
+			      	<tr>
+				        <th>Recibo</th>
+				        <th>Fecha de emisión</th>
+				        <th>Folio MV</th>
+				        <th>Total</th>
+				        <th>Cliente</th>
+				        <th>Método de pago</th>
+				        <th>Observaciones</th>
+			      	</tr>
+			    </thead>
+			    <tbody>
+			      	<tr ng-repeat="x in recibos">
+				        <td>{{x.Recibo_cont}}</td>
+				        <td>{{x.Recibo_fecExp}}</td>
+				        <td>{{x.Exp_folio}}</td>
+				        <td>{{x.Recibo_total | currency}}</td>
+				        <td>{{x.Exp_completo}}</td>
+				        <td>{{x.metodo | uppercase}}</td>
+				        <td>{{x.Recibo_obsCancel}}</td>
+			      	</tr>
+			    </tbody>
+			</table>
+		</div>
+	</div>
+ -->
+<hr>
+
+	<div class="row mianimacion" ng-show="recibos" >
+		<div class="col-md-12" >
+			{{recibos.nombre}}
+			<table  class="table table-bordered">
+				<tbody>
+					<tr>
+						<td> <b>Recibo #</b> </td>
+						<td style="width:35%">{{recibos.Recibo_serie}}{{recibos.Recibo_cont}}</td>
+
+						<td> <b>Importe:</b> </td>
+						<td style="width:35%">{{recibos.Recibo_total | currency}}</td>
+					</tr>
+					<tr>
+						<td> <b>Fecha de emisión:</b> </td>
+						<td style="width:35%">{{recibos.Recibo_fecExp}}</td>
+
+						<td> <b>Emitido por:</b> </td>
+						<td style="width:35%">{{recibos.Usu_nombre | uppercase}}</td>
+					</tr>
+					<tr>
+						<td> <b>Folio MV:</b> </td>
+						<td style="width:35%">{{recibos.Exp_folio}}</td>
+
+						<td> <b>Método de pago:</b> </td>
+						<td style="width:35%">{{recibos.metodo | uppercase}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>		
+	</div>
+<hr ng-show="recibos">
+<h4 ng-show="recibos">Búsqueda de Cobro x Aplicar</h4>
+<hr ng-show="recibos">
+	<div class="row mianimacion" ng-show="recibos">
+	    <div class="col-md-3" >
+	          <div class="input-group ">
+	              <span>Fecha inicial:</span>
+	              <input type="text" ng-model="bcobro.fechaIni" name="fecha1" id="fecha1" class= "form-control" data-date-format="YYYY-MM-DD" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" required>
+	          </div>                         
+	      </div>
+
+	      <div class="col-md-3" >
+	          <div class="input-group ">
+	              <span>Fecha final:</span>
+	              <input type="text" ng-model="bcobro.fechaFin" name="fecha2" id="fecha2" class= "form-control" data-date-format="YYYY-MM-DD" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" required>
+	          </div>  
+	    </div>
+		<div class="col-md-3">
+			<input class="btn btn-info btn-lg" type="button" value="Buscar" style="margin-top: 0.8em;" ng-click="buscaCobro()">
+		</div>
+
+		<div class="col-md-3">
+			<input class="btn btn-primary btn-lg" type="button" value="Inicia Aplicación" style="margin-top: 0.8em;" ng-click="enviaAplicacion()">
+		</div>
+	</div>
+<!-- Inicia tabla de cobros -->
+	<div  class="panel panel-default" ng-show="cobro" style="width: 90%; margin: auto;">
+	    <br>
+	    <div class="row" ng-show="recibos">
+	      <div class="col-md-12">
+	        <table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" style="width: 100%">
+	          <tr> 
+	            <th width="2%">
+
+	            	<input type="checkbox"  toggle-checkbox toggle-checkbox-list="listado" toggle-checkbox-property="listadoCobros" name="selectedTodo[]" value="{{ listado }}" ng-checked="selection.indexOf(listadoCobros) > -1" ng-click="toggleSelection(listadoCobros)">  
+	            </th>         
+	            <th width="10%"><b>Clave</b></th>
+	            <th width="20%"><b>Referencia Bancaria</b></th>
+	            <th width="10%"><b>Fecha Cobro</b></th>         
+	            <th width="10%"><b>Saldo Inicial</b></th>
+	            <th width="10%"><b>Saldo</b></th>
+
+	          </tr>
+	          <tr ng-repeat="listado in listadoCobros">
+	            <td>
+	            	
+					<input type="checkbox"  toggle-checkbox toggle-checkbox-list="listado" toggle-checkbox-property="listado" name="selectedTodo[]" value="{{ listado }}" ng-checked="selection.indexOf(listadoCobros) > -1" ng-click="toggleSelection(listado)"> 
+	            </td>                         
+	            <td style="color: #aaa">{{listado.COB_claveint}}</td>
+	            <td >{{listado.COB_relacionBancaria}}</td>
+	            <td >{{listado.COB_fechaRegistroCobro}}</td>
+	            <td >{{listado.COB_saldoinicial | currency }}</td>
+	            <td >{{listado.COB_saldo | currency}}</td>
+
+	          </tr>
+	        </table>
+	      </div>
+	    </div>
+    </div>
+          
+<!-- Ventana de App -->
+
+<div class="modal fade" id="ventanaApp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+		        <h4 class="modal-title" id="myModalLabel">Ventana de Aplicación de Cobro</h4>
+
+	      </div>
+  		  <div class="modal-body"> 
+
+					<div class="panel panel-primary" >
+					    <div class="panel-heading">
+					      <h2   align="center">
+					      	Cobro: <span style="font-size: 30px">{{datosRecibo.totalcobro}}</span> </b> 
+					      	Recibo: <span style="font-size: 30px"> <b>{{datosRecibo.total}} </span></b> 
+					      	Aplicado: <b> {{datosRecibo.aplicado}}</b></span></h2>					     
+					    </div>
+					    <div class="panel-body">							
+							<div class="row mianimacion">
+								<form name="formAplicacionParticulares" ng-submit="guardarAplicacion()" novalidate>
+									<div class="col-md-12">										
+					                        <div class="form-group">				                           
+			                           			<div class="col-sm-2">
+			                           				<label class="control-label">Aplicar</label>
+													<input type="number" step="any" min="1"  name="monto" ng-model="aplicacion.monto" value="{{datosRecibo.totalcobro}}" class="form-control" required>	
+													<div class="validacion" role="alert" ng-if="interacted(formAplicacionParticulares.monto)" ng-messages="formAplicacionParticulares.monto.$error">
+							                        <div ng-message="required">campo requerido</div>
+<!-- 													<div ng-message="number">valor numérico</div>
+													<div ng-message="max">no puede ser mayor al faltante ({{datosRecibo.total-datosRecibo.aplicado}})</div>
+													<div ng-message="min">valor mayor a $1</div> -->                       
+							                        </div>			
+												</div>
+
+												<div class="col-sm-2">
+			                           				<div class="form-group">
+								                        <label>Fecha de cobro:</label>                        
+								                        <input type="text"  data-date-viewmode="years" data-date-format="YYYY-MM-DD"  class= "form-control" name="fecCobro" id="fecCobro" ng-model="aplicacion.fecCobro" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" value="{{aplicacion.fecCobro}}" required mayusculas ng-pattern="/^(\d{4})-(\d{2})-(\d{2})$/">
+								                        <div class="alert alert-danger" role="alert" ng-if="interacted(formAplicacionParticulares.fecCobro)" ng-messages="formAplicacionParticulares.fecCobro.$error">
+								                          <div ng-message="required">Se requiere el valor de la fecha de nacimiento</div>
+								                          <div ng-message="pattern">Formato incorrecto (aaaa-mm-dd)</div>
+								                        </div>
+								                    </div>          
+												</div>
+												<div class="col-sm-3">
+			                           				<label class="control-label">Referencia</label>
+																
+													<textarea name="referencia" placeholder="" ng-model="aplicacion.referencia" class="form-control" required mayusculas></textarea>
+													<div class="validacion"  role="alert" ng-if="interacted(formAplicacionParticulares.referencia)" ng-messages="formAplicacionParticulares.referencia.$error">
+							                        <div ng-message="required">campo requerido</div>                          
+							                        </div>	
+												</div>
+												<div class="col-sm-3">
+			                           				<label class="control-label">Observaciones</label>										
+													<textarea ng-model="aplicacion.observaciones" placeholder="" class="form-control" mayusculas></textarea>			
+												</div>
+												<div class="col-md-2 text-center" style="padding-top: 1em">
+													<input type="submit" name="guardaAplicacion" id="guardaAplicacion" class="btn btn-primary" value="Aplicar">
+												</div>
+					                        </div>					                   
+									</div>
+								</form>
+							</div>
+<!-- 							<div ng-show="cargador" class="row"> 
+                                <div class="col-md-12">
+                                  <div  align="center">
+                                    <img ng-src="imgs/cargadorCuadro.gif">
+                                  </div>
+                                </div>
+                            </div>   -->
+							<div class="row mianimacion" ng-show="listadoAplicaciones.length>0">
+								<div class="col-md-12">
+									<table class="table table-bordered table-hover">
+										<tr>
+											<th>
+												#
+											</th>
+											<th>
+												Fecha
+											</th>
+											<th>
+												Saldo
+											</th>
+											<th>
+												Aplicado
+											</th>
+											<th>
+												Usuario
+											</th>
+											<th>
+												Referencia
+											</th>
+											<th>
+												Cancelar
+											</th>
+										</tr>
+										<tr ng-repeat="aplicacion in listadoAplicaciones">
+											<td>
+												{{$index + 1}}
+											</td>
+											<td>
+												{{aplicacion.RPA_fecreg}}
+											</td>
+											<td>
+												{{aplicacion.RPA_monto}}
+											</td>
+											<td>
+												{{aplicacion.RPA_aplicado}}
+											</td>
+											<td>
+												{{aplicacion.Usu_login}}
+											</td>
+											<td>
+												{{aplicacion.RPA_referencia}}
+											</td>
+											<td>
+												<a href="" ng-click="borrarAplicacion(aplicacion.RPA_id)">
+			                                       <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="borrar">
+			                                          <em class="fa fa-circle fa-stack-2x text-success"></em>
+			                                          <em class="fa fa-check fa-stack-1x fa-inverse text-white"></em>
+			                                       </span>
+			                                     </a>
+											</td>
+										</tr>
+									</table>	
+								</div>
+							</div>												
+						</div>	
+					</div>
+
+     	  </div>
+
+     	  <div class="modal-footer">	      	
+
+	        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+	       
+	      </div> 
+	    </div>
+        </div>
+</div>
+
+</div>
+</div>
+<script type="text/javascript">
+       $('#fecCobro').datetimepicker({
+
+        pickDate: true,                 //en/disables the date picker
+        pickTime: false,                 //en/disables the time picker     
+        showToday: true,                 //shows the today indicator
+        language:'es'                  //sets language locale        
+    });
+
+    $('#fecha1').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+        $('#fecha2').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+
+ </script>

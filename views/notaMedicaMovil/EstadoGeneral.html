@@ -1,0 +1,35 @@
+
+<form name="formularios.estadoGral"  ng-submit="guardaEdoGral()" novalidate>
+  <div class="panel panel-primary" >
+    <div class="panel-heading">
+      <h3 class="panel-title" align="center"> Observaciones</h3>
+    </div>
+    <div class="panel-body"> 
+      <div class="row" align="center">
+        <div class="col-md-12">          
+          <div class="panel panel-default" style="width:60%">
+            <div class="panel-heading">
+              <h3 class="panel-title" align="center"> Estado General y Exploraci&oacute;n F&iacute;sica</h3>
+            </div>
+            <textarea class="form-control" rows="6" name="estado" ng-model="edoGral.estado" onpaste="return false" style="resize:none; border: none; width:100%" required mayusculas></textarea>
+          </div>
+          <div class="validacion" style="width:60%" role="alert" ng-if="interacted2(formularios.estadoGral.estado)" ng-messages="formularios.estadoGral.estado.$error">
+            <div ng-message="required">campo requerido</div>            
+          </div>        
+        </div>            
+      </div><!--fin del row principal-->
+      <div class="row"> 
+          <div class="col-md-12">
+            <div ng-show="cargador" align="center">
+              <img ng-src="imgs/cargador.gif">
+            </div>
+          </div>
+      </div> 
+      <div class="row">
+        <div class="col-md-4 col-md-offset-8">
+          <input type="submit" name="guardaObs" id="guardaObs" class="btn btn-success"  value="Guardar" />
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

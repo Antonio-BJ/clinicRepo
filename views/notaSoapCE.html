@@ -1,0 +1,95 @@
+<div class="row" style="width: 94%; margin: auto;">
+	<div class="col-md-10">
+		<h2><i class="fa fa-clipboard" aria-hidden="true" style="color: #156790"></i> &nbsp;&nbsp;Nota SOAP para Corta Estancia</h2>
+	</div>
+
+	<div class="col-md-2" align="right">
+		<a href="#/documentos"><img src="imgs/back.png" width="45" tooltip-placement="bottom" tooltip-trigger tooltip="Regresar a Documentos"></a>
+	</div>
+</div>
+
+<form name="notaSoapCortaEstancia" ng-submit="guardarSoap()">
+	<div class="row"  style="width:60%; margin: auto;">
+		<div class="col-md-12">
+			<h4>App:</h4>
+			<textarea class="form-control" ng-model="soap.appSoap" placeholder="* Ingrese App" rows="3" required mayusculas style="resize:none"></textarea>
+		</div>
+	</div>
+
+	<div class="row"  style="width:60%; margin: auto;">
+		<div class="col-md-12">
+			<h4>Apx:</h4>
+			<textarea class="form-control" ng-model="soap.apxSoap" placeholder="* Ingrese Apx" rows="3" required mayusculas style="resize:none"></textarea>
+		</div>
+	</div>
+
+	<div class="row"  style="width:60%; margin: auto;">
+		<div class="col-md-12">
+			<h4>Subjetivos:</h4>
+			<textarea class="form-control" ng-model="soap.subjetivo" placeholder="* Ingrese subjetivos" rows="3" required mayusculas style="resize:none"></textarea>
+		</div>
+	</div>
+
+	<div class="row"  style="width:60%; margin: auto;">
+		<div class="col-md-12">
+			<h4>Objetivos:</h4>
+			<textarea class="form-control" ng-model="soap.objetivo" placeholder="* Ingrese Objetivos" rows="3" required mayusculas style="resize:none"></textarea>
+		</div>
+	</div>
+
+	<div class="row"  style="width:60%; margin: auto;">
+		<div class="col-md-12">
+			<h4>Análisis:</h4>
+			<textarea class="form-control" ng-model="soap.analisis" placeholder="* Ingrese análisis" rows="3" required mayusculas style="resize:none"></textarea >
+		</div>
+	</div>
+
+	<div class="row"  style="width:60%; margin: auto;">
+		<div class="col-md-12">
+			<h4>Plan:</h4>
+			<textarea class="form-control" ng-model="soap.pronostico" placeholder="Ingrese plan" rows="3" required mayusculas style="resize:none"></textarea>
+		</div>
+	</div>
+
+	<br><br>
+	
+	<div class="row"  style="width:60%; margin: auto;">
+		<div class="col-md-12" align="center" ng-show="cargadorGuarda==true">
+			<br>
+			<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color: #156790"></i>
+			<span class="sr-only">Loading...</span>
+		</div>
+		
+		<div class="col-md-12" align="center" ng-hide="cargadorGuarda==true">
+			<br>
+			<button type="submit" class="btn btn-primary btn-lg" name="guardarSoap" id="guardarSoap">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				Guardar
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</button>
+		</div>
+	</div>
+</form>
+
+<br><br><br><br>
+
+<!-- MODAL DE CONFIRMACIÓN -->
+<!-- 	<div class="modal fade" id="confirmacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Confimación</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<br>
+	        ¡Los datos han sido enviados!
+	        <br><br>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div> -->
+<!-- MODAL DE CONFIRMACIÓN -->

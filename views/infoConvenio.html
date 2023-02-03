@@ -1,0 +1,806 @@
+<div class="container" style="width: 100%"> 
+
+    
+
+ <div class="panel panel-primary">
+
+    <div class="panel-heading">
+
+      <label>Detalle de convenio</label>
+
+    </div> 
+
+</div>
+
+    <div class="Panel-body">
+
+    <div class="row" ng-show="convenio==1">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/tarjetaInbursa.jpg" width="400" /><br>
+
+        <label class="alert alert-info" style="width:60%">los costos serán iguales que los de la membresía mv.</label>       
+
+        </div>            
+
+      </div>  
+
+      <div class="row" ng-show="convenio==2">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/grupo_bimbo.jpg" width="400" /><br>
+
+        <label class="alert alert-info" style="width:60%">Aplica convenio donde atendemos por paquete ambulatorio a precio fijo
+
+        . El lesionado no paga la atención directamente. Favor de mandar el expediente completo en original a operación mv.</label>       
+
+        </div>            
+
+      </div>  
+
+        <div class="row" ng-show="convenio==3">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/membresiaMV.png" width="400" /><br>        
+
+        </div>            
+
+      </div>
+
+      <div class="row" ng-show="convenio==3">
+
+        <div class="col-md-12" align="center" ng-show="convenio==3" style="width:100%">               
+
+        <label class="alert alert-info">Búsqueda de membresía medicavial por folio o por nombre</label> 
+
+        </div>            
+
+      </div>   
+
+      <form ng-submit="buscarMembresia()">
+
+      <div class="row" ng-show="convenio==3">
+
+        <div class="col-md-3">        
+
+          <div class="input-group">
+
+                  <span class="input-group-addon">Folio: </span>
+
+                  <input type="text" name="folio" id="folio" ng-model="mem.folio" class= "form-control" >
+
+                </div>
+
+            </div>
+
+        <div class="col-md-7">        
+
+        <div class="input-group">
+
+                  <span class="input-group-addon">Nombre: </span>
+
+                  <input type="text" name="nombre" id="nombre" ng-model="mem.nombre" class= "form-control" >
+
+                </div>
+
+        </div>
+
+        <div class="col-md-2" align="right">                        
+
+        <button class="btn btn-primary">Buscar</button>
+
+        </div>              
+
+      </div>  
+
+      </form>
+
+      <div class="row" ng-show="listadoMemebresias">                     
+
+                     <div class="col-md-12">
+
+                        <div class="panel panel-default">
+
+                           <div class="panel-heading">
+
+                              <div class="panel-title">Folios encontrados</div>
+
+                           </div>
+
+                           <!-- START list group-->
+
+                           <div class="list-group">
+
+                              <!-- START list group item-->
+
+                              <div class="list-group-item" ng-repeat="listado in listadoMemebresias | orderBy:predicate:reverse">
+
+                                 <div class="media">
+
+                                  
+
+                                    
+
+                                    <div class="media-body clearfix">
+
+                                       <div class="media-heading text-warning m0">{{listado.mem_folio}} - {{listado.mem_serie}} ---- <label class="media-heading text-danger m0"> {{listado.mem_nombre}} </label>
+
+                    <small class="text-muted pull-right">{{listado.mem_fecreg}}</small> 
+
+                                       </div>                                       
+
+                                       <p class="m0">
+
+                                          
+
+                                          <small class="m0 pull-right"><a href="#/registra" ng-click="registrarLesionado(listado.mem_folio)"><button class="btn btn-primary" >Registrar</button></a></small>
+
+                                          
+
+                                       </p>                                       
+
+                                    </div>
+
+                                    
+
+                                 </div>
+
+                              </div>
+
+                              <!-- END list group item-->                                                            
+
+                           </div>
+
+                           <!-- END list group-->
+
+                           <!-- START panel footer-->
+
+                           <div class="panel-footer clearfix">
+
+                              <a href="#" class="pull-left">
+
+                                 <small></small>
+
+                              </a>
+
+                           </div>
+
+                           <!-- END panel-footer-->
+
+                        </div>
+
+                     </div>
+
+                  </div>
+
+         <div class="row" ng-show="convenio==4">
+
+      <div class="col-md-12" align="justify">
+
+      <div align="center">        
+
+      <img ng-src="imgs/convenio/desclub.png" width="400" /><br>
+
+    </div>
+
+
+
+      <div class="panel panel-success">
+
+        <div class="panel-heading">
+
+          <h4>Descripción de la promoción</h4>
+
+        </div>
+
+        <div class="panel-body">
+
+          Check up ortopédico a solo <b>$ 1,300 pesos</b>; incluye:
+
+            <br><br>
+
+          <ul>
+
+            <li>Consulta con especialista.</li>
+
+            <li>RX de columna.</li>
+
+            <li>RX de cadera.</li>
+
+            <li>RX de rodillas.</li>
+
+            <li>Plantogragía.</li>
+
+            <li>Plan de tratamiento para manejo de dolor o atención de problemas crónico degenerativos (en caso de presentarlos).</li>
+
+            <li>Membresía familiar totalmente gratutita que te permite obtener atractivos decuentos en todos nuestros paquetes actuales y futuros.</li>
+
+          </ul>
+
+            <br>
+
+          <div style="font-size:0.8em;">
+
+            <b>* Precio normal $2,250 pesos.</b>
+
+          </div>
+
+            <br>
+
+          Para quienes soliciten el descuento al pagar con las <b>Tarjetas BBVA Bancomer</b> del programa <b>*Vida Bancomer Descuentos</b> y para todos aquellos usuarios que presenten en el establecimiento anuncio, cupón o tarjeta de descuento virtual o física con el logotipo <b>*Vida Bancomer</b> o <b>Desclub</b>.
+
+            <br><br>
+
+          <b>Vigencia de la promoción:</b> Del 1 de septiembre de 2016 al 31 de diciembre de 2016.
+
+        </div>
+
+      </div>  
+
+          <br>
+
+      <label class="alert alert-info"><b>Alianza entre Médicavial y Desclub:</b><br>
+
+1.      Se otorgarán los siguientes beneficios:
+
+·        Membresía familiar gratuita; para familiares directos al titular (esposa, hijos, padres)
+
+·        40 % de descuento en paquetes cuello, espalda, hombro. De $2,000.00 a $1200.00, incluye: Consulta con médico especialista en ortopedia y traumatología, 2 placas de RX, diagnostico escrito, aplicación de medicamentos.
+
+Dichos beneficios aplicables al presentar cualquier variante de las tarjetas Desclub ó pagar con las Tarjetas BBVA Bancomer del programa *Vida Bancomer Descuentos. Las tarjetas serán señaladas de forma gráfica al final del presente.<br><br>
+
+2.      Las restricciones de la promoción son:<br>
+
+a)    Cualquier insumo o servicio no mencionado en el contenido de paquetes será cobrado independiente con un  10 % de descuento sobre precio de lista
+
+b)      No aplica en conjunto con otras promociones<br><br>
+
+3.      Si en algún momento existiera queja o reclamación de algún Tarjetahabiente, el cual indicara que la promoción le ha sido negada o que el personal indicó desconocimiento de la misma; el establecimiento    se compromete a reembolsar el importe del descuento no aplicado, en los próximos 3 días, después de haber sido notificado:<br>
+
+a)      Al recibir la queja o reclamación, Desclub y/o BBVA Bancomer validará en su sistema que en efecto el Tarjetahabiente haya realizado el consumo en el establecimiento, solicitando un voucher y que el consumo cumpla con la vigencia de la promoción y condiciones de la misma.<br><br>
+
+4.      El establecimiento proporcionará a Desclub el Banco adquirente y núm. de afiliación Bancaria de cada sucursal, no importando si cuenta con Terminales de BBVA Bancomer o de cualquier otro banco, con la finalidad de medir el impacto del programa.<br><br>
+
+5.      El establecimiento se compromete a colocar el material POP proporcionado en un lugar visible dentro del establecimiento y mantenerlo durante la vigencia de la promoción. Desclub proporcionará el material pop necesario para cada establecimiento. – Esto se refiere a un reloj que se coloca pegado en la puerta de acceso a Medicavial,  y algunos folletos que se colocan en recepción.<br><br>
+
+6.      Durante La vigencia de la promoción se harán de manera aleatoria visitas y llamadas  de calidad por parte del personal de VIDA BBVA Bancomer o Desclub, en la cuales se realizará una breve encuesta a una o dos personas del establecimiento para asegurar que el Personal se encuentre informado de la promoción. El personal de Desclub se presentará debidamente identificado.</label>        
+
+      </div>            
+
+    </div>
+
+     <div class="row" ng-show="convenio==5">
+
+      <div class="col-md-12" align="justify">
+
+      <div align="center">        
+
+      <img ng-src="imgs/convenio/MetLife.png" width="400" /><br>
+
+    <br>
+
+      <label class="alert alert-info" align="center"><p><b>Pacientes con credencial de Metlife tienen precio especial en consulta y rehabilitaciones. Si desean otro insumo puede comprar o no la membresía Medicavial y agregarlos a su recibo.</b></p>
+
+        <p><b>El paciente paga el recibo en clínica, se le otorga su recibo y puede pedir factura en clínica u obtenerla por nuestro portal de facturación.</b></p>
+
+        <p><b>NOTA.</b> Si el paciente presenta orden de pago directo se debe registrar el la sección aseguradora -> Metlife</p>      
+
+      </label>
+
+    </div>
+
+    <br>
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+  <!-- Indicators -->
+
+  <ol class="carousel-indicators">
+
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+
+    <li data-target="#myCarousel" data-slide-to="3"></li>
+
+  </ol>
+
+
+
+  <!-- Wrapper for slides -->
+
+  <div class="carousel-inner" role="listbox">
+
+    <div class="item active" align="center">
+
+      <img src="imgs/convenio/metlife/metlife1.jpg" alt="metlife">
+
+    </div>
+
+
+
+    <div class="item" align="center">
+
+      <img src="imgs/convenio/metlife/metlife2.jpg" alt="metlife">
+
+    </div>
+
+
+
+    <div class="item" align="center">
+
+      <img src="imgs/convenio/metlife/metlife3.jpg" alt="metlife">
+
+    </div>
+
+
+
+    <div class="item" align="center">
+
+      <img src="imgs/convenio/metlife/metlife4.jpg" alt="metlife">
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Left and right controls -->
+
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+
+    <span class="sr-only">Previous</span>
+
+  </a>
+
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+
+    <span class="sr-only">Next</span>
+
+  </a>
+
+</div>        
+
+      </div>            
+
+    </div>
+
+    <div class="row" ng-show="convenio==6">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/elAsegurador.png" width="400" /><br>
+
+        <label class="alert alert-info" style="width:70%">Al personal del Periódico el Asegurador se le va atender en las clínicas solo con presentar el pase que se anexa, el cual va firmado por el Sr. Genuario Rojas Director General ó Lic. Briza I. Islas Yañéz, Directora de Administración, la atención es de cortesía. </label>  
+
+        <br><br>
+
+        <div style="border: 1px solid; width:70%">
+
+        <img ng-src="imgs/convenio/asegurador/asegurador.jpg" width="600" />     
+
+        </div>    
+
+        </div>            
+
+      </div> 
+
+
+
+      <div class="row" ng-show="convenio==7">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/hapag.png" width="400" /><br><br>
+
+        <label class="alert alert-info" style="width:60%">Convenio con HAPAG se generará recibo de lo consumido sin ser entregado al paciente, que será cobrado directo con la compañia.</label>       
+
+        </div>
+
+           <br>
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+  <!-- Indicators -->
+
+  <ol class="carousel-indicators">
+
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+
+    <li data-target="#myCarousel" data-slide-to="1"></li>    
+
+  </ol>
+
+
+
+  <!-- Wrapper for slides -->
+
+  <div class="carousel-inner" role="listbox">
+
+    <div class="item active" align="center">
+
+      <img src="imgs/convenio/hapag/hapag1.png" alt="hapag">
+
+    </div>
+
+
+
+    <div class="item" align="center">
+
+      <img src="imgs/convenio/hapag/hapag2.png" alt="hapag">
+
+    </div>   
+
+  </div>
+
+
+
+  <!-- Left and right controls -->
+
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+
+    <span class="sr-only">Previous</span>
+
+  </a>
+
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+
+    <span class="sr-only">Next</span>
+
+  </a>
+
+</div>             
+
+      </div> 
+
+
+
+      <div class="row" ng-show="convenio==8">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/keken.png" width="280" /><br><br><br>
+
+        <label class="alert alert-info" style="width:60%">Convenio con KEKEN se generará recibo de lo consumido sin ser entregado al paciente, que será cobrado directo con la compañia.</label>       
+
+        </div>            
+
+      </div> 
+
+
+
+       <div class="row" ng-show="convenio==13">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/asiss.jpg" width="300" /><br><br><br>
+
+        <label class="alert alert-info" style="width:60%">Convenio con ASISS</label>       
+
+        </div>            
+
+      </div> 
+
+      <div class="row" ng-show="convenio==14">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/multiva.jpg" width="300" /><br><br><br>
+
+        <label class="alert alert-info" style="width:60%">Convenio con Tarjeta multiva se hará un descuento de 40%</label>       
+
+        </div>            
+
+      </div>
+
+      <div class="row" ng-show="convenio==15">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/axa.jpg" width="400" /><br>
+
+        <label class="alert alert-info" style="width:60%">Se registra paciente para solo rehabilitación, registrando el número de sesiones que va a tomar, existe un semáforo en el menú izquierdo en el que se llevará el contro de liberacion del paciente</label>       
+
+        </div>            
+
+      </div> 
+
+      <div class="row" ng-show="convenio==16">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/cosem.jpg" width="400" /><br>
+
+        <label class="alert alert-info" style="width:60%">1.- Médicavial, se compromete a la toma de radiografías simples con un costo de $150.00 por placa o $400 por el paquete de 3 proyecciones.<br>2.- Los estudios no se entregarán impresos o interpretados. <br></label>       
+
+        </div>            
+
+      </div>  
+
+
+
+      <div class="row" ng-show="convenio==17">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/alianzaFrancesa.jpg" width="400" /><br>
+
+        <label class="alert alert-info" style="width:60%">Convenio con Alianza Francesa<br></label>       
+
+        </div>            
+
+      </div>  
+
+
+
+      <div class="row" ng-show="convenio==18">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/grupo-frisa.jpg" width="200" /><br>
+
+        <label class="alert alert-info" style="width:60%">Se atenderá al paciente que llegue con credencial similar a las siguiente, el descuento es similar a la membresía MédicaVial y se tendrá que cobrar en el momento de la consulta<br></label><br> <img ng-src="imgs/convenio/credencialFrisa/Crdncl_fin.jpg" width="80" />
+
+        <img ng-src="imgs/convenio/credencialFrisa/Credencial_fin_1.jpg" width="200" />
+
+        <img ng-src="imgs/convenio/credencialFrisa/Credencial_fin_2.jpg" width="200" />
+
+        <img ng-src="imgs/convenio/credencialFrisa/Credencial_fin_3.jpg" width="200" />      
+
+        <img ng-src="imgs/convenio/credencialFrisa/imagen credencia final.jpg" width="100" /><br>      
+
+        </div>            
+
+      </div>  
+
+
+
+      <div class="row" ng-show="convenio==19">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/revistaSiniestro.png" width="400" /><br>
+
+        <label class="alert alert-info" style="width:60%" align="left">
+
+        Se brinda la atención a los funcionarios de la revista siniestro como un particular con convenio (sin medicamentos)
+
+        . 
+
+        <br><br>
+
+        Los pacientes deben de venir con autorización de la licenciada Laura Edith Islas o directivo MédicaVial.
+
+        <br><br>
+
+        El paciente no deberá pagar por el servicio, pero es importante generar el recibo y descargar los insumos.
+
+        <br><br>
+
+        El recibo no se le entrega al paciente.
+
+        <br><br>
+
+        Estas atenciones no generan factura.
+
+        </div> </label>           
+
+      </div> 
+
+
+
+
+
+      <div class="row" ng-show="convenio==20">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/ausa.jpg" width="400" /><br>
+
+        <label class="alert alert-info" style="width:60%" align="left">
+
+        Atención con identificación de grupo ausa, se maneja como una cortesía mv.
+
+        </label>
+
+        </div>            
+
+      </div> 
+
+
+
+     <!--  <div class="row" ng-show="convenio==21">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/scotiabank.png" width="200" /><br>
+
+        <label class="alert alert-info" style="width:60%">Se atenderá al paciente que pague con tarjeta de crédito scotiabank con un precio especial en el páquete de 5 sesiones de rehabilitacioón a $1510 <br></label><br>
+
+        <img ng-src="imgs/convenio/scotia/scotia.png" width="500" />
+
+        <img ng-src="imgs/convenio/scotia/scotia1.png" width="500" /><br>      
+
+        </div>            
+
+      </div>  -->
+
+
+
+      <div class="row" ng-show="convenio==21">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/sisnova.jpg" width="200" /><br>
+
+        <label class="alert alert-info" style="width:60%"> <p><h3>Se atenderá al paciente que presente la  Carta de Autorización que se deberá resguardar y  digitalizar, la identificación  del lesionado tendrá que ser digitalizada además de generar el recibo correspondiente sin entregarlo.</h3></p><br>
+
+          <p>Consulta médica genera.</p>
+
+          <p>Cosnutla médica de ortopedia.</p>
+
+          <p>Uso cúbiculo para curaciones.</p>
+
+          <p>Paquete de estancia por tratamiento antibiótico.</p>
+
+          <p>Rayos x (proyección).</p>
+
+          <p>Sesión de rehabilitación.</p>
+
+          <p>paquete de 20 sesiones.</p>
+
+       </label>
+
+   
+
+        </div>            
+
+      </div>
+      
+      <div class="row" ng-show="convenio==22">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/logostmp/5422.jpg" width="200" /><br>
+
+        <label class="alert alert-info" style="width:60%"> <p><h3>Se tendrá que generar un recibo sin entregarlo al peciente, el costo de los rayos x será de $___ por placa.</h3></p><br>
+
+         
+
+       </label>
+
+   
+
+        </div>            
+
+      </div>
+
+      <div class="row" ng-show="convenio==23">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/logostmp/5423.jpg" width="200" /><br><br><br>
+
+        <label class="alert alert-info" style="width:60%"> <p><h3>El afilidado presentará su "TARJETA DE AFILIACIÓN" con el LOGO DISTINTIVO de KALAAN con el nombre del paciente con lo que debe tener acceso a los descuentos y costos de un 40% en los productos y servicios.</h3></p><br>
+          <p>Cualquier duda comunicarse con: Dr. Miguel Hernández Estrada al 55 3711 5751 / 55 8718 3162 ó al correo electrónico mhernandez@kalaanbienestarsocial.com con un horario de lunes a viernes de 8:00 a 17:00 horas.</p>
+
+         
+
+       </label>
+
+   
+
+        </div>            
+
+      </div>
+
+       <div class="row" ng-show="convenio==24">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/logostmp/85242.jpg" width="200" /><br><br><br>
+
+        <label class="alert alert-info" style="width:60%"> <p><h3>El paciente presentará un código QR otorgado por Go Benefits el cual le da un descuento del 40% en servicios seleccionados.</h3></p>
+
+         
+
+       </label>
+
+   
+
+        </div>            
+
+      </div>
+
+      <div class="row" ng-show="convenio==25">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/logostmp/8825.jpg" width="200" /><br><br><br>
+
+        <label class="alert alert-info" style="width:60%"> <p><h2>Pacientes referenciados por Sociedad de Beneficiencia Alianza Monte Sinai, IAP.</h2></p>
+
+          <p>Dr Natan Sarue Saed.</p>
+          <p>Cobro por sesiòn de rehabilitaciòn $400.</p>
+
+         
+
+       </label>
+
+   
+
+        </div>            
+
+      </div>
+
+      <div class="row" ng-show="convenio==26">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/logostmp/8826.jpg" width="200" /><br><br><br>
+
+        <label class="alert alert-info" style="width:60%"> <p><h2>40% de descuento a colaboradores y a médicos de Mapfre.</h2></p>
+
+          <p>Membresía Gratis</p>
+          <p>Solo para Médicos y Personal de Mapfre.</p>
+
+          <br><br><br>
+
+          <p align="Left">1.- Descarga la imagen de la promoción.</p>
+          <p align="Left">2.- Presenta la imagen impresa o desde tu celular en cualquiera de nuestras clinicas.</p>
+          <p align="Left">3.- ¡Listo!</p>
+
+       </label>
+
+        </div>            
+
+      </div>
+
+
+      <div class="row" ng-show="convenio==27">
+
+        <div class="col-md-12" align="center">        
+
+        <img ng-src="imgs/convenio/reh-3ra-edad.jpg" width="50%" /><br><br><br>
+
+        <label class="alert alert-primary" style="width:60%"> <p><h2>Terapia Grupal para Personas de la 3ra Edad.</h2></p>
+
+          <p>Trate Dolores y Molestias.</p>
+          <p>Conviva y mejore su estado de animo.</p>
+
+          <br>
+
+       </label>
+
+        </div>            
+
+      </div>
+
+
+      <div class="row" ng-hide="convenio==3">
+
+        <div class="col-md-12" align="right" >                
+
+        <a class="btn btn-primary btn-lg" href="#/registra">Siguiente</a>
+
+        </div>            
+
+      </div>  
+
+  </div>
+
+</div>
+

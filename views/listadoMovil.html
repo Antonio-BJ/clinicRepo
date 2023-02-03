@@ -1,0 +1,162 @@
+<div class="container" ng-init="init()">
+	<div class="content-wrapper">
+		<h3 >Pacientes AMI
+		<!-- <small>A showcase of different components inside tables</small> -->
+
+		</h3>
+		
+		<!-- START panel-->
+
+		<ul class="nav nav-tabs">
+			<li class="active">
+				<a data-target="#tab-one"  data-toggle="tab">Listado de pacientes por atender</a>
+			</li>
+			<li >
+				<a data-target="#tab-two" ng-click="verDatosAcc()" data-toggle="tab">Listado de pacientes atendidos</a>
+			</li>
+		
+		</ul>
+		<div class="tab-content" >
+			<div id="tab-one" class="tab-pane active">
+				<div class="panel panel-default">
+					<!-- START table-responsive-->
+					<div  ng-class="cargadorListado">
+						<table id="table-ext-1" class="table table-bordered">
+							<thead>
+								<tr>
+								<!-- <th>EMPRESA</th> -->
+								<th>FOLIO MV</th>
+								<th style="width:30%">NOMBRE</th>
+								<th >TIEMPO ESPERA</th>
+								<!-- <th>EDAD</th> -->
+								<th>SEXO</th>
+								<th>TELÉFONO</th>
+								<th>MEDIO</th>
+								<th>CORREO</th>
+								<th>ATENCIÓN</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="dato in listadoMovil" ng-show="dato.CA_fin=='N'" >
+								<!-- <td>{{dato.Empresa}}</td> -->
+								<td style="background-color: {{dato.color}};">{{dato.folio}}</td>
+								<td>{{dato.lesionado}}</td>
+								<td>{{dato.tiempoEspera}}</td>
+								<!-- <td>{{dato.edad}}</td> -->
+								<td>{{dato.sexo}}</td>
+								<td>{{dato.telefono}}</td>
+								<td>{{dato.medio}}</td>
+								<td >
+									{{dato.correro}}
+								</td>
+								<td ng-if="dato.usuario==usrLogin">
+									<button ng-show="dato.antecion=='0'" class="btn btn-default"  ng-click="mandaDocumentos(dato.folio)">Atender</button>
+									<button ng-show="dato.antecion=='1'" class="btn btn-warning"  ng-click="mandaDocumentos(dato.folio)">Seguir atendiendo</button>
+								</td>
+								<td ng-if="dato.usuario!=usrLogin">
+									{{dato.Medico}}
+								</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					</div>
+			</div>
+			<div id="tab-two" class="tab-pane">
+				<div class="panel panel-default">
+					<!-- START table-responsive-->
+					<div class="table-responsive">
+						<table id="table-ext-1" class="table table-bordered table-hover">
+							<thead>
+								<tr>
+								<!-- <th>EMPRESA</th> -->
+								<th>FOLIO MV</th>
+								<th style="width:30%">NOMBRE</th>
+								<!-- <th>EDAD</th> -->
+								<th>SEXO</th>
+								<th>TELÉFONO</th>
+								<th>MEDIO</th>
+								<th>CORREO</th>
+								<th>ATENCIÓN</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="dato in listadoMovil" ng-show="dato.CA_fin=='S'">
+								<!-- <td>{{dato.Empresa}}</td> -->
+								<td>{{dato.folio}}</td>
+								<td>{{dato.lesionado}}</td>
+								<!-- <td>{{dato.edad}}</td> -->
+								<td>{{dato.sexo}}</td>
+								<td>{{dato.telefono}}</td>
+								<td>{{dato.medio}}</td>
+								<td >
+									{{dato.correro}}
+								</td>
+								<td >
+									Atendido
+								</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					</div>
+			</div>
+		</div>
+
+
+
+
+
+
+		
+		<!-- END table-responsive-->
+		<!-- <div class="panel-footer">
+			<div class="row">
+				<div class="col-lg-2">
+					<div class="input-group">
+					<input type="text" placeholder="Buscar" class="input-sm form-control">
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-sm btn-default">Buscar</button>
+					</span>
+					</div>
+				</div>
+				<div class="col-lg-8"></div>
+				<div class="col-lg-2">
+					<div class="input-group pull-right">
+					<select class="input-sm form-control">
+						<option value="0">Bulk action</option>
+						<option value="1">Delete</option>
+						<option value="2">Clone</option>
+						<option value="3">Export</option>
+					</select>
+					<span class="input-group-btn">
+						<button class="btn btn-sm btn-default">Apply</button>
+					</span>
+					</div>
+				</div>
+			</div>
+		</div> -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="modalListadoMovil" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">Aviso</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body" style="text-align: justify; color: coral;">
+		  <p ><h3 >Estimado doctor recuerda que para atender una videollamda es indispensable portar tu bata y verificar que tu espacio de trabajo esté limpio, ordenado y que de una buena imagen.</h3></p>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+		</div>
+	  </div>
+	</div>
+  </div>
+		</div>
+	</div>
+</div>

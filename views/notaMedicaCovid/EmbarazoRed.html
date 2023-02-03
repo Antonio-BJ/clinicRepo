@@ -1,0 +1,145 @@
+<form name="formularios.embarazoForm" ng-submit="guardaEmbarazo()" novalidate>
+    <div class="container" style="width: 100%"> 
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title" align="center">Antecedentes Gineco-Obstetricos</h3>
+            </div>    
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-1" >
+                        <div class="input-group">
+                            <span class="input-group-addon ">La Paciente esta Embarazada?   </span>
+                            <span class="input-group-addon " style="height:35px;"> <input type="radio" name="Emb" id="Emb" value="Si" ng-model="siEmb" />Si &nbsp;&nbsp;<input type="radio" name="Emb" id="Emb" value="No" ng-model="siEmb" Checked/>No </span>
+                        </div>
+                    </div>
+                </div>
+                <div id="Embarazo" ng-show="siEmb=='Si'" class="muestraderecha2">
+                <br>
+                <div class="row">
+                    <div class="col-md-1">
+                        <div class="input-group">
+                            <span class="input-group-addon">Actualmente  est&aacute; sometida a control ginecol&oacute;gico?  </span>
+                            <span class="input-group-addon " style="height:35px;"> <input type="radio" name="Gine" id="Gine" value="Si" ng-model="embarazo.controlGine" ng-true-value="Si" ng-false-value="No">Si &nbsp;&nbsp; <input type="radio" name="Gine" id="Gine" value="No" ng-model="embarazo.controlGine" ng-true-value="No" ng-false-value="Si" Checked>No</span>
+                        </div>
+                    </div>
+                    <div class="col-md-5" >
+                    </div>
+                    <div class="col-md-5 ">
+                        <div class="input-group">
+                            <span class="input-group-addon">Semanas de gestaci&oacute;n</span>                            
+                            <input type="number" name="semanas" ng-model="embarazo.semanas" class="form-control" min="1" max="45" placeholder='Ingresa Semanas' required>                                                  
+                        </div>
+                        <div class="validacion" role="alert" ng-if="interacted1(formularios.embarazoForm.semanas)" ng-messages="formularios.embarazoForm.semanas.$error">
+                          <div ng-message="required">campo requerido</div>
+                          <div ng-message="number">valor numérico</div>
+                          <div ng-message="min">valor mayor a 1</div>
+                          <div ng-message="max">valor menor a 45</div>
+                        </div> 
+                    </div>                     
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-1">
+                        <div class="input-group">
+                            <span class="input-group-addon" style="height:35px;">Dolor Abdominal</span>
+                            <span class="input-group-addon " style="height:35px;"><input type="radio" name="dolAbdominal" id="dolAbdominal" ng-model="embarazo.dolor" value="Si" ng-true-value="Si" ng-false-value="No"/>Si &nbsp; &nbsp; <input type="radio" name="dolAbdominal" id="dolAbdominal" ng-model="embarazo.dolor" value="No" ng-true-value="Si" ng-false-value="No" Checked/>No</span>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">Descripci&oacute;n: </span>
+                            <textarea  id="descEmb" ng-model="embarazo.desc" name="descEmb" class="form-control" style="width:250px; height: 35px; resize:none;" mayusculas></textarea>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon"> Frecuencia card&iacute;aca fetal </span>
+                            <input type="number" name="fcFet" id="fcFet" class="form-control" ng-model="embarazo.fcFet">
+                        </div>
+                        <div class="validacion" role="alert" ng-if="interacted1(formularios.embarazoForm.fcFet)" ng-messages="formularios.embarazoForm.fcFet.$error">                          
+                          <div ng-message="number">valor numérico</div>                          
+                        </div> 
+                    </div>
+                    <div class="col-md-1">
+                        <div class="input-group">
+                            <span class="input-group-addon">Movimientos Fetales</span>
+                            <span class="input-group-addon " ><input type="radio" name="movFet" id="movFet" Value="Si" ng-model="embarazo.movFet" ng-true-value="Si" ng-false-value="No"/>Presentes &nbsp; &nbsp;<input type="radio" name="movFet" id="movFet" ng-model="embarazo.movFet" Value="No" ng-true-value="Si" ng-false-value="No"/>Ausentes</span>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">Justificaci&oacute;n y obs.  </span>
+                            <textarea rows="1" ng-model="embarazo.justif" cols="60" name="obsEmb" id="obsEmb" class="form-control" onpaste="return false" style="resize:none; " mayusculas></textarea>
+                        </div>
+                    </div>
+                </div> 
+                <div class="row"> 
+                    <div class="col-md-12">
+                      <div ng-show="cargador" align="center">
+                        <img ng-src="imgs/cargador.gif">
+                      </div>
+                    </div>
+                </div>   
+                <DIV class= "row">  
+                    <div class="col-md-5 ">
+                    </div>   
+                    <div class="col-md-6">
+                        <div class="input group">
+                            <input type="submit" class="btn btn-success" value="Guardar Embarazo" />
+                        </div>
+                    </div>
+                </DIV>  
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ng-show="mensaje">
+                            <div class="alert alert-warning">No se puede agregar otro embarazo</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ng-show="listEmbarazo" class="muestraderecha2">
+                            <table align="center" width="100%" class="table table-striped table-hover" ng-repeat="emba in listEmbarazo">
+                                <tr>
+                                  <td><b>Control ginecologico</b></td><td>{{emba.Emb_ginecologia}}</td>
+                                   <td><b>Semanas de gestaci&oacute;n</b></td><td>{{emba.Emb_semGestacion}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Dolor abdominal</b></td> <td>{{emba.Emb_dolAbdominal}}</td>
+                                        <td><b>Descripcion</b></td><td>{{emba.Emb_descripcion}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Frecuencía cardiaca fetal</b></td><td>{{emba.Emb_fcf}}</td>
+                                        <td><b>Movimientos fetales</b></td><td>{{emba.Emb_movFetales}}</td>
+                                   </tr>
+                                   <tr>
+                                        <td><b>Observaciones</b></td><td colspan="3">{{emba.Emb_obs}}</td>
+                                   </tr>
+                            </table>
+                        </div>
+                    </div> 
+                </div>
+                </div>
+                <DIV class= "row">  
+                    <div class="col-md-10 ">
+                    </div>   
+                    <div class="col-md-2">
+                        <div class="input group">
+                            <input type="button"  name="siguiente" id="siguiente" class="btn btn-primary" ng-click="lesionSig()" value="Siguiente" />
+                        </div>
+                    </div>
+                </DIV>  
+            </div>
+        </div>
+    </div>
+</form>

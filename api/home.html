@@ -1,0 +1,369 @@
+<div ng-init="init()">
+	<div class="row">
+		<div class="col-md-6">
+		<h1>Bienvenido </h1>	
+		</div>
+		<div class="col-md-6">
+		<h1><b>{{uniNombre}}</b></h1>	
+		</div>
+	</div>
+    
+     <div ng-hide="avisos" class="row"> 
+        <div class="col-md-12">
+          <div ng-show="cargador" align="center">
+            <img ng-src="imgs/cargador.gif">
+          </div>
+        </div>
+      </div>  
+    <div ng-show="avisos" class="row mianimacion">
+    <div class="col-md-12" ng-hide="usrLogin=='algo'">
+				<div class="color-box space" ng-repeat="aviso in avisos">
+                    <div class="shadow" ng-if="aviso.Aviso_tipo==0">
+                        <div class="info-tab tip-icon" title="Useful Tips">&nbsp;</div>
+                        <div class="tip-box">
+                        	<br>
+                            <p><strong>{{aviso.Aviso_titulo}}</strong> <br>
+                            {{aviso.Aviso_textoCorto}}</p>
+                            <p><a href="{{aviso.Aviso_rutaPDF}}"></a></p>
+                        </div>
+                    </div>
+                    <div class="shadow" ng-if="aviso.Aviso_tipo==1">
+                        <div class="info-tab note-icon" title="Useful Tips">&nbsp;</div>
+                        <div class="warning-box">
+                        	<br>
+                            <p><strong>{{aviso.Aviso_titulo}}</strong> <br>
+                            {{aviso.Aviso_textoCorto}}</p>
+                            <p><a href="{{aviso.Aviso_rutaPDF}}"  >{{aviso.Aviso_rutaPDF}}</a></p>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{aviso.Aviso_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel">{{aviso.Aviso_rutaPDF}}</h4>
+					      </div>
+					      <div class="modal-body">
+					        <embed src="{{ruta+aviso.Aviso_rutaPDF+ruta1}}" height="450" style="width:100%" >
+							</div>
+					      
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+
+				<div class="modal fade" id="{{aviso.Aviso_id+1000}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">video</h4>
+				      </div>
+				      <div class="modal-body">
+				        <video controls style="width:100%;height:360px;">
+						  <source src="devstories.webm" 
+						          type='video/webm;codecs="vp8, vorbis"' />
+						  <source src="http://www.w3schools.com/html/mov_bbb.mp4" 
+						          type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"' />
+						  <track src="devstories-en.vtt" label="English subtitles" 
+						         kind="subtitles" srclang="en" default></track>
+						</video>
+						</div>				      
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+                </div>								
+	</div>
+	<div class="col-md-6" ng-show="usrLogin=='algo'">
+			<div class="row" ng-show="loadGraficas==true">
+				<div class='col-md-12' align="center">
+					<img ng-src="imgs/cargador.gif">
+				</div>
+			</div>
+
+			<div ng-hide="loadGraficas==true" data-ng-cloak>
+				<br>
+				<!-- PRIMER TABLA -->
+				<c3chart bindto-id="chart1" ng-model="chart">
+				</c3chart>
+				<br>
+
+				<!-- SEGUNDA TABLA -->
+				<c3chart bindto-id="chart2" ng-model="chart">
+				</c3chart>
+				<br>
+
+				<!-- TERCER TABLA -->
+				<c3chart bindto-id="chart3" ng-model="chart" >
+				</c3chart>
+			</div>
+	</div>
+    
+	<div class="col-md-6" ng-show="1==0">
+		<br>
+		<table   style="width:100%">
+			<tr >
+				<th class="tablaIzquierda" style="width:45%">Concepto</th>
+				<th class="tablaCentro" style="width:25%">Historico</th>
+				<th class="tablaCentro" style="width:20%">Mes</th>
+				<th class="tablaDerecha" style="width:20%">Hoy</th>
+			</tr>
+			<tr >
+				<td class="tablaCuerpo">
+					Membresias Emitidas
+				</td>
+				<td class="tablaCuerpo">
+					{{totalMem}}
+				</td>
+				<td class="tablaCuerpo">
+					{{mesMem}}
+				</td>
+				<td class="tablaCuerpo">
+					{{diaMem}}
+				</td>
+			</tr>
+			<tr>
+				<td class="tablaCuerpo">
+					Recibos Emitidos (sin cancelados)
+				</td>
+				<td class="tablaCuerpo">
+					{{totalRecibo}}
+				</td>
+				<td class="tablaCuerpo">
+					{{mesRecibo}}
+				</td>
+				<td class="tablaCuerpo">
+					{{diaRecibo}}
+				</td>
+			</tr>
+			<tr>
+				<td class="tablaCuerpo">
+					Recibos Membresias Pendientes de Aplicar
+				</td>
+				<td class="tablaCuerpo">
+					{{totalReciboSA}}
+				</td>
+				<td class="tablaCuerpo">
+					{{mesReciboSA}}
+				</td>
+				<td class="tablaCuerpo">
+					{{diaReciboSA}}
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-md-6" ng-show="usrLogin=='algo'">
+		<br>
+		<div ng-repeat="datos in listadoUnidadesDatos">
+		<table   style="width:100%">
+			<tr >
+				<th class="tablaIzquierda" style="width:45%"><b>{{datos.uniNombre}}</b></th>
+				<th class="tablaCentro" style="width:25%">Histórico</th>
+				<th class="tablaCentro" style="width:20%">Mes</th>
+				<th class="tablaDerecha" style="width:20%">Hoy</th>
+			</tr>
+			<tr >
+				<td class="tablaCuerpo">
+					Membresias Emitidas
+				</td>
+				<td class="tablaCuerpo ">
+					{{datos.totalMembresias}}
+				</td>
+				<td class="tablaCuerpo">
+					{{datos.mesMembresias}}
+				</td>
+				<td class="tablaCuerpo">
+					{{datos.diaMembresias}}
+				</td>
+			</tr>
+			<tr style="background: #E0F8E0">
+				<td class="tablaCuerpo">
+					Recibos Emitidos (sin cancelados)
+				</td>
+				<td class="tablaCuerpo">
+					{{datos.totalRecibo}}
+				</td>
+				<td class="tablaCuerpo">
+					{{datos.mesRecibo}}
+				</td>
+				<td class="tablaCuerpo">
+					{{datos.diaRecibo}}
+				</td>
+			</tr>
+			<tr>
+				<td class="tablaCuerpo">
+					Recibos Membresias Pendientes de Aplicar
+				</td>
+				<td class="tablaCuerpo">
+					{{datos.totalRecibosMem}}
+				</td>
+				<td class="tablaCuerpo">
+					{{datos.mesRecibosMem}}
+				</td>
+				<td class="tablaCuerpo">
+					{{datos.diaRecibosMem}}
+				</td>
+			</tr>
+		</table>
+		<br>
+		</div>
+	</div>
+	</div>
+	<div class="row">
+		
+		<div class="col-md-12" ng-show="usrLogin=='algo'">
+				<div class="color-box space" ng-repeat="aviso in avisos">
+                    <div class="shadow" ng-if="aviso.Aviso_tipo==0">
+                        <div class="info-tab tip-icon" title="Useful Tips">&nbsp;</div>
+                        <div class="tip-box">
+                        	<br>
+                            <p><strong>{{aviso.Aviso_titulo}}</strong> <br>
+                            {{aviso.Aviso_textoCorto}}</p>
+                            <p><a href="/api/avisos/{{aviso.Aviso_rutaPDF}}" >{{aviso.Aviso_rutaPDF}}</a></p>
+                        </div>
+                    </div>
+                    <div class="shadow" ng-if="aviso.Aviso_tipo==1">
+                        <div class="info-tab warning-icon" title="Useful Tips">&nbsp;</div>
+                        <div class="warning-box">
+                        	<br>
+                            <p><strong>{{aviso.Aviso_titulo}}</strong> <br>
+                            {{aviso.Aviso_textoCorto}}</p>
+                            <p><a href="/api/avisos/{{aviso.Aviso_rutaPDF}}"  >{{aviso.Aviso_rutaPDF}}</a></p>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{aviso.Aviso_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel">{{aviso.Aviso_rutaPDF}}</h4>
+					      </div>
+					      <div class="modal-body">
+					        <embed src="{{ruta+aviso.Aviso_rutaPDF+ruta1}}" height="450" style="width:100%" >
+							</div>
+					      
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+
+				<div class="modal fade" id="{{aviso.Aviso_id+1000}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">video</h4>
+				      </div>
+				      <div class="modal-body">
+				        <video controls style="width:100%;height:360px;">
+						  <source src="devstories.webm" 
+						          type='video/webm;codecs="vp8, vorbis"' />
+						  <source src="http://www.w3schools.com/html/mov_bbb.mp4" 
+						          type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"' />
+						  <track src="devstories-en.vtt" label="English subtitles" 
+						         kind="subtitles" srclang="en" default></track>
+						</video>
+						</div>				      
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+                </div>								
+	</div>
+	</div>
+
+
+ <div class="modal fade" id="Imagen1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Imagen 1</h4>
+                </div>
+                <div class="modal-body">
+                <img src="imgs/imagen1.jpg" style="width:100%; height:100%">               
+                </div>                               
+                </form>
+              </div>
+            </div>
+          </div>
+
+           <div class="modal fade" id="Imagen2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Imagen 1</h4>
+                </div>
+                <div class="modal-body">
+                <img src="imgs/imagen2.jpg" style="width:100%; height:100%">               
+                </div>                               
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+<div class="modal fade" id="estatusMedico" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Estatus Médico</h4>
+                </div>
+                <div class="modal-body">                						
+					<form ng-submit="guardaInicioTurno()">  
+						<div class="row">
+							<div class='col-md-12'>
+								<div class='input-group'>
+									<span class='input-group-addon'>Estatus:</span>
+									<input type="text" name="estatus" ng-model="turno.estatus" id="estatus" class='form-control' required mayusculas>
+								</div>
+							</div>    
+						</div>
+						<div class="row" ng-show="cargador">
+							<div class='col-md-12' align="center">				           
+								<img ng-src="imgs/cargador.gif">                                                 
+							</div>    
+						</div>	  							     	  				     	   						      
+						<input type="submit" class="btn btn-default"  value="Guardar">
+					</form>
+                </div>                                               
+              </div>
+            </div>
+          </div>
+	<!--<div class="offset1 span8 pull-left" style="bottom:0;">    
+		<div ng-show="avisos" class="row mianimacion">
+		    <div class="col-md-12" >
+				<div class="color-box space">
+		            <div class="shadow">
+		                <div class="info-tab note-icon" title="Useful Tips">&nbsp;</div>
+		                <div class="note-box">
+		                	<br>
+		                    <p><strong>Hoy es cumpleaños de:</strong> <br>
+		                    prueba prueba prueba de la clínica prueba</p>                    
+		                </div>
+		            </div>                    		
+				</div>
+			</div>
+		</div>
+	</div>-->
+	
+<script type="text/javascript">
+	doBump('.bump');
+
+	$(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+    event.preventDefault();
+    $(this).ekkoLightbox();
+});
+
+</script>

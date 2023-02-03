@@ -1,0 +1,151 @@
+<div ng-init="inicio()" class="margin">
+	<h1>Mis Solicitudes <small><i class="glyphicon glyphicon-search" ng-click="avanzado = true"></i></small></h1> 
+	
+	<div class="row alertas" ng-show="avanzado">
+      
+      <div class="col-lg-12">
+        <div class="widget">
+            <div class="widget-title"><i class="glyphicon glyphicon-folder-open"></i> Detalles de busqueda <i ng-click="avanzado = false" class="glyphicon glyphicon-remove pull-right"></i></div>
+            <div class="widget-body">
+                  
+                  <div class="row">
+
+                      <div class="col-md-3">
+                          <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon-font"></span>
+                            <input type="text" class="form-control" ng-model="folio" placeholder="Folio">
+                          </div>
+                      </div>
+                      <div class="col-md-5">
+                          <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon-user"></span>
+                            <input type="text" class="form-control" ng-model="lesionado" placeholder="Lesionado" mayusculas>
+                          </div>
+                      </div>
+
+                      <div class="col-md-2">
+                        <input type="text" id="fechaini2" ng-model="datos.fechaini" data-date-format="YYYY-MM-DD" class="form-control" placeholder="Fecha Inicio" />
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" id="fechafin2" ng-model="datos.fechafin" data-date-format="YYYY-MM-DD" class="form-control" placeholder="Fecha Fin" />
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    
+
+                  </div>
+                  <div class="text-center">
+                        <button type="button" class="btn btn-primary" ng-click="Buscar()">Consultar</button>
+                  </div>
+
+            </div>
+        </div>
+      </div>
+    </div>
+	
+	
+	<ul class="nav nav-tabs">
+	    <li class="active">
+	        <a data-target="#tab-one"  data-toggle="tab">Pendientes de respuesta</a>
+	    </li>
+	    <li>
+	        <a data-target="#tab-two"  data-toggle="tab" >Solicitud de información <span class="badge" ng-show="solicitudesInformacion.length > 0" >{{solicitudesInformacion.length}}</span></a>
+	    </li>
+	    <li>
+	        <a data-target="#tab-three"  data-toggle="tab" >Respondidas <span class="badge" ng-show="solicitudesRespondidas.length > 0" >{{solicitudesRespondidas.length}}</span></a>
+	    </li>
+	</ul>
+	<div class="tab-content">
+	    <div id="tab-one" class="tab-pane fade in active padding">
+	    	<div ng-show="buscar">
+	        	<loading3></loading3>
+	        </div>
+	    	<div ng-hide="buscar" class="table-responsive">
+		        <table class="table table-hover table-bordered">
+			      <thead>
+			        <tr class="active">
+			          <th ng-click="predicate = 'clave'; reverse=!reverse" >Solicitud</th>
+			          <th ng-click="predicate = 'tipo'; reverse=!reverse" >Tipo de Solicitud</th>
+			          <th ng-click="predicate = 'folio'; reverse=!reverse" >Folio</th>
+			          <th ng-click="predicate = 'lesionado'; reverse=!reverse" >Lesionado</th>
+			          <th ng-click="predicate = 'cliente'; reverse=!reverse" >Cliente</th>
+			          <th ng-click="predicate = 'fecharegistro'; reverse=!reverse" >Fecha</th>
+			          <th ng-click="predicate = 'diferencia'; reverse=!reverse" > Tiempo de espera (dias)</th>
+			        </tr>
+			      </thead>
+			      <tbody>
+			        <tr ng-click="detalleSolicitud(solicitud.clave)" ng-repeat="solicitud in solicitudes | orderBy:predicate:reverse">
+			          <td width="70">{{solicitud.clave}}</td>
+			          <td>{{solicitud.tipo}}</td>
+			          <td>{{solicitud.folio}}</td>
+			          <td>{{solicitud.lesionado}}</td>
+			          <td>{{solicitud.cliente}}</td>
+			          <td>{{solicitud.fecharegistro}}</td>
+			          <td class="text-center">{{solicitud.diferencia}}</td>
+			        </tr>
+			      </tbody>
+			    </table>
+			</div>
+	    </div>
+	    <div id="tab-two" class="tab-pane fade padding">
+			<div class="table-responsive tabla">
+		        <table class="table table-hover table-bordered">
+			      <thead>
+			        <tr class="active">
+			          <th ng-click="predicate2 = 'clave'; reverse2=!reverse2" >Solicitud</th>
+			          <th ng-click="predicate2 = 'tipo'; reverse2=!reverse2" >Tipo de Solicitud</th>
+			          <th ng-click="predicate2 = 'folio'; reverse2=!reverse2" >Folio</th>
+			          <th ng-click="predicate2 = 'lesionado'; reverse2=!reverse2" >Lesionado</th>
+			          <th ng-click="predicate2 = 'cliente'; reverse2=!reverse2" >Cliente</th>
+			          <th ng-click="predicate2 = 'fecharegistro'; reverse2=!reverse2" >Fecha</th>
+			        </tr>
+			      </thead>
+			      <tbody>
+			        <tr ng-click="seguimientoSolicitud(solicitud.clave)" ng-repeat="solicitud in solicitudesInformacion | orderBy:predicate2:reverse2">
+			          <td width="70">{{solicitud.clave}}</td>
+			          <td>{{solicitud.tipo}}</td>
+			          <td>{{solicitud.folio}}</td>
+			          <td>{{solicitud.lesionado}}</td>
+			          <td>{{solicitud.cliente}}</td>
+			          <td>{{solicitud.fecharegistro}}</td>
+			        </tr>
+			      </tbody>
+			    </table>
+			</div>
+	    </div>
+	    <div id="tab-three" class="tab-pane fade padding">
+			<div class="table-responsive tabla">
+		        <table class="table table-hover table-bordered">
+			      <thead>
+			        <tr class="active">
+			          <th ng-click="predicate3 = 'clave'; reverse3=!reverse3" >Solicitud</th>
+			          <th ng-click="predicate3 = 'tipo'; reverse3=!reverse3" >Tipo de Solicitud</th>
+			          <th ng-click="predicate3 = 'folio'; reverse3=!reverse3" >Folio</th>
+			          <th ng-click="predicate3 = 'lesionado'; reverse3=!reverse3" >Lesionado</th>
+			          <th ng-click="predicate3 = 'cliente'; reverse3=!reverse3" >Cliente</th>
+			          <th ng-click="predicate3 = 'fecharegistro'; reverse3=!reverse3" >Fecha</th>
+			          <th ng-click="predicate3 = 'respuesta'; reverse3=!reverse3">Respuesta</th>
+			          <th ng-click="predicate3 = 'diferencia'; reverse3=!reverse3">Tiempo de respuesta (dias)</th>
+			        </tr>
+			      </thead>
+			      <tbody>
+			        <tr ng-click="respuestaSolicitud(solicitud.clave)" ng-repeat="solicitud in solicitudesRespondidas | orderBy:predicate3:reverse3">
+			          <td width="70">{{solicitud.clave}}</td>
+			          <td>{{solicitud.tipo}}</td>
+			          <td>{{solicitud.folio}}</td>
+			          <td>{{solicitud.lesionado}}</td>
+			          <td>{{solicitud.cliente}}</td>
+			          <td>{{solicitud.fecharegistro}}</td>
+			          <td class="text-center">
+			          	<span ng-class="{'text-success glyphicon glyphicon-ok': solicitud.respuesta == 3, 'text-danger glyphicon glyphicon-remove': solicitud.respuesta == 4 }"></span>
+			          </td>
+			          <td class="text-center">{{solicitud.diferencia}}</td>
+			        </tr>
+			      </tbody>
+			    </table>
+			</div>
+	    </div>
+	</div>
+
+</div>

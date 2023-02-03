@@ -1,0 +1,170 @@
+<div class="container" style="width: 100%;">
+<section style="background: #F7F7F7;padding: .5em .5em .0em .5em; margin-left: 1em ">
+         <!-- START Page content-->
+         <div class="content-wrapper" ng-hide="cargador">
+            <h4>Lo más usado</h4>
+            <!-- START row-->
+            <div class="row">
+            	<div class="col-sm-2" ng_repeat="usado in usados">
+	                <!-- START widget-->
+        			<div class="container" style="width: 100%"> 
+					   <div class="panel panel-INFO">
+					        <div class="panel-heading">
+                                <h3 class="panel-title" align="center">{{usado.Cia_nombrecorto}}</h3>
+					        </div> 
+				  			<div class="Panel-body">
+								<div class="row">
+			      					<div class="col-md-12">
+			 							<a href="" ng-click="asignaProducto(usado.Cia_clave,1)" class="thumbnail">
+			      						<img ng-src="imgs/logostmp/{{usado.Cia_clave}}.jpg"  title="{{usado.Cia_nombrecorto}}">
+			   							 </a>
+			   						</div>	
+				   				</div>
+				   			</div>
+				   		</div>
+				   	</div>
+	                <!-- END widget-->
+         		</div>               	
+            </div>
+            
+         </div>
+         <!-- END Page content-->
+         <div class="row" ng-show="cargador">
+         	<div class="col-md-12 text-center">         		
+         		 <img ng-src="imgs/cuadrito.gif"  title="{{usado.Cia_nombrecorto}}">
+         	</div>
+         </div>
+      </section>
+      <br>
+<section style="background: #F7F7F7;padding: .5em .5em .5em .5em; margin-left: 1em  ">
+         <!-- START Page content-->
+         <div class="content-wrapper">
+            <h4>Opciones</h4>
+            <!-- START row-->
+            <div class="row">
+               	<div class="col-sm-2 col-sm-offset-1">
+	                <!-- START widget-->
+	                <a href="" ng-click="confirmaUnidad(1)">
+		                <div class="panel widget">
+		                   <div class="panel-body bg-primary text-center">
+		                      
+		                      <p>Aseguradoras</p>
+		                      <div class="mb-lg"></div>	                      
+		                   </div>
+		                </div>
+	            	</a>
+	                <!-- END widget-->
+         		</div>
+         		<div class="col-sm-2">
+	                <!-- START widget-->
+	                <div class="panel widget" >
+	                	<a href="" ng-click="confirmaUnidad(2)">
+		                   <div class="panel-body bg-primary text-center">
+		                      
+		                      <p>Convenios</p>
+		                      <div class="mb-lg"></div>	     
+		                   </div>
+	                   	</a>
+	                </div>
+	                <!-- END widget-->
+         		</div>
+         		<div class="col-sm-2">
+	                <!-- START widget-->
+	                <div class="panel widget">
+	                	<a href="" ng-click="confirmaUnidad(3)">
+		                   <div class="panel-body bg-primary text-center">	                      
+		                      <p>Promociones</p>
+		                      <div class="mb-lg"></div>
+		                   </div>
+		               	</a>
+	                </div>
+	                <!-- END widget-->
+         		</div>
+         		<div class="col-sm-2">
+	                <!-- START widget-->
+	                <div class="panel widget">
+	                	<a href="" ng-click="confirmaUnidad(4)">
+		                   <div class="panel-body bg-primary text-center">	                      
+		                      <p>Particulares</p>
+		                      <div class="mb-lg"></div>
+
+		                   </div>
+		                 </a>
+	                </div>
+	                <!-- END widget-->
+         		</div>
+				 <div class="col-sm-2">
+	                <!-- START widget-->
+	                <div class="panel widget">
+	                	<a href="" ng-click="confirmaUnidad(5)">
+		                   <div class="panel-body bg-primary text-center">	                      
+		                      <p>Cliente con recibo</p>
+		                      <div class="mb-lg"></div>
+
+		                   </div>
+		                 </a>
+	                </div>
+	                <!-- END widget-->
+         		</div>
+         		<div class="col-sm-2">
+	                <!-- START widget-->
+	                <!-- <div class="panel widget">
+	                	<a href="" ng-click="confirmaUnidad(5)">
+							<div class="panel-body bg-primary text-center">	                     
+							  <p>Especiales</p>
+							  <div class="mb-lg"></div>
+							</div>
+						</a>
+	                </div> -->
+	                <!-- END widget-->
+         		</div>
+            </div>
+            
+         </div>
+         <!-- END Page content-->
+      </section>
+<br>
+  <section style="background: #F7F7F7;padding: .5em .5em .5em .5em; margin-left: 1em  ">
+         <!-- START Page content-->
+         <div class="content-wrapper">
+            <h4>Búsqueda</h4>
+            <!-- START row-->
+            <div class="row">
+               	<div class="col-sm-12 ">
+	                <!-- START widget-->			         			                          
+                    <div class="input-group">
+					  <span class="input-group-addon">Búsqueda</span>
+					  <input type="text" ng-model="q" name="q" id="q" class= "form-control" required> 					  
+					</div>			                                     
+	                <!-- END widget-->
+         		</div>         		
+            </div> 
+
+            <div class="row" ng-show="q">
+            	<div class="clearfix"></div>
+            	<div ng-repeat="Compania in listadoCompanias | filter:q as results track by Compania.EMR_nombre">            		
+	            	<div class="clearfix" ng-if="$index % 6 == 0"></div>
+	            	<div class="col-md-2" style="background: white">
+	            		<h6>{{Compania.EMR_nombre}}</h6>
+	            		<a href=""  ng-click="asignaProducto(Compania.Cia_clave,Compania.EMR_tipo,Compania.EMR_id)" class="thumbnail">
+							<img ng-src="imgs/logostmp/{{Compania.Cia_clave}}.jpg"  title="{{Compania.EMR_nombre}}">
+					 	</a>
+					 	<h6 ng-if="Compania.EMR_tipo==1" class="bg-primary" style="padding: 5px 5px 5px 5px">Aseguradora</h6>
+					 	<h6 ng-if="Compania.EMR_tipo==2" class="bg-info" style="padding: 5px 5px 5px 5px">Particulares</h6>
+					 	<h6 ng-if="Compania.EMR_tipo==3" class="bg-warning" style="padding: 5px 5px 5px 5px">Promociones</h6>
+	            	</div>
+	            	<li class="animate-repeat" ng-if="results.length === 0">
+				      <strong>Sin resultados encontrados...</strong>
+				    </li>
+			    </div>
+            	
+            </div>           
+         </div>
+         <div class="row" ng-show="cargador1">
+         	<div class="col-md-12 text-center">         		
+         		 <img ng-src="imgs/cuadrito.gif"  title="{{usado.Cia_nombrecorto}}">
+         	</div>
+         </div>
+         <!-- END Page content-->
+      </section>
+     </div>

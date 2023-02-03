@@ -1,0 +1,117 @@
+<div class="container" style="width:100%">
+  <form  ng-submit="guardarLesionAdmin()" name="formularios.lesAdmin" novalidate>
+  <div class="row">           
+        <div class="col-md-12">
+          <div class="cajaInputArriba">
+                <span style="font-size:18px">Tipo de lesión administrativa (clasificación médico-administrativa):</span>
+          </div>
+          <div  class="row bordeInput">
+            <div class="col-md-3">            
+            <label class="radio c-radio">
+               <input id="inlineradio3" value="3"  ng-model="lesionAdmin.tipoLesion" ng-change="checaLesion()" type="radio" name="tipLesion" required>
+               <span class="fa fa-check"></span>Solo valoración&nbsp;&nbsp;&nbsp; <button style="background:transparent; border:0px" tooltip-placement="right" tooltip-trigger tooltip="Paciente que solo requiere valoración médica y algún medicamento, no requiere Rx ni ortesis o clinicamente sanos"><img src="imgs/signo.jpg" width="15" height="15" class="img-circle" /></button></label>              
+            <label class="radio c-radio">
+               <input id="inlineradio3" value="4"  ng-model="lesionAdmin.tipoLesion" ng-change="checaLesion()" type="radio" name="tipLesion" required>
+               <span class="fa fa-check"></span>Valoración con Rx y ortesis que no requieren susbsecuencias <button style="background:transparent; border:0px" tooltip-placement="right" tooltip-trigger tooltip="Paciente que cumple con las caracteristicas de un leve pero que además requiere Rx y/o ortesis."><img src="imgs/signo.jpg" width="15" height="15" class="img-circle" /></button></label>   
+             <label class="radio c-radio" ng-show="noPersonales">
+               <input id="inlineradio1" value="1" ng-model="lesionAdmin.tipoLesion" ng-change="checaLesion()"  type="radio" name="tipLesion" required>
+               <span class="fa fa-check"></span>Única&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <button style="background:transparent; border:0px" tooltip-placement="right" tooltip-trigger tooltip="Paciente con solo una lesión de interés a seguimiento, muy probablemente necesita subsecuencia. ejemplo: esguince cervical + una lesión menor (hematoma)."><img src="imgs/signo.jpg" width="15" height="15" class="img-circle" /></button></label>          
+            <label class="radio c-radio" ng-show="noPersonales">
+               <input id="inlineradio2" value="2" ng-model="lesionAdmin.tipoLesion" ng-change="checaLesion()" type="radio" name="tipLesion"  required>
+               <span class="fa fa-check"></span>Múltiple <button style="background:transparent; border:0px" tooltip-placement="right" tooltip-trigger tooltip="Paciente con varias lesiones a seguimiento requirió varios medicamentos, ortesis, rx y probablemente necesitará subsecuencias y muy probablemente necesitará rehabilitación"><img src="imgs/signo.jpg" width="15" height="15" class="img-circle" /></button></label>
+             
+             <label class="radio c-radio" ng-hide="noPersonales">
+               <input id="inlineradio3" value="5"  ng-model="lesionAdmin.tipoLesion" ng-change="checaLesion()" type="radio" name="tipLesion" required>
+               <span class="fa fa-check"></span>Otro&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button style="background:transparent; border:0px" tooltip-placement="right" tooltip-trigger tooltip="Paciente que cumple con las caracteristicas de un leve pero que además requiere Rx y/o ortesis."><img src="imgs/signo.jpg" width="15" height="15" class="img-circle" /></button></label>                    
+                          
+     
+          <div class="validacion" style="width:100%" role="alert" ng-if="interacted13(formularios.lesAdmin.tipLesion)" ng-messages="formularios.lesAdmin.tipLesion.$error">
+            <div ng-message="required">campo requerido</div>            
+          </div> 
+          </div> 
+          <div class="col-md-9">
+              <div class="row mianimacion" ng-show="verUnica||verMultiple||listadoOtros">
+            <div class="col-md-6" ng-show='listadoUnica'>
+                <div  class="input-group cajaInputcompleto" style="width:100%">
+                <span><b>Lesión</b></span>            
+                  <select   ng-model="lesionAdmin.lesionUnica" ng-change="seleccionLesion()" name="lesionUnica" class="form-control"   
+                  ng-options="lesionUnica.id as lesionUnica.label for lesionUnica in listadoUnica" ng-required="lesionAdmin.tipoLesion==1">
+                    <option value=""> *Selecciona</option>                
+                  </select>                    
+                    </div>
+                  <div class="validacion" role="alert" ng-if="interacted13(formularios.lesAdmin.lesionUnica)" ng-messages="formularios.lesAdmin.lesionUnica.$error">
+                      <div ng-message="required">campo requerido</div>            
+                  </div>            
+            </div>
+            <div class="col-md-6" ng-show='listadoMultiple'>            
+                <div  class="input-group cajaInputcompleto" style="width:100%">
+                <span><b>Lesión</b></span>                          
+                   <select   ng-model="lesionAdmin.lesionMultiple" ng-change="seleccionLesionSecundaria()" name="lesMultiple" class="form-control" ng-options="lesionMult.id as lesionMult.label for lesionMult in listadoMultiple" ng-required="lesionAdmin.tipoLesion==2">
+                    <option value=""> *Selecciona</option>                
+                  </select>            
+                </div>
+                <div class="validacion" role="alert" ng-if="interacted13(formularios.lesAdmin.lesMultiple)" ng-messages="formularios.lesAdmin.lesMultiple.$error">
+                      <div ng-message="required">campo requerido</div>            
+                  </div>  
+                              
+            </div>
+            <div class="col-md-6" ng-show='listadoOtros'>            
+                <div  class="input-group cajaInputcompleto" style="width:100%">
+                <span><b>Lesión</b></span>                          
+                   <select   ng-model="lesionAdmin.lesionOtro" ng-change="seleccionLesionOtra()"  name="lesionMul" class="form-control" ng-options="lesionOtros.id as lesionOtros.label for lesionOtros in listadoOtros" ng-required="lesionAdmin.tipoLesion==5">
+                    <option value=""> *Selecciona</option>                
+                  </select>            
+                </div>
+                <div class="validacion" role="alert" ng-if="interacted13(formularios.lesAdmin.lesionMul)" ng-messages="formularios.lesAdmin.lesionMul.$error">
+                  <div ng-message="required">campo requerido</div>            
+                </div>                          
+            </div>
+              <div class="col-md-6" >
+                      <div class="input-group cajaInputcompleto" ng-show="verMultipleSecundaria">
+                        <span><b>Lesión(es) secundaria(s)</b></span>        
+                        <div  ng-dropdown-multiselect="Lesiones secundarias" ng-click="agregarMultipleSecundaria()"  options="listadoMultipleSecundaria" selected-model="lesionAdmin.example1model" style="width:100%"></div>
+                      </div>
+                      <div ng-show="verMensajePolicontundidos">
+                        <div class="alert alert-warning"><b>Favor de describir todas las lesiones</b></div>
+                      </div>
+              </div>         
+          </div> 
+          </div>
+          </div>             
+        </div>
+      </div>
+      <div class="row" ng-show="listadoLesionesModuloCodificado">           
+        <div class="col-md-12">
+          <div class="cajaInputArriba">
+                <span style="font-size:18px">Lesión Principal Codificada:</span>
+          </div>
+            <div class="row bordeInput">                    
+          <div class="col-md-6">
+              <div  class="input-group cajaInputcompleto" style="width:100%">
+                <span><b>CIE-10</b></span>                          
+                   <select   ng-model="lesionAdmin.lesionCodificada" name="lesCie10" class="form-control" ng-options="lesionCod.CIE_cve as lesionCod.CIE_cve+'-'+lesionCod.CIE_descripcion for lesionCod in listadoLesionesModuloCodificado" ng-required="listadoLesionesModuloCodificado">
+                    <option value=""> *Selecciona</option>                
+                  </select>            
+                </div>
+                <div class="validacion" role="alert" ng-if="interacted13(formularios.lesAdmin.lesCie10)" ng-messages="formularios.lesAdmin.lesCie10.$error">
+                      <div ng-message="required">campo requerido</div>            
+                </div>  
+          </div>
+          </div>             
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-12" align="right">
+              <input type="submit" ng-disabled="!lesionAdmin.lesionCodificada" class="btn btn-primary btn-lg" value="Siguiente">
+        </div>
+      </div>
+     </form>
+  <br><br><br>
+  <div class="row"> 
+        <div class="col-md-12">
+            <div ng-show="cargador1" align="center">
+              <img ng-src="imgs/cargador.gif">
+            </div>
+        </div>
+    </div>          
+</div>

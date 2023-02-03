@@ -1,0 +1,333 @@
+<div ng-init="inicio()" >
+	<ol class="breadcrumb">
+	  <li><a href="#/solicitudes">Mis Solicitudes</a></li>
+	  <li class="active">Detalle</li>
+	</ol>
+	<h1>Detalle de Solicitud</h1>
+	<!-- <div class="form-group"> -->
+		<div class="col-md-12 col-sm-12">
+			<div class="fondo">
+				<div class="row">
+	    			<div class="col-md-12">
+	    				<fieldset>
+			    			<legend>Solicitud : <mark>{{ clave }}</mark></legend>
+			    		</fieldset>
+	    			</div>
+	    		</div>
+				<div class="row">
+	    			<div class="col-md-4 col-sm-4">
+	    				<div class="form-group">
+							<label for="exp">Folio:</label>
+							{{datos.folio}}
+						</div>
+	    			</div>
+	    			<div class="col-md-4 col-sm-4">
+	    				<div class="form-group">
+							<label for="exp">Cliente:</label>
+							{{datos.cliente}}
+						</div>
+	    			</div>
+	    		</div>
+
+		    	<div class="row">
+	    			<div class="col-md-12">
+	    				<div class="form-group">
+							<label for="exp">Lesionado:</label>
+							 {{datos.lesionado}}
+						</div>
+	    			</div>
+	    		</div>
+
+	    		<div class="row">
+	    			<div class="col-md-12">
+	    				<fieldset>
+			    			<legend>Tipo de Solicitud : <small>{{ datos.tiponombre }}</small></legend>
+			    		</fieldset>
+	    			</div>
+	    		</div>
+
+	    		<div ng-show="datos.tipo == 4 ">
+					<div class="row">
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Tipo Interconsulta:</label>
+								{{datos.DES_intertipo}}
+							</div>
+		    			</div>
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Embarazo:</label>
+								<span ng-if="datos.DES_embarazo == 0">
+									NO
+								</span>
+								<span ng-if="datos.DES_embarazo != 0">
+									SI
+								</span>
+								
+							</div>
+		    			</div>
+		    		</div>
+
+		    		<div class="row" ng-show="datos.DES_embarazo">
+		    			
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Sometida a control ginecológico:</label>
+								{{datos.DES_controlgineco}}
+							</div>
+		    			</div>
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Semanas de gestación:</label>
+								{{datos.DES_semanas}}
+							</div>
+		    			</div>
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Dolor abdominal:</label>
+								{{datos.DES_dolorabdominal}}
+							</div>
+		    			</div>
+		    		</div>
+
+		    		<div class="row" ng-show="datos.DES_embarazo">
+		    			
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Frecuencia cardiaca fetal:</label>
+								{{datos.DES_frecuencia}}
+							</div>
+		    			</div>
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Movimientos fetales:</label>
+								{{datos.DES_movimientosfetales}}
+							</div>
+		    			</div>
+		    		</div>
+
+		    		<div class="row" ng-show="datos.DES_embarazo">
+		    			
+		    			<div class="col-md-12 col-sm-12">
+		    				<div class="form-group">
+								<label for="exp">Observaciones:</label>
+								{{datos.DES_embarazoObs}}
+							</div>
+		    			</div>
+		    		</div>
+	    		</div>
+
+	    		<div ng-show="datos.tipo == 3 ">
+					<div class="row">
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Tipo de estudio:</label>
+								{{datos.DES_estudiotipo}}
+							</div>
+		    			</div>
+		    			
+		    		</div>
+
+		    		<div class="row">
+		    			
+		    			<div class="col-md-12 col-sm-12">
+		    				<div class="form-group">
+								<label for="exp">Detalle estudio:</label>
+								{{datos.DES_estudioDetalle}}
+							</div>
+		    			</div>
+		    		</div>
+	    		</div>
+
+	    		<div ng-show="datos.tipo == 1 ">
+					<div class="row">
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Escala de dolor del paciente:</label>
+								{{datos.DES_dolor}}
+							</div>
+		    			</div>
+		    			<div class="col-md-8 col-sm-8">
+		    				<div class="form-group">
+								<label for="exp">Numero de sesiones de rehabilitación del paciente:</label>
+								{{datos.DES_rehabilitaciones}}
+							</div>
+		    			</div>
+		    			
+		    		</div>
+
+		    		<div class="row">
+		    			
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Escala de mejoria:</label>
+								{{datos.DES_mejora}}
+							</div>
+		    			</div>
+		    		</div>
+	    		</div>
+				
+	    		<div ng-show="datos.tipo == 9">
+
+		    		<div class="row">
+		    			
+		    			<div class="col-md-12 col-sm-12">
+		    				<div class="form-group">
+								<label for="exp">Detalle del suministro requerido:</label>
+								{{datos.DES_suministroDetalle}}
+							</div>
+		    			</div>
+		    		</div>
+	    		</div>
+
+	    		<div ng-show="datos.tipo == 11">
+					<div class="row">
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Nota medica:</label>
+								<span ng-class="{'glyphicon glyphicon-ok': datos.DES_notamedica}"></span>
+							</div>
+		    			</div>
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Rx:</label>
+								<span ng-class="{'glyphicon glyphicon-ok': datos.DES_rx}"></span>
+							</div>
+		    			</div>
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Resultado de estudios :</label>
+								<span ng-class="{'glyphicon glyphicon-ok': datos.DES_resultados}"></span>
+							</div>
+		    			</div>
+		    			
+		    		</div>
+
+		    		<div class="row">
+		    			
+		    			<div class="col-md-12 col-sm-12">
+		    				<div class="form-group">
+								<label for="exp"> Motivo por el cual el paciente requiere esta información:</label>
+								{{datos.DES_infoDetalle}}
+							</div>
+		    			</div>
+		    		</div>
+	    		</div>
+
+
+
+	    		<div ng-show="datos.tipo == 21 ">
+
+		    		<div class="row">
+		    			
+		    			<div class="col-md-12 col-sm-12">
+		    				<div class="form-group">
+								<label for="exp">Detalle de la salida de paquete:</label>
+								{{datos.DES_hosDetalle}}
+							</div>
+		    			</div>
+		    		</div>
+	    		</div>
+
+	    		<!-- ng-show="datos.tipo == '7'" -->
+
+	    		<div ng-show="datos.tipo == 2" >
+					<div class="row">
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Problema pase médico:</label>
+								<span ng-class="{'glyphicon glyphicon-ok': datos.DES_pase}"></span>
+							</div>
+		    			</div>
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Problema identificación:</label>
+								<span ng-class="{'glyphicon glyphicon-ok': datos.DES_identificacion}"></span>
+							</div>
+		    			</div>
+		    			
+		    		</div>
+
+		    		<div class="row">
+		    			
+		    			<div class="col-md-12 col-sm-12">
+		    				<div class="form-group">
+								<label for="exp"> Motivo del problema:</label>
+								{{datos.DES_documentalDetalle}}
+							</div>
+		    			</div>
+		    		</div>
+	    		</div>
+
+	    		<div class="row">
+	    			<div class="col-md-12">
+	    				<div class="form-group">
+							<label for="exp">Diagnostico Actual:</label>
+							<p>
+								{{datos.DES_diagnostico}}
+							</p>
+						</div>
+	    			</div>
+	    		</div>
+
+	    		<div class="row">
+	    			<div class="col-md-12">
+	    				<div class="form-group">
+							<label for="exp">Justificación y Observaciones:</label>
+							<p>
+								{{datos.DES_justificacion}}
+							</p>
+						</div>
+	    			</div>
+	    		</div>
+
+	    		<div class="row">
+	    			<div class="col-md-10">
+	    				<fieldset>
+			    			<legend>Soporte</legend>
+			    		</fieldset>
+	    			</div>
+	    		</div>
+
+				<div class="deckgrid clearfix" deckgrid source="archivos" cardTemplate="views/solicitudes/photos.html"></div>
+
+			</div>
+		
+		</div>
+		<pdf data="clave"></pdf>
+		<div class="text-center padding-top" ng-show="cordinacion">
+			
+			<div ng-hide="terminado">
+
+				<button class="btn btn-default" ng-click="estatus(2)">Solicitar otra Información</button>
+				<button class="btn btn-danger" ng-click="estatus(4)">Rechazar</button>
+				<button class="btn btn-primary" ng-click="estatus(3)">Aceptar</button>
+				
+			</div>
+
+			<div ng-show="terminado">
+				<a href="#/solicitudes" class="btn btn-primary glyphicon glyphicon-arrow-left" > Regresar</a>
+			</div>
+		
+		</div>
+		
+		<div class="row muestraderecha" ng-show="info">
+			<div class="col-md-6 col-sm-6">
+				<div class="form-group">
+					<label for="exp">Escribe la información adicional que necesitas:</label>
+					<textarea name="que" id="que" class="form-control  input-lg" ng-model="datosinfo.descripcion" rows="3"></textarea>
+				</div>
+				<div class="text-right">
+					<button class="btn btn-primary" id="boton" ng-disabled="datosinfo.descripcion == ''" data-loading-text="Enviando..." ng-click="mandamensaje()">Enviar</button>
+				</div>
+			</div>
+		</div>
+			
+	<!-- </div> -->
+	<div ng-show="mensaje" class="alert alert-success text-center alertas" role="alert">
+				{{ mensaje }}
+		</div>
+	<br>
+	<br>
+	<br>
+</div>

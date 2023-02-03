@@ -1,0 +1,145 @@
+<div class="container" style="width: 100%">     
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<label>Pruebas covid pendientes de enviar</label>
+		</div> 
+		<div class="Panel-body">
+			<div class="row">
+				<div class="col-md-12">
+					<h1>Parámetros de búsqueda</h1>
+				</div>
+			</div>
+			<div class="row">
+				<form ng-submit="buscaParametros()">
+					<div class="col-md-4" align="left">
+						<div class="input-group">
+		                 <span class="input-group-addon">Nombre: </span>	                 
+		                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.nombre" class= "form-control" mayusculas >	                 
+	          			</div>
+					</div>
+					<div class="col-md-4">
+						<div class="input-group">
+		                 <span class="input-group-addon">Folio: </span>	                 
+		                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.folio" class= "form-control" mayusculas>
+	          			</div>
+					</div>
+					<div class="col-md-4" align="right">
+		                <div class="form-group">
+		                    <input type="submit" id="btnenvioprimero" class="btn btn-primary" value="Buscar">
+		                </div>
+		            </div>
+	            </form>
+			</div>
+			<div  ng-show="error" class="row mianimacion">
+				<div class="col-md-12">
+					<div class="alert alert-warning">No se encontraron coincidencias.</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+                    <div ng-show="cargador1" align="center">
+                            <img ng-src="imgs/cargador.gif">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+				<div class="col-md-12" >
+					<table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" >
+						<tr>          
+							<th width="10%"><b>#</b></th>
+							<th width="15%"><b>Fecha</b></th>         
+							<th width="20%"><b>A.Paterno</b></th>
+							<th width="15%"><b>A.Materno</b></th>
+							<th width="20%"><b>Nombre(s)</b></th>
+							<th width="30%"><b>Estatus</b></th>
+							<th width="10%"><b>Opciones</b></th>						
+						</tr>
+						<tr ng-repeat="lista in listadosCovid">							
+							<td>{{lista.id}}</td>
+							<td>{{lista.fechareg}}</td>
+							<td>{{lista.paterno}}</td>
+							<td>{{lista.materno}}</td>
+							<td>{{lista.nombre}}</td>
+							<td class="text-danger">{{lista.estatus}}</td>
+							<td ng-show="{{lista.RPC_estatus == 1}}"><a href="" ng-click="abreConfirmacion(lista.id, lista.claveAut)" >Enviar Resultado</a></td>
+						</tr>
+					</table>
+				</div>
+			</div>	
+			<br>
+			<div class="row">
+				<div class="col-md-12">
+                    <div ng-show="cargador" align="center">
+                            <img ng-src="imgs/cargador.gif">
+                    </div>
+                </div>
+				<div class="col-md-12" >
+					<table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive">
+						<tr>          
+							<th width="10%"><b>#</b></th>
+							<th width="15%"><b>Fecha</b></th>         
+							<th width="20%"><b>A.Paterno</b></th>
+							<th width="15%"><b>A.Materno</b></th>
+							<th width="20%"><b>Nombre(s)</b></th>
+							<th width="10%"><b>Estatus</b></th>
+							<th width="10%"><b>Documentos</b></th>						
+						</tr>
+						<tr ng-repeat="lista in todosCovid">							
+							<td>{{lista.Exp_folio}}</td>
+							<td>{{lista.Fecha}}</td>
+							<td>{{lista.Exp_paterno}}</td>
+							<td>{{lista.Exp_materno}}</td>
+							<td>{{lista.Exp_nombre}}</td>
+							<td>{{lista.Exp_obs}}</td>
+							<td ng-show="{{lista.RPC_estatus == 1}}"><a href="" ng-click="abreConfirmacion(lista.id, lista.claveAut)" >Enviar Resultado</a></td>
+
+						</tr>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--- MODAL PARA SUBIR RESULTADOS -->
+
+<div class="modal fade" id="modalConfirma" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  	<div class="modal-dialog">
+    	<div class="modal-content">
+      		<div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Confirma envío</h4>
+		    </div>
+		    <div class="modal-body">
+		        <div class="row">
+		          	<div class="col-md-12">
+		            	<label>Por favor confirma el envío de resultados</label><br>
+		          	</div>
+		         </div>
+
+	          	<div class="row">
+		            <div class="col-md-12">
+		                <label >El resultado de <b>{{nombrePx}}</b> se enviará al correo <b>{{correoPx}}</b> para continuar da clic en "Enviar resultados".</label>
+        			</div>
+      			</div>
+
+
+				<div class="col-md-12">
+                    <div ng-show="cargador1" align="center">
+                            <img ng-src="imgs/cargador.gif">
+                    </div>
+                </div>
+
+		        <div class="modal-footer">
+		          	<button class="btn btn-primary" ng-click="generaEnvia()">
+		            	Enviar
+		          	</button>
+		          	<button class="btn btn-danger" ng-click="regresaPagina()">
+		            	Cancelar
+		          	</button>
+    			</div>
+    		</div>
+  		</div>
+	</div>
+</div>

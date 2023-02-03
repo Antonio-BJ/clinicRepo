@@ -1,0 +1,423 @@
+<style type="text/css">
+  .left{
+    text-align: left;
+    width: fit-content;
+  }
+</style>
+<div>
+	<h2 style="width: 94%; margin: auto;">Buscar Recibo</h2>
+	<form name="ventasSinReg" ng-submit="buscaRecibo()" style="width: 94%; margin: auto;">
+		<br>
+		<div class="row">
+			<div class="col-md-3">
+          <div class="input-group ">
+              <span>Recibo:</span>
+              <input type="text" ng-model="consulta.recibo" name="recibo" id="recibo" class= "form-control">
+          </div>                         
+      </div>
+
+      <div class="col-md-3">
+        <div  class="input-group " style="width:90%">
+            <span>Folio MV: </span>
+            <input type="text" ng-model="consulta.folio" name="folio" id="folio" class= "form-control">
+            </select>
+        </div>  
+      </div>
+
+			<div class="col-md-3" align="center">
+        <br>
+				<div class="input-group" style="width:100%">
+            <input type="Submit" class="btn btn-primary btn-md" value="Buscar"/>     
+        </div>  
+			</div>
+		</div>
+	</form>
+  
+  <br ng-show="cargador">
+  <div class="row" ng-show="cargador">
+    <div class="col-md-12">
+      <div  align="center">
+        <img ng-src="imgs/cargador.gif">
+      </div>
+    </div>
+  </div>
+            
+  <div class="row" ng-show="mensaje">
+    <div class="col-md-12">
+      <div align="center">
+        <div class="alert alert-warning">
+          Sin registros
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <hr ng-show="listadoReporte">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="text-danger"><strong> NOTA: Solo se pueden cancelar, recibos activos que no tengan un soporte, que no este facturado y este dentro de las 24hrs de su emisión.</strong></div>
+      <div class="text-danger"><strong> La cancelación surte efecto inmediatamente.</strong></div>
+      <div class="text-danger"><strong> Para cualquier aclaración llamar a sistemas 55 55144700 ext 311.</strong></div>
+    </div>
+  </div>
+
+  <div class="panel panel-default" ng-show="listadoReporte" style="width: 100%; margin: auto;">
+    <div class="row" ng-show="listadoReporte">
+      <div class="col-md-12">
+        <table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" style="width: 100%">
+          <tr>          
+            <th width="2%"><b>#</b></th>
+            <th width="15%" ><b>Nombre</b></th>         
+            <th width="10%" ><b>FOLIO MV</b></th>
+            <th width="8%" ><b>Unidad</b></th>            
+            <th width="12%"><b>Fecha del Recibo</b></th>
+            <th width="7%"><b>Folio de Recibo</b></th>
+            <th width="6%"><b>Total</b></th>
+            <th width="10%" ><b>Pago</b></th>
+            <th width="10%" ><b>Tipo Recibo</b></th>
+            <th width="6%"><b>Imprimir</b></th>
+            <th width="6%" ng-show="cancelaRecibo"><b>Estatus</b></th>
+            <th width="10%" ><b>Facturado</b></th>
+            <th width="10%" ><b>Subir Soporte</b></th>
+            <th width="10%" ><b>Tipo Factura</b></th>
+            <th width="10%" ><b>Imprime Factura</b></th>
+          </tr>
+          <tr ng-repeat="listado in listadoReporte">
+            <td style="color: #aaa">{{$index + 1}}</td>
+            <td >{{listado.NOMBRE}}</td>
+            <td >{{listado.FOLIOMV}}</td>
+            <td >{{listado.UNIDAD}}</td>
+            <td>{{listado.FECHA_RECIBO}}</td>
+            <td style="color: #880000">{{listado.RECIBO}}</td>
+            <td style="font-weight: bold">{{listado.TOTAL | currency}}</td>
+            <td >{{listado.FORMA_PAGO}}</td>
+            <td >{{listado.TIPO_RECIBO}}</td>
+            <td ng-hide="listado.Recibo_cancelado==1">
+              <a href="" ng-click="reimprimirRecibo(listado.FOLIOMV,listado.FOLIO_RECIBO, listado.SERIE)">
+                 <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Imprimir recibo">
+                    <em class="fa fa-circle fa-stack-2x text-success"></em>
+                    <em class="fa fa-print fa-stack-1x fa-inverse text-white"></em>
+                 </span>
+              </a>
+            </td>
+             <td ng-show="listado.Recibo_cancelado==1">
+              <a href="" ng-click="verCancelado(listado.FOLIO_RECIBO, listado.SERIE)">
+                 <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Detalles de cancelación">
+                    <em class="fa fa-circle fa-stack-2x text-info"></em>
+                    <em class="fa fa-eye fa-stack-1x fa-inverse text-white"></em>
+                 </span>
+              </a>
+            </td>
+            <td width="20%">
+                <a ng-show="listado.Recibo_cancelado==0 && (listado.Recibo_soporte==0 || listado.Recibo_soporte==null) && listado.estatus == 'Recibo no facturado'" href="" ng-click="abreModalCancelacion1(listado.FOLIO_RECIBO)">
+                  <span  tooltip-placement="buttom" tooltip-trigger tooltip="Cancelación de Recibo">
+                      <div class="text-success">Recibo Vigente</div>
+                                                    <!-- <em class="fa fa-close fa-stack-1x fa-inverse text-white"></em> -->
+                  </span>
+                </a>
+                <a ng-show="listado.Recibo_cancelado==1" href="">
+                <span  tooltip-placement="buttom" tooltip-trigger tooltip="{{listado.Recibo_motCancel}}">
+                <div class="text-danger">Recibo Cancelado</div>
+                                                    <!-- <em class="fa fa-check fa-stack-1x fa-inverse text-white"></em> -->
+                </span>
+                </a>
+            </td>
+            <td width="20%">
+              <a ng-show="listado.estatus =='Recibo Facturado'" href="">
+                  <span  tooltip-placement="buttom" tooltip-trigger tooltip="Recibo cancelado">
+                    <div class="text-success">Recibo Facturado</div>
+                                                  <!-- <em class="fa fa-check fa-stack-1x fa-inverse text-white"></em> -->
+                  </span>
+              </a>
+              <a ng-show="listado.estatus =='Recibo no facturado'" href="">
+                  <span  tooltip-placement="buttom" tooltip-trigger tooltip="Recibo cancelado">
+                    <div class="text-danger">Recibo no Facturado</div>
+                                                  <!-- <em class="fa fa-check fa-stack-1x fa-inverse text-white"></em> -->
+                  </span>
+              </a>
+            </td>
+            <td width="10%">
+              <a ng-show="listado.Recibo_cancelado==0" href="" ng-click="abreModalsoporte(listado.FOLIO_RECIBO)">
+                <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Sube Soporte">
+                  <em class="fa fa-circle fa-stack-2x text-danger"></em>
+                  <em class="fa fa-upload fa-stack-1x fa-inverse text-white"></em>
+                </span>
+              </a>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+
+        <div class="modal fade" id="verDetalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Detalle de cancelación del recibo <b>{{folioModal}}</b></h4>
+              </div>
+              <div class="modal-body">
+                <div class="container" style="width:100%;" id="verFormato">
+                  <div class="panel panel-primary">                         
+                    <div class="panel-body">
+                      <br>
+                      <div class="row" id="campoFol">
+                        <div class="col-md-12" align="left">
+                          <div class="input-group">
+                            <span class="input-group-addon left">Motivo de cancelaci&oacute;n:</span> 
+                            <span class="input-group-addon left">{{datosCancelado.Recibo_motCancel}}</span>
+                          </div>
+                        </div>                    
+                      </div>
+                      <br>
+                
+                      <div class="row" id="campoFol">
+                        <div class="col-md-12" align="left">
+                          <div class="input-group">
+                            <span class="input-group-addon left">Recibo sustituto:</span>
+                            <span class="input-group-addon left">{{datosCancelado.Recibo_folSustituye}}</span>
+                          </div>
+                        </div>                    
+                      </div>
+                      <br>
+
+                      <div class="row" id="campoObs">
+                        <div class="col-md-12" align="left">
+                          <div class="input-group">
+                            <span class="input-group-addon left">Observaciones:</span>
+                            <span class="input-group-addon left">{{datosCancelado.Recibo_CancNota}}</span>
+                          </div>
+                        </div>                    
+                      </div>
+                      <br>
+
+                      <div class="row" id="campoFol">
+                        <div class="col-md-12" align="left">
+                          <div class="input-group">
+                            <span class="input-group-addon left">Solcitado por:</span>
+                            <span class="input-group-addon left">{{datosCancelado.Recibo_obsCancel}}</span>
+                          </div>
+                        </div>                    
+                      </div>
+                      <br>
+
+                      <div class="row" id="campoFol">
+                        <div class="col-md-12" align="left">
+                          <div class="input-group">
+                            <span class="input-group-addon left">Fecha de cancelación:</span> 
+                            <span class="input-group-addon left">{{datosCancelado.Recibo_Fcancelado}}</span>
+                          </div>
+                        </div>                    
+                      </div>
+                      <br>
+                    </div>
+                  </div>
+                </div>
+              
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODAL PARA SUBIR SOPORTE DE RECIBO -->
+
+    <div class="modal fade" id="myModalsoporte" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Recibo {{folioModal}}</h4>
+              </div>
+
+              <div class="modal-body">
+
+                <form ng-submit="guardasoporteRecibo(folioModal)">
+
+                    <div class="row" >
+
+                        <div class="col-md-5">
+
+                            <input type="file" ng-file-select="onFileSelect_xml($files)" required>
+
+                            <div ng-file-drop="onFileSelect_xml($files)" class="drop-box"  ng-file-drag-over-class="optional-css-class-name-or-function"
+
+                            ng-show="dropSupported">Arrastra tu archivo
+
+                            </div>
+
+                            <div ng-file-drop-available="dropSupported=true"
+
+                            ng-show="!dropSupported">HTML5 Drop File is not supported!
+
+                            </div>
+
+                        </div>
+
+                         <div class="col-md-3">
+
+                            <input type="submit" class="btn btn-primary" value="Guardar">
+
+                        </div>
+
+                    </div>
+
+                    </form>
+
+                    <div class="row">
+
+                      <table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" style="width: 100%">
+                          <tr>          
+                            <th width="15%" ><b>Usuario</b></th>         
+                            <th width="10%" ><a href="">Fecha</a></th>
+                            <th width="10%" ><a href="">Soporte</a></th>
+
+                          </tr>
+                          <tr ng-repeat="soprecibo in soprecibos">
+
+                            <th width="15%" ><b>{{soprecibo.SRE_usuario}}</b></th>         
+                            <th width="10%" >{{soprecibo.SRE_fecha}}</th>
+                            <th width="10%" ><a href="http://medicavial.net/{{soprecibo.SRE_soporte}}" target="_blank">Ver</a></th>
+                            
+                          </tr>
+                      </table>
+                      
+                    </div>
+
+                           
+
+            </div> 
+              
+              
+                <div class="modal-footer">              
+                  <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>               
+                </div>
+            </div>
+      </div>
+    </div>
+
+  <!-- modal bueno para cancelacion -->
+
+
+  <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Cancelación para el folio <b>{{folioModal}}</b></h4>
+          </div>
+
+            <div class="modal-body">
+              <div class="container" style="width:100%;" id="verFormato">
+            <div class="panel panel-primary">
+              <div class="panel-body">
+                <form name="enviaCancelacion" id="enviaCancelacion" ng-submit="enviaCancelacionRecibo(folioModal)"><br>
+                  <div class="row" id="campoFol">
+                    <div class="col-md-12" align="left">
+                      <div class="input-group">
+                        <span class="input-group-addon">Motivo de cancelaci&oacute;n:</span> 
+                                <input type="text" class="form-control" name="motivo1" ng-model="datosCancelacion1.motivo" id="motivo1" required mayusculas>        
+                            </div>
+                    </div>                    
+                  </div>  
+
+                  <div class="row" id="campoFol">
+                    <div class="col-md-12" align="left">
+                      <div class="input-group">
+                        <span class="input-group-addon">Recibo Sustituto:</span> 
+                                <input type="text" class="form-control" name="motivo2" ng-model="datosCancelacion1.folioSus" id="motivo2" required mayusculas>        
+                            </div>
+                    </div>                    
+                  </div>                                              
+                  <div class="row" id="campoObs">
+                    <div class="col-md-12" align="left">
+                      <div class="input-group">
+                                <span class="input-group-addon">Observaciones:</span> 
+                                <input type="text" class="form-control" name="Obs" ng-model="datosCancelacion1.Obs" id="Obs" mayusculas>        
+                            </div>
+                    </div>                    
+                  </div>
+
+                  <div class="row" id="campousu" ng-show="usrLogin == 'algo'">
+                    <div class="col-md-12" align="left">
+                      <div class="input-group">
+                                <span class="input-group-addon">Solicitado por:</span> 
+                                <input type="text" class="form-control" name="Obs" ng-model="datosCancelacion1.solicitado" id="Obs" mayusculas disabled>        
+                            </div>
+                    </div>                    
+                  </div>
+
+                  <div class="row" id="campoObs">
+                    <div class="col-md-12" align="left">
+                      <div id="resultado">
+                        
+                      </div>
+                    </div>                    
+                  </div>
+
+                  <div class="row" ng-show="cargador">
+                        <div class='col-md-12' align="center">                   
+                                    <img ng-src="imgs/cargador.gif">                                                 
+                          </div>    
+                      </div>                    
+                </form>
+              </div>
+            </div>
+              </div>
+                
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+              <input type="Submit" class="btn btn-primary" id="botonEnvio" form="enviaCancelacion"  value="Enviar" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--    fin del modal   -->
+  </div>    
+      </div>
+    </div>
+            
+    <br><br>
+
+    <div class="row" ng-show="cargaRep">
+      <div class="col-md-12">
+        <div  align="center">
+          <img ng-src="imgs/cargador.gif">
+        </div>
+      </div>
+    </div>
+
+    <br><br><br>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+       $('#fecha1').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+        $('#fecha2').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+
+        $('#hora1').datetimepicker({
+            pickDate: false,
+            format: 'LT',
+            locale: 'mx',
+            language:'es',
+            startTime: '12:00',
+        });
+
+        $('#hora2').datetimepicker({
+            pickDate: false,
+            format: 'LT',
+            locale: 'mx',
+            language:'es',
+            startTime: '12:00',
+        });
+</script>

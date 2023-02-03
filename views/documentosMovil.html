@@ -1,0 +1,342 @@
+   
+	<div class="content-wrapper" style="background-color:#F0F0F0;">
+
+		<div class="row">
+			<div  ng-class="columna">
+				<div class="shadow">
+					<div class="info-tab tip-icon" title="Useful Tips">&nbsp;</div>
+					<div class="tip-box">
+						<div>
+							<label >Folio: <b style="font-size:12px;">{{folio}}</b></label>&nbsp; &nbsp; 
+							<label >Nombre: <b style="font-size:12px;">{{detalle.nombre}}</b></label><br>
+							<label >Compañia: <b style="font-size:12px;">{{detalle.aseguradora}}</b></label>&nbsp; &nbsp; 
+							<label >Edad: <b style="font-size:12px;">{{detalle.edad}} años</b></label>&nbsp; &nbsp; 
+							<label >Sexo: <b style="font-size:12px;">{{detalle.sexo}}</b></label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div ng-class="columna" align="left">
+				<div class="shadow">
+					<div class="info-tab note-icon" title="Useful Tips">&nbsp;</div>
+					<div class="note-box">
+						<span>El Paciente se atenderá por <b  style="font-size:1.2em;">{{detalle.medio}}</b></span><br>
+							<span ng-if="telAdic">Teléfono principal: <b style="font-size:1em;">{{detalle.telAdic}}</b></span> 
+							<span ng-if="!telAdic">Teléfono principal: <b style="font-size:1em;">{{detalle.telefono}}</b></span> <br>		
+					<span >Correo: <b style="font-size:12px;">{{detalle.mail}}</b></span>										
+					</div>
+				</div>	
+				
+			</div>
+			<div class="col-md-4" align="left" ng-show="datos.alergias">
+				<div class="shadow">
+					<div class="info-tab warning-icon" title="Useful Tips">&nbsp;</div>
+					<div class="warning-box">
+						<span style="font-size: 1.5em;">  Alergias</span><br>
+							<span><b>{{datos.alergias}}</b></span>										
+					</div>
+				</div>	
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+
+	<div ng-class="cargadorClass">
+		<!-- <div class="panel-heading">
+			<div class="row">
+				<div  ng-class="columna">
+					<div class="shadow">
+                        <div class="info-tab tip-icon" title="Useful Tips">&nbsp;</div>
+                        <div class="tip-box">
+							<div>
+								<label >Folio: <b style="font-size:12px;">{{folio}}</b></label>&nbsp; &nbsp; 
+								<label >Nombre: <b style="font-size:12px;">{{detalle.nombre}}</b></label><br>
+								<label >Compañia: <b style="font-size:12px;">{{detalle.aseguradora}}</b></label>&nbsp; &nbsp; 
+								<label >Edad: <b style="font-size:12px;">{{detalle.edad}} años</b></label>&nbsp; &nbsp; 
+								<label >Sexo: <b style="font-size:12px;">{{detalle.sexo}}</b></label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div ng-class="columna" align="left">
+					<div class="shadow">
+						<div class="info-tab note-icon" title="Useful Tips">&nbsp;</div>
+						<div class="note-box">
+							<span>El Paciente se atenderá por <b  style="font-size:1.2em;">{{detalle.medio}}</b></span><br>
+								<span ng-if="telAdic">Teléfono principal: <b style="font-size:1em;">{{detalle.telAdic}}</b></span> 
+								<span ng-if="!telAdic">Teléfono principal: <b style="font-size:1em;">{{detalle.telefono}}</b></span> <br>		
+						<span >Correo: <b style="font-size:12px;">{{detalle.mail}}</b></span>										
+						</div>
+					</div>	
+					
+				</div>
+				<div class="col-md-4" align="left" ng-show="datos.alergias">
+					<div class="shadow">
+						<div class="info-tab warning-icon" title="Useful Tips">&nbsp;</div>
+						<div class="warning-box">
+							<span style="font-size: 1.5em;">  Alergias</span><br>
+								<span><b>{{datos.alergias}}</b></span>										
+						</div>
+					</div>	
+				</div> -->
+<!-- 
+				<div class="col-md-1" align="right">
+
+
+
+						
+
+						<div class="row" ng-show="soloReha==false" style="text-align: right">
+
+
+
+								<div class="col-md-12" align="right" style="text-align: right">	
+
+									<a  data-toggle="modal" data-target="#carritoCompras" ng-click="catItemsCarrito()" >
+
+									<div style=" position: relative; text-align: right" >
+
+										<div style="position: absolute; left: 80%; top: 25px; z-index: 1; text-align: bottom" class="gi-5x"><i tooltip-placement="left" tooltip-trigger tooltip="Recibo SR"  style="position:absolute; color: white"  class="glyphicon glyphicon-shopping-cart gi-5x"></i> </div>
+
+										<div ng-show="contadorItemsCarrito>0" class="label label-danger gi-2x"  style="position: absolute; left: 70%; top: 5.5em; z-index: 2; text-align: right">{{contadorItemsCarrito}}</div>																	
+
+									</div>
+
+									</a>														
+
+								</div>
+
+		
+
+							</div>						
+
+
+
+				</div>
+
+				<div class="col-md-1" align="right">
+
+
+
+						
+
+						<div class="row" ng-show="verComentario" style="text-align: right">
+
+
+
+								<div class="col-md-12" align="right" style="text-align: right">	
+
+									<a  data-toggle="modal" data-target="#comentarios"  >
+
+									<div style=" position: relative; text-align: right" >
+
+										<div style="position: absolute; left: 80%; top: 25px; z-index: 1; text-align: bottom" class="gi-5x"><i tooltip-placement="left" tooltip-trigger tooltip="Ver Comentarios"  style="position:absolute; color: white"  class="glyphicon glyphicon-comment gi-5x"></i> </div>
+
+										<div class="label label-danger gi-2x"  style="position: absolute; left: 70%; top: 5.5em; z-index: 2; text-align: right">{{contador}}</div>																	
+
+									</div>
+
+									</a>														
+
+								</div>
+
+		
+
+							</div>
+
+							<div class="row"  style="text-align: bottom" ng-hide="verComentario">
+
+
+
+									<div class="col-md-12" align="right" style="text-align: right">	
+
+										<a data-toggle="modal" data-target="#comentarios" >
+
+										<div style=" position: relative; text-align: right" >
+
+											<div style="position: absolute; left: 80%; top: 1.5em; z-index: 1; text-align: right" class="gi-5x"><i tooltip-placement="left" tooltip-trigger tooltip="Agregar Comentario"  style="position:absolute; color: white"  class="glyphicon glyphicon-plus gi-2x"></i> </div>																												
+
+										</div>
+
+										</a>
+
+										
+
+																
+
+									</div>
+
+			
+
+								</div>
+
+
+
+				</div> -->
+
+
+
+			<!-- </div>						 -->
+
+
+
+		<!-- </div>  -->
+
+
+
+		<div class="Panel-body" style="background-color:#F0F0F0;">
+			<br>
+				<!-- <div class="row"  >
+						<div class="col-md-2" ng-show="permisos.Per_cabina =='S'">
+							<button type="button" class="btn btn-lx btn-success" data-toggle="modal" data-target="#altaMedica">
+	                           <span class="btn-label"><i class="fa fa-check"></i>
+	                           </span>Alta</button>
+						</div>
+						<div class="col-md-2">
+							<button type="button" class="btn btn-lx btn-success" data-toggle="modal" ng-click="listaDetalle()" data-target="#Detalle">
+	                           <span class="btn-label"><i class="fa fa-check"></i>
+	                           </span>Detalle</button>
+						</div>
+						<div class="col-md-2">
+							<button type="button" class="btn btn-lx btn-success" ng-click="verificaArchivo()">
+	                           <span class="btn-label"><i class="fa fa-check"></i>
+	                           </span>validar archivo</button>
+						</div>
+					</div> -->
+
+<!-- FIN NOTAINTERNA  ---------------------------------------------------------------->
+
+
+
+<div ng-show="uniClave==392">
+
+	<div class="row">
+		<div class="col-md-4">
+		<a href="" ng-click="irHistoriaClinicaMovil(folio)">
+			<div class="panel widget" >
+				<div class="panel-body bg-primary text-center">
+					<div class="col-md-2">
+						<h1  style="font-size:3.5em"><b>1</b></h1>
+					</div>
+					<div class="col-md-10">
+						<div class="text-lg m0"><em class="fa fa-list-alt"></em></div>
+						<p>Historia Clínica</p>
+						<div class="mb-lg"></div>
+					</div>
+				   
+				</div>
+			</div>
+		</a>
+		</div>
+		<div class="col-md-4">
+			<a href="" ng-click="irSignosVitales(folio)">
+			<div class="panel widget">
+				<div class="panel-body bg-primary text-center">
+				   <div class="text-lg m0"><em class="fa fa-stethoscope"></em></div>
+				   <p>Signos Vitales</p>
+				   <div class="mb-lg"></div>
+				   
+				</div>
+			 </div>
+			</a>
+		</div>
+		<div class="col-md-4">
+			<a href="" ng-click="irNotaMedicaMovil(folio)">
+			<div class="panel widget">
+				<div class="panel-body bg-primary text-center">
+					<div class="col-md-2">
+						<h1  style="font-size:3.5em"><b>2</b></h1>
+					</div>
+					<div class="col-md-10">
+						<div class="text-lg m0"><em class="fa fa-book"></em></div>
+						<p ng-show="subsecuenciaVal||Ndigital">Nota Médica</p>
+						<div ng-hide="subsecuenciaVal||Ndigital">
+							<p ng-show="veEditaNota">Continuar Nota</p>
+							<p ng-hide="veEditaNota">Imprimir Nota</p>
+							</div>
+						<div class="mb-lg"></div>
+				   </div>
+				   
+				</div>
+			 </div>
+			</a>
+		</div>
+	</div>
+	<div class="row">
+		<!-- <div class="col-md-4">
+			<a href="" ng-click="VerNotaSOAP()">
+			<div class="panel widget">
+				<div class="panel-body bg-primary text-center">
+				   <div class="text-lg m0"><em class="fa fa-list-alt"></em></div>
+				   <p>Nota SOAP</p>
+				   <div class="mb-lg"></div>
+				   
+				</div>
+			 </div>
+			</a>
+		</div> -->
+		<!-- <div class="col-md-4">
+			<a href="" ng-click="irReciboPar(folio)">
+			<div class="panel widget">
+				<div class="panel-body bg-primary text-center">
+				   <div class="text-lg m0"><em class="fa fa-money"></em></div>
+				   <p>Recibo</p>
+				   <div class="mb-lg"></div>
+				   
+				</div>
+			 </div>
+			</a>
+		</div> -->
+		<!-- <div class="col-md-4">
+			<div class="item dropdown">
+				<a href="" class="dropdown-toggle">
+			<div class="panel widget">
+				
+				<div class="panel-body bg-primary text-center">
+				   <div class="text-lg m0"><em class="fa fa-pencil"></em></div>
+				   <p>Receta</p>
+				   <div class="mb-lg"></div>
+				</div>
+				
+			 </div>
+			</a>
+			 <ul class="dropdown-menu dropdown-menu-top">
+                <li class="dropdown-header">
+                  Receta 
+                </li>
+                <li class="divider"></li>
+                <li class="link">
+                  <a href="" ng-click="irRecetaMovil(folio)">
+                    Interna
+                  </a>
+                </li>
+                <li class="link">
+                  <a href="" ng-click="irRecetaMovilExterna(folio)">
+                    Externa
+                  </a>
+                </li>
+              </ul> 
+			</div>
+			
+		</div> -->
+	</div>
+</div>
+</div>
+
+<div class="modal fade" id="modalScript" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width: 950px">
+	    <div class="modal-content">
+	        <div class="modal-header">Script para iniciar consulta</div>
+	        <div class="modal-body" style="text-align: justify">
+	          	<p align="justify" style="font-size:1.2em">Buen día, {{sexoMed}} {{nombreMedico}} de Atención Médica Inmediata y lo estaré atendiendo por medio de esta {{detalle.medio}}. <br><br>¿Es usted {{detalle.nombre}}?<br><br> ¿Cómo se encuentra el día de hoy? <br><br>Le comento a grandes rasgos cómo efectuaremos su consulta.  Primero, le haré unas breves preguntas para completar su historía clínica.<br>A continuación procederé a evaluar su lesión a través de una exploración física, por lo que le pediré que realice algunos movimientos y usted me dirá los síntomas que presente.<br><br>En caso de requerirlo, le rectaré medicamentos para tratar la lesión, con sus respectivas indicaciones y algunos ejercicios para que usted realice en casa.<br><br>Toda esta documentación se la haré llegar al final por medio del correo, sms y/o whatsapp.<br><br>¿Tiene alguna duda de cómo llevaremos a cabo su consulta médica?<br><br>Le recuerdo que esta {{detalle.medio}} está siendo grabada únicamente con fines médicos y de calidad en el servicio.<br><br><b style="font-size: 2em;"> Nota importante</b> <i> verlo a los ojos, mantener una actitud cálida y escuchar activamente para crear una buena relación interpersonal con él.</i></p>
+	        </div>
+	        <div class="modal-footer">
+	          	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+	        </div>
+	    </div>
+    </div>
+</div>

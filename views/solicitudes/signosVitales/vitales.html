@@ -1,0 +1,139 @@
+<div class="container" style="width: 100%"> 
+	<form ng-submit="guardaVitales()">	
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-md-6">
+						<h3 class="panel-title"><b>Signos Vitales</b></h3>
+					</div>
+					<div class="col-md-6" align="right">
+						<a href="imgs/vitales.jpg" id="mylink" data-toggle="lightbox" data-title="Tabla de Signos Vitales" tooltip-placement="right" tooltip="Ver tabla de signos vitales"><img src="imgs/signo.jpg" width="25" height="25" class="img-circle" /></a>
+					</div>
+				</div>				
+			</div><!-- End panel-heading -->
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="input-group">
+							<span class="input-group-addon">Temperatura: </span>
+							<input type="number" ng-model="vitales.tem" min="35" max="40" class="form-control" id="temp" name="temp" placeholder="Temperatura" required="" >
+							<span class="input-group-addon">&ordm;C</span>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="input-group">
+							<span class="input-group-addon">Talla: </span>
+							<input type="number" ng-model="vitales.talla" min="40" max="230" class="form-control" id="talla" name="talla" placeholder="Talla" required="" >
+							<span class="input-group-addon">Cm.</span>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="input-group">
+							<span class="input-group-addon">Peso: </span>
+							<input type="number" ng-model="vitales.peso" min="30" max="500" class="form-control" id="peso" name="peso" placeholder="Peso" required="">
+							<span class="input-group-addon">Kg.</span>
+						</div>
+					</div>
+				</div><!-- End row -->
+				<br />
+				<div class="row">
+					<div class="col-md-6">
+						<div class="input-group">
+							<span class="input-group-addon">Frec. Respiratoria: </span>
+							<input type="number" ng-model="vitales.frecResp" min="16" max="80" class="form-control" id="frecResp" name="frecResp" placeholder="F/R" required="">
+							<span class="input-group-addon">Rpm.</span>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="input-group">
+							<span class="input-group-addon">T. Arterial: </span>
+							<input type="number" ng-model="vitales.sistole" min="60" max="140" class="form-control" id="sistole" name="sistole" required="">
+							<span class="input-group-addon"> / </span>
+							<input type="number" ng-model="vitales.astole" min="30" max="90" class="form-control" id="astole" name="astole" required="">
+							<span class="input-group-addon">mmHg.</span>
+						</div>
+					</div>
+					
+				</div><!-- End row -->
+				<br />
+				<div class="row">
+					<div class="col-md-5">
+						<div class="input-group">
+							<span class="input-group-addon">Frecuencia Cardiaca: </span>
+							<input type="number" ng-model="vitales.frecCard" min="60" max="150" class="form-control" id="frecCard" name="frecCard" placeholder="F/C" required="">
+							<span class="input-group-addon">Lpm.</span>
+						</div>
+					</div>
+					<div class="col-md-7">
+						<div class="input-group">
+							<span class="input-group-addon">Observaciones: </span>
+							<textarea class="form-control" ng-model="vitales.obs" rows="3" name="obs" id="obs"></textarea>
+						</div>
+					</div>
+				</div><!-- End row -->
+				<div class="row">
+					<div class="col-md-12">
+						<div ng-show="listVitales" class="mianimacion">
+							</br>
+							<table width="100%" class="table table-striped table-hover" align="center" class="tabla" ng-repeat="vitales in listVitales">
+								<tr>
+									<th>Fecha:</th>
+									<th colspan="3" align="center">{{vitales.Vit_fecha}}</th>
+									<th colspan="2" align ="center">Usuario: {{vitales.Usu_registro}}</th>
+								</tr>
+								<tr>
+									<th width="16%">Temperatura</th>
+									<th width="16%">Talla</th>
+									<th width="16%">Peso</th>
+									<th width="16%">Presion arterial</th>
+									<th width="16%">Frecuencia cardiaca</th>
+									<th width="16%">Frecuencia respiratoria</th>
+								</tr>
+								<tr>
+									<td align="center">{{vitales.Vit_temperatura}}</td>
+									<td align="center">{{vitales.Vit_talla}}</td>
+									<td align="center">{{vitales.Vit_peso}}</td>
+									<td align="center">{{vitales.Vit_ta}}</td>
+									<td align="center">{{vitales.Vit_fc}}</td>
+									<td align="center">{{vitales.Vit_fr}}</td>
+								</tr>
+
+								<tr>
+									<td align="center"><b>IMC</b></td>
+									<td align="center"><b>Categoria</b></td>
+									<td align="center" colspan="4"><b>Comentario *(IMC)</b></td>
+								</tr>
+
+								<tr>
+									<td align="center">{{vitales.Vit_imc}}</td>
+									<td align="center">{{vitales.IMC_categoria}}</td>
+									<td align="justify" colspan="4">{{vitales.IMC_comentario}}</td>
+								</tr>
+								<tr>
+									<td colspan="0"><b>Observaciones:</b></td>
+									<td colspan="5" align="justify">{{vitales.Vit_observaciones}}</td>
+								</tr>
+							</table>
+						</div> 
+					</div>
+				</div>
+				<br />
+				<div class="row">
+					 <div class="col-md-2">
+			          	<input type="Button" class="btn btn-primary"  value="Documentos" ng-click="irDocumentos()" />
+			          </div>
+					<div class="col-md-3 col-md-offset-7" >						
+						<input type="submit" name="guardaVit" id="guardaVit" class="btn btn-success"  value="Guarda Signos Vitales" />						
+					</div> 
+				</div>
+				<br>
+			</div><!-- End panel-body -->
+		</div>
+	</form>	
+</div><!-- End container -->
+<script type="text/javascript">
+	$(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+    event.preventDefault();
+    $(this).ekkoLightbox();
+});
+</script>

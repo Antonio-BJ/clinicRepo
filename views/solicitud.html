@@ -1,0 +1,854 @@
+<div ng-init="inicio()" id="solicitud">
+	
+	<wizard class="wizard" on-finish="final()" current-step="paso"> 
+
+		<div ng-hide="paso == 'Lesionado'" class="row border-bottom alertas">
+			<div class="col-md-9 col-sm-9 padding-top">
+				<a href="" class="fa fa-arrow-circle-left" wz-previous></a>
+				<p class="pull-right">LESIONADO:{{datos.lesionado}}</p>
+			</div>
+			<div class="col-md-3 col-sm-3 padding-top">
+				<p><strong>FOLIO:{{datos.folio}}</strong></p>
+			</div>
+			
+		</div>
+		<wz-step title="Lesionado">
+	        <h2>Consulta tu lesionado</h2>
+	        <div class="row">
+
+	        	<div class="col-md-3">
+					<fieldset>
+						<legend>Folio</legend>
+						<div class="input-group">
+							<input type="text" ng-model="folio" class="form-control" folio="buscaFolio"/>
+							<span class="input-group-btn">
+						        <button class="btn btn-default" type="button" ng-click="buscaFolio(folio)"><i class="glyphicon glyphicon-search"></i></button>
+						    </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="col-md-5">
+					<fieldset>
+						<legend>Nombre</legend>
+						<div class="input-group">
+							<input type="text" ng-model="lesionado" class="form-control" mayusculas enter="buscaLesionado"/>
+							<span class="input-group-btn">
+						        <button class="btn btn-default" ng-click="buscaLesionado(lesionado)" type="button"><i class="glyphicon glyphicon-search"></i></button>
+						    </span>
+						</div>
+						
+					</fieldset>
+				</div>
+				<div class="col-md-4">
+					<br>
+					<br>
+					<button ng-click="muestraExpedientes()" class="btn btn-default">Actualizar</button>
+				</div>
+	        </div>
+	        <br>
+	        <div ng-show="buscar">
+	        	<loading3></loading3>
+	        </div>
+	        <div id="prueba">
+		        <div ng-hide="buscar" class="table-responsive tabla">
+			        <table class="table table-hover table-bordered">
+				      <thead>
+				        <tr>
+				          <th ng-click="predicate = 'expediente'; reverse=!reverse">Folio</th>
+				          <th ng-click="predicate = 'cliente'; reverse=!reverse">Cliente</th>
+				          <th ng-click="predicate = 'lesionado'; reverse=!reverse">Lesionado</th>
+				          <th ng-click="predicate = 'sexo'; reverse=!reverse">Sexo</th>
+				          <th ng-click="predicate = 'fecha'; reverse=!reverse">Fecha Atención</th>
+				        </tr>
+				      </thead>
+				      <tbody>
+				        <tr  ng-repeat="expediente in expedientes">
+				          <td ng-click="datosPaciente($index)">{{expediente.expediente}}</td>
+				          <td ng-click="datosPaciente($index)">{{expediente.cliente}}</td>
+				          <td ng-click="datosPaciente($index)">{{expediente.lesionado}}</td>
+				          <td ng-click="datosPaciente($index)">{{expediente.sexo}}</td>
+				          <td ng-click="datosPaciente($index)">{{expediente.fecha}}</td>
+				        </tr>
+				      </tbody>
+				    </table>
+				</div>
+	        </div>
+			
+	    </wz-step>
+	    <wz-step title="Inicio">
+	        <h2>¿Es una autorización urgente?</h2>
+	        <div class="row">
+	        	<div class="col-md-4 col-sm-4">
+	        		<button class="btn btn-block btn-primary" wz-next >NO</button>
+	        	</div>
+	        	<div class="col-md-4 col-sm-4">
+	        		<button class="btn btn-block btn-danger" ng-click="urgente = true">Si</button>
+	        	</div>
+	        </div>
+
+	        <div ng-show="urgente" class="alert alert-danger alertas text-justify" role="alert">
+	        	<p>
+	        		La NOM-040-SSA2-2004 define como Urgencia calificada al “problema de salud, habitualmente de presentación súbita, que pone en riesgo la vida, órgano o función del paciente y que, por lo tanto, requiere de una atención médica inmediata.” 	
+	        	</p>
+	        	<br>
+	        	<p>
+					En este caso es obligación de la unidad médica el hacer lo necesario para estabilizar al paciente e inmediatamente después de terminada la urgencia calificada, reportarlo a coordinación médica así como completar la parte administrativa según los procesos establecidos. 
+	        	</p>
+	        	<br>
+				<p>
+					Para comunicarse con coordinación médica, favor de marcar el siguiente número telefónico:
+				</p>
+				<p>
+					01 800 3 MEDICA (01 800 3 633422) o bien: 01 800 999 12 22. 
+				</p>
+				<p>
+					Es necesario tener a la mano el folio Médicavial <strong>({{datos.folio}})</strong> y el diagnóstico actualizado.
+				</p>
+	        </div>
+
+	    </wz-step>
+	    <wz-step title="Tipo de Solicitud">
+
+	        <h2>Que tipo de autorización necesitas</h2>
+	        <div class="row">
+	        	<div class="col-md-5 col-sm-6">
+			        <select class="form-control" ng-model="datos.tipo" mayusculas>
+		        		<option value="">SELECCIONA AUTORIZACIÓN</option>
+						<option value="4">INTERCONSULTA</option>
+						<option value="3">Estudio Especial</option>
+						<option value="1">Rehabilitación</option>
+						<option value="9">Suministro Especial</option>
+						<option value="11">Prestamo de Información</option>
+						<option value="21">Salida de paquete</option>
+						<option value="2">Problema Documental</option>
+					</select>
+	        	</div>
+	        </div>
+	        <br>
+			<div ng-show="datos.tipo" class="alert alert-info alertas" role="alert">
+	        	<span ng-if="datos.tipo == 4">
+	        		Te recordamos que dentro del paquete pactado está incluida la atención inicial y subsecuente por médico traumatólogo o urgenciólogo. Así como también la consulta de valoración por médico de cualquier otra especialidad, en caso de requerir tratamiento de una especialidad distinta a Traumatología y Ortopedia por favor solicita una salida de paquete.
+	        	</span>
+	        	<span ng-if="datos.tipo == 3">
+	        		Te recordamos que los Rx están conveniados dentro del paquete.
+	        	</span>
+	        	<span ng-if="datos.tipo == 1">
+	        		Según su lesión y siguiendo el criterio y las indicaciones del médico tratante es recomendable proporcionarle al lesionado ejercicio para realizar por su cuenta. Aunado a lo anterior les recordamos que las primeras cinco sesiones de rehabilitación están previamente convenidas dentro del paquete.
+	        	</span>
+	        	<span ng-if="datos.tipo == 9">
+	        		Cualquier insumo o medicamento que se requiera para el tratamiento de la lesión y que este fuera de la lista de insumos recomendados.
+	        	</span>
+	        	<span ng-if="datos.tipo == 11">
+	        		Rayos X y/o estudios especiales y/o notas médicas la coordinación médica es quien dictaminará, en su caso, la entrega o rechazo de informes médicos y estudios a los pacientes, de acuerdo a las indicaciones de cada compañía de seguros.
+	        	</span>
+	        	<span ng-if="datos.tipo == 21">
+	        		Se debe solicitar salida de paquete cuando el tratamiento amerite periodo de tiempo en observación, canalización, hospitalización o procedimientos quirúrgicos, terapia intermedia o intensiva.
+	        	</span>
+	        	<span ng-if="datos.tipo == 2">
+	        		Problemas con pase médico: <br>
+	        		tachaduras o enmendaduras, mas lesionados indicadas en el formato, datos faltantes y/o vigencia.
+	        	</span>
+	        </div>
+	        <br>
+	        <div ng-show="datos.tipo == 1">
+	        	<label for="">Documentos de apoyo</label><br>
+	        	<button class="btn btn-default" archivo="ejercicios/Cadera_Rodilla.pdf">Cadera Rodilla</button>
+	        	<button class="btn btn-default" archivo="ejercicios/Codo_Mano_Muneca.pdf">Codo,Mano yMuneca</button>
+	        	<button class="btn btn-default" archivo="ejercicios/Columna_Cervical.pdf">Columna Cervical</button>
+	        	<button class="btn btn-default" archivo="ejercicios/Columna_Dorsolumbar.pdf">Columna Dorsolumbar</button>
+	        	<button class="btn btn-default" archivo="ejercicios/Higiene_Columna.pdf">Higiene Columna</button>
+	        	<button class="btn btn-default" archivo="ejercicios/Hombro.pdf">Hombro</button>
+	        	<button class="btn btn-default" archivo="ejercicios/Tobillo.pdf">Tobillo Pie</button>
+	        </div>
+	        <br>
+			<div class="pull-right">
+				<button class="btn btn-block btn-primary" ng-disabled=" datos.tipo == ''" wz-next>Siguiente</button>
+			</div>
+
+	    </wz-step>
+	    <wz-step title="Detalle">
+			<h2>Detalle de solicitud</h2>
+
+	        <div ng-show="datos.tipo == 4">
+
+	        	<div class="row">
+	        		<div class="col-md-4">
+	        			<h3>Tipo de Interconsulta</h3>
+	        			<select class="form-control" ng-model="datos.interconsulta.tipo">
+			        		<option value="">Selecciona Consulta</option>
+							<option value="Neurologia">Neurología</option>
+							<option value="Ginecologia">Ginecología</option>
+							<option value="Otorrinolaringologia">Otorrinolaringología</option>
+							<option value="Oftalmologia">Oftalmología</option>
+							<option value="Otro">Otro</option>
+						</select>
+						<br>
+						<div class="text-center">
+							<button class="btn btn-primary" ng-hide="datos.interconsulta.tipo == 'Ginecologia'" ng-disabled="datos.interconsulta.tipo == '' " wz-next>Siguiente</button>
+
+							<button ng-show="datos.interconsulta.tipo == 'Ginecologia' && datos.interconsulta.embarazo == true" class="btn btn-primary" wz-next>Siguiente</button>
+						</div>
+	        		</div>
+	        		<div class="col-md-8">
+						<div ng-show="datos.interconsulta.tipo == 'Ginecologia'" class="alertas text-center">
+							<h3>¿La paciente se encuentra embarazada?</h3>
+							<button class="btn btn-danger" ng-click="datos.interconsulta.embarazo = false" wz-next >NO</button>
+							<button class="btn btn-primary" ng-click="datos.interconsulta.embarazo = true">SI</button>
+							<br>
+							<br>
+							<div ng-show="datos.interconsulta.embarazo" class="alertas">
+								<div class="row">
+									<div class="col-md-4">
+										<label for="control">
+											¿Actualmente está sometida a control ginecológico?
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="control" ng-model="datos.interconsulta.controlgineco" value="NO"> NO
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="control" ng-model="datos.interconsulta.controlgineco"  value="SI"> SI
+										</label>
+									</div>
+									<div class="col-md-4">
+										<label for="">Semanas de gestacion:</label>
+										<input type="number" ng-model="datos.interconsulta.semanas" class="form-control"/>
+									</div>
+									<div class="col-md-4">
+										<label for="dolor">
+											¿Dolor abdominal?
+										</label>
+										<br>
+										<label class="radio-inline">
+										  <input type="radio" name="dolor" ng-model="datos.interconsulta.dolorabdominal" value="NO"> NO
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="dolor" ng-model="datos.interconsulta.dolorabdominal"  value="SI"> SI
+										</label>
+									</div>
+									
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<label for="">Frecuencia cardiaca fetal:</label>
+										<input type="text" ng-model="datos.interconsulta.frecuencia" class="form-control"/>
+									</div>
+									<div class="col-md-6">
+										<label for="movimiento">
+											Movimientos Fetales:
+										</label>
+										<br>
+										<label class="radio-inline">
+										  <input type="radio" name="movimiento" ng-model="datos.interconsulta.movimientosfetales" value="presentes"> Presentes
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="movimiento" ng-model="datos.interconsulta.movimientosfetales"  value="ausentes"> Ausentes
+										</label>
+									</div>
+									
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+
+										<label for="">Observaciones</label>
+										<textarea name="que" id="que" class="form-control  input-lg" ng-model="datos.interconsulta.observaciones" rows="3" mayusculas></textarea>
+
+									</div>
+								</div>
+								
+							</div>
+
+						</div>
+	        		</div>
+	        	</div>
+
+	        </div>
+
+	        <div ng-show="datos.tipo == 3">
+	        	<p>Tipo de estudio</p>
+	        	<div class="radio">
+				  <label>
+				    <input type="radio" name="estudio" id="estudio1" ng-model="datos.estudio.tipo" value="Resonancia magentica nuclear (RMN)" checked>
+				    Resonancia magentica nuclear (RMN)
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="estudio" id="estudio2" ng-model="datos.estudio.tipo" value="Tomografia accial computarizada (TAC)">
+				    Tomografia accial computarizada (TAC)
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="estudio" ng-model="datos.estudio.tipo" id="estudio3" value="Electromiografia (EMG)">
+				    Electromiografia (EMG)
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="estudio" ng-model="datos.estudio.tipo" id="estudio4" value="Ultrasonido (US)">
+				    Ultrasonido (US)
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="estudio" ng-model="datos.estudio.tipo" id="estudio5" value="Ultrasonido ginecobstetrico (USG)">
+				    Ultrasonido ginecobstetrico (USG)
+				  </label>
+				</div>
+				<br>
+				<label for="">Por favor detalla el estudio</label>
+				<textarea name="que" id="que" class="form-control  input-lg" ng-model="datos.estudio.detalle" rows="3" mayusculas></textarea>
+				<br>
+				<div class="pull-right">
+					<button class="btn btn-primary" ng-disabled="datos.estudio.tipo == '' || datos.estudio.detalle == '' " wz-next>Siguiente</button>
+				</div>
+	        </div>
+
+	        <div ng-show="datos.tipo == 1">
+	        	<div class="row">
+	        		<div class="col-md-5 col-sm-5">
+	        			<div class="row">
+	        				<div class="col-md-9">
+    							<h3>Escala de dolor del paciente</h3>
+	        				</div>
+	        				<div class="col-md-3">
+	        					<br>
+								<input type="number" ng-change="verDolor()" ng-model="datos.rehabilitacion.dolor" class="form-control pull-left"  min="0" max="10" />
+	        				</div>
+	        			</div>
+	        			<!-- <div class="dropdown">
+						  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+						    Escala de dolor
+						    <span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Ninguno <i class="icon-happy pull-right"></i></a></li>
+						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Poco <i class="icon-smiley pull-right"></i></a></li>
+						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Molesto <i class="icon-sad pull-right"></i></a></li>
+						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">No tolerable <i class="icon-confused pull-right"></i></a></li>
+						  </ul>
+						</div> -->
+						<br>
+						<div class="text-center">
+		        			<div width="200" ng-radial-gauge ranges="ranges" value="datos.rehabilitacion.dolor" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
+		        			<!-- <div style="font-size:92px;" ng-class="{'icon-happy': dolor == 'Ninguno','icon-smiley': dolor == 'Poco','icon-sad': dolor == 'Molesto','icon-confused': dolor == 'No tolerable'}" ></div> -->
+		        			<!-- <p class="text-center"> {{ dolor }} </p> -->
+						</div>
+	        		</div>
+	        		<div class="col-md-7 col-sm-7">
+
+	        			<h3>¿cuantas sesiones de rehabilitación a tomado el paciente?</h3>
+	        			<div class="col-md-3">
+		        			<input type="number" ng-model="datos.rehabilitacion.rehabilitaciones" class="form-control"  min="0"/>
+		        		</div>
+		        		<br><br>
+	        			<div ng-show="datos.rehabilitacion.rehabilitaciones > 0" class="load">
+	        				<div class="row">
+	        					<div class="col-md-10">
+		        					<h3>Escala de mejora del paciente</h3>
+	        					</div>
+	        					<div class="col-md-2">
+	        						<br>
+									<input type="number" name="input" ng-model="datos.rehabilitacion.mejora" ng-change="verMejora()" class="form-control"  min="0" max="10"/>
+	        					</div>
+	        				</div>
+							<br>
+							<div class="text-center">
+								<!-- <div style="font-size:92px;" ng-class="{'icon-confused': mejoria == 'Ninguna','icon-sad': mejoria == 'Poca','icon-smiley': mejoria == 'Alguna','icon-happy': mejoria == 'Mucha'}" ></div> -->
+	        					<div width="200" ng-radial-gauge ranges="ranges2" value="datos.rehabilitacion.mejora" value-unit="unit2" precision="precision2" lower-limit="lowerLimit2" upper-limit="upperLimit2"></div>
+	        					<!-- <p class="text-center"> {{ mejoria }} </p> -->
+							</div>
+	        			</div>
+	        		</div>
+	        		<div class="pull-right">
+						<button class="btn btn-primary" wz-next>Siguiente</button>
+					</div>
+	        	</div>
+	        </div>
+
+	        <div ng-show="datos.tipo == 9">
+	        	<p>Por favor detalla el suministro requerido</p>
+	        	<textarea name="que" id="que" class="form-control  input-lg" ng-model="datos.suministro.detalle" rows="5" mayusculas required></textarea>
+	        	<br>
+	        	<div class="pull-right">
+					<button class="btn btn-primary" ng-disabled="datos.suministro.detalle == '' " wz-next>Siguiente</button>
+				</div>
+	        </div>
+
+	        <div ng-show="datos.tipo == 11">
+
+	        	<h3>Selecciona informacion</h3>
+				<label class="checkbox-inline">
+				  <input type="checkbox" id="inlineCheckbox1" ng-model="datos.informacion.notamedica" value="nota medica"> Nota Médica
+				</label>
+				<label class="checkbox-inline">
+				  <input type="checkbox" id="inlineCheckbox2" ng-model="datos.informacion.rx" value="rx"> Rx
+				</label>
+				<label class="checkbox-inline">
+				  <input type="checkbox" id="inlineCheckbox3" ng-model="datos.informacion.resultados" value="resultado de estudios"> Resultado de estudios
+				</label>
+				<br>
+				<br>
+				<p>Por favor detalla el motivo por el cual el paciente requiere esta información</p>
+		        <textarea id="datalle" class="form-control  input-lg" ng-model="datos.informacion.datalle" rows="5" mayusculas></textarea>
+		        <br>
+		        <div class="pull-right">
+					<button class="btn btn-block btn-primary" ng-disabled="datos.informacion.datalle == ''" wz-next>Siguiente</button>
+				</div>
+	        </div>
+
+	        <div ng-show="datos.tipo == 21">
+	        	<p>Por favor detalla la salida de paquete</p>
+	        	<textarea name="que" id="que" class="form-control  input-lg" ng-model="datos.salidapaquete.detalle" rows="5" mayusculas required></textarea>
+	        	<br>
+	        	<div class="pull-right">
+					<button class="btn btn-block btn-primary" ng-disabled="datos.salidapaquete.detalle == ''" wz-next>Siguiente</button>
+				</div>
+	        </div>
+
+	        <div ng-show="datos.tipo == 2">
+	        	<h4>Tipo de problema</h4>
+	        	<div class="checkbox">
+				  <label>
+				    <input type="checkbox" ng-model="datos.problemadocumental.pase" value="pase">
+				    Problema con el pase médico
+				  </label>
+				</div>
+				<div class="checkbox">
+				  <label>
+				    <input type="checkbox" ng-model="datos.problemadocumental.identificacion" value="identificacion">
+				    Problema con la identificación
+				  </label>
+				</div>
+				<br>
+				<p>Por favor detalla el motivo del problema</p>
+		        <textarea name="que" id="que" class="form-control  input-lg" ng-model="datos.problemadocumental.detalle" rows="5" mayusculas></textarea>
+		        <br>
+		        <div class="pull-right">
+					<button class="btn btn-block btn-primary" ng-disabled="datos.problemadocumental.detalle == ''" wz-next>Siguiente</button>
+				</div>
+	        </div>
+			<br>
+			
+	    </wz-step>
+	    <wz-step title="Justificación">
+	        
+			<h3>Diagnostico Actual</h3>
+			<input type="text" ng-model="datos.diagnostico" class="form-control" mayusculas/>
+			<h3>Justificación y Observaciones</h3>
+	        <textarea name="que" id="que" class="form-control  input-lg" ng-model="datos.justificacion" rows="5" mayusculas required></textarea>
+	        <br>
+	        <div class="pull-right">
+				<button class="btn btn-block btn-primary" ng-disabled="datos.justifiacion == '' || datos.diagnostico == '' " wz-next>Siguiente</button>
+			</div>
+
+	    </wz-step>
+	    <wz-step title="Soporte">
+	        
+			<h2>Proporciona información adicional para agilizar tu solicitud</h2>
+			<p>Nota Médica, Pase, Identificacion, Etc.</p>
+
+			<div class="row">
+				<div class="col-sm-6 col-md-6">
+					<!-- <input type="file" ng-file-select="onFileSelect($files)"> -->
+					<input type="file" ng-file-select="onFileSelect($files)" multiple/>
+					<br>
+					<div ng-show="dropSupported" class="drop-box" ng-file-drop="onFileSelect($files);" ng-file-drop-available="dropSupported=true" ng-file-drag-over-class="arrastra">Arrastra documentos aqui</div>
+
+					
+				</div>
+				<div class="col-sm-6 col-md-6">
+
+					<div class="text-center animate-show" ng-show="cargando">
+						<p>Cargando {{ archivo }} de {{ archivos }}</p>
+						<progressbar class="progress-striped active" value="valor">{{ valor }}%</progressbar>
+						<br>	
+						<button class="btn btn-default" ng-click="upload.abort()">Cancelar Subida</button>
+					</div>
+					
+
+					<ul class="list-group">
+					    <li class="list-group-item" ng-repeat="file in documentos">
+					    	<div class="media">
+							  <a class="pull-left" href="#">
+							    <img class="media-object" ng-src="{{file.ubicacion}}" alt="{{file.tipo}}" width="80" height="80">
+							  </a>
+							  <div class="media-body">
+							    nombre: {{file.archivo}}</br>
+					    		Tipo de Documento: {{file.tipo}}<br>
+					    		Observciones:{{file.observaciones}}
+					    		<button class="btn btn-danger pull-right" ng-click="eliminaImagen($index)"> <i class="glyphicon glyphicon-trash"></i> </button>
+							  </div>
+							  
+							</div>
+					    </li>
+					</ul>
+				</div>
+			</div>
+			<div class="pull-right">
+				<button class="btn btn-block btn-primary" wz-next>Siguiente</button>
+			</div>
+
+	    </wz-step>
+	    <wz-step title="Comprobante">
+	        
+			<h2>Generar Solicitud</h2>
+			<p>
+				Verifica que tus datos ingresados en los pasos anteriores sean correctos
+			</p>
+			<br>
+			<div class="col-md-12 col-sm-12">
+				<div class="fondo">
+					<div class="row" ng-show="clavesolicitud">
+		    			<div class="col-md-12">
+		    				<fieldset>
+				    			<legend>Solicitud : <mark>{{ clavesolicitud }}</mark></legend>
+				    		</fieldset>
+		    			</div>
+		    		</div>
+					<div class="row">
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Folio:</label>
+								{{datos.folio}}
+							</div>
+		    			</div>
+		    			<div class="col-md-4 col-sm-4">
+		    				<div class="form-group">
+								<label for="exp">Cliente:</label>
+								{{datos.clientenombre}}
+							</div>
+		    			</div>
+		    		</div>
+
+			    	<div class="row">
+		    			<div class="col-md-12">
+		    				<div class="form-group">
+								<label for="exp">Lesionado:</label>
+								 {{datos.lesionado}}
+							</div>
+		    			</div>
+		    		</div>
+
+		    		<div class="row">
+		    			<div class="col-md-12">
+		    				<fieldset>
+				    			<legend>Tipo de Solicitud :
+				    			<small ng-if="datos.tipo == 4">Interconsulta</small>
+								<small ng-if="datos.tipo == 3">Estudio Especial</small>
+								<small ng-if="datos.tipo == 1">Rehabilitación</small>
+								<small ng-if="datos.tipo == 9">Suministro Especial</small>
+								<small ng-if="datos.tipo == 11">Prestamo de Información</small>
+								<small ng-if="datos.tipo == 21">Salida de paquete</small>
+								<small ng-if="datos.tipo == 2">Problema Documental</small>
+				    			</legend>
+				    		</fieldset>
+		    			</div>
+		    		</div>
+
+		    		<div ng-show="datos.tipo == 4 ">
+						<div class="row">
+			    			<div class="col-md-4 col-sm-4">
+			    				<div class="form-group">
+									<label for="exp">Tipo Interconsulta:</label>
+									{{datos.interconsulta.tipo}}
+								</div>
+			    			</div>
+			    			<div class="col-md-4 col-sm-4" ng-show="datos.interconsulta.tipo == 'Ginecologia'">
+			    				<div class="form-group">
+									<label for="exp">Embarazo:</label>
+									<span ng-if="datos.interconsulta.embarazo == 0">
+										NO
+									</span>
+									<span ng-if="datos.interconsulta.embarazo != 0">
+										SI
+									</span>
+									
+								</div>
+			    			</div>
+			    		</div>
+
+			    		<div class="row" ng-show="datos.interconsulta.embarazo">
+			    			
+			    			<div class="col-md-4 col-sm-4">
+			    				<div class="form-group">
+									<label for="exp">Sometida a control ginecológico:</label>
+									{{datos.interconsulta.controlgineco}}
+								</div>
+			    			</div>
+			    			<div class="col-md-4 col-sm-4">
+			    				<div class="form-group">
+									<label for="exp">Semanas de gestación:</label>
+									{{datos.interconsulta.semanas}}
+								</div>
+			    			</div>
+			    			<div class="col-md-4 col-sm-4">
+			    				<div class="form-group">
+									<label for="exp">Dolor abdominal:</label>
+									{{datos.interconsulta.dolorabdominal}}
+								</div>
+			    			</div>
+			    		</div>
+
+			    		<div class="row" ng-show="datos.interconsulta.embarazo">
+			    			
+			    			<div class="col-md-4 col-sm-4">
+			    				<div class="form-group">
+									<label for="exp">Frecuencia cardiaca fetal:</label>
+									{{datos.interconsulta.frecuencia}}
+								</div>
+			    			</div>
+			    			<div class="col-md-4 col-sm-4">
+			    				<div class="form-group">
+									<label for="exp">Movimientos fetales:</label>
+									{{datos.interconsulta.movimientosfetales}}
+								</div>
+			    			</div>
+			    		</div>
+
+			    		<div class="row" ng-show="datos.interconsulta.embarazo">
+			    			
+			    			<div class="col-md-12 col-sm-12">
+			    				<div class="form-group">
+									<label for="exp">Observaciones:</label>
+									{{datos.interconsulta.observaciones}}
+								</div>
+			    			</div>
+			    		</div>
+		    		</div>
+
+		    		<div ng-show="datos.tipo == 3 ">
+						<div class="row">
+			    			<div class="col-md-4 col-sm-4">
+			    				<div class="form-group">
+									<label for="exp">Tipo de estudio:</label>
+									{{datos.estudio.tipo}}
+								</div>
+			    			</div>
+			    			
+			    		</div>
+
+			    		<div class="row">
+			    			
+			    			<div class="col-md-12 col-sm-12">
+			    				<div class="form-group">
+									<label for="exp">Detalle estudio:</label>
+									{{datos.estudio.detalle}}
+								</div>
+			    			</div>
+			    		</div>
+		    		</div>
+
+		    		<div ng-show="datos.tipo == 1 ">
+						<div class="row">
+			    			<div class="col-md-4 col-sm-4">
+			    				<div class="form-group">
+									<label for="exp">Escala de dolor del paciente:</label>
+									{{datos.rehabilitacion.dolor}}
+								</div>
+			    			</div>
+			    			<div class="col-md-8 col-sm-8">
+			    				<div class="form-group">
+									<label for="exp">Numero de sesiones de rehabilitación del paciente:</label>
+									{{datos.rehabilitacion.rehabilitaciones}}
+								</div>
+			    			</div>
+			    			
+			    		</div>
+
+			    		<div class="row">
+			    			
+			    			<div class="col-md-4 col-sm-4">
+			    				<div class="form-group">
+									<label for="exp">Escala de mejoria:</label>
+									{{datos.rehabilitacion.mejora}}
+								</div>
+			    			</div>
+			    		</div>
+		    		</div>
+					
+		    		<div ng-show="datos.tipo == 9">
+
+			    		<div class="row">
+			    			
+			    			<div class="col-md-12 col-sm-12">
+			    				<div class="form-group">
+									<label for="exp">Detalle del suministro requerido:</label>
+									{{datos.suministro.detalle}}
+								</div>
+			    			</div>
+			    		</div>
+		    		</div>
+
+		    		<div ng-show="datos.tipo == 11">
+						<div class="row">
+			    			<div class="col-md-4 col-sm-4">
+			    				<div class="form-group">
+									<label for="exp">Nota medica:</label>
+									<span ng-class="{'glyphicon glyphicon-ok': datos.informacion.notamedica}"></span>
+								</div>
+			    			</div>
+			    			<div class="col-md-4 col-sm-4">
+			    				<div class="form-group">
+									<label for="exp">Rx:</label>
+									<span ng-class="{'glyphicon glyphicon-ok': datos.informacion.rx}"></span>
+								</div>
+			    			</div>
+			    			<div class="col-md-4 col-sm-4">
+			    				<div class="form-group">
+									<label for="exp">Resultado de estudios :</label>
+									<span ng-class="{'glyphicon glyphicon-ok': datos.informacion.resultados}"></span>
+								</div>
+			    			</div>
+			    			
+			    		</div>
+
+			    		<div class="row">
+			    			
+			    			<div class="col-md-12 col-sm-12">
+			    				<div class="form-group">
+									<label for="exp"> Motivo por el cual el paciente requiere esta información:</label>
+									<p>
+										{{datos.informacion.datalle}}
+									</p>
+								</div>
+			    			</div>
+			    		</div>
+		    		</div>
+
+
+
+		    		<div ng-show="datos.tipo == 21 ">
+
+			    		<div class="row">
+			    			
+			    			<div class="col-md-12 col-sm-12">
+			    				<div class="form-group">
+									<label for="exp">Detalle de la salida de paquete:</label>
+									{{datos.salidapaquete.detalle}}
+								</div>
+			    			</div>
+			    		</div>
+		    		</div>
+
+		    		<!-- ng-show="datos.tipo == '7'" -->
+
+		    		<div ng-show="datos.tipo == 2" >
+						<div class="row">
+			    			<div class="col-md-4 col-sm-4">
+			    				<div class="form-group">
+									<label for="exp">Problema pase médico:</label>
+									<span ng-class="{'glyphicon glyphicon-ok': datos.problemadocumental.pase}"></span>
+								</div>
+			    			</div>
+			    			<div class="col-md-4 col-sm-4">
+			    				<div class="form-group">
+									<label for="exp">Problema identificación:</label>
+									<span ng-class="{'glyphicon glyphicon-ok': datos.problemadocumental.identificacion}"></span>
+								</div>
+			    			</div>
+			    			
+			    		</div>
+
+			    		<div class="row">
+			    			
+			    			<div class="col-md-12 col-sm-12">
+			    				<div class="form-group">
+									<label for="exp"> Motivo del problema:</label>
+									{{datos.problemadocumental.detalle}}
+								</div>
+			    			</div>
+			    		</div>
+		    		</div>
+
+		    		<div class="row">
+		    			<div class="col-md-12">
+		    				<div class="form-group">
+								<label for="exp">Diagnostico Actual:</label>
+								<p>
+									{{datos.diagnostico}}
+								</p>
+							</div>
+		    			</div>
+		    		</div>
+
+		    		<div class="row">
+		    			<div class="col-md-12">
+		    				<div class="form-group">
+								<label for="exp">Justificación y Observaciones:</label>
+								<p>
+									{{datos.justificacion}}
+								</p>
+							</div>
+		    			</div>
+		    		</div>
+
+				</div>
+					
+			</div>		
+	        <br>
+	        <div class="text-center">
+				<button class="btn btn-lg btn-primary" id="final" data-loading-text="Generando..." ng-hide="clavesolicitud" wz-next>Generar Comprobante</button>
+			</div>
+			<br>
+			<div ng-show="mensaje" class="text-center alertas" role="alert">
+				<p><i class="glyphicon glyphicon-ok texto-grande"></i></p>
+				<h2> {{ mensaje }} </h2>
+				<h3>Tu clave de solicitud es:</h3>
+				<h1 class="texto-grande"> {{ clavesolicitud }} </h1>
+				<br>
+				<pdf data="'SMI25T'"></pdf>
+				<br>
+				<br>
+			</div>
+
+	    </wz-step>
+	</wizard>
+	<br>
+	<br>
+	<br>
+</div>
+
+
+<!-- ventana para el alta de los datos de un documento cuando se sube la imagen-->
+<div id="altadoc" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+    	<div class="modal-header">
+        	<h4>Datos del Documento</h4>
+        	<p>Imagen: {{inicioarchivo + 1}} de {{numeroimagenes + 1}}</p>
+        	<p>{{nombreArchivo}}</p>
+        </div>
+        <div class="modal-body">
+        
+			<div class="row">
+				<div class="col-md-12">
+				<label>Tipo de Documento</label>
+				<select class="form-control" ng-model="nombredoc" ng-options="TipoDoc as TipoDoc.TID_nombre for TipoDoc in tiposDocumentos">
+					<option value="">Tipo Documento</option>
+				</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<label for="numeroafi">Observaciones</label>
+					<textarea class="form-control" ng-model="observacionesimagen" rows="3"></textarea>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="col-md-6">
+					<button class="btn btn-block btn-danger" ng-click="cancelaimagen()" data-dismiss="modal">Cancelar</button>		
+				</div>
+				<div class="col-md-6">
+					<button type="submit" class="btn btn-block btn-primary" ng-disabled="nombredoc == ''" ng-click="imagenInfo()">Agregar</button>		
+				</div>
+			</div>
+
+	  	</div>
+	</div>
+  </div>
+</div>
+
+<div id="impresion">
+	
+</div>

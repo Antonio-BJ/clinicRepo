@@ -1,0 +1,237 @@
+<div>
+	<h2 style="width: 94%; margin: auto;">Reportes de Ventas sin Atención</h2>
+	<form name="ventasSinReg" ng-submit="enviaParametros()" style="width: 94%; margin: auto;">
+		<br>
+		<div class="row">
+			<div class="col-md-3">
+          <div class="input-group ">
+              <span>Fecha inicial:</span>
+              <input type="text" ng-model="reporte.fechaIni" name="fecha1" id="fecha1" class= "form-control" data-date-format="YYYY-MM-DD" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" required>
+          </div>                         
+      </div>
+
+      <div class="col-md-3">
+          <div class="input-group ">
+              <span>Fecha final:</span>
+              <input type="text" ng-model="reporte.fechaFin" name="fecha2" id="fecha2" class= "form-control" data-date-format="YYYY-MM-DD" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" required>
+          </div>  
+      </div>
+
+			<div class="col-md-3" ng-show="usrLogin=='chernandez'">
+				<div class="input-group " style="width:90%">
+            <span>Unidad: </span>
+            <select name="uni" id="uni" ng-model="reporte.unidad" class="form-control"  ng-options="uni.Uni_clave as uni.Uni_nombrecorto  for uni in listadoUnidades">
+                <option value=""> TODAS LAS PROPIAS </option>
+            </select>
+        </div>  
+			</div>
+
+			<div class="col-md-3" align="center">
+        <br>
+				<div class="input-group" style="width:100%">
+            <input type="Submit" class="btn btn-primary btn-md" value="Generar Reporte"/>     
+        </div>  
+			</div>
+		</div>
+	</form>
+  
+  <br ng-show="cargador">
+  <div class="row" ng-show="cargador">
+    <div class="col-md-12">
+      <div  align="center">
+        <img ng-src="imgs/cargador.gif">
+      </div>
+    </div>
+  </div>
+            
+  <div class="row" ng-show="mensaje">
+    <div class="col-md-12">
+      <div align="center">
+        <div class="alert alert-warning">
+          Sin registros
+        </div>
+      </div>
+    </div>
+  </div>
+            
+  <hr ng-show="listadoReporte">
+
+  <div class="row" ng-show="listadoReporte" style="width: 96%; margin: auto;">
+    <h5>Ver / ocultar datos</h5>
+    <div class="col-md-2">
+      <div class="checkbox c-checkbox" >
+        <label>
+          <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="ver.nombrePaciente" disabled>
+          <span class="fa fa-check"></span>
+          Paciente
+        </label>
+      </div>
+
+      <div class="checkbox c-checkbox" >
+        <label>
+          <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="ver.fechaRegistro">
+          <span class="fa fa-check"></span>
+          Fecha de registro
+        </label>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="checkbox c-checkbox" >
+        <label>
+          <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="ver.unidad">
+          <span class="fa fa-check"></span>
+          Unidad
+        </label>
+      </div>
+
+      <div class="checkbox c-checkbox" >
+        <label>
+          <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="ver.contadorVenta">
+          <span class="fa fa-check"></span>
+          Folio de Venta
+        </label>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="checkbox c-checkbox" >
+        <label>
+          <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="ver.fPago">
+          <span class="fa fa-check"></span>
+          Forma de Pago
+        </label>
+      </div>
+
+      <div class="checkbox c-checkbox" >
+        <label>
+          <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="ver.facturado">
+          <span class="fa fa-check"></span>
+          Facturación
+        </label>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="checkbox c-checkbox" >
+        <label>
+          <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="ver.banco">
+          <span class="fa fa-check"></span>
+          Banco
+        </label>
+      </div>
+
+      <div class="checkbox c-checkbox" >
+        <label>
+          <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="ver.tarjeta">
+          <span class="fa fa-check"></span>
+          Tarjeta
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default" ng-show="listadoReporte" style="width: 100%; margin: auto;">
+    <div class="row" ng-show="listadoReporte">
+      <div class="col-md-12">
+        <table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" style="width: 100%">
+          <tr>          
+            <th width="2%"><b>#</b></th>
+            <th width="15%" ng-show="ver.nombrePaciente==1"><b>Nombre</b></th>         
+            <th width="10%" ng-show="ver.fechaRegistro==1"><b>Registro</b></th>
+            <th width="8%" ng-show="ver.unidad==1"><b>Unidad</b></th>
+            <th width="8%" ng-show="ver.contadorVenta==1"><b>Venta #</b></th>
+            <th width="12%"><b>Fecha del Recibo</b></th>
+            <th width="7%"><b>Folio de Recibo</b></th>
+            <th width="6%"><b>Total</b></th>
+            <th width="10%" ng-show="ver.fPago==1"><b>Pago</b></th>
+            <th width="2%" ng-show="ver.facturado==1"><b>Facturado</b></th>
+            <th width="10%" ng-show="ver.banco==1"><b>Banco</b></th>
+            <th width="4%" ng-show="ver.tarjeta==1"><b>Tarjeta</b></th>
+            <th width="6%"><b>Recibo aplicado</b></th>
+            <th width="6%"><b>Imprimir</b></th>
+          </tr>
+          <tr ng-repeat="listado in listadoReporte">
+            <td style="color: #aaa">{{$index + 1}}</td>
+            <td ng-show="ver.nombrePaciente==1">{{listado.NOMBRE}}</td>
+            <td ng-show="ver.fechaRegistro==1">{{listado.FECHA_REGISTRO}}</td>
+            <td ng-show="ver.unidad==1">{{listado.UNIDAD}}</td>
+            <td ng-show="ver.contadorVenta==1">{{listado.FOLIO}}</td>
+            <td>{{listado.FECHA_RECIBO}}</td>
+            <td style="color: #880000">{{listado.FOLIO_RECIBO}}</td>
+            <td style="font-weight: bold">{{listado.TOTAL | currency}}</td>
+            <td ng-show="ver.fPago==1">{{listado.METODO_PAGO}}</td>
+            <td ng-show="ver.facturado==1">{{listado.FACTURADO}}</td>
+            <td ng-show="ver.banco==1">{{listado.BANCO}}</td>
+            <td ng-show="ver.tarjeta==1">{{listado.TERMINACION}}</td>
+            <td>{{listado.RECIBO_APLICADO | currency}}</td>
+            <td>
+              <a href="" ng-click="reimprimirRecibo(listado.FOLIO,listado.FOLIO_RECIBO, listado.SERIE)">
+                 <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Imprimir recibo">
+                    <em class="fa fa-circle fa-stack-2x text-success"></em>
+                    <em class="fa fa-print fa-stack-1x fa-inverse text-white"></em>
+                 </span>
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+            
+  <br><br>
+
+  <div class="row" ng-show="listadoReporte">
+    <div class="col-md-6" align="center">
+      <div class="input-group" style="width:100%">
+        <input type="button" ng-click="excelReportes()" class="btn btn-success btn-md" value="Exportar a Excel" ng-disabled="cargaRep"/>
+      </div>  
+    </div>
+
+    <div class="col-md-6" align="center">
+      <div class="input-group" style="width:100%">
+        <input type="button" ng-click="pdfReportes()" class="btn btn-danger btn-md" value="Generar PDF" ng-disabled="cargaRep"/>
+      </div>  
+    </div>
+  </div>
+
+  <div class="row" ng-show="cargaRep">
+      <div class="col-md-12">
+        <div  align="center">
+          <img ng-src="imgs/cargador.gif">
+        </div>
+      </div>
+  </div>
+
+  <br><br><br>
+
+</div>
+
+
+
+<script type="text/javascript">
+       $('#fecha1').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+        $('#fecha2').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+
+        $('#hora1').datetimepicker({
+            pickDate: false,
+            format: 'LT',
+            locale: 'mx',
+            language:'es',
+            startTime: '12:00',
+        });
+
+        $('#hora2').datetimepicker({
+            pickDate: false,
+            format: 'LT',
+            locale: 'mx',
+            language:'es',
+            startTime: '12:00',
+        });
+</script>

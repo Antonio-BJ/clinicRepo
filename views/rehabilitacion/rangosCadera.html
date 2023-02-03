@@ -1,0 +1,72 @@
+<h4>Rangos de Movilidad para Cadera</h4>
+<div class="row">
+	<div class="col-md-6">
+		<div class="input-group">
+		    <span class="input-group-addon">Flexión</span>
+		    <input type="number" class="form-control" min="0"  ng-model="histClinicaReh.flexion" ng-required="histClinicaReh.region==7">
+		    <span class="input-group-addon">°</span>
+		</div>
+		<div role="alert" style="color: red; font-size:0.9em;">
+		  {{error2}}
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="input-group">
+		    <span class="input-group-addon">Extensión</span>
+		    <input type="number" class="form-control" min="0" ng-model="histClinicaReh.extension" ng-required="histClinicaReh.region==7">
+		    <span class="input-group-addon">°</span>
+		</div>
+		<div role="alert" style="color: red; font-size:0.9em;">
+		  {{error2}}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="input-group">
+		    <span class="input-group-addon">Abducción</span>
+		    <input type="number" class="form-control" min="0" ng-model="histClinicaReh.abduccion" ng-required="histClinicaReh.region==7">
+		    <span class="input-group-addon">°</span>
+		</div>
+		<div role="alert" style="color: red; font-size:0.9em;">
+		  {{error2}}
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="input-group">
+		    <span class="input-group-addon">Aducción</span>
+		    <input type="number" class="form-control" min="0"  ng-model="histClinicaReh.aduccion" ng-required="histClinicaReh.region==7">
+		    <span class="input-group-addon">°</span>
+		</div>
+		<div role="alert" style="color: red; font-size:0.9em;">
+		  {{error2}}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="input-group">
+		    <span class="input-group-addon">Rotación externa</span>
+		    <input type="number" class="form-control" min="0" ng-model="histClinicaReh.rotExterna" ng-required="histClinicaReh.region==7">
+		    <span class="input-group-addon">°</span>
+		</div>
+		<div role="alert" style="color: red; font-size:0.9em;">
+		  {{error2}}
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="input-group">
+		    <span class="input-group-addon">Rotación interna</span>
+		    <input type="number" class="form-control" min="0" ng-model="histClinicaReh.rotInterna" ng-required="histClinicaReh.region==7">
+		    <span class="input-group-addon">°</span>
+		</div>
+		<div role="alert" style="color: red; font-size:0.9em;">
+		  {{error2}}
+		</div>
+	</div>
+</div>

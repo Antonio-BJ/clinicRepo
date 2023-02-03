@@ -1,0 +1,193 @@
+<div class="container" style="width: 100%" ng-init="inicio()">     
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<label>Últimos registro</label>
+		</div> 
+		<div class="Panel-body">
+			<div class="row">
+				<div class="col-md-12">
+					<h1>Parámetros de búsqueda</h1>
+				</div>
+			</div>
+			<div class="row">
+				<form ng-submit="buscaParametros()">
+					<div class="col-md-4" align="left">
+						<div class="input-group">
+		                 <span class="input-group-addon">Nombre: </span>	                 
+		                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.nombre" class= "form-control" mayusculas >	                 
+	          			</div>
+					</div>
+					<div class="col-md-3">
+						<div class="input-group">
+		                 <span class="input-group-addon">Folio: </span>	                 
+		                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.folio" folio="buscaParametros()" class= "form-control" mayusculas>        
+	          			</div>
+					</div>
+					
+					<div class="col-md-3">
+						<select class="form-control" ng-model="cveUni" ng-options="unidad.Uni_clave as unidad.Uni_nombre for unidad in unidades" ng-change="muestraFolios()" mayusculas>
+							<option value="">Selecciona Unidad</option>
+						</select>
+					</div> <br><br><br>
+
+					<div class="col-md-3">
+						<div class="input-group">
+		                 <span class="input-group-addon">Fecha inicio: </span>	
+		                    <input type="date" name="fecini" id="fecini" ng-model="busca.fecini" class= "form-control">
+	          			</div>
+					</div>
+					<div class="col-md-3">
+						<div class="input-group">
+		                 <span class="input-group-addon">Fecha fin: </span>	
+		                    <input type="date" name="fecfin" id="fecfin" ng-model="busca.fecfin" class= "form-control">
+	          			</div>
+					</div>
+
+					<div class="col-md-2" align="right">
+		                <div class="form-group">
+		                    <input type="submit" id="btnenvioprimero" class="btn btn-primary btn-block" value="Buscar">
+		                </div>
+		            </div>
+	            </form>
+			</div>
+			<div ng-show="buscar">
+	        	<loading2></loading2>
+	        </div>
+	        <div ng-hide="buscar">
+				<div  ng-show="error" class="row mianimacion">
+					<div class="col-md-12">
+						<div class="alert alert-warning">No se encontraron coincidencias.</div>
+					</div>
+				</div>
+				<div class="row" ng-show="listaFolPar">
+					<div class="col-md-12">
+						<table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive">
+							<tr>          
+								<th width="10%" ng-click="predicate = 'Exp_folio'; reverse=!reverse"><b>Folio</b></th>
+								<th width="10%" ng-click="predicate = 'Cia_nombrecorto'; reverse=!reverse"><b>Aseguradora</b></th>
+								<th width="15%" ng-click="predicate = 'Fecha'; reverse=!reverse"><b>Fecha</b></th>         
+								<th width="12%" ng-click="predicate = 'Exp_paterno'; reverse=!reverse"><b>A.Paterno</b></th>
+								<th width="13%" ng-click="predicate = 'Exp_materno'; reverse=!reverse"><b>A.Materno</b></th>
+								<th width="20%" ng-click="predicate = 'Exp_nombre'; reverse=!reverse"><b>Nombre(s)</b></th>
+								<th width="10%" ng-click="predicate = 'Exp_obs'; reverse=!reverse"><b>Observaciones</b></th>
+								<th width="10%" ng-click="predicate = 'Exp_cancelado'; reverse=!reverse"><b>Cancelado</b></th>
+							</tr>
+							<tr ng-repeat="listado in listaFolPar | orderBy:predicate:reverse">
+								<td><a href="" ng-click="mandaPortada(listado.Exp_folio)">{{listado.Exp_folio}}</a></td>
+								<td>{{listado.Cia_nombrecorto}}</td>
+								<td>{{listado.Fecha}}</td>
+								<td>{{listado.Exp_paterno}}</td>
+								<td>{{listado.Exp_materno}}</td>
+								<td>{{listado.Exp_nombre}}</td>
+								<td>{{listado.Exp_obs}}</td>
+								<td ng-show="listado.Exp_cancelado==1"><a href=""  ng-click="modalCancelado(listado.Exp_folio)"><img ng-src="imgs/ok.jpg" width="18"></a></td>
+								<td ng-hide="listado.Exp_cancelado==1"><img ng-src="imgs/cancelar.png" width="26"></td>
+								<td><a href="" ng-click="mandaDocumentos(listado.Exp_folio)" >Documentos</a></td>
+							</tr>
+						</table>
+					</div>
+				</div>	
+				<br>
+				<div class="row">
+					<div class="col-md-12">
+						<table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive">
+							<tr>          
+								<th width="10%" ng-click="predicate2 = 'Exp_folio'; reverse=!reverse"><b>Folio</b></th>
+								<th width="10%" ng-click="predicate2 = 'Cia_nombrecorto'; reverse=!reverse"><b>Aseguradora</b></th>
+								<th width="15%" ng-click="predicate2 = 'Fecha'; reverse=!reverse"><b>Fecha</b></th>         
+								<th width="20%" ng-click="predicate2 = 'Exp_paterno'; reverse=!reverse"><b>A.Paterno</b></th>
+								<th width="15%" ng-click="predicate2 = 'Exp_materno'; reverse=!reverse"><b>A.Materno</b></th>
+								<th width="20%" ng-click="predicate2 = 'Exp_nombre'; reverse=!reverse"><b>Nombre(s)</b></th>
+								<th width="10%" ng-click="predicate2 = 'Exp_obs'; reverse=!reverse"><b>Observaciones</b></th>
+								<th width="10%" ng-click="predicate2 = 'Exp_cancelado'; reverse=!reverse"><b>Cancelado</b></th>							
+							</tr>
+							<tr ng-repeat="folios in list | orderBy:predicate2:reverse">
+								<td><a href="" ng-click="mandaPortada(folios.Exp_folio)">{{folios.Exp_folio}}</a></td>
+								<td>{{folios.Cia_nombrecorto}}</td>
+								<td>{{folios.Fecha}}</td>
+								<td>{{folios.Exp_paterno}}</td>
+								<td>{{folios.Exp_materno}}</td>
+								<td>{{folios.Exp_nombre}}</td>	
+								<td>{{folios.Exp_obs}}</td>						
+								<td ng-show="listado.Exp_cancelado==1"><a href="" ng-click="modalCancelado(listado.Exp_folio)"><img ng-src="imgs/ok.jpg" width="18"></a></td>
+								<td ng-hide="listado.Exp_cancelado==1"><img ng-src="imgs/cancelar.png" width="26"></td>
+								<td><a href="" ng-click="mandaDocumentos(folios.Exp_folio)" >Documentos</a></td>
+							</tr>
+						</table>
+
+						<div class="modal fade" id="Cancelados" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						  	<div class="modal-dialog">
+						    	<div class="modal-content">
+						      		<div class="modal-header">
+						        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						        		<h4 class="modal-title" id="myModalLabel">Datos de cancelación del folio <b>{{folioModal}}</b></h4>
+						      		</div>
+
+						      		<div class="modal-body">
+						        		<div class="container" style="width:100%;" id="verFormato">
+											<div class="panel panel-primary">
+									      		<div class="panel-body">
+									      			<br>
+									      			<div class="row" id="campoFol">
+									      				<div class="col-md-12" align="left">
+									      					<div class="input-group">
+									      						<span class="input-group-addon">Motivo de cancelaci&oacute;n: (catálogo):</span>
+									      						<span class="input-group-addon" align="left">{{motivoCatalogo}}</span>
+									      					</div>
+									      				</div>
+									      			</div>
+
+									      			<br>
+													<div class="row" id="campoFol">
+														<div class="col-md-12" align="left">
+															<div class="input-group">
+											              		<span class="input-group-addon">Motivo de cancelaci&oacute;n:</span>
+											              		<span class="input-group-addon" align="left">{{motivo}}</span>
+											            	</div>
+														</div>				            
+													</div>
+													<br>
+											
+													<div class="row" id="campoFol">
+														<div class="col-md-12" align="left">
+															<div class="input-group">
+											              		<span class="input-group-addon">Fecha de cancelación:</span>
+											              		<span class="input-group-addon" align="left">{{fecCan}}</span>
+											            	</div>
+														</div>				            
+													</div>
+													<br>
+													<div class="row" id="campoObs">
+														<div class="col-md-12" align="left">
+															<div class="input-group">
+											              		<span class="input-group-addon">Usuario que canceló:</span> 
+											               		<span class="input-group-addon" align="left">{{usuCan}}</span>
+											            	</div>
+														</div>				            
+													</div>
+													<br>
+											
+													<div class="row" id="campoObs">
+														<div class="col-md-12" align="left">
+															<div id="resultado">
+																
+															</div>
+														</div>				            
+													</div>
+												</div>
+											</div>
+								        </div>
+								      
+								      	<div class="modal-footer">
+								        	<button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+								      	</div>
+								    </div>
+						  		</div>
+							</div>
+						</div>
+					</div>   	
+		        </div>
+			</div>
+		</div>
+	</div>
+</div>

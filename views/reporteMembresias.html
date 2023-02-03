@@ -1,0 +1,129 @@
+<div ng-init="inicio()">
+		<div class="panel panel-primary" style="width: 85%; margin: auto;">
+		    <div class="panel-heading">
+		     	<h4>Reportes de membresías</h4>		     	
+		    </div>			
+			<form name="reportees" ng-submit="enviaParametros()">
+				<br>
+				<div class="row">
+					<div class="col-md-3">
+                        <div class="input-group ">
+                            <span>Fecha inicial:</span>
+                            <input type="text" ng-model="reporte.fechaIni" name="fecha1" id="fecha1" class= "form-control" data-date-format="YYYY-MM-DD" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" required>
+                        </div>                         
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="input-group ">
+                            <span>Fecha final:</span>
+                            <input type="text" ng-model="reporte.fechaFin" name="fecha2" id="fecha2" class= "form-control" data-date-format="YYYY-MM-DD" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" required>
+                        </div>  
+                    </div>
+
+					<div class="col-md-3" ng-show="permisos.Per_reportes=='S'">
+						<div class="input-group " style="width:100%">
+                            <span>Unidad: </span>
+                            <select name="llega" id="llega" ng-model="reporte.unidad" class="form-control" ng-options="unidades.Uni_clave as unidades.Uni_nombrecorto  for unidades in listadoUnidades" ng-disabled="opUni=='no'" title="{{mensajeUni}}">
+                            	<option value=""> * Seleccione </option>
+                            </select>
+                        </div>  
+					</div>
+
+          <div class="col-md-3">
+            <img src="imgs/logos/mv.jpg" style="widht:4em; height:4em">
+          </div>
+
+					<div class="col-md-12" style="padding-top:1em;" align="center">
+						<div class="input-group" style="width:100%">
+                            <input type="Submit" class="btn btn-primary btn-md"  value="Generar Reporte"/>     
+                        </div>  
+					</div>
+				</div>	
+																
+			</form>
+            <br ng-show="cargador">
+            <div class="row" ng-show="cargador">
+                <div class="col-md-12">
+                    <div  align="center">
+                        <img ng-src="imgs/cargador.gif">
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-show="mensaje">
+                <div class="col-md-12">
+                    <div  align="center">
+                        <div class="alert alert-warning">No hay membresías existentes</div>
+                    </div>
+                </div>
+            </div>
+            
+            <hr ng-show="listadoReporte">
+            <div class="panel panel-default" ng-show="listadoReporte" style="width: 90%; margin: auto;">
+              <div class="row" ng-show="listadoReporte">
+                  <div class="col-md-12">
+                      <table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" style="width: 100%">
+                          <tr>          
+                              <th width="6%"><b>Folio</b></th>
+                              <th width="6%"><b>Serie</b></th>         
+                              <th width="30%"><b>Nombre</b></th>
+                              <th width="20%"><b>Fecha de registro</b></th>
+                              <th width="15%"><b>Unidad</b></th>
+                              <th width="28%"><b>Usuario</b></th>
+                          </tr>
+                          <tr ng-repeat="listado in listadoReporte.membresias">                  
+                              <td>{{listado.mem_folio}}</td>
+                              <td>{{listado.mem_serie}}</td>
+                              <td>{{listado.mem_nombre}}</td>
+                              <td>{{listado.mem_fecreg}}</td>                                  
+                              <td>{{listado.Uni_nombrecorto}}</td>
+                              <td>{{listado.Usu_nombre}}</td>
+                          </tr>
+                      </table>
+                  </div>
+              </div>
+            </div>
+            <br>
+
+            <br>
+
+              <div class="row" ng-show="listadoReporte">
+                  <div class="col-md-6" align="center">
+                          <div class="input-group" style="width:100%">
+                              <input type="button" ng-click="excelReportes()" class="btn btn-success btn-md"  value="Exportar a Excel"/>     
+                          </div>  
+                  </div>
+                  <div class="col-md-6" align="center">
+                          <div class="input-group" style="width:100%">
+                              <input type="button" ng-click="pdfReportes()" class="btn btn-danger btn-md"  value="Generar PDF"/>     
+                          </div>  
+                  </div>
+              </div>
+
+		</div>		
+</div>
+<script type="text/javascript">
+       $('#fecha1').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+        $('#fecha2').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+
+        $('#hora1').datetimepicker({
+            pickDate: false,
+            format: 'LT',
+            locale: 'mx',
+            language:'es',
+            startTime: '12:00',
+        });
+
+        $('#hora2').datetimepicker({
+            pickDate: false,
+            format: 'LT',
+            locale: 'mx',
+            language:'es',
+            startTime: '12:00',
+        });
+</script>

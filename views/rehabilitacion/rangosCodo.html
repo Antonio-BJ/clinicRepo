@@ -1,0 +1,48 @@
+<h4>Rangos de Movilidad para Codo</h4>
+<div class="row">
+	<div class="col-md-6">
+		<div class="input-group">
+		    <span class="input-group-addon">Flexión</span>
+		    <input type="number" class="form-control" min="0"  ng-model="histClinicaReh.flexion" ng-required="histClinicaReh.region==5">
+		    <span class="input-group-addon">°</span>
+		</div>
+		<div role="alert" style="color: red; font-size:0.9em;">
+		  {{error2}}
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="input-group">
+		    <span class="input-group-addon">Extensión</span>
+		    <input type="number" class="form-control" min="0"  ng-model="histClinicaReh.extension" ng-required="histClinicaReh.region==5">
+		    <span class="input-group-addon">°</span>
+		</div>
+		<div role="alert" style="color: red; font-size:0.9em;">
+		  {{error2}}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="input-group">
+		    <span class="input-group-addon">Pronación</span>
+		    <input type="number" class="form-control" min="0" ng-model="histClinicaReh.pronacion" ng-required="histClinicaReh.region==5">
+		    <span class="input-group-addon">°</span>
+		</div>
+		<div role="alert" style="color: red; font-size:0.9em;">
+		  {{error2}}
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="input-group">
+		    <span class="input-group-addon">Supinacion</span>
+		    <input type="number" class="form-control" min="0" ng-model="histClinicaReh.supinacion" ng-required="histClinicaReh.region==5">
+		    <span class="input-group-addon">°</span>
+		</div>
+		<div role="alert" style="color: red; font-size:0.9em;">
+		  {{error2}}
+		</div>
+	</div>
+</div>

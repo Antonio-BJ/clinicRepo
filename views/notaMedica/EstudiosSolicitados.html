@@ -1,0 +1,258 @@
+    <div class="row semiTitulo" >
+        <label >Estudios Solicitados</label>    
+    </div>
+   
+      <form name="formularios.estudio" ng-submit="guardaEstudios()" novalidate>
+       <div class="bordeSemititulo">     
+        <div class="row">
+          <div class="col-md-4 col-xs-4" >
+            <div class="input-group cajaInputcompleto">              
+              <span  ><b>Rx: </b></span>
+              <CENTER>
+                <select  ng-model="estudios.rx" name="rx" class="form-control"   
+                ng-options="rx.Rx_clave as rx.Rx_nombre group by rx.Rx_zona for rx in listRX" required>
+                <option value=""> *SELECCIONA</option>
+                </select>
+              </CENTER>
+            </div>
+            <div class="validacion" role="alert" ng-if="interacted3(formularios.estudio.rx)" ng-messages="formularios.estudio.rx.$error">
+              <div ng-message="required">campo requerido</div>            
+            </div> 
+          </div>
+          <div class="col-md-4 col-xs-4">
+            <div class="input-group cajaInputcompleto" style="width:100%">
+            <span><b>Observaciones:</b></span>           
+            <textarea class="form-control" name="interp" rows="3" ng-model="estudios.obs" onpaste="return false" style="resize:none" mayusculas></textarea>
+            </div>
+          </div>
+          <div class="col-md-4 col-xs-4">
+            <div class="input-group cajaInputcompleto">
+              <span > <b>Interpretacion de Rx Ortopédica: </b></span>
+              <textarea class="form-control" name="interp" rows="3" ng-model="estudios.interp" onpaste="return false" style="resize:none; width:100%" required="" mayusculas></textarea>
+            </div>
+            <div class="validacion" role="alert" ng-if="interacted3(formularios.estudio.interp)" ng-messages="formularios.estudio.interp.$error">
+              <div ng-message="required">campo requerido</div>            
+            </div>
+          </div>
+        </div>
+        <div class="row">
+        <div class="col-md-4 col-xs-4">
+          <div class="checkbox" ng-show="sinEstudios">
+            <label><input type="checkbox" ng-model="sinEstud">Ninguno</label>
+          </div>
+        </div>                
+        <div class="col-md-4 col-xs-4 col-md-offset-4 col-xs-offset-4" align="right">            
+              <input type="submit" class="btn btn-success" value="Agregar Estudio" />           
+        </div>
+        </div>
+      </form>
+        <div class="row" ng-show="cargador"> 
+          <div class="col-md-12">
+            <div  align="center">
+              <img ng-src="imgs/cargador.gif">
+            </div>
+          </div>
+        </div> 
+        <!-- *******************************-->
+        <div ng-show="listEstSoli" class="row mianimacion">
+          <div class="col-md-12 col-xs-12">
+            <div >
+                <table id="EstudiosRealizadosRed" align="center"  width="100%" class="table table-striped table-hover">
+                  <tr>
+                    <th width="20%"><b>Rx</b></th>
+                    <th width="35%"><b>Observaciones</b></th>
+                    <th width="35%"><b>Interpretacion</b></th>                    
+                    <th width="10%"><b>Eliminar</b></th>
+                  </tr>        
+                  <tr ng-repeat="estudios in listEstSoli">
+                    <td>{{estudios.Rx_nombre}}</td>
+                    <td>{{estudios.Rxs_Obs}}</td>                   
+                    <td>{{estudios.Rxs_desc}}</td>
+                    <td><input type="button" class="btn btn-danger btn-xs" ng-click="eliminarEstRealizado(estudios.Rxs_clave)" value='Eliminar'>
+                  </tr>
+                </table>
+            </div>
+          </div>
+        </div>              
+    </div>
+   <!-- <br>
+    <div class="row semiTitulo" >
+        <label >Procedimientos Médicos</label>    
+    </div> 
+
+      <form name="formularios.proce" ng-submit="guardaProcMedicos()" novalidate>
+      <div class="bordeSemititulo">     
+        <div class="row">
+        <div class="col-md-4 col-xs-4">
+          <div class="input-group cajaInputcompleto">
+            <span><b>Procedimientos</b></span>            
+              <select  ng-model="procedimientos.procedimiento" name="procedimiento" class="form-control"   
+              ng-options="proc.Pro_clave as proc.Pro_nombre for proc in listaProced" required mayusculas>
+                <option value=""> *Selecciona</option>
+                <option value="6"> Curaciones</option>
+                <option value="6"> Curaciones</option>
+                <option value="6"> Curaciones</option>
+                <option value="6"> Curaciones</option>
+              </select>            
+                </div>
+                <div class="validacion" role="alert" ng-if="interacted4(formularios.proce.procedimiento)" ng-messages="formularios.proce.procedimiento.$error">
+                  <div ng-message="required">campo requerido</div>            
+                </div>
+        </div>        
+        <div class="col-md-6 col-xs-6">
+          <div class="input-group cajaInputcompleto" style="width:100%">
+            <span><b>Observaciones: </b></span>
+            <textarea class="form-control"  ng-model="procedimientos.obs" rows="2" id="obs" name="obs" style="resize:none; width:100%" mayusculas></textarea>
+          </div>          
+        </div>
+        <div class="col-md-2 col-xs-2" align="right">
+          <div class="input-group" >
+            <input type="submit" id="btn-addProcMedicos" class="btn btn-success" value="Agregar">
+          </div>
+        </div>
+        
+        </div><!-- End row --> 
+       <!-- <div class="row" ng-show="cargador1"> 
+        <div class="col-md-12 col-xs-12">
+          <div  align="center">
+            <img ng-src="imgs/cargador.gif">
+          </div>
+        </div>
+      </div>   
+        <div class="row">
+        <div class="col-md-12 col-xs-12">
+          <div ng-show="listaProcedimientos" class="mianimacion">
+             <table id="TablaAlergias" width="100%" class="table table-striped table-hover">
+              <tr>
+                <th width="20%"><b>Procedimiento</b></th>
+                <th width="70%"><b>Observaciones<b/></th>
+                <th width="10%"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-repeat="proc in listaProcedimientos">
+                <td>{{proc.Pro_nombre}}</td>
+                <td>{{proc.Nproc_obs}}</td>
+                <td><input type='button' class="btn btn-danger btn-xs" ng-click='eliminarProcedimiento(proc.Nproc_clave)' value='Eliminar'></td>
+              </tr>
+              </table>
+          </div>
+        </div>
+        </div> 
+      </div> 
+    </form> 
+    
+    -->
+<br>
+
+<div class="row semiTitulo" >
+    <label >Diagnóstico</label>    
+</div> 
+
+          
+      <form name="formularios.diagnos" ng-submit="guardaDiagnostico()" novalidate>
+      <div class="bordeSemititulo">     
+        <div class="row">
+        <div class="col-md-6">
+          <div class="input-group" style="width:100%">                       
+              <li class="list-group-item list-group-item-info">Categoría</li>                     
+              <div style="height:15em; overflow: scroll; width:100%; overflow-x: hidden;">
+              <div  ng-hide="cargador2" class="list-group" id="tooltip-ex">           
+                <a href="" ng-repeat="diag in listaDiagnostico" class="list-group-item element" tooltip-placement="right" tooltip-trigger tooltip="{{diag.DX_diagnostico}}" ng-click="despliegaDiagnosticos(diag.DX_clave)">{{diag.DX_abreviatura}}</a>           
+              </div>
+                  <div ng-show="cargador2" align="center">
+                    <br><br><br><br><br>
+                    <img ng-src="imgs/cargador.gif">
+                  </div>                          
+            </div>
+                </div>
+        </div> 
+        <div class="col-md-6">
+          <div class="input-group" style="width:100%">                       
+              <li class="list-group-item list-group-item-info">Diagnóstico</li>                     
+              <div style="height:15em; overflow: scroll; width:100%; overflow-x: hidden;">
+              <div ng-hide="cargador" class="list-group" id="tooltip-ex">           
+                <a href="" ng-repeat="diagnos in listaDiagnostics" class="list-group-item element" tooltip-placement="left" tooltip-trigger tooltip="{{diagnos.DxS_diagnos}}" ng-dblclick="agregaDiagnostico(diagnos.DxS_diagnos)">{{diagnos.DxS_cveDiag}}</a>            
+              </div>  
+              <div ng-show="cargador" align="center">
+                <br><br><br><br><br>
+                      <img ng-src="imgs/cargador.gif">
+                  </div>            
+            </div>
+                </div>                
+        </div>    
+      </div>
+      <br>
+      <div class="row">     
+        <div class="col-md-12">         
+            <div class="input-group" style="width:100%">
+                     <div class="cajaInputArriba">
+                  <span>Crónico-degenerativo de relevancia:</span>
+                </div>
+              <textarea  ng-model="diagnostico.cron" rows="4"  id="cron" name="cron" style="resize:none; width:100%" mayusculas></textarea>
+            </div>           
+      </div>
+     </div>
+     <div class="row"> 
+        <div class="col-md-12">
+          <label for="" class="alert alert-danger">
+           <p> <b>- Describir lesiones principales</b> (225 caracteres) </p>
+            <p>- Para evitar posibles repercusiones legales sobre el médico tratante, le recomendamos evitar agregar términos como "policontundido" u otros términos ambigüos. </p> 
+          </label>
+        </div> 
+      </div>
+      <div class="row">     
+        <div class="col-md-6">         
+          <div class="input-group" style="width:100%">
+              <div class="row cajaInputArriba">
+                <div >
+                  <div class="col-md-6"><span>Diagnóstico a este momento:</span></div>    
+                  <div class="col-md-6" align="right"><span><b>{{conteoDiag}}</b></span></div>    
+                </div>
+              </div>
+            <textarea  ng-model="diagnostico.diagnostico" ng-keypress="validarLongitud()" rows="4" id="obs" name="diagnostico" style="resize:none; width:100%" mayusculas maxlength="225" minlength="1"></textarea>
+          </div>
+          
+                <div class="validacion" ng-show="msjPalabraProhi">
+                  <div >Está utilzando una palabra prohibida <b>(POLICONTUNDIDO, POLITRAUMATIZADO, POSIBLE)</b></div>            
+                </div>
+        </div>
+        <div class="col-md-6"> 
+          <div class="input-group" style="width:100%">
+            <div class="cajaInputArriba">
+                <span>Diagnóstico no relacionado al siniestro:</span>
+            </div>           
+            <textarea class="form-control" ng-model="diagnostico.diagNoSin" rows="4" id="obs" name="obs" style="resize:none; width:100%" mayusculas></textarea>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="validacion" ng-show="msjDiagnostico">
+              <div >Se tiene que agregar por lo menos un diagnóstico.</b></div>            
+          </div>
+        </div> 
+      </div>
+      <div class="row">
+        <div class="col-md-12"> 
+          <div class="input-group" style="width:100%">
+            <div class="cajaInputArriba">
+                <span>Observaciones:</span>
+            </div>           
+            <textarea class="form-control" ng-model="diagnostico.obs" rows="4" id="obs" name="obs" style="resize:none; width:100%" mayusculas></textarea>
+          </div>
+        </div>
+      </div>                           
+        <div class="row" ng-show="cargador1"> 
+            <div class="col-md-12">
+              <div  align="center">
+                <img ng-src="imgs/cargador.gif">
+              </div>
+            </div>
+        </div>    
+    
+        <div class="row">
+        <div class="col-md-12" align="right">
+          <input type="submit" ng-disabled="estudioAgreg&&sinEstud==false" class="btn btn-primary btn-lg" value="Siguiente">
+        </div>
+        </div>
+        </div> 
+      </form>             
+  
+

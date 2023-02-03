@@ -1,0 +1,84 @@
+<div class="container" style="width: 100%"> 
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title" align="center">Antecedentes Heredo Familiares</h3>
+    </div>
+    <div class="panel-body">
+    <form ng-submit="guardaAntedente()">
+      <div class="row">
+        <div class="col-md-4" >
+          <div class="input-group">
+            <span class="input-group-addon">Enfermedad:</span>
+            <select name="Enfermedad" ng-model="datos1.enfermedad" id="Enfermedad" class= "form-control" required="required" ng-options="enf.Enf_clave as enf.Enf_nombre  for enf in enfermedad">
+              <option value=""> * Seleccione </option>
+            </select>
+          </div> 
+        </div >
+        <div class="col-md-4" >
+          <div class="input-group">
+            <span class="input-group-addon">Familiar:</span>
+            <select name="Familiar" ng-model="datos1.familiar" id="Familiar" class= "form-control" required="required" ng-options="fam.Fam_clave as fam.Fam_nombre for fam in familiar">
+              <option value=""> * Seleccione </option>
+            </select>
+          </div> 
+        </div >
+        <div class="col-md-4" >
+          <div class="input-group">
+            <span class="input-group-addon">Estatus:</span>
+            <select name="Estatus" ng-model="datos1.estatus" id="Estatus" class= "form-control" required="required" ng-options="est.Est_clave as est.Est_nombre for est in estatus">
+              <option value=""> * Seleccione </option>                
+            </select>
+          </div> 
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-8" >
+          <div class="input-group">
+            <span class="input-group-addon">Observaciones:</span>
+            <input type="text" ng-model="datos1.observaciones" name="ObsHeredo" id="ObsHeredo" class="form-control">
+          </div> 
+        </div >
+        <div class="col-md-4">
+          <input type="submit" class="btn btn-success" value="Agregar Antecedente" />
+        </div>
+      </div>
+      </form>
+    
+      <div class="row">
+        <div class="col-md-12">
+          <div ng-show="listEnfeHe">
+            <table class="table table-striped table-hover">
+              <tr>
+                <th width="20%"><b>Enfermedad</b></th>
+                <th width="15%"><b>Familiar</b></th>
+                <th width="15%"><b>Estatus</b></th>
+                <th width="40%"><b>Observaciones</b></th>
+                <th width="10%"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-repeat="enfermedad in listEnfeHe">
+                <td>{{enfermedad.Enf_nombre}}</td>
+                <td>{{enfermedad.Fam_nombre}}</td>
+                <td>{{enfermedad.Est_nombre}}</td>
+                <td>{{enfermedad.FamE_obs}}</td>
+                <td><input type="button" ng-click="borrarEnfHeredo(enfermedad.FamE_clave)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+              </tr>
+            </table>
+          </div>   
+        </div>
+      </div>                             
+      
+      <div class="row">
+        <div class="col-md-10">
+        </div>
+        <div class="col-md-2">
+          <input type="Button" class="btn btn-primary btn-lg" ng-click="antPersonales()"  value="Siguiente" />
+        </div>
+      </div>
+    </div>       
+  </div>
+</div>    
+
+
+
+

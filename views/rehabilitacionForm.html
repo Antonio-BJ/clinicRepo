@@ -1,0 +1,629 @@
+<div class="container" style="width: 100%">
+
+<!-- FORMULARIO DE HISTORIA CLINICA PARA REHABILITACION -->
+<ng-include src="'views/rehabilitacion/historiaClinicaReh.html'" ng-show="terminaHCR==false && hcrExistente==false"></ng-include>
+<!-- <ng-include src="'views/rehabilitacion/historiaClinicaReh.html'" ng-show="noR==1 && terminaHCR==false && hcrExistente==false"></ng-include> -->
+
+<!-- <div>
+  <h3>Historia Clinica para Rehabilitación</h3>
+  
+  <br>
+
+  <div class="row">
+    <div class="col-md-12" style="margin: auto;">
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4>Por favor confirme los antecedentes personales del paciente para conformar la Historia Clinica para Rehabilitación</h4>
+      </div>
+    </div>
+  </div>
+  
+  <br>
+
+  <div class="row">
+    <div class="col-md-6" style="margin-left:0; padding-left:0">
+      <table class="table table-striped table-hover table-condensed table-responsive table-bordered" style="width: 95%;">
+        <tr>
+          <th style="width: 5%">#</th>
+          <th style="width: 30%">Padecimiento</th>
+          <th style="width: 40%">Observaciones</th>
+          <th style="width: 25%">Editar</th>
+        </tr>
+        <tr ng-repeat="x in histClinica" ng-hide="histClinica[$index]==undefined">
+          <td>{{$index+1}}</td>
+          <td>{{x.Enf_nombre}}</td>
+          <td>{{x.Pad_obs}}</td>
+          <td>
+            <button class="btn btn-success btn-xs" ng-click="guardaDatoHCR($index, x.Enf_nombre, x.Pad_obs, x.Pad_clave)">Guardar</button>
+            <button class="btn btn-info btn-xs" ng-click="editarDatoHCR($index, x.Enf_nombre, x.Pad_obs, x.Pad_clave)">Editar</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="col-md-6" style="margin-right:0; padding-right:0" align="right">
+      <table class="table table-striped table-hover  table-responsive table-bordered" style="width: 95%;">
+        <tr>
+          <th style="width: 5%">#</th>
+          <th style="width: 30%">Padecimiento</th>
+          <th style="width: 40%">Observaciones</th>
+        </tr>
+        <tr ng-repeat="x in listaHCR" class="success">
+          <td>{{$index+1}}</td>
+          <td>{{x.Enf_nombre}}</td>
+          <td>{{x.Pad_obs}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-md-3">
+        <label>Enfermedad:</label>
+        <select class="form-control" id="selEnf" ng-model="nuevoHCR.claveEnf" ng-options="enfermedad.Enf_clave as enfermedad.Enf_nombre for enfermedad in listaEnfermedades">
+            <option value=""> * Seleccione </option>
+        </select>
+    </div>
+    
+    <div class="col-md-7">
+      <div class="form-group">
+        <label for="comment">Observaciones:</label>
+        <textarea class="form-control" rows="1" id="comment" ng-model="nuevoHCR.observaciones"></textarea>
+      </div>
+    </div>
+
+    <div class="col-md-2" align="center">
+      <button class="btn btn-primary" ng-click="agregaEnf()" style="margin-top:1.8em">Agregar Antecedente</button>
+    </div>
+  </div>
+
+  <hr>
+  <br><br>
+
+  <div style="text-align: center">
+    <button class="btn btn-success btn-lg" ng-click="continuarRh()">Continuar a la Rehabilitación</button>
+  </div>
+  <br><br>
+</div> -->
+<!-- TERMINA FORMULARIO DE HISTORIA CLINICA PARA REHABILITACION -->
+
+  <!-- <div class="panel panel-primary" ng-hide="numRehab==1 && terminaHCR==false"> -->
+  <div class="panel panel-primary" ng-hide="terminaHCR==false && hcrExistente==false">
+  <!-- <div class="panel panel-primary" ng-hide="noR==1 && terminaHCR==false && hcrExistente==false"> -->
+    <div style="width:100%; background:gray;color:white">
+    <div class="row">
+      <div class="col-md-1" style="padding-top:1.2em" ng-show="regresar">
+        <button ng-click="regresaWizard()" style="background:transparent; border:0px"><img src="imgs/flecha.jpg" width="35" height="35" class="img-circle" /></button>
+      </div>
+    
+      <h2 style="padding-left:2%;">Solicitud de Rehabilitación <b><label>{{folio}}</label></b></h2>
+    </div>
+    </div>                                
+
+    <div class="Panel-body">
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="nav nav-tabs">
+                 <li class="active">
+                     <a data-target="#tab-one"  data-toggle="tab">Datos del paciente</a>
+                 </li>
+                 <li >
+                     <a data-target="#tab-two" ng-click="verDatosAcc()" data-toggle="tab">Datos del Accidente</a>
+                 </li>
+                 <li >
+                     <a data-target="#tab-three" ng-click="verExpdiente()"  data-toggle="tab">Expediente</a>
+                 </li>
+                 <li >
+                     <a data-target="#tab-four" ng-click="VerDatosPase()"  data-toggle="tab">Datos del Pase a Rehabilitación</a>
+                 </li>
+             </ul>
+            <div class="tab-content">
+              <div id="tab-one" class="tab-pane active">
+                 <table class="table table-bordered table-hover" ng-hide="cargador">
+                    <thead>
+                        <tr>
+                            <td>Folio: <b>{{folio}}</b></td>
+                            <td>Nombre: <b>{{nombre}}</b></td>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Aseguradora: <b>{{datos.cia}}</b></td>
+                            <td>Siniestro: <b>{{datos.sin}}</b></td>
+                            <td>Póliza: <b>{{datos.pol}}</b></td>
+                            <td>Reporte: <b>{{datos.rep}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Fecha nacimiento:</td>
+                            <td><b>{{datos.fecnac}}</b></td>
+                            <td>Edad: <b>{{datos.anios}} años {{datos.meses}} meses</b></td>
+                            <td>Sexo: <b>{{datos.sexo}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Tipo de Trabajo: </td>
+                            <td><b>{{datos.ocu}}</b></td>
+                            <td>Estado Civil:</td>
+                            <td><b>{{datos.edoC}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Teléfono: </td>
+                            <td><b>{{datos.tel}}</b></td>
+                            <td>Email:</td>
+                            <td><b>{{datos.mail}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Observaciones Religiosas: </td>
+                            <td><b>{{datos.obs}}</b></td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row" ng-show='cargador'> 
+                <div class="col-md-12">
+                  <div ng-show="cargador" align="center" style="hight:10em;">
+                    <img ng-src="imgs/cargador.gif">
+                  </div>
+                </div>
+            </div>   
+              </div>
+              <div id="tab-two" class="tab-pane">
+                  <div class="row"> 
+                <div class="col-md-12">
+                  <table class="table table-bordered table-hover" ng-hide="cargador">
+                    <thead>
+                        <tr>
+                            <td>Fecha de siniestro: <b>{{acc.fecSin}}</b></td>
+                            <td>Fecha de primera atención: <b>{{acc.fecAtn}}</b></td>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">Medico de primera atencion:  <b>{{acc.doc}}</b></td>                                                        
+                        </tr>
+                        <tr>
+                            <td colspan="2">Diagnóstico Actual: 
+                            <b>{{acc.diag}}</b></td>                            
+                        </tr>                        
+                    </tbody>
+                </table>
+                  <div ng-show="cargador" align="center" style="hight:10em;">
+                    <img ng-src="imgs/cargador.gif">
+                  </div>
+                </div>
+            </div>   
+              </div>
+              <div id="tab-three" class="tab-pane">
+              <div class="row"> 
+                <div class="col-md-6">
+                  <table class="table table-bordered table-hover" ng-hide="cargador">
+                    <thead>
+                        <tr>
+                            <th><b>Primera Atención</b></th>                            
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-show="nota">
+                            <td><a href="#">  Nota Médica</a></td> 
+                        <tr ng-hide="nota">
+                            <td>Nota Médica</td>
+                        </tr>                                                       
+                        </tr>
+                        <tr>
+                            <td><a href="#"> Historia Clínica</a></td>                            
+                        </tr>                        
+                    </tbody>
+                </table>                  
+                </div>
+                <div class="col-md-6">
+                  <table class="table table-bordered table-hover" ng-hide="cargador">
+                    <thead>
+                        <tr>
+                            <th><b>Subsecuencias:</b></th>                                                      
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="sub in subsec">
+                            <td><a href="#"> Subsecuencia {{sub.Sub_cons}} </a></td>                                                        
+                        </tr>                                          
+                    </tbody>
+                </table>
+                  
+                </div>
+                <div class="col-md-12">
+                    <div ng-show="cargador" align="center" style="hight:10em;">
+                      <img ng-src="imgs/cargador.gif">
+                  </div>
+                </div>
+            </div>   
+              </div>
+
+              <div id="tab-four" class="tab-pane">
+              <div class="row"> 
+                <div class="col-md-12">
+                  <table class="table table-bordered table-hover" ng-hide="cargador">
+                    <thead>
+                        <tr>
+                            <td>Médico que envió a rehabilitación: <b>{{datosPase.medic}}</b></td>
+                            <td>Fecha: <b>{{datosPase.fech}}</b></td> 
+                            <td>Rehabilitaciones Aproximandas: <b>{{datosPase.noSes}}</b></td>                                                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Observaciones previas a Rehabilitación: <b>{{datosPase.obs}}</b></td> 
+                        
+                            <td colspan="2">Diagnóstico previo a Rehabilitación: <b>{{datosPase.diag}}</b></td>
+                        </tr>                                                                         
+                    </tbody>
+                </table>                  
+                </div>               
+                <div class="col-md-12">
+                    <div ng-show="cargador" align="center" style="hight:10em;">
+                      <img ng-src="imgs/cargador.gif">
+                  </div>
+                </div>
+            </div>   
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                    <div class="panel-heading" ng-if="datosSoloReh!='false'">Rehabilitacion {{noR}} de {{datosSoloReh.Total_sesiones}}</div>
+                    <div class="panel-heading" ng-if="datosSoloReh=='false'">Rehabilitacion {{noR}}</div> <!-- se muestra para todos -->
+                      <div class="Panel-body">
+                      <fieldset ng-disabled="formu">
+                          <form name="formularios.rehabForm" ng-submit="guardaRehabilitacion()" novalidate> 
+                              <br><br>                           
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="input-group">
+                                    <span class="input-group-addon">Tipo de terapia: </span>
+                                    <input type="text" class="form-control" ng-model="rehabilitacionForm.tipo"  id="tipo" name="tipo" required maxlength="65">
+                                  </div>
+                                  <div class="validacion" role="alert" ng-if="interacted(formularios.rehabForm.tipo)" ng-messages="formularios.rehabForm.tipo.$error">
+                                    <div ng-message="required">campo requerido</div>                                        
+                                  </div>
+                                </div>                                                              
+                                <div class="col-md-3">
+                                 <div class="input-group">
+                                  <span class="input-group-addon">Escala de dolor:</span>
+                                  <select  class="form-control" ng-model="rehabilitacionForm.escala"  id="escala" name="escala" required >
+                                            <option value="">Seleccione</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                  </select>
+                                </div>
+                                <div class="validacion" role="alert" ng-if="interacted(formularios.rehabForm.escala)" ng-messages="formularios.rehabForm.escala.$error">
+                                    <div ng-message="required">campo requerido</div>                                    
+                                  </div>   
+                                </div>
+                                 <div class="col-md-3">
+                                 <div class="input-group">
+                                  <span class="input-group-addon">Escala de mejoría:</span>
+                                  <select  class="form-control" ng-model="rehabilitacionForm.mejoria"  id="mejoria" name="mejoria" style="resize:none;" required >
+                                            <option value="">Seleccione</option>
+                                            <option value="1">1-Muy poca</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10-Total</option>
+                                  </select>
+                                </div>
+                                <div class="validacion" role="alert" ng-if="interacted(formularios.rehabForm.mejoria)" ng-messages="formularios.rehabForm.mejoria.$error">
+                                    <div ng-message="required">campo requerido</div>                                    
+                                  </div>   
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                  <span class="input-group-addon">Criterios de Waddell: </span>
+                                  <textarea class="form-control" ng-model="rehabilitacionForm.criterios" rows="4" id="criterios" name="criterios" style="resize:none;" mayusculas></textarea>
+                                </div>   
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                  <span class="input-group-addon">Observaciones </span>
+                                  <textarea class="form-control" ng-model="rehabilitacionForm.observa" rows="4" id="observa" name="observa" style="resize:none;" mayusculas required></textarea>
+                                </div>
+                                <div class="validacion" role="alert" ng-if="interacted(formularios.rehabForm.observa)" ng-messages="formularios.rehabForm.observa.$error">
+                                    <div ng-message="required">campo requerido</div>                                    
+                                  </div>      
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                    <span class="input-group-addon">Duracion de la rehabilitacion:</span>
+                                    <input type="number" class="form-control" ng-model="rehabilitacionForm.duracion"  id="duracion" name="duracion" required>
+                                  </div>
+                                  <div class="validacion" role="alert" ng-if="interacted(formularios.rehabForm.duracion)" ng-messages="formularios.rehabForm.duracion.$error">
+                                    <div ng-message="required">campo requerido</div>
+                                    <div ng-message="number">valor numérico</div>            
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                      <span class="input-group-addon">  El paciente acudió a su cita anterior: </span> 
+                                      <span class="input-group-addon">                 
+                                      <input type='radio' name='acudio' id='acudio' value='S' ng-model="rehabilitacionForm.acudio" required ng-checked="rehabilitacionForm.acudio== S" />  Si <input type='radio' name='acudio' id='acudio' value='N' ng-model="rehabilitacionForm.acudio" required/>  No
+                                      </span>              
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-show="cargador1" align="center" style="hight:10em;">
+                                      <img ng-src="imgs/cargador.gif">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">                                                          
+                                <div class="col-md-2 col-md-offset-10">
+                                  <input type="submit" class="btn btn-primary" value="Guardar">
+                                </div>
+                              </div>                           
+                          </form>
+                          </fieldset>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <input type="button" class="btn btn-primary" ng-click="irDocumentos()" value="Documentos"> 
+                      </div>  
+                    </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+
+<!-- MODAL PARA ADJUNTAR ORDEN MEDICA O RESPONSIVA EN SOLO REHABILITACION -->
+<div class="modal fade" id="modalRh" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header modal-header-warning">
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+        <h4 class="modal-title" id="myModalLabel" ng-if="datosSoloReh!='false'">Rehabilitación {{noR}} de {{datosSoloReh.Total_sesiones}}</h4>
+        <h4 class="modal-title" id="myModalLabel" ng-if="datosSoloReh=='false'">Rehabilitación {{noR}}</h4>
+      </div>
+      <div class="modal-body">
+        <h5 style="font-size: 1.2em;">El paciente entra con:</h5>
+        
+        <div class="row">
+          <div class="col-md-3">           
+            <div class="radio c-radio">
+              <label>
+                <input type="radio" name="a" value="ORD" ng-model="doctoRh">
+                <span class="fa fa-circle"></span>
+                Orden Médica
+              </label>
+            </div>
+            <div class="radio c-radio">
+              <label>
+                <input type="radio" name="a" value="RES" ng-model="doctoRh" ng-click="imprimirResponsiva()">
+                <span class="fa fa-circle"></span>
+                Responsiva
+              </label>
+            </div>
+          </div>
+          
+          <div class="col-md-5" ng-show="doctoRh=='ORD'">
+              <p>Por favor adjunte la Orden Médica:</p>
+              <input type="file" class="form-control" required name="file" uploader-model="file">
+          </div>
+          <div class="col-md-5" ng-show="doctoRh=='RES'">
+              <p>Por favor adjunte la Responsiva:</p>
+              <input type="file" class="form-control" required name="file" uploader-model="file">
+          </div>
+
+          <div class="col-md-2" ng-show="doctoRh=='ORD' || doctoRh=='RES'">
+              <label>&nbsp;</label>
+              <button class="btn btn-success" style="margin-top: 0.35em" ng-click="subeArchivo()">
+                <i class="glyphicon glyphicon-arrow-up"></i> Subir Archivo
+              </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="alert alert-warning" role="alert" ng-if="noR<=1">
+              Es necesario presentar la Orden a Rehabilitación (o Responsiva firmada) como máximo en la segunda sesión, de lo contrario no podrá registrar Rehabilitaciones.
+            </div>
+            <div class="alert alert-danger" role="alert" ng-if="noR>1">
+              Para continuar es necesario presentar la Orden a Rehabilitación.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="irDocumentos()">Cancelar</button>
+        <button type="button" class="btn btn-warning" ng-disabled="btnAceptar==false" ng-click="cerrarModal()" ng-if="noR>1">Continuar</button>
+        <button type="button" class="btn btn-warning" ng-click="cerrarModal()" ng-if="noR<=1">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- MODAL PARA EDITAR DATOS DE LA HISTORIA CLINICA PARA REHABILITACION -->
+<!-- <div class="modal fade" id="modalEditaDatos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Editar padecimiento {{folio}}</h4>
+      </div>
+      <div class="modal-body">
+        <div ng-show="cargador==false">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="selEnf">Enfermedad:</label>
+                <select class="form-control" id="selEnf" ng-model="editaHCR.claveEnf" ng-options="enfermedad.Enf_clave as enfermedad.Enf_nombre for enfermedad in listaEnfermedades">
+                  <option value=""> * Seleccione </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="form-group">
+                <label for="observaciones">Observaciones:</label>
+                <textarea class="form-control" rows="3" id="observaciones" ng-model="editaHCR.observaciones" value="{{editaHCR.observaciones}}"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" ng-click="modificar()">Modificar</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+ <!-- Modal DESCLUB-->
+        <div class="modal fade" id="comoLlegoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                
+                <h4 class="modal-title" id="myModalLabel">Como se enteró el paciente de MédicaVial</h4>
+              </div>
+              <div class="modal-body">
+                  <form id="llego" name="llego" ng-submit="guardarComoLLego()">                   
+                    <div class="row">
+                      <div class="col-md-12">
+                          <div class="radio">
+                            <label><input type="radio" name="optradio" ng-model='seEntero' value="1" required>Periódicos</label>
+                          </div>
+                          <div class="radio">
+                            <label><input type="radio" name="optradio" ng-model='seEntero' value="2" required>Redes sociales</label>
+                          </div>
+                          <div class="radio">
+                            <label><input type="radio" name="optradio" ng-model='seEntero' value="3" required>Correo</label>
+                          </div>
+                          <div class="radio">
+                            <label><input type="radio" name="optradio" ng-model='seEntero' value="4" required>Otros</label>
+                          </div>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="row" ng-show="mensajeLlego">
+                    <div class="col-md-12 alert alert-danger" >
+                        <label class="" for="">{{mensajeLlego}}</label>
+                    </div>                  
+                </div>
+              <div class="modal-footer">                
+                <button type="submit" form="llego" class="btn btn-primary">Guardar</button>               
+              </div>
+            </div>
+          </div>
+        </div>
+      
+    </div>
+
+
+<!-- MODAL PARA CONFIRMAR TERMINO DE SESIONES DE REHABILITACION -->
+<div class="modal fade" id="modalRehabFinal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Confirmación</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger" role="alert" ng-show="rehabTotales<sesionActual">
+          Se han terminado las sesiones de rehabilitacion para éste paciente
+        </div>
+        <br>
+        <div class="row">
+          ¿El paciente requiere sesiones de rehabilitación adicionales?
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-2">           
+            <div class="radio c-radio">
+              <label>
+                <input type="radio" name="a" value="N" ng-model="sesAdicionales">
+                <span class="fa fa-circle"></span>
+                No
+              </label>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="radio c-radio">
+              <label>
+                <input type="radio" name="a" value="S" ng-model="sesAdicionales">
+                <span class="fa fa-circle"></span>
+                Si
+              </label>
+            </div>
+
+          </div>
+            <div class="col-md-3" style="margin-top: 0.8em" ng-show="sesAdicionales=='S'">
+              <label>¿Cuantas?</label>
+              <input type="number" min="1" ng-model="numAdicionales">
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-show="rehabTotales<sesionActual" ng-click="irDocumentos()">Cancelar</button>
+        <button type="button" class="btn btn-primary" ng-disabled="sesAdicionales=='N' || numAdicionales==undefined" ng-show="rehabTotales<sesionActual" ng-click="confirmaReh()">Continuar</button>
+        <button type="button" class="btn btn-primary" ng-disabled="sesAdicionales=='S' && numAdicionales==undefined" ng-hide="rehabTotales<sesionActual" ng-click="confirmaReh()">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+.modal-header-warning {
+  color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #f0ad4e;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+</style>
+
+<script type="text/javascript">
+/*$('#modalRh').modal({
+  backdrop: 'static', 
+  keyboard: false});*/
+
+/*$('#modalRehabFinal').modal({
+  backdrop: 'static', 
+  keyboard: false});*/
+</script>

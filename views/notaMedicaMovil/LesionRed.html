@@ -1,0 +1,185 @@
+<div class="row semiTitulo" >
+    <label > El paciente presenta: </label>    
+</div> 
+<div class="bordeSemititulo">
+<div class="row">
+<div class="col-md-3">
+<div class="input-group">
+<div class="cajaInputArriba"> 
+  <span>Lesión</span>
+</div>
+  <select name="lesionRed" id="lesionRed" ng-model="lesion.lesion" ng-change="validaLista()" size="13" class="form-control"   
+  ng-options="lesion.LES_clave as lesion.LES_nombre for lesion in listLesion">
+  <option value=""> *Selecciona</option>
+  </select>
+</div>
+</div>                     
+<div class="col-md-5">
+ <div class="cajaInputArriba"> 
+  <span>Zona</span>
+</div>
+<div class="row bordeInput" >
+<div class="col-md-12"><center>
+<img alt=""  src="imgs/mapitacuerpo.png" width="200" height="200" usemap="#cuerpo2map"/>
+         <map name="cuerpo2map" id="cuerpo2map">
+           <area shape="rect" ng-model="lesion.cuerpo" ng-value="1"    id="1"  coords="46,140,30,110"  title="muslo derecho"       ng-click="guardaLesion(1)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect" ng-model="lesion.cuerpo" ng-value="2"  id="2"  coords="65,140,45,110"  title="muslo izquierdo"     ng-click="guardaLesion(2)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="3"  id="3"  coords="40,145,7"       title="rodilla derecha"      ng-click="guardaLesion(3)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="4"  id="4"  coords="50,145,7"       title="rodilla izquierda"    ng-click="guardaLesion(4)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"  ng-model="lesion.cuerpo" ng-value="5"   id="5"  coords="46,180,30,145"  title="pierna derecha"   ng-click="guardaLesion(5)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"  ng-model="lesion.cuerpo" ng-value="6"   id="6"  coords="65,180,45,145"  title="pierna izquierda" ng-click="guardaLesion(6)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="7" id="7"  coords="42,185,4"       title="tobillo derecho"      ng-click="guardaLesion(7)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="8"  id="8"  coords="50,185,4"       title="tobillo izquierdo"    ng-click="guardaLesion(8)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="9" id="9"  coords="40,190,4"       title="pie derecho"          ng-click="guardaLesion(9)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="10" id="10" coords="50,190,4"       title="pie izquierdo"        ng-click="guardaLesion(10)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="11"  id="11" coords="46,18,7"        title="cara"                 ng-click="guardaLesion(11)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="12" id="12" coords="46,8,7"         title="cabeza"               ng-click="guardaLesion(12)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"   ng-model="lesion.cuerpo" ng-value="13"  id="13" coords="40,23,55,35"    title="cuello"               ng-click="guardaLesion(13)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="14"  id="14" coords="25,40,4"        title="hombro derecho"       ng-click="guardaLesion(14)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="15"  id="15" coords="65,40,4"        title="hombro izquierdo"     ng-click="guardaLesion(15)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="16" id="16" coords="35,50,7"        title="pecho derecho"        ng-click="guardaLesion(16)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="17"  id="17" coords="60,50,7"        title="pecho izquierdo"      ng-click="guardaLesion(17)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"   ng-model="lesion.cuerpo" ng-value="18"  id="18" coords="30,55,60,90"    title="abdomen"              ng-click="guardaLesion(18)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="62"  id="62" coords="40,52,7"        title="Torax"                ng-click="guardaLesion(62)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"   ng-model="lesion.cuerpo" ng-value="19"  id="19" coords="35,90,60,110"   title="Cadera"               ng-click="guardaLesion(19)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="20"  id="20" coords="25,70,3"        title="codo derecho"         ng-click="guardaLesion(20)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="21" id="21" coords="70,70,3"        title="codo izquierdo"       ng-click="guardaLesion(21)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"   ng-model="lesion.cuerpo" ng-value="22"  id="22" coords="20,40,30,70"    title="brazo derecho"        ng-click="guardaLesion(22)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"  ng-model="lesion.cuerpo" ng-value="23"   id="23" coords="61,40,75,70"    title="brazo izquierdo"      ng-click="guardaLesion(23)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"   ng-model="lesion.cuerpo" ng-value="24"  id="24" coords="10,71,30,95"   title="ante-brazo derecho"    ng-click="guardaLesion(24)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"  ng-model="lesion.cuerpo" ng-value="25"   id="25" coords="63,71,80,95"   title="ante-brazo izquierdo"  ng-click="guardaLesion(25)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="26"  id="26" coords="13,98,4"      title="mu&ntilde;eca derecha"  ng-click="guardaLesion(26)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="27" id="27" coords="80,98,4"      title="mu&ntilde;eca izquierda"ng-click="guardaLesion(27)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="28"  id="28" coords="9,105,4"      title="mano derecha"           ng-click="guardaLesion(28)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="29"  id="29" coords="83,105,4"     title="mano izquierda"         ng-click="guardaLesion(29)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="30"  id="30" coords="8,115,4"      title="dedos mano derecha"     ng-click="guardaLesion(30)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="31" id="31" coords="83,115,4"     title="dedos mano izquierda"   ng-click="guardaLesion(31)" data-toggle="tooltip" data-placement="left"/>
+
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="32"  id="32" coords="150,8,7"         title="cabeza (posterior)"                ng-click="guardaLesion(32)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="33" id="33" coords="150,15,5"        title="nuca"                              ng-click="guardaLesion(33)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="34" id="34" coords="150,25,5"        title="Columna Cervical"                ng-click="guardaLesion(34)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"   ng-model="lesion.cuerpo" ng-value="39"  id="39" coords="153,140,170,105" title="pierna derecha (posterior)"        ng-click="guardaLesion(39)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"  ng-model="lesion.cuerpo" ng-value="40"   id="40" coords="135,140,160,110" title="pierna izquierda (posterior)"      ng-click="guardaLesion(40)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"   ng-model="lesion.cuerpo" ng-value="41"  id="41" coords="155,150,170,185" title="ante-pierna derecha (posterior)"   ng-click="guardaLesion(41)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"   ng-model="lesion.cuerpo" ng-value="42"  id="42" coords="130,150,165,185" title="ante-pierna izquierda (posterior)" ng-click="guardaLesion(42)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="43" id="43" coords="158,151,7"       title="rodilla derecha (posterior)"       ng-click="guardaLesion(43)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="44" id="44" coords="145,151,7"       title="rodilla izquierda (posterior)"     ng-click="guardaLesion(44)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="45"  id="45" coords="158,195,5"       title="talon derecho"                     ng-click="guardaLesion(45)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="46" id="46" coords="145,195,5"       title="talon izquierdo"                   ng-click="guardaLesion(46)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="51" id="51" coords="175,70,7"        title="codo derecho()"                    ng-click="guardaLesion(51)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="52" id="52" coords="130,70,7"        title="codo izquierdo()"                  ng-click="guardaLesion(52)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"   ng-model="lesion.cuerpo" ng-value="53"  id="53" coords="175,71,190,98"   title="ante-brazo derecho (posterior)"    ng-click="guardaLesion(53)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"   ng-model="lesion.cuerpo" ng-value="54"  id="54" coords="110,71,130,98"   title="ante-brazo izquierdo (posterior)"  ng-click="guardaLesion(54)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="55"  id="55" coords="190,105,7"      title="mano derecha (posterior)"           ng-click="guardaLesion(55)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="56" id="56" coords="110,105,7"      title="mano izquierda (posterior)"         ng-click="guardaLesion(56)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="57" id="57" coords="190,115,4"      title="dedos mano derecha (posterior)"     ng-click="guardaLesion(57)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="58" id="58" coords="115,115,4"      title="dedos mano izquierda (posterior)"   ng-click="guardaLesion(58)" data-toggle="tooltip" data-placement="left"/>
+           
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="59" id="59" coords="150,50,8"       title="Columna Dorzal"                     ng-click="guardaLesion(59)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="60" id="60" coords="150,80,8"      title="Columna Lumbar"                     ng-click="guardaLesion(60)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="61"  id="61" coords="150,95,8"      title="Zona Sacra"                         ng-click="guardaLesion(61)" data-toggle="tooltip" data-placement="left"/>
+
+           <area shape="rect"   ng-model="lesion.cuerpo" ng-value="35"  id="35" coords="138,10,168,80"   title="espalda"                           ng-click="guardaLesion(35)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"   ng-model="lesion.cuerpo" ng-value="36"  id="36" coords="140,81,165,95"   title="espalda baja"                      ng-click="guardaLesion(36)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="37" id="37" coords="160,101,8"       title="gluteo derecho"                    ng-click="guardaLesion(37)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle" ng-model="lesion.cuerpo" ng-value="38"  id="38" coords="145,101,8"       title="gluteo izquierdo"                  ng-click="guardaLesion(38)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="47" id="47" coords="175,40,7"        title="hombro derecho (posterior)"        ng-click="guardaLesion(47)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="circle"  ng-model="lesion.cuerpo" ng-value="48" id="48" coords="130,40,7"        title="hombro izquierdo (posterior)"      ng-click="guardaLesion(48)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"   ng-model="lesion.cuerpo" ng-value="49"  id="49" coords="160,40,180,70"   title="brazo derecho (posterior)"         ng-click="guardaLesion(49)" data-toggle="tooltip" data-placement="left"/>
+           <area shape="rect"  ng-model="lesion.cuerpo" ng-value="50"   id="50" coords="120,40,150,70"   title="brazo izquierdo (posterior)"       ng-click="guardaLesion(50)" data-toggle="tooltip" data-placement="left"/>
+           
+           
+          </map>
+
+</center>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="cajaInputArriba"> 
+  <span>Resultados</span>
+</div>
+
+<div ng-show="listLesiones" class="mianimacion bordeInput">
+<br>
+
+  <table width="100%" class="table table-striped table-hover" >
+    <tr>
+      <th width="45%"><b>Lesion</b></th>
+      <th width="45%"><b>Zona</b></th>
+      <th width="10%"><b>Eliminar</b></th>
+    </tr>
+    <tr ng-repeat="les in listLesiones">
+      <td >{{les.Les_nombre}}</td>
+      <td>{{les.Cue_nombre}}</td>
+      <td><input type='button' class="btn btn-danger btn-xs" ng-click="eliminarLes(les.LesN_clave)" value='Eliminar'>
+    </tr>
+  </table>
+  
+</div>
+<div ng-show="cargador" align="center">
+    <img ng-src="imgs/cargador.gif">
+  </div>
+</div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div ng-show="mensajeLesion">
+      <div class="alert alert-warning">Elige primero una lesión</div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- CIERRE DE PANEL Y CONTAINER -->
+<br>
+<div class="row semiTitulo" >
+    <label >Observaciones </label>    
+</div> 
+<div class="bordeSemititulo">
+<form name="formularios.estadoGral"  ng-submit="guardaEdoGral()" novalidate>
+      <div class="row">
+        <div class="col-md-6">                            
+            <div class="cajaInputArriba">
+              <span>Estado General y Exploración Física</span>
+            </div>
+            <textarea class="form-control" rows="6" name="estado" ng-model="edoGral.estado" onpaste="return false" style="resize:none; width:100%" required mayusculas></textarea>        
+          <div class="validacion" role="alert" ng-if="interacted2(formularios.estadoGral.estado)" ng-messages="formularios.estadoGral.estado.$error">
+            <div ng-message="required">campo requerido</div>            
+          </div>        
+        </div> 
+        <div class="col-md-6">         
+          <div class="input-group cajaInputcompleto" style="width:100%">
+            <span>Glasgow: </span>
+            <input type="number" ng-model="edoGral.glasgow" name="glasgow" id="glasgow" class='form-control' ng-value="15" required max="15" min="3">
+          </div>
+          <div class="validacion" role="alert" ng-if="interacted2(formularios.estadoGral.glasgow)" ng-messages="formularios.estadoGral.glasgow.$error">
+            <div ng-message="required">campo requerido</div>            
+            <div ng-message="min">valor mínimo 3</div>            
+            <div ng-message="max">valor máximo 15</div>            
+          </div>
+        </div>               
+      </div><!--fin del row principal-->
+      <div class="row"> 
+          <div class="col-md-12">
+            <div ng-show="cargador" align="center">
+              <img ng-src="imgs/cargador.gif">
+            </div>
+          </div>
+      </div> 
+      <!--<div class="row">
+        <div class="col-md-4 col-md-offset-8">
+          <input type="submit" name="guardaObs" id="guardaObs" class="btn btn-success"  value="Guardar" />
+        </div>
+      </div>-->
+
+
+<br>
+<div class="row" align="right">
+  <div class="col-md-12">
+    <input type="submit" class="btn btn-primary btn-lg"  value="Siguiente" />
+  </div>
+</div> <!-- CIERRE DE ROW -->
+</form>
+</div>

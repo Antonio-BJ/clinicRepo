@@ -1,0 +1,179 @@
+
+  <div class="container" style="width: 100%"> 
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title" align="center">Antecedentes Covid</h3>
+      </div>    
+      <div class="panel-body">
+        <form name="covidForm" id="covidForm" ng-submit="guardarDatosCovid()" >
+        <div class="row">
+              
+            <div class="col-md-4">   
+            <div class="input-group">
+              <span class="input-group-addon">Fecha del primer síntoma: </span>                      
+              <input  type="text" class="form-control" name="fechaPrimerSintoma" id="fechaPrimerSintoma" required ng-model="covid.fechaPrimerSintoma" data-format="dd/MM/yyyy" data-date="covid.fechaPrimerSintoma">               
+            </div>
+          </div> 
+          <div class="col-md-8" >
+            <div class="input-group">
+              <span class="input-group-addon">Sospecha del medio de contagio: </span>
+              <input type="text" name="sospechaMedio" id="sospechaMedio" ng-model="covid.sospechaMedio" class= "form-control" >
+            </div>
+          </div> 
+            
+            </div>
+            <div class="row">
+
+              <div class="col-md-4" >
+                <div class="input-group">
+                   <span class="input-group-addon" style="height:35px">Diagnóstico confirmado: </span>
+                   <span class="input-group-addon">
+                      <input type='radio' name='diagnosticoConfirmado' required ng-model="covid.diagnosticoConfirmado" id="diagnosticoConfirmado" value='1' Checked />Si <input required type='radio' name='diagnosticoConfirmado' ng-model="covid.diagnosticoConfirmado" id="diagnosticoConfirmado" value='0'  />No
+                    </span>
+                </div>
+              </div>
+              <div class="col-md-4" >   
+                <div class="input-group">
+                  <span class="input-group-addon">Tipo de estudio: </span>
+                  <input type="text" name="tipEstudio" ng-disabled="covid.diagnosticoConfirmado!=1" id="tipEstudio" ng-model="covid.tipEstudio" class= "form-control" >
+                </div>
+              </div> 
+              <div class="col-md-4" >   
+                <div class="input-group">
+                  <span class="input-group-addon">Fecha de estudio: </span>                      
+                  <input type="text" class="form-control" ng-disabled="covid.diagnosticoConfirmado!=1" name="fechaEstudio" id="fechaEstudio"   ng-model="covid.fechaEstudio" data-format="dd/MM/yyyy" data-date="covid.fechaEstudio">               
+                </div>
+              </div> 
+            </div>
+              
+            <div class="row">
+              <div class="col-md-4">   
+                <div class="input-group">
+                  <span class="input-group-addon">Fecha de prueba negativa: </span>                      
+                  <input type="text" class="form-control" name="fechaPruebaNegativa" id="fechaPruebaNegativa" ng-model="covid.fechaPruebaNegativa" data-format="dd/MM/yyyy" data-date="covid.fechaPruebaNegativa">               
+                </div>
+  
+              </div> 
+              <div class="col-md-4" >   
+                <div class="input-group">
+                  <span class="input-group-addon">Tipo de prueba: </span>
+                  <select name="tipPueba" id="tipPueba" ng-model="covid.tipPueba" required class="form-control">
+                    <option selected>Selecciona...</option>
+                    <option value="PCR">PCR</option>
+                    <option value="ANTIGENOS">ANTÍGENOS</option>
+                    <option value="ANTICUERPOS">ANTICUERPOS</option>
+                  </select>
+                </div>
+              </div> 
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-4" >
+                <div class="input-group">
+                   <span class="input-group-addon" style="height:35px">Hospitalizado por Covid: </span>
+                   <span class="input-group-addon">
+                      <input type='radio' name='hospitalizado' required ng-model="covid.hospitalizado" id="hospitalizado" value='1' Checked />Si <input type='radio' name='hospitalizado' required ng-model="covid.hospitalizado" id="hospitalizado" value='0'  />No
+                    </span>
+                </div>
+              </div>
+              <div class="col-md-4" >   
+                <div class="input-group">
+                  <span class="input-group-addon">Cuantos días: </span>
+                  <input type="text" ng-disabled="covid.hospitalizado!=1" name="dias" id="dias" ng-model="covid.dias" class= "form-control" >
+                </div>
+              </div> 
+              <div class="col-md-4" >   
+                <div class="input-group">
+                  <span class="input-group-addon" style="height:35px">Requirio asistencia respiratoria: </span>
+                  <span class="input-group-addon">
+                     <input type='radio' name='asistenciaRespitaria' ng-model="covid.asistenciaRespitaria" id="asistenciaRespitaria" value='1' Checked />Si
+                     <input type='radio' name='asistenciaRespitaria' ng-model="covid.asistenciaRespitaria" id="asistenciaRespitaria" value='0'  />No
+                   </span>
+               </div>
+              </div>
+               <div class="col-md-12">   
+                <div class="input-group">
+                  <span class="input-group-addon">Hospital: </span>
+                  <input ng-disabled="covid.hospitalizado!=1" type="text" name="hospital" id="hospital" ng-model="covid.hospital" class= "form-control" >
+                </div>
+              </div> 
+
+            </div>
+
+
+             <div class="row">      
+            <div class="col-md-12" >
+              <div class="input-group">
+                <span class="input-group-addon">Tratamiento (suplementos, medicamentos, terapias, indicaciones): </span>
+                <textarea name="tratamiento" rows="3" id="tratamiento" ng-model="covid.tratamiento" class= "form-control"></textarea>
+              </div>
+            </div>
+             </div>
+             <div class="row">
+            <div class="col-md-12" >
+              <div class="input-group">
+                <span class="input-group-addon">Secuelas </span>
+                <textarea name="secuelas" id="secuelas" rows="3" ng-model="covid.secuelas" class= "form-control" ></textarea>
+              </div>
+            </div>           
+        </div>
+     
+         <div class="row"> 
+        <div class="col-md-12">
+          <div ng-show="cargador" align="center">
+            <img ng-src="imgs/cargador.gif">
+          </div>
+        </div>
+      </div>  
+      <div class="row" ng-show="mensaje">
+        <div class="col-md-12">
+          <div class="alert alert-success">{{mensaje}}</div>
+        </div>
+      </div> 
+    </form>      
+        <div class="row">
+          <div class="col-md-2">
+          <input type="button" class="btn btn-primary btn-lg"  value="Documentos" ng-click="irDocumentos()"/>
+          </div>
+          <div ng-hide="irNota" class="col-md-2 col-md-offset-3">
+            <input type="submit" form="covidForm"  class="btn btn-primary btn-lg"  value="Guardar" />
+            </div>
+            <div ng-show="irNota" class="col-md-2 col-md-offset-3">
+              <input type="button"  class="btn btn-primary btn-lg" ng-click="irNotaMedica()"  value="Ir a Nota Médica" />
+              </div>
+          <div class="col-md-2 col-md-offset-3">
+            <input type="Button"   class="btn btn-primary btn-lg"  value="Imprimir" ng-click="imprimirHistoriaClinica(motivoCon)" />
+          </div>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+<!--   **************************-->
+<script type="text/javascript">
+       $('#fechaPrimerSintoma').datetimepicker({ 
+        pickDate: true,                 //en/disables the date picker
+        pickTime: false,                 //en/disables the time picker     
+        showToday: true,                 //shows the today indicator
+        language:'es'                  //sets language locale
+
+    });
+    $('#fechaEstudio').datetimepicker({ 
+        pickDate: true,                 //en/disables the date picker
+        pickTime: false,                 //en/disables the time picker     
+        showToday: true,                 //shows the today indicator
+        language:'es'                  //sets language locale
+
+    });
+    $('#fechaPruebaNegativa').datetimepicker({ 
+        pickDate: true,                 //en/disables the date picker
+        pickTime: false,                 //en/disables the time picker     
+        showToday: true,                 //shows the today indicator
+        language:'es'                  //sets language locale
+
+    });
+</script>
+
+
+

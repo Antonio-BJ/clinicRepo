@@ -1,0 +1,110 @@
+<div ng-init="inicio()">
+	<br>
+	<ol class="breadcrumb">
+	  <li><a href="#/solicitudes">Mis Solicitudes</a></li>
+	  <li class="active">Seguimiento</li>
+	</ol>
+	<h1>Seguimiento de Solicitud</h1>
+	<div class="row">
+		<div class="col-md-6 col-sm-6">
+			<label for="numeroafi">Comentarios:</label>
+			<textarea class="form-control" ng-model="datosinfo.descripcion" rows="3"></textarea>
+			<input type="file" ng-file-select="onFileSelect($files)" multiple/>
+			<br>
+			<div class="text-right">
+				<button class="btn btn-danger" ng-show="cordinacion" ng-disabled="solicitoinfo" ng-click="estatus(4)">Rechazar Solicitud</button>
+				<button class="btn btn-primary" ng-show="cordinacion" ng-disabled="solicitoinfo" ng-click="estatus(3)">Aceptar Solicitud</button>
+				<button class="btn btn-default" id="boton" ng-disabled="datosinfo.descripcion == ''" data-loading-text="Enviando..." ng-click="mandamensaje()">Enviar</button>
+			</div>
+			<br>
+			<div ng-show="mensaje" class="alert alert-success text-center alertas" role="alert">
+				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				{{ mensaje }}
+			</div>
+		</div>
+		<div class="col-sm-6 col-md-6">
+
+			<div class="text-center animate-show" ng-show="cargando">
+				<p>Cargando {{ archivo }} de {{ archivos }}</p>
+				<progressbar class="progress-striped active" value="valor">{{ valor }}%</progressbar>
+				<br>	
+				<button class="btn btn-default" ng-click="upload.abort()">Cancelar Subida</button>
+			</div>
+			
+
+			<ul class="list-group">
+			    <li class="list-group-item" ng-repeat="file in documentos">
+			    	<div class="media">
+					  <a class="pull-left" href="#">
+					    <img class="media-object" ng-src="{{file.ubicacion}}" alt="{{file.tipo}}" width="80" height="80">
+					  </a>
+					  <div class="media-body">
+					    nombre: {{file.archivo}}</br>
+			    		Tipo de Documento: {{file.tipo}}<br>
+			    		Observciones:{{file.observaciones}}
+			    		<button class="btn btn-danger pull-right" ng-click="eliminaImagen($index)"> <i class="glyphicon glyphicon-trash"></i> </button>
+					  </div>
+					  
+					</div>
+			    </li>
+			</ul>
+		</div>
+
+	</div>
+	<div class="contendor">
+		<blockquote ng-class="{'blockquote-reverse':seguimiento.usuario == usuario}" ng-repeat="seguimiento in seguimientos">
+		  <p>{{ seguimiento.descripcion }}</p>
+		  <div>
+		  	<a href="{{ file.ruta }}" target="_blank" ng-repeat="file in seguimiento.archivos" class="btn btn-default">
+		  		<i class="glyphicon glyphicon-file"></i>
+		  		{{ file.nombre }}
+		  	</a>
+		  	<!-- <ul class="list-group">
+		  		<li class="list-group-item" ng-repeat="file in seguimiento.archivos">
+		  			<a href="{{ file.ruta }}" target="_blank">{{ file.nombre }}</a>
+		  		</li>
+		  	</ul> -->
+		  </div>
+		  <footer>{{ seguimiento.nombre }} - <cite title="Usuario de prueba"> {{ seguimiento.fecha | date:'medium' }}</cite></footer>
+		</blockquote>
+	</div>
+</div>
+
+
+<div id="altadoc2" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+    	<div class="modal-header">
+        	<h4>Datos del Documento</h4>
+        	<p>Imagen: {{inicioarchivo + 1}} de {{numeroimagenes + 1}}</p>
+        	<p>{{nombreArchivo}}</p>
+        </div>
+        <div class="modal-body">
+        
+			<div class="row">
+				<div class="col-md-12">
+				<label>Tipo de Documento</label>
+				<select class="form-control" ng-model="nombredoc" ng-options="TipoDoc as TipoDoc.TID_nombre for TipoDoc in tiposDocumentos">
+					<option value="">Tipo Documento</option>
+				</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<label for="numeroafi">Observaciones</label>
+					<textarea class="form-control" ng-model="observacionesimagen" rows="3"></textarea>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="col-md-6">
+					<button class="btn btn-block btn-danger" ng-click="cancelaimagen()" data-dismiss="modal">Cancelar</button>		
+				</div>
+				<div class="col-md-6">
+					<button type="submit" class="btn btn-block btn-primary" ng-disabled="nombredoc == ''" ng-click="imagenInfo()">Agregar</button>		
+				</div>
+			</div>
+
+	  	</div>
+	</div>
+  </div>
+</div>

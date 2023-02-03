@@ -1,0 +1,533 @@
+
+<div class="row" ng-show="verDetalle" style="padding-top: 17em">
+	<div class="col-md-12" align="center">
+		<img src="imgs/cargadorCuadro.gif">
+
+	</div>
+</div>
+<div class="container muestraderecha2" ng-hide="verDetalle||verDetalleCargado" style="width: 100%" ng-init="inicio()" style="background-color: #f6f6f6">     
+	<div class="panel panel-primary" style="width: 100%">
+		<div class="panel-heading">
+			<label>Detalle del Lesionado</label>
+		</div> 
+		<div class="Panel-body">
+			<div class="row">
+				<div class="col-md-12">
+					<h1>Parámetros de búsqueda</h1>
+				</div>
+			</div>
+			<div class="row">
+				<form ng-submit="buscaParametros()">
+					<div class="col-md-4" align="left">
+						<div class="input-group">
+		                 <span class="input-group-addon">Nombre: </span>	                 
+		                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.nombre" class= "form-control" mayusculas >	                 
+	          			</div>
+					</div>
+					<div class="col-md-4">
+						<div class="input-group">
+		                 <span class="input-group-addon">Folio: </span>	                 
+		                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.folio" class= "form-control" mayusculas>	                  
+	          			</div>
+					</div>
+					<div class="col-md-4" align="right">
+		                <div class="form-group">
+		                    <input type="submit" id="btnenvioprimero" class="btn btn-primary" value="Buscar">
+		                </div>
+		            </div>
+	            </form>
+			</div>
+			<div class="row" ng-show="cargador1">
+	                <div class="col-md-12">
+	                    <div  align="center">
+	                            <img ng-src="imgs/cargador.gif">
+	                    </div>
+	                </div>
+            </div>   
+			<div ng-show="buscar">
+	        	<loading2></loading2>
+	        </div>
+	        <div ng-hide="buscar">
+				<div  ng-show="error" class="row mianimacion">
+					<div class="col-md-12">
+						<div class="alert alert-warning">No se encontraron coincidencias.</div>
+					</div>
+				</div>
+
+			
+				<div class="row" ng-show="listaFolPar">                     
+                     <div class="col-md-12">
+                        <div class="panel panel-default">
+                           <div class="panel-heading">
+                              <div class="panel-title">Folios encontrados</div>
+                           </div>
+                           <!-- START list group-->
+                           <div class="list-group">
+                              <!-- START list group item-->
+                              <div class="list-group-item" style="background-color: {{listado.UniActual}}" ng-repeat="listado in listaFolPar | orderBy:predicate:reverse">
+                                 <div class="media" >
+                                 	<div class="pull-left">
+                                    	<img src="imgs/logostmp/{{listado.Cia_clave}}.jpg" alt="Image" class="img-thumbnail" alt="Cinque Terre" width="100" height="80"> 
+                                    	<img src="imgs/producto/{{listado.Pro_img}}" alt="Image" class="img-thumbnail" alt="Cinque Terre" width="45">          
+                                    </div>                                    
+                                    <div class="pull-right" ng-hide="listado.Exp_cancelado==1">
+                                    <div class="col-xs-4">
+		                              <a href="" ng-click="verDetalleFn(listado.Exp_folio)" class="btn btn-purple">
+		                                 <em class="fa fa-hand-o-right"></em>
+		                                 <span>Detalle de la Atención</span>
+		                              </a>
+		                           </div>
+                                   
+                                    </div>
+                                   
+                                    
+                                    <div class="media-body clearfix">
+                                       <div class="media-heading text-danger m0"><a href="" ng-click="mandaPortada(listado.Exp_folio)">{{listado.Exp_folio}}</a> -- {{listado.Exp_nombre}} {{listado.Exp_paterno}} {{listado.Exp_materno}} 
+										<small class="text-muted pull-right">{{listado.Fecha}}</small>	
+                                       </div>                                       
+                                       <p class="m0">                                       		                                        
+                                          
+                                       </p>                                       
+                                    </div>
+                                    
+                                 </div>
+                              </div>
+                              <!-- END list group item-->                                                            
+                           </div>
+                           <!-- END list group-->
+                           <!-- START panel footer-->
+                           <div class="panel-footer clearfix">
+                              <a href="#" class="pull-left">
+                                 <small></small>
+                              </a>
+                           </div>
+                           <!-- END panel-footer-->
+                        </div>
+                     </div>
+                  </div>
+                 	
+				<div class="row" ng-show="list">                     
+                     <div class="col-md-12">
+                        <div class="panel panel-default">
+                           <div class="panel-heading">
+                              <div class="panel-title">Folios encontrados</div>
+                           </div>
+                           <!-- START list group-->
+                           <div class="list-group">
+                              <!-- START list group item-->
+                              <div class="list-group-item" style="background-color: {{listado.UniActual}}" ng-repeat="listado in list ">
+                                 <div class="media" 
+                                 >
+                                 	<div class="pull-left">
+                                    	<img src="imgs/logostmp/{{listado.Cia_clave}}.jpg" alt="Image" class="img-thumbnail" alt="Cinque Terre" width="100" height="80"> 
+                                    	<img src="imgs/producto/{{listado.Pro_img}}" alt="Image" class="img-thumbnail" alt="Cinque Terre" width="45">                                    	                               
+                                    </div>
+                                    <div class="pull-right"  ng-hide="listado.Exp_cancelado==1||listado.Exp_solCancela=='S'">
+                                    <a href="" ng-disabled="listado.ESTATUSFOLIO=='ORIGEN'|| listado.ESTATUSFOLIO=='CAMBIO'"  ng-click="abreModalCancelacion(listado.Exp_folio)">
+                                       <span class="fa-stack fa-lg" tooltip-placement="buttom"  tooltip-trigger tooltip="Cancelar folio">
+                                          <em class="fa fa-circle fa-stack-2x text-danger"></em>
+                                          <em class="fa fa-close fa-stack-1x fa-inverse text-white"></em>
+                                       </span>
+                                     </a>
+                                    </div>
+                                    <div class="pull-right" ng-disabled="listado.ESTATUSFOLIO=='ORIGEN'|| listado.ESTATUSFOLIO=='CAMBIO'" ng-show="listado.Exp_solCancela=='S'&&listado.Exp_cancelado==0">
+                                    
+                                       <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Solicitud enviada">
+                                          <em class="fa fa-circle fa-stack-2x text-success"></em>
+                                          <em class="fa fa-envelope fa-stack-1x fa-inverse text-white"></em>
+                                       </span>
+                                    
+                                    </div>
+                                    <div class="pull-right"  ng-show="listado.Exp_cancelado==1&&listado_Exp_solCancela==null">
+                                    
+                                       <span ng-disabled="listado.ESTATUSFOLIO=='ORIGEN'|| listado.ESTATUSFOLIO=='CAMBIO'" class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Folio cancelado">
+                                          <em class="fa fa-circle fa-stack-2x text-success"></em>
+                                          <em class="fa fa-check fa-stack-1x fa-inverse text-white"></em>
+                                       </span>
+                                  
+                                    </div>
+                                    
+                                    <div class="media-body clearfix">
+                                       <div class="media-heading text-danger m0"><a href="" ng-click="mandaPortada(listado.Exp_folio)">{{listado.Exp_folio}}</a> -- {{listado.Exp_nombre}} {{listado.Exp_paterno}} {{listado.Exp_materno}}
+										<small class="text-muted pull-right">{{listado.Fecha}}</small>	
+                                       </div>                                       
+                                       <p class="m0">
+                                          <small>{{listado.Exp_obs}}</small>
+                                         <small ng-hide="listado.ESTATUSFOLIO=='ORIGEN'" class="m0 pull-right"><a href="" ng-click="mandaDocumentos(listado.Exp_folio)" >Editar documentos</a>
+                                         </small>
+                                         <small ng-show="listado.ESTATUSFOLIO=='ORIGEN'" class="m0 pull-right"><a href="" ng-click="mandaDocumentos(listado.Exp_folio)" >Ver Digitales</a></small>
+                                       </p>                                       
+                                    </div>
+                                    
+                                 </div>
+                              </div>
+                              <!-- END list group item--> 
+                               <div class="row" ng-show="cargador">
+				                <div class="col-md-12">
+				                    <div  align="center">
+				                            <img ng-src="imgs/cargador.gif">
+				                    </div>
+				                </div>
+				            </div>                                                           
+                           </div>                          
+                           <!-- END list group-->
+                           <!-- START panel footer-->
+                           <div class="panel-footer clearfix">
+                              <a href="#" class="pull-left">
+                                 <small></small>
+                              </a>
+                           </div>
+                           <!-- END panel-footer-->
+                        </div>
+                     </div>
+                  </div>					
+	        </div>
+		</div>
+	</div>
+</div>
+<div ng-show="verDetalleCargado" class="container estirar" style="width: 100%">
+
+	<div class="row ">
+		<div class="col-md-12">
+			<button type="button" ng-click="verDetalle=false;verDetalleCargado=false;" class="btn btn-pill-left btn-purple">Regresar</button>
+			
+			<br><br>
+			<div class="well">
+		         <h4>Detalle del Folio</h4>
+		         <table style="width: 100%"  class=" table table-condensed">				
+					<tbody>
+						<tr >
+							<td style="width: 10%">
+								Folio: {{detallePaciente.FOLIO}}<br>			
+							</td>
+							<td style="width: 20%">
+								Lesionado: {{detallePaciente.NOMBRE}}<br>			
+							</td>
+							<td style="width: 10%">
+								Fec. de nac.: {{detallePaciente.FECNAC}}
+							</td>
+							<td style="width: 10%">
+								Edad: {{detallePaciente.EDAD}}
+							</td>
+							<td style="width: 10%">
+								Sexo: {{detallePaciente.SEXO}}
+							</td>
+							
+							
+							
+						</tr>
+						<tr>
+							<td style="width: 10%">
+								Correo: {{detallePaciente.CORREO}}<br>			
+							</td>
+							<td style="width: 10%">
+								Teléfono: {{detallePaciente.TELEFONO}}<br>			
+							</td>
+							
+							<td style="width: 10%">
+								Unidad:  {{detallePaciente.UNIDAD}}
+							</td>
+							<td style="width: 10%">
+								Compañía:  {{detallePaciente.COMPANIA}}
+							</td>
+							<td>
+								Producto:  {{detallePaciente.PRODUCTO}}
+							</td>
+							
+						</tr>
+						<tr>
+							<td style="width: 10%">
+								Poliza:  {{detallePaciente.POLIZA}}
+							</td>
+							<td style="width: 10%">
+								Siniestro:  {{detallePaciente.SINIESTRO}}
+							</td>
+							<td style="width: 10%">
+								Reporte:  {{detallePaciente.REPORTE}}
+							</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr ng-show="detallePaciente.OBS">
+							<td colspan="5">
+								Observaciones: {{detallePaciente.OBS}}
+							</td>
+						</tr>
+						</tbody>
+					</table>		
+		      </div>
+		</div>
+	</div>    
+   <div class="row">
+       <div class="col-lg-12">
+	       <div class="well">
+	        <div id="accordion">
+			    <div class="panel" style="padding: 1em 1em 1em 1em">
+			        <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse1">
+			            PRIMERA ETAPA
+			        </a>
+			        <div id="collapse1" class="collapse">
+			            	<table style="width: 100%" class=" table table-condensed">
+								<tr>								
+									<th align="right" colspan="2">
+										Fecha: {{primeraEtapa.Not_fechareg}}
+									</th>
+								</tr>
+								<tr>
+									<td style="width: 70%">
+									<b>Diagnóstico</b> {{primeraEtapa.ObsNot_diagnosticoRx}}
+									</td>	
+									<td>
+										<div ng-show="primeraEtapa.contProc>0">
+										<b>Procedimiento(s)</b>
+											<div ng-repeat="proc in procedimientos">
+												{{proc.Pro_nombre}}<br>
+											</div>
+											
+										</div>
+									</td>				
+								</tr>
+								<tr>
+									<td colspan="2">Médico: {{primeraEtapa.MEDICO}}</td>
+								</tr>
+								<!-- <tr>
+									<td colspan="2">
+										<button type="button" ng-click="verDetalle=false;verDetalleCargado=false;" class="btn btn-pill-left btn-purple">Ver soportes digitales</button>
+									</td>
+								</tr> -->
+							</table>
+			        </div>
+			    </div>
+			    <div class="panel" style="padding: 1em 1em 1em 1em">
+			        <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse2">
+			            SEGUNDA ETAPA
+			        </a>
+			        <div id="collapse2" class="collapse">
+			            <table ng-show='subsecuencias' style="width: 100%" class=" table table-condensed">						
+							<tr >
+								<td>
+									<table ng-repeat="subsecuencia in subsecuencias" class=" table table-condensed" style="width: 100%">
+										<tr>
+											<th style="width: 70%">
+												Subsecuencia no. {{subsecuencia.Sub_cons}}
+											</th>
+											<th style="width: 30%">
+												Fecha de subsecuencia: {{subsecuencia.Sub_fecha}} {{subsecuencia.Sub_hora}}
+											</th>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<b>Causa</b> {{subsecuencia.Sub_SignosSintomas}}
+											</td>
+										</tr>
+										<tr>	
+											<td colspan="2">
+												<b>Medico:</b> {{subsecuencia.Usu_nombre}} 
+											</td>			
+										</tr>
+										<tr>
+											<td colspan="2">
+												<b>Diagnóstico:</b> {{subsecuencia.Sub_diagnostico}}
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<hr>
+											</td>
+										</tr>
+									</table>
+								</td>	
+							</tr>			
+						</table>
+			        </div>
+			    </div>
+			    <div class="panel" style="padding: 1em 1em 1em 1em"> 
+			        <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse3">
+			            TERCERA ETAPA
+			        </a>
+			        <div id="collapse3" class="collapse" style="width: 100%"> 
+			            	
+
+			        		<div  data-ng-cloak>
+								<br>
+								<!-- PRIMER TABLA -->
+								<c3chart bindto-id="grafica1" ng-model="chart1" style="width: 100%">
+								</c3chart>			
+							</div>
+
+							<div class="item dropdown">
+					          	<div style="cursor:pointer" class="dropdown-toggle">
+					             <a href="" > Ver detalle rehabilitaciones</a>
+					        	</div>               
+								<ul class="dropdown-menu dropdown-menu-left">                                                                                   
+									<li class="link">
+									 	<table ng-show='rehabilitaciones' style="width: 100%" class=" table table-condensed">
+											<tr>
+												<th>
+													TERCERA ETAPA					
+												</th>
+												
+											</tr>
+											<tr >
+												<td>
+													<table ng-repeat="rehabilitacion in rehabilitaciones" class=" table table-condensed" style="width: 100%">
+														<tr>
+															<th style="width: 70%">
+																Rehabilitacion no. {{rehabilitacion.Rehab_cons}}
+															</th>
+															<th style="width: 30%">
+																Fecha de rehabilitación: {{rehabilitacion.Rehab_fecha}}
+															</th>
+														</tr>
+														<tr>
+															<td colspan="2">
+																<b>Tipo</b> {{rehabilitacion.Rehab_tipo}}
+															</td>
+														</tr>
+														<tr>	
+															<td colspan="2">
+																<b>Observaciones:</b> {{rehabilitacion.Rehab_obs}} 
+															</td>			
+														</tr>
+														<tr>
+															<td colspan="2">
+																<b>Rehabilitador:</b> {{rehabilitacion.Usu_nombre}}
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<hr>
+															</td>
+														</tr>
+													</table>
+												</td>	
+											</tr>			
+										</table>
+									</li>                                                                                      
+								</ul>               
+					        </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+          <!-- END panel-->
+       </div>
+    </div> 
+</div>
+
+
+
+
+
+
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel">Solicitud de cancelación para el folio <b>{{folioModal}}</b></h4>
+					      </div>
+					      <div class="modal-body">
+					        <div class="container" style="width:100%;" id="verFormato">
+									<div class="panel panel-primary">    								      
+								      <div class="panel-body">
+								      
+									<form name="enviaSolCancelacion" id="enviaSolCancelacion" ng-submit="enviaDatosCancelacion()">												
+										<br>
+										<div class="row" id="campoFol">
+											<div class="col-md-12" align="left">
+												<div class="input-group">
+								              <span class="input-group-addon">Motivo de cancelaci&oacute;n:</span> 
+								               <input type="text" class="form-control" name="motivo" ng-model="datos.motivo" id="motivo" required >        
+								            </div>
+											</div>				            
+										</div>										
+										<div class="row" id="campoFol">
+											<div class="col-md-12" align="left">
+												<div class="input-group">
+								              <span class="input-group-addon">Folio sustituto:</span> 
+								               <input type="text" class="form-control" name="folioSus" ng-model="datos.folioSus" id="folioSus">        
+								            </div>
+											</div>				            
+										</div>										
+										<div class="row" id="campoObs">
+											<div class="col-md-12" align="left">
+												<div class="input-group">
+								              <span class="input-group-addon">Observaciones:</span> 
+								               <input type="text" class="form-control" name="Obs" ng-model="datos.Obs" id="Obs">        
+								            </div>
+											</div>				            
+										</div>											
+										<div class="row" ng-show="cargadorCancel">
+							                <div class="col-md-12">
+							                    <div  align="center">
+							                            <img ng-src="imgs/cargador.gif">
+							                    </div>
+							                </div>
+							            </div>     									
+									</form>
+									</div>
+								</div>
+					        </div>
+					      
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+					        <input type="Submit" class="btn btn-primary" id="botonEnvio" form="enviaSolCancelacion"  value="Enviar solicitud" />
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					<!--    fin del modal   -->
+				</div>
+
+
+
+    <div class="modal fade" id="Documentos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	          <h4 class="modal-title" id="myModalLabel">Subir documentos</h4>
+	        </div>
+	        <div class="modal-body">
+	          <form ng-submit="guardaInsidencia()">
+	          <div class="row">
+	            <div class="col-md-12">
+	                           FORMULARIO                          
+	            </div>
+	            </div>
+	                     
+	            <div class="row" ng-show="msjTel">
+	               <div class="col-md-12">
+	                  <div  class="validacion">
+	                      Los campos son obligatorios
+	                  </div>
+	               </div>
+	             </div>
+	             <div class="row" ng-show="cargador1">
+	                <div class="col-md-12">
+	                    <div  align="center">
+	                            <img ng-src="imgs/cargador.gif">
+	                    </div>
+	                </div>
+	            </div>
+	             <div class="row" ng-show="msjIncidencia">
+	               <div class="col-md-12">
+	                  <div  class="alert alert-success" >
+	                      confirmacion
+	                  </div>
+	               </div>
+	             </div> 
+
+	          </div>
+	        
+	        <div class="modal-footer">                  
+	          <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+	          <button type="submit" class="btn btn-info">Agregar</button>
+	        </div>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+
+

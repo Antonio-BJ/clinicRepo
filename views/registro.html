@@ -1,0 +1,65 @@
+<div class="container" style="width: 100%"> 
+<div class="panel panel-primary">        
+<div class="panel-body">
+
+<div class="row" ng-show="permisos.Per_cabina =='S'">
+  	<div class="col-md-12" align="center">
+  		<div class="input-group" style="width:93%">
+              <span class="input-group-addon">Selecciona unidad</span>
+              <select required ng-model="unidadAlternativa" name="unidadAl" id="unidadAl"   class= "form-control"   ng-options="unidad.Uni_clave as unidad.Uni_nombre  for unidad in listadoUnidades" ng-change="asignarUnidad()" mayusculas>
+                <option value=""> *Seleccione </option>                
+              </select>                             
+             
+            </div> 
+  	</div>
+</div>
+
+<div class="row">
+ <div class="col-md-6">
+
+				<div class="container" style="width: 100%"> 
+				   <div class="panel panel-INFO">
+				        <div class="panel-heading">
+                                            <h3 class="panel-title" align="center">CLIENTES</h3>
+				        </div> 
+				  			<div class="Panel-body">
+								<div class="row">
+				      					<div class="col-md-12">
+
+				 							<a ng-click="confirmaUnidad(1)" class="thumbnail">
+				      						<img ng-src="imgs/registro/aseguradoraReg.jpg"  title="Aseguradora">
+				   							 </a>
+				   						</div>	
+				   				</div>
+				   			</div>
+				   		</div>
+				   	</div> 
+				      	
+</div>
+
+ <div class="col-md-6" ng-show="sinParticulares">
+
+				<div class="container" style="width: 100%"> 
+				   <div class="panel panel-INFO">
+				        <div class="panel-heading">
+				         	<h3 class="panel-title" align="center">PARTICULAR</h3>
+				        </div> 
+				  			<div class="Panel-body">
+								<div class="row">
+				      					<div class="col-md-12">
+
+				 							<a ng-click="confirmaUnidad(2)" class="thumbnail">
+				      						<img ng-src="imgs/registro/particularReg.jpg"  title="Particular">
+				   							 </a>
+				   						</div>	
+				   				</div>
+				   			</div>
+				   		</div>
+				   	</div> 				      	
+</div>
+
+</div>
+
+    </div>
+</div>
+</div>

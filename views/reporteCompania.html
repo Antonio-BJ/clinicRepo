@@ -1,0 +1,64 @@
+<div ng-init="inicio()">
+		<div class="panel panel-primary" >
+		    <div class="panel-heading">
+		     	<h4>Reporte de Compañias</h4>		     	
+		    </div>			
+			
+            <br ng-show="cargador">
+            <div class="row" ng-show="cargador">
+                <div class="col-md-12">
+                    <div  align="center">
+                        <img ng-src="imgs/cargador.gif">
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-show="mensaje">
+                <div class="col-md-12">
+                    <div  align="center">
+                        <div class="alert alert-warning">No existen folios agregados</div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <form name="reportees" ng-submit="imprimirReporte()">
+            <div class="row">
+                    <div class="col-md-3">
+                        <div class="input-group cajaInputcompleto">
+                            <span>Fecha inicio</span>
+                            <input type="text" ng-model="intervalo.fechaInicio" name="fechaInicio" id="fechaInicio" class= "form-control" data-date-format="YYYY-MM-DD" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" required>
+                        </div>                         
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group cajaInputcompleto">
+                            <span>Fecha fin</span>
+                            <input type="text" ng-model="intervalo.fechaFin" name="fechaFin" id="fechaFin" class= "form-control" data-date-format="YYYY-MM-DD" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" required>
+                        </div>                        
+                    </div>
+                     <div class="col-md-3">
+                       <div class="input-group cajaInputcompleto">
+                            <span  ><b>Compañia: </b></span>
+                            <select name="llega" id="llega" ng-model="intervalo.localidad" class="form-control" ng-options="Localidad.Cia_clave as Localidad.Cia_nombrecorto  for Localidad in catLoc" required >   <option value=""> * Seleccione </option>                        
+                            </select>
+                        </div>                   
+                    </div>
+                    <div class="col-md-3" align="right" style="padding-top:1em">
+                        <div class="input-group" style="width:100%">
+                            <input type="Submit" class="btn btn-primary btn-lg"  value="Generar Reporte"/>     
+                        </div>  
+                    </div>
+            </div>
+
+            </form>
+
+		</div>		
+</div>
+<script type="text/javascript">
+       $('#fechaInicio').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+        $('#fechaFin').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+</script>

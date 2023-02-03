@@ -1,0 +1,432 @@
+<div class="container" style="width: 100%"> 
+    
+	<div class="panel panel-primary">
+
+	    <div class="panel-heading">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-1">
+						<a href="#/registroN" style="background:transparent; border:0px;"><img style="margin-top: 1em;" src="imgs/flecha.jpg" width="35" height="35" class="img-circle" /> </a>
+					</div>
+					<div class="col-md-3">
+				     		<h2  style="margin-top: 1em;" class="panel-title">Selecciona Cliente</h2>
+					</div>		
+				</div>
+			</div>
+	    </div> 
+
+	  	<div class="Panel-body">
+	  	
+	  		<section style="background: #F7F7F7;padding: .5em .5em .5em .5em; margin-left: 1em  ">
+	         <!-- START Page content-->
+	         <div class="content-wrapper">
+	            <h4>Búsqueda</h4>
+	            <!-- START row-->
+	            <div class="row">
+	               	<div class="col-sm-12 ">
+		                <!-- START widget-->			         			                          
+	                    <div class="input-group">
+						  <span class="input-group-addon">Búsqueda</span>
+						  <input type="text" ng-model="q" name="q" id="q" class= "form-control" required> 					  
+						</div>			                                     
+		                <!-- END widget-->
+	         		</div>         		
+	            </div> 
+
+	            <div class="row">
+	            	
+	            	<div ng-repeat="Compania in listadoCompanias | filter:q as results track by Compania.EMR_nombre" ng-hide="(Compania.EMR_id==99&&(uniClave==1 || uniClave==2 || uniClave==3 || uniClave==184))||(Compania.EMR_id==98&&(uniClave==4 || uniClave==5 || uniClave==6 || uniClave==7 || uniClave==8 || uniClave==86 || uniClave==186)) || ((Compania.EMR_id==126 || Compania.EMR_id==125) && (uniClave==1 || uniClave==2 || uniClave==4 || uniClave==5 || uniClave==6 || uniClave==7 || uniClave==86 || uniClave==186)) || (Compania.EMR_id==716 && (uniClave!=3 && uniClave!=8)) || (Compania.EMR_id==718 && (uniClave!=8))">            		
+		            	<div class="clearfix" ng-if="$index % 6 == 0"></div>
+		            	<div class="col-md-2" style="background: white;" ng-show="Compania.EMR_unidades=='' || Compania.EMR_unidades == uniClave">
+		            		<h6><strong>{{Compania.EMR_nombre}}</strong></h6>
+		            		<a href=""  ng-click="asignaProducto(Compania.Cia_clave,Compania.EMR_tipo,Compania.EMR_id)" class="thumbnail red-tooltip" tooltip-placement="top"  tooltip-trigger tooltip="{{Compania.EMR_mensaje}}">
+
+								<img ng-show='(Compania.EMR_id==115 && (uniClave==1 || uniClave==2 || uniClave==3 || uniClave==184))' ng-src="imgs/logostmp/{{Compania.Cia_clave}}.jpg"  title="{{Compania.EMR_nombre}}">
+								<img ng-show='(Compania.EMR_id==115 && (uniClave==4 || uniClave==5 || uniClave==6 || uniClave==7 || uniClave==8 || uniClave==86 || uniClave==186))' ng-src="imgs/logostmp/{{Compania.Cia_clave}}F.jpg"  title="{{Compania.EMR_nombre}}">
+								<img ng-show='(Compania.EMR_id!=115)' ng-src="imgs/logostmp/{{Compania.Cia_clave}}.jpg"  title="{{Compania.EMR_nombre}}">
+
+						 	</a>
+						 	<h6 ng-if="Compania.EMR_tipo==1" class="bg-primary" style="padding: 5px 5px 5px 5px">Aseguradora</h6>
+						 	<h6 ng-if="Compania.EMR_tipo==2" class="bg-info" style="padding: 5px 5px 5px 5px">Particulares</h6>
+						 	<h6 ng-if="Compania.EMR_tipo==3" class="bg-warning" style="padding: 5px 5px 5px 5px">Promociones</h6>
+		            	</div>
+		            	<li class="animate-repeat" ng-if="results.length === 0">
+					      <strong>Sin resultados encontrados...</strong>
+					    </li>
+
+					     <!-- Modal -->
+						<div id="cellers" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+
+						    <!-- Modal content-->
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">{{Compania.EMR_nombre}}</h4>
+						      </div>
+						      <div class="modal-body">
+						        <object type="application/pdf" data="imgs/promos/cellers.pdf" width="100%" height="700" style="height: 85vh;">No Support</object>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+						      </div>
+						    </div>
+
+						  </div>
+						</div> 
+
+						<div id="experience" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+
+						    <!-- Modal content-->
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">{{Compania.EMR_nombre}}</h4>
+						      </div>
+						      <div class="modal-body">
+						        <object type="application/pdf" data="imgs/promos/experience.pdf" width="100%" height="700" style="height: 85vh;">No Support</object>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+						      </div>
+						    </div>
+
+						  </div>
+						</div> 
+						<div id="aliado" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+
+						    <!-- Modal content-->
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">{{Compania.EMR_nombre}}</h4>
+						      </div>
+						      <div class="modal-body">
+						        <object type="application/pdf" data="imgs/promos/aliado.pdf" width="100%" height="700" style="height: 85vh;">No Support</object>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+						      </div>
+						    </div>
+
+						  </div>
+						</div> 
+						<div id="asmas" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+
+						    <!-- Modal content-->
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">{{Compania.EMR_nombre}}</h4>
+						      </div>
+						      <div class="modal-body">
+						        <object type="application/pdf" data="imgs/promos/asmas.pdf" width="100%" height="700" style="height: 85vh;">No Support</object>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+						      </div>
+						    </div>
+
+						  </div>
+						</div> 
+						<div id="bienestar" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+
+						    <!-- Modal content-->
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">{{Compania.EMR_nombre}}</h4>
+						      </div>
+						      <div class="modal-body">
+						        <object type="application/pdf" data="imgs/promos/bienestar.pdf" width="100%" height="700" style="height: 85vh;">No Support</object>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+						      </div>
+						    </div>
+
+						  </div>
+						</div> 
+
+						<div id="revajim" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+
+						    <!-- Modal content-->
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">{{Compania.EMR_nombre}}</h4>
+						      </div>
+						      <div class="modal-body">
+						      	<img src="imgs/promos/revajim_todos.jpg" width="500">						        
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+						      </div>
+						    </div>
+
+						  </div>
+						</div> 
+
+						<div id="rhCovid" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+  
+							  <!-- Modal content-->
+							  <div class="modal-content">
+								<div class="modal-header">
+								  <button type="button" class="close" data-dismiss="modal">&times;</button>
+								  <h4 class="modal-title">Rehabilitación COVID</h4>
+								</div>
+								<div class="modal-body">
+									<form ng-submit="formRHCovid(opcion1)" name="formrhCovid" id="formrhCovid">
+										<div class="row">
+											<div class="col-md-12">
+												<label for="">Que tipo de paciente es:</label>
+												<br>
+
+												<div class="row">
+													<div class="col-md-12">
+														<div class="radio">
+														  <label><input type="radio" name="optradio" ng-change="asignaValor(1)" ng-model='opcion1' value="1" required>Particular</label>
+														</div>
+														<div class="radio">
+														  <label><input type="radio" name="optradio" ng-change="asignaValor(2)" ng-model='opcion1' value="2" required>Empleado</label>
+														</div>
+														<div class="radio">
+														  <label><input type="radio" name="optradio" ng-change="asignaValor(3)" ng-model='opcion1' value="3" required>Compañía de seguros</label>
+														</div>
+													</div>
+												  </div>
+											</div>
+										</div>
+										
+										
+
+									</form>					        
+								</div>
+								<div class="modal-footer">
+								  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+								  <button type="submit" form="formrhCovid" class="btn btn-primary">Aceptar</button>
+								</div>
+							  </div>
+  
+							</div>
+						  </div> 
+
+
+						<div id="banamex" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+
+						    <!-- Modal content-->
+						    <div class="modal-content" style="display: inherit;">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">MÉDICA VIAL</h4>
+						      </div>
+						      <div class="modal-body">
+						      	<img src="imgs/promos/7330.jpg" width="800">						        
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+						      </div>
+						    </div>
+
+						  </div>
+						</div>
+
+						<div id="scotia" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+
+						    <!-- Modal content-->
+						    <div class="modal-content" style="display: inherit;">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">REHABILITACIÓN DE COVID</h4>
+						      </div>
+						      <div class="modal-body">
+						      	<img src="imgs/promos/8131.jpg" width="800">						        
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+						      </div>
+						    </div>
+
+						  </div>
+						</div>
+
+						<div id="rehab5" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+
+						    <!-- Modal content-->
+						    <div class="modal-content" style="display: inherit;">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">MÉDICA VIAL</h4>
+						      </div>
+						      <div class="modal-body">
+						      	<img src="imgs/promos/5130.jpg" width="700" height="500">						        
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+						      </div>
+						    </div>
+
+						  </div>
+						</div>
+						  	<div id="10sesiones" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
+
+							    <!-- Modal content-->
+							    <div class="modal-content" style="display: inherit;">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							        <h4 class="modal-title">MÉDICA VIAL</h4>
+							      </div>
+							      <div class="modal-body">
+							      	<img src="imgs/promos/5131.jpg" width="700" height="500">						        
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+							      </div>
+							    </div>
+
+							  </div>
+							</div>
+
+							<div id="5sesiones" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
+
+							    <!-- Modal content-->
+							    <div class="modal-content" style="display: inherit;">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							        <h4 class="modal-title">MÉDICA VIAL</h4>
+							      </div>
+							      <div class="modal-body">
+							      	<img src="imgs/promos/5132.jpg" width="700" height="500">						        
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+							      </div>
+							    </div>
+
+							  </div>
+							</div>
+
+							<div id="10mayo" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
+
+							    <!-- Modal content-->
+							    <div class="modal-content" style="display: inherit;">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							        <h4 class="modal-title">MÉDICA VIAL</h4>
+							      </div>
+							      <div class="modal-body">
+							      	<img src="imgs/promos/5133.jpg" width="700" height="500">						        
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+							      </div>
+							    </div>
+
+							  </div>
+							</div>
+
+							<div id="paquetemejores" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
+
+							    <!-- Modal content-->
+							    <div class="modal-content" style="display: inherit;">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							        <h4 class="modal-title">MÉDICA VIAL</h4>
+							      </div>
+							      <div class="modal-body">
+							      	<img src="imgs/promos/5134.jpg" width="700" height="500">						        
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+							      </div>
+							    </div>
+
+							  </div>
+							</div>
+
+					        <div id="BANCOPPEL" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
+
+							    <!-- Modal content-->
+							    <div class="modal-content" style="display: inherit;">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							        <h4 class="modal-title">MÉDICA VIAL</h4>
+							      </div>
+							      <div class="modal-body">
+							      	<img src="imgs/promos/5135.jpg" width="700" height="500">						        
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+							      </div>
+							    </div>
+
+							  </div>
+							</div>
+
+							<div id="CONVENIOMAPFRE" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
+
+							    <!-- Modal content-->
+							    <div class="modal-content" style="display: inherit;">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							        <h4 class="modal-title">MÉDICA VIAL</h4>
+							      </div>
+							      <div class="modal-body">
+							      	<img src="imgs/promos/8826.jpg" width="700" height="500">						        
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							        <button type="button" class="btn btn-primary" ng-click="irRegistra()">Aceptar</button>
+							      </div>
+							    </div>
+
+							  </div>
+							</div>
+				    </div>
+	            	
+	            </div>   
+
+
+
+	         </div>
+	         <div class="row" ng-show="cargador1">
+	         	<div class="col-md-12 text-center">         		
+	         		 <img ng-src="imgs/cuadrito.gif">
+	         	</div>
+	         </div>
+	         <!-- END Page content-->
+	      </section>
+
+		</div>
+
+	</div>
+</div>

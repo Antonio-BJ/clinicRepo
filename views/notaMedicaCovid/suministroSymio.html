@@ -1,0 +1,511 @@
+<div class="row semiTitulo" >
+        <label >Inventario de medicamentos y ortesis</label>    
+    </div> 
+    <div class="bordeSemititulo">             
+
+          <br>          
+          <div class="row" ng-show="alergias">
+            <div class="col-md-12">
+             <div class="alert alert-danger"> <label style="color:#ba3f44; font-size:14px"><b>Alergias:</b> {{alergias}} </label></div>
+            </div>
+          </div>           
+      <div class="cajaInputArriba" ng-hide="ciaClave==51">        
+            <label>Medicamentos</label>              
+      </div>
+      <div class="bordeInput" ng-hide="ciaClave==51">
+      <div ng-hide="recargarMed||(ciaClave==51)">         
+          <div class="row">
+            <div class="col-md-12">           
+            <div align="center">
+              <button class="btn btn-primary ln" ng-click="botonRecargaMed()">Recargar</button>
+            </div>
+                  </div>        
+          </div>
+    </div>            
+                        <!-- Modal -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Agregar Medicamentos</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form ng-submit="agregaMedAlternativo()">
+                                    <div class="row">
+                                      <div class="col-md-12">
+                                        <div style="width:100%" class="input-group">  
+                                        <label>Medicamento:</label>                    
+                                        <input   type="text" ng-model="medAlter.medicamento"  class="form-control" id="numTel" name="numTel" required>                                         
+                                        </div> 
+                                      </div>                                        
+                                      </div>
+                                      <div class="row">
+                                      <div class="col-md-2">
+                                        <div style="width:100%" class="input-group">  
+                                        <label>Cantidad:</label>                    
+                                        <input  type="number" ng-model="medAlter.cantidad"  class="form-control" id="numTel" name="numTel" >                                         
+                                        </div> 
+                                      </div>  
+                                      <div class="col-md-8">  
+                                        <div  style="width:100%"class="input-group">  
+                                        <label>Indicaciones:</label>                    
+                                        <input  type="text" style="width:100%" ng-model="medAlter.indicaciones"  class="form-control" id="numTel" name="numTel" required>                                         
+                                        </div>
+                                        </div>
+                                      <div class="col-md-2">
+                                        <div style="padding-top:1.8em">  
+                                        <button type="submit" class="btn btn-info">Agregar</button>
+                                        </div>
+                                        </div> 
+                                      </div>
+                                      </form> 
+                                      <div class="row" ng-show="msjTel">
+                                         <div class="col-md-12">
+                                            <div  class="validacion">
+                                                Los campos son obligatorios
+                                            </div>
+                                         </div>
+                                       </div> 
+                                       <div class="row" ng-show="mensajevacio">
+                                         <div class="col-md-12">
+                                            <div  class="validacion">
+                                                Debes agregar por lo menos 1 medicamento
+                                            </div>
+                                         </div>
+                                       </div> 
+                                      <div class="row" ng-show="sumaMed">
+                                         <div class="col-md-12">
+                                           <table ng-hide="sumaMed==null" class="table table-striped table-hover">
+                                            <tr>
+                                              <th width="10%"><b>#</b></th>
+                                              <th width="40%"><b>cantidad</b></th>
+                                              <th width="40%"><b>Medicamento</b></th>
+                                              <th width="40%"><b>Indicaciones</b></th>                  
+                                              <th width="10%"><b>Eliminar</b></th>                  
+                                            </tr>
+                                            <tr ng-repeat="medics in sumaMed">  
+                                            <td>{{medics.cont}}</td>         
+                                              <td>{{medics.cantidad}}</td>                                  
+                                              <td>{{medics.medicamento}}</td>
+                                              <td>{{medics.indicaciones}}</td>
+                                              <td><input type="button" ng-click="eliminaTelefono($index+1)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+                                            </tr>
+                                          </table>                                            
+                                         </div>
+                                       </div> 
+                                        <div ng-show="cargadorModalMed">          
+                                          <div class="row">
+                                            <div class="col-md-12">           
+                                            <div align="center">
+                                              <img ng-src="imgs/cargador.gif">
+                                            </div>
+                                                  </div>        
+                                          </div>
+                                        </div>
+                                          
+                                    </div>
+                                  
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+                                    <button ng-disabled="cargadorModalMed" type="button" class="btn btn-default" ng-click="guardarMedicamentosAlternativos()" >Guardar</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>                
+        
+      <form name="formularios.medicSymio" ng-submit="guardaMedicamentoSymio()" novalidate>
+        
+        <div ng-show="cargadorMed&&recargarMed&&verListaSumAlter">          
+          <div class="row">
+            <div class="col-md-12">           
+            <div align="center">
+              <img ng-src="imgs/cargador.gif">
+            </div>
+                  </div>        
+          </div>
+        </div>
+        <div ng-hide="cargadorMed|| (ciaClave==51)">         
+          <div class="row" >
+          <div class="col-md-7">
+            <div class="input-group" style="width:100%">                       
+                <span class="input-group-addon">Medicamento</span>
+              <select class="form-control" ng-model="med.sustAct" style="width:100%;" name="sustAct" id="sustAct" ng-change="seleccionaMedicamentos(med.sustAct)" ng-options="medSymio.Clave_producto as medSymio.Descripcion for medSymio in lisMedSymio" required>
+                <option value="" > - Seleccione - </option>             
+              </select>
+            </div>
+                  <div class="validacion" role="alert" ng-if="interacted11(formularios.medicSymio.sustAct)" ng-messages="formularios.medicSymio.sustAct.$error">
+                    <div ng-message="required">campo requerido</div>            
+                  </div>                                            
+          </div>        
+                    
+          <div class="col-md-5" style="height:100%,width:100%">         
+            <div class="input-group" style="width:100%">                       
+                <span class="input-group-addon">Presentación: </span>           
+              <input  class="form-control" type="text" id="presentacion" name="presentacion" ng-disabled="true" ng-model="med.presentacion" required > 
+                  </div>
+                  <div class="validacion" role="alert" ng-if="interacted11(formularios.medicSymio.presentacion)" ng-messages="formularios.medicSymio.presentacion.$error">
+                    <div ng-message="required">campo requerido</div>            
+                  </div>          
+          </div>
+                
+          </div><!-- End row --> 
+
+          <div class="row">         
+            <div class="col-md-3" style="vertical-align:middle;" align="right">                 
+            <div class="input-group">          
+              <span  class="input-group-addon"><span class="badge" ng-show="med.sustAct" >{{med.stock}}</span> cantidad: </span>
+              <input type="number" min="1" ng-model="med.cantidad" id="cantidad" name="cantidad" class="form-control" required>
+            </div>
+            <div class="validacion" role="alert" ng-if="interacted11(formularios.medicSymio.cantidad)" ng-messages="formularios.medicSymio.cantidad.$error">
+              <div ng-message="required">campo requerido</div>
+              <div ng-message="number">campo numérico</div>            
+            </div>
+            <div class="validacion" ng-show="validaStock">
+                    <div align='center'>Excediste el stock</div>            
+                  </div>              
+          </div>  
+          <div class="col-md-9" style="vertical-align:middle;" align="right">                 
+            <div class="input-group">
+              <span class="input-group-addon">Posología: </span>
+              <textarea class="form-control" ng-model="med.posologia" rows="1" id="posologia" name="posologia" style="resize:none;" required=""></textarea>
+            </div>
+            <div class="validacion" role="alert" ng-if="interacted11(formularios.medicSymio.posologia)" ng-messages="formularios.medicSymio.posologia.$error">
+              <div ng-message="required">campo requerido</div>            
+            </div>        
+          </div>  
+                  
+          </div>               
+          <div class="row">
+            <div class="col-md-3">
+                <div ng-hide="listaMedicamentosSymio||listaMedicamentosSymioAlternativo">
+                  <input type="checkbox" name="checkSiguiente" id="checkMed" ng-model="checkMed"  ng-click="botonHabilita1()"> Sin medicamentos
+                </div>
+            </div> 
+            <div class="col-md-9" style="vertical-align:middle;" align="right">          
+              <input type="submit" class="btn btn-success" value="Agregar">       
+            </div>                    
+          </div>                                      
+          <div class="row">             
+            <div class="col-md-12">
+              <div ng-show="cargador" align="center">
+                <img ng-src="imgs/cargador.gif">
+              </div>
+            </div>
+          </div>
+          <div class="row" ng-show="ValidaInventario == 1" > 
+            <div class="col-md-12">
+              <div ng-show="listaMedicamentosSymio" class="mianimacion">
+                 <table id="TablaAlergias" width="100%" class="table table-striped table-hover">
+                  <tr>
+                    <th width="40%"><b>Medicamento rpuba</b></th>
+                    <th width="40%"><b>Indicaciones<b/></th>
+                    <th width="10%"><b>cantidad<b/></th>
+                    <th width="10%"><b>Eliminar</b></th>
+                  </tr>
+                  <tr ng-repeat="med in listaMedicamentosSymio">
+                    <td>{{med.NS_descripcion}}</td>
+                    <td>{{med.NS_posologia}}</td>
+                    <td>{{med.NS_cantidad}}</td>
+                    <td><input type='button' class="btn btn-danger btn-xs" ng-click='eliminarMedicamentoSymio(med.id_reserva,med.NS_id)' value='Eliminar'></td>
+                  </tr>                 
+                  </table>
+              </div>
+            </div>
+          </div>         
+          <div class="row" ng-hide="ValidaInventario == 1">
+            <div class="col-md-12">
+              <div ng-show="listaMedicamentosSymio" class="mianimacion">
+                 <table id="TablaAlergias" width="100%" class="table table-striped table-hover">
+                  <tr>
+                    <th width="40%"><b>Medicamento</b></th>
+                    <th width="40%"><b>Indicaciones<b/></th>
+                    <th width="10%"><b>cantidad<b/></th>
+                    <th width="10%"><b>Eliminar</b></th>
+                  </tr>                  
+                  <tr ng-repeat="med in listaMedicamentosSymio">
+                    <td>{{med.Sym_medicamento}}</td>
+                    <td>{{med.Nsum_obs}}</td>
+                    <td>{{med.Nsum_Cantidad}}</td>
+                    <td><input type='button' class="btn btn-danger btn-xs" ng-click='eliminarMedicamentoSymio1(med.Nsum_clave)' value='Eliminar'></td>
+                  </tr>
+                  </table>
+              </div>
+            </div>
+          </div>      
+        </div>
+        <div class="row" ng-hide="verListaSumAlter">
+          <div class="col-md-12">
+            <div ng-show="listaMedicamentosSymioAlternativo" class="mianimacion">
+               <table id="TablaAlergias" width="100%" class="table table-striped table-hover">
+                <tr>
+                  <th width="10%"><b>Cantidad</b></th>
+                  <th width="50%"><b>Medicamento<b/></th>
+                  <th width="40%"><b>Posología<b/></th>                  
+                </tr>
+                <tr ng-repeat="med in listaMedicamentosSymioAlternativo">
+                  <td>{{med.NsumAl_Cantidad}}</td>
+                  <td>{{med.NsumAl_medicamento}}</td>
+                  <td>{{med.NsumAl_posologia}}</td>                  
+                </tr>
+                </table>
+            </div>
+          </div>
+        </div> 
+                          
+      </form>
+      </div>  
+      <br>    
+    
+      <br>
+      <form name="formularios.indica" ng-submit="guardaIndicaciones()" novalidate>
+        <div class="cajaInputArriba">        
+            <label>Indicaciones</label>              
+        </div>
+        <div class="bordeInput">
+        <div class="row">
+        <div class="col-md-5">
+          <div class="input-group" style="width:100%">                       
+              <span class="input-group-addon">Indicaciones Generales: </span>
+            <select class="form-control" ng-model="indicacion.indicacion" style="width:100%;" name="tipoSumin" id="tipoSumin" ng-options="indicacion.Ind_nombre as indicacion.Ind_nombre for indicacion in listaIndicacion" ng-change="verIndicacionCam()">
+              <option value="" > - Seleccione - </option>             
+            </select>
+            </div>
+         </div>
+         <div class="col-md-5">     
+            <div class="input-group" style="width:100%">            
+            <textarea class="form-control" ng-model="indicacion.obs" rows="3" id="obs" name="obs" style="resize:none;" required></textarea>
+          </div>
+          <div class="validacion" role="alert" ng-if="interacted8(formularios.indica.obs)" ng-messages="formularios.indica.obs.$error">
+              <div ng-message="required">campo requerido</div>            
+            </div>
+            <div class="validacion" ng-show="msjPalabraProhiInd">
+              <div >Está utilzando una palabra prohibida <b>(INCAPACIDAD)</b></div>            
+            </div>  
+
+        </div>        
+              
+        <div class="col-md-2" align="right">         
+        
+            <input type="submit" class="btn btn-success" value="Agregar">       
+        </div>        
+        </div><!-- End row --> 
+        <div class="row"> 
+                <div class="col-md-12">
+                  <div ng-show="cargador2" align="center">
+                    <img ng-src="imgs/cargador.gif">
+                  </div>
+                </div>
+            </div>          
+        <div class="row">
+        <div class="col-md-12">
+          <div ng-show="listaIndicAgreg" class="mianimacion">
+             <table id="TablaAlergias" width="100%" class="table table-striped table-hover">
+              <tr>
+                
+                <th width="80%"><b>Indicaciones<b/></th>
+                <th width="20%"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-repeat="indic in listaIndicAgreg">               
+                <td>{{indic.Nind_obs}}</td>
+                <td><input type='button' class="btn btn-danger btn-xs" ng-click='eliminarIndicacion(indic.Nind_clave)' value='Eliminar'></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        </div>
+        </div>              
+      </form>            
+  </div>  
+<br>
+
+    <div class="row semiTitulo" >
+        <label >Procedimientos Médicos</label>    
+    </div> 
+
+      <form name="formularios.proce" ng-submit="guardaProcMedicos()" novalidate>
+      <div class="bordeSemititulo">     
+        <div class="row">
+        <div class="col-md-4 col-xs-4">
+          <div class="input-group cajaInputcompleto">
+            <span><b>Procedimientos</b></span>            
+              <select  ng-model="procedimientos.procedimiento" name="procedimiento" class="form-control"   
+              ng-options="proc.Pro_clave as proc.Pro_nombre for proc in listaProced" required>
+                <option value=""> *Selecciona</option>
+                <option value="6"> Curaciones</option>
+                <option value="6"> Curaciones</option>
+                <option value="6"> Curaciones</option>
+                <option value="6"> Curaciones</option>
+              </select>            
+                </div>
+                <div class="validacion" role="alert" ng-if="interacted4(formularios.proce.procedimiento)" ng-messages="formularios.proce.procedimiento.$error">
+                  <div ng-message="required">campo requerido</div>            
+                </div>
+        </div>        
+        <div class="col-md-6 col-xs-6">
+          <div class="input-group cajaInputcompleto" style="width:100%">
+            <span><b>Observaciones: </b></span>
+            <textarea class="form-control"  ng-model="procedimientos.obs" rows="2" id="obs" name="obs" style="resize:none; width:100%" mayusculas></textarea>
+          </div>          
+        </div>
+        <div class="col-md-2 col-xs-2" align="right">
+          <div class="input-group" >
+            <input type="submit" id="btn-addProcMedicos" class="btn btn-success" value="Agregar">
+          </div>
+        </div>
+        
+        </div><!-- End row --> 
+        <div class="row" ng-show="cargador1"> 
+        <div class="col-md-12 col-xs-12">
+          <div  align="center">
+            <img ng-src="imgs/cargador.gif">
+          </div>
+        </div>
+      </div>   
+        <div class="row">
+        <div class="col-md-12 col-xs-12">
+          <div ng-show="listaProcedimientos" class="mianimacion">
+             <table id="TablaAlergias" width="100%" class="table table-striped table-hover">
+              <tr>
+                <th width="20%"><b>Procedimiento</b></th>
+                <th width="70%"><b>Observaciones<b/></th>
+                <th width="10%"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-repeat="proc in listaProcedimientos">
+                <td>{{proc.Pro_nombre}}</td>
+                <td>{{proc.Nproc_obs}}</td>
+                <td><input type='button' class="btn btn-danger btn-xs" ng-click='eliminarProcedimiento(proc.Nproc_clave)' value='Eliminar'></td>
+              </tr>
+              </table>
+          </div>
+        </div>
+        </div> 
+      </div> 
+    </form> 
+    
+
+<br>
+
+
+<form name="formularios.prono" ng-submit="guardaPronostico()" novalidate>
+  <div class="row semiTitulo" >
+    <label >Pronóstico </label>    
+  </div> 
+  <div class="bordeSemititulo">                        
+        <div class="row" align="center">                                    
+          <div class="col-md-6">
+            <div class="container" style="width:100%"  >
+             <div class="input-group" style="width:100%">                      
+              <span class="input-group-addon">Pronóstico: </span>
+                <select class="form-control" ng-model="opcionPronostico" style="width:100%;" id="opPron" ng-change="agregarPronostico(opcionPronostico)">
+                  <option value="" > - Seleccione - </option>
+                  <option value="1" > Bueno para la vida y bueno para la función </option>
+                  <option value="2" > Bueno para la vida y malo para la función </option>
+                  <option value="3" > Malo para la vida y bueno para la función </option>
+                  <option value="4" > Malo para la vida y malo para la función </option>
+                  <option value="5" > Reservado a evolución </option>
+                </select>
+                </div>             
+            </div> 
+          </div>
+          <div class="col-md-6">
+            <div class="container" style="width:100%"  >
+              <div class="panel panel-default" style="width:100%">                
+                <textarea rows="3" class="form-control" name="pronostico" ng-model="pronostico.pronostico" id="pronostico" onpaste="return false" style="resize:none; border: none;"  mayusculas required></textarea>
+              </div> 
+              <div class="validacion" role="alert" ng-if="interacted9(formularios.prono.pronostico)" ng-messages="formularios.prono.pronostico.$error">
+              <div ng-message="required">campo requerido</div>            
+            </div>             
+            </div> 
+          </div>          
+        </div><!--fin del row principal-->
+            
+</div>
+<br>
+   <div class="row" ng_hide="cveProducto==10 && ciaClave!=53">
+        <div class="col-md-12" align="right">
+          <input ng-disabled="siguienteMed==true" type="submit" class="btn btn-primary btn-lg" value="Siguiente">
+        </div>
+    </div> 
+    <div class="row" ng-show="cveProducto==10 && ciaClave!=53">
+      <div class="col-md-12" align="right">
+        <input type="submit" class="btn btn-primary btn-lg" value="Siguiente">
+      </div>
+  </div> 
+    <div class="row"> 
+        <div class="col-md-12">
+          <div ng-show="cargador5" align="center">
+            <img ng-src="imgs/cargador.gif">
+          </div>
+        </div>
+    </div> 
+     <div id="modalConfirmacion" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Confirmación de receta</h4>
+          </div>
+          <div class="modal-body">
+            <table class="table table-hover">
+              <tr>
+                <td>#</td>
+                <td>Medicamento</td>
+                <td>Indicaciones</td>
+                <td>Cantidad</td>
+              </tr>
+              <tr ng-show="listaMed.length>0" ng-repeat="medi in listaMed">
+                <td>{{$index+1}}</td>
+                <td>{{medi.sustancia}}</td>
+                <td>{{medi.posologia}}</td>
+                <td>{{medi.cantidad}}</td>                
+              </tr>
+              <tr ng-show="listaMed.length==0" align="center" style="background-color: #ffe0e0">
+                <td colspan="4">SIN MEDICAMENTOS</td>                
+              </tr>
+            </table>
+            <hr>
+            <table class="table table-hover">
+              <tr>
+                <td>#</td>
+                <td>Ortesis</td>
+                <td>Indicaciones</td>
+                <td>Cantidad</td>
+              </tr>
+              <tr ng-show="listaOrt.length>0" ng-repeat="ort in listaOrt">
+                <td>{{$index+1}}</td>
+                <td>{{ort.sustancia}}</td>
+                <td>{{ort.posologia}}</td>
+                <td>{{ort.cantidad}}</td>                
+              </tr>
+               <tr ng-show="listaOrt.length==0" align="center" style="background-color: #ffe0e0">
+                <td align="center" colspan="4">SIN ORTESIS</td>                
+              </tr>
+            </table>
+            <hr>
+            <table class="table table-hover">
+              <tr>
+                <td>#</td>
+                <td>Indicaciones generales</td>                
+              </tr>
+              <tr ng-show="listaInd.length>0" ng-repeat="ind in listaInd">
+                <td>{{$index+1}}</td>
+                <td>{{ind.Nind_obs}}</td>                
+              </tr>
+               <tr ng-show="listaInd.length==0" align="center" style="background-color: #ffe0e0">
+                <td align="center" colspan="4">SIN INDICACIONES</td>                
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="guardaPronosticoValidado()">Confirmar receta</button>
+          </div>
+        </div>
+
+      </div>
+    </div>              
+</form>    
+  

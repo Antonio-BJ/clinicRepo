@@ -1,0 +1,81 @@
+<h4>Rangos de Movilidad</h4>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="input-group">
+              <span class="input-group-addon">REGIÓN</span>
+              <input type="text" class="form-control" ng-model="histClinicaReh.regionOtra">
+            </div>
+            <div role="alert" style="color: red; font-size:0.9em;">
+              {{error1}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="input-group">
+                <span class="input-group-addon">Flexión</span>
+                <input type="number" class="form-control" min="0" max="360" ng-model="histClinicaReh.flexion">
+                <span class="input-group-addon">°</span>
+            </div>
+            <div role="alert" style="color: red; font-size:0.9em;">
+              {{error2}}
+            </div>
+          </div>
+
+          <div class="col-md-10">
+            <div class="input-group">
+                <span class="input-group-addon">Extensión</span>
+                <input type="number" class="form-control" min="0" max="360" ng-model="histClinicaReh.extension">
+                <span class="input-group-addon">°</span>
+            </div>
+            <div role="alert" style="color: red; font-size:0.9em;">
+              {{error3}}
+            </div>
+          </div>
+
+          <div class="col-md-10">
+            <div class="input-group">
+                <span class="input-group-addon">Lateralización</span>
+                <input type="number" class="form-control" min="0" max="360" ng-model="histClinicaReh.lateralizacion">
+                <span class="input-group-addon">°</span>
+            </div>
+            <div role="alert" style="color: red; font-size:0.9em;">
+              {{error4}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="input-group">
+                <span class="input-group-addon">Rotación Interna</span>
+                <input type="number" class="form-control" min="0" max="360" ng-model="histClinicaReh.rotInterna">
+                <span class="input-group-addon">°</span>
+            </div>
+            <div role="alert" style="color: red; font-size:0.9em;">
+              {{error5}}
+            </div>
+          </div>
+
+          <div class="col-md-10">
+            <div class="input-group">
+                <span class="input-group-addon">Rotación Externa</span>
+                <input type="number" class="form-control" min="0" max="360" ng-model="histClinicaReh.rotExterna">
+                <span class="input-group-addon">°</span>
+            </div>
+            <div role="alert" style="color: red; font-size:0.9em;">
+              {{error6}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,82 @@
+<div class="container" style="width: 100%"> 
+	<form ng-submit="guardaVitales()">	
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title" align="center"><b>Signos Vitales</b></h3>
+			</div><!-- End panel-heading -->
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="input-group">
+							<span class="input-group-addon">Temperatura: </span>
+							<input type="number" ng-model="vitales.tem" min="30" max="50" class="form-control" id="temp" name="temp" placeholder="Temperatura" required="" >
+							<span class="input-group-addon">&ordm;C</span>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="input-group">
+							<span class="input-group-addon">Talla: </span>
+							<input type="number" ng-model="vitales.talla" min="0" max="230" class="form-control" id="talla" name="talla" placeholder="Talla" required="" >
+							<span class="input-group-addon">Cm.</span>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="input-group">
+							<span class="input-group-addon">Peso: </span>
+							<input type="number" ng-model="vitales.peso" min="0" max="500" class="form-control" id="peso" name="peso" placeholder="Peso" required="">
+							<span class="input-group-addon">Kg.</span>
+						</div>
+					</div>
+				</div><!-- End row -->
+				<br />
+				<div class="row">
+					<div class="col-md-4">
+						<div class="input-group">
+							<span class="input-group-addon">Frec. Respiratoria: </span>
+							<input type="number" ng-model="vitales.frecResp" min="0" max="250" class="form-control" id="frecResp" name="frecResp" placeholder="F/R" required="">
+							<span class="input-group-addon">Rpm.</span>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="input-group">
+							<span class="input-group-addon">T. Arterial: </span>
+							<input type="number" ng-model="vitales.sistole" min="30" max="250" class="form-control" id="sistole" name="sistole" required="">
+							<span class="input-group-addon"> / </span>
+							<input type="number" ng-model="vitales.astole" min="30" max="250" class="form-control" id="astole" name="astole" required="">
+							<span class="input-group-addon">mmHg.</span>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="input-group">
+							<span class="input-group-addon">Frecuencia Cardiaca: </span>
+							<input type="number" ng-model="vitales.frecCard" min="0" max="250" class="form-control" id="frecCard" name="frecCard" placeholder="F/C" required="">
+							<span class="input-group-addon">Lpm.</span>
+						</div>
+					</div>
+				</div><!-- End row -->
+				<br />
+				<div class="row">
+					<div class="col-md-12">
+						<div class="input-group">
+							<span class="input-group-addon">Observaciones: </span>
+							<textarea class="form-control" ng-model="vitales.obs" rows="3" name="obs" id="obs"></textarea>
+						</div>
+					</div>
+				</div><!-- End row -->
+				<br />
+				<div class="row">
+					<div class="col-md-5" >
+						<div class="input-group">
+						</div>
+					</div>
+					<div class="col-md-5" >
+						<div class="input-group">
+							<input type="submit" name="guardaVit" id="guardaVit" class="btn btn-success"  value="Guarda Signos Vitales" />
+						</div>
+					</div> 
+				</div>
+				<br>
+			</div><!-- End panel-body -->
+		</div>
+	</form>	
+</div><!-- End container -->

@@ -1,0 +1,95 @@
+.cajaInputIzq {
+    background:#3f81ba; color:white;  padding:3px 3px 3px 6px;border-radius: 5px 0px 0px 5px;
+	-moz-border-radius: 5px 0px 0px 5px;
+	-webkit-border-radius: 5px 0px 0px 5px;
+	border: 0px solid #000000;
+}
+.cajaInputCentro {
+    background:#3f81ba; color:white;  padding:3px 3px 3px 6px;
+}
+.cajaInputDer {
+    background:#3f81ba; color:white; padding:3px 3px 3px 6px;border-radius: 0px 5px 5px 0px;
+	-moz-border-radius: 0px 5px 5px 0px;
+	-webkit-border-radius: 0px 5px 5px 0px;
+	border: 0px solid #000000;
+}
+.cajaInputArriba {
+    background:#3f81ba; color:white; padding:3px 3px 3px 6px;border-radius: 5px 5px 0px 0px;
+	-moz-border-radius: 5px 5px 0px 0px;
+	-webkit-border-radius: 5px 5px 0px 0px;
+	border: 0px solid #000000;
+}
+
+.semiTitulo {
+	font-size:18px; 
+	background:#002f59; 
+	color:white; 
+	padding:5px 5px 5px 5px;
+	border-radius: 5px 5px 0px 0px;
+	-moz-border-radius: 5px 5px 0px 0px;
+	-webkit-border-radius: 5px 5px 0px 0px;
+	border: 0px solid #000000;
+	width:100%;	
+}
+.cajaInputcompleto {
+    background:#3f81ba; color:white; padding:3px 3px 3px 6px;border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	border: 0px solid #000000;
+}
+.bordeInput {
+    border:1px solid #dadfe3;
+    padding: 5px 5px 5px 10px;
+}
+.bordeSemititulo {    
+    padding: 5px 5px 5px 10px;
+    border-radius: 0px 0px 5px 5px;
+	-moz-border-radius: 0px 0px 5px 5px;
+	-webkit-border-radius: 0px 0px 5px 5px;
+	border: 1px solid #002f59;	
+	width:100%
+}
+.tablaIzquierda {
+    background:#3f81ba; color:white; padding:3px 0px 0px 0px;border-radius: 5px 0px 0px 0px;
+	-moz-border-radius: 5px 0px 0px 0px;
+	-webkit-border-radius: 5px 0px 0px 0px;
+	border: 0px solid #000000;
+	padding: 5px 5px 5px 5px;
+}
+.tablaCentro {
+    background:#3f81ba; color:white; padding:0px 0px 0px 0px;border-radius: 0px 0px 0px 0px;
+	-moz-border-radius: 0px 0px 0px 0px;
+	-webkit-border-radius: 0px 0px 0px 0px;
+	border: 0px solid #000000;
+	padding: 5px 5px 5px 5px;
+}
+.tablaDerecha {
+    background:#3f81ba; color:white; padding:0px 5px 0px 0px;border-radius: 0px 5px 0px 0px;
+	-moz-border-radius: 0px 5px 0px 0px;
+	-webkit-border-radius: 0px 5px 0px 0px;
+	border: 0px solid #000000;
+	padding: 5px 5px 5px 5px;
+}
+.tablaCuerpo {
+    border: 1px solid #3f81ba;
+    padding: 5px 5px 5px 5px;
+}
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+

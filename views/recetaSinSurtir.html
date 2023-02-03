@@ -1,0 +1,79 @@
+<div ng-init="inicio()">
+		<div class="panel panel-primary" >
+		    <div class="panel-heading">
+		     	<h4>Reportes Recetas sin Surtir</h4>		     	
+		    </div>			
+			
+            <hr>
+            <div class="mianimacion" ng-hide="cargador">
+            <div class="row" ng-show="listadorecetas.length>0">
+                <div class="col-md-12">
+                    <table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" style="width: 100%">
+                        <tr>          
+                            <th width="25%" ><b>NO. RECETA</b></th>
+                            <th width="25%" ><b>FOLIO</b></th>                            
+                            <th width="25%" ><b>FECHA</b></th>
+                            <th width="25%" align="center"><b>ITEMS FALTANTES</b></th>                                               
+                                                                        
+                        </tr>
+                        <tr ng-repeat="listado in listadorecetas">                         
+                            <td >{{listado.RECETA}}</td>
+                            <td >{{listado.FOLIO}}</td>                           
+                            <td >{{listado.FECHA_RECETA}}</td>                                  
+                            <td align="center">{{listado.ITEMS_FALTANTES}}</td>                                                              
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row" ng-hide="listadorecetas.length>0">
+                <div class="col-md-12" align="center">
+                    <br>
+                    <div class="alert alert-warning">Sin recetas pendientes</div>
+                </div>
+            </div>
+            </div>
+            <div class="row" ng-show="cargador">
+                        <div class="col-md-12">
+                            <div  align="center">
+                                    <img ng-src="imgs/cargadorCuadro.gif">
+                            </div>
+                        </div>
+                    </div>
+            <div class="row" ng-show="listadoReporte">
+                <div class="col-md-12" align="center">
+                        <div class="input-group" style="width:100%">
+                            <input type="button" ng-click="exportarReporteRegistro()" class="btn btn-primary btn-lg"  value="Exportar a Excel"/>     
+                        </div>  
+                </div>
+                
+            </div>
+
+		</div>		
+</div>
+<script type="text/javascript">
+       $('#fecha1').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+        $('#fecha2').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+
+        $('#hora1').datetimepicker({
+            pickDate: false,
+            format: 'LT',
+            locale: 'mx',
+            language:'es',
+            startTime: '12:00',
+        });
+
+        $('#hora2').datetimepicker({
+            pickDate: false,
+            format: 'LT',
+            locale: 'mx',
+            language:'es',
+            startTime: '12:00',
+        });
+
+</script>

@@ -1,0 +1,98 @@
+<div ng-init="inicio()">
+		<div class="panel panel-primary" >
+		    <div class="panel-heading">
+		     	<h4>Estado de Cuenta</h4>
+		    </div>
+		    <div class="panel-body" style="background: #F7F7F7  ">
+		    	<br>
+		    	<div class="row" ng-show="detalle">
+				  <div class="col-sm-12">
+					 <div class="panel widget">
+	                   
+	                     <div class="panel-body text-center">
+	                        <h3 class="m0">{{datosEnfermera.ENF_nombre}}</h3>
+	                        <p class="text-muted">{{datosEnfermera.ENF_puesto}} <br> Turno {{datosEnfermera.ENF_turno}}</p>	           
+	                     </div>
+	                     <div class="panel-body text-center bg-gray-dark">
+	                     	<div class="row">
+	                     		<div class="col-xs-12">	                     		
+	                     			RECIBOS
+	                     		</div>	
+	                     	</div>
+	                     	
+	                        <div class="row row-table" ng-repeat="recibo in detalle">
+	                           <div class="col-xs-3">
+	                              <h4 class="m0">{{recibo.Recibo_serie}}{{recibo.Recibo_cont}}</h4>
+	                              <p class="m0">No. recibo</p>
+	                           </div>
+	                           <div class="col-xs-2">
+	                              <h4 class="m0">{{recibo.Exp_folio}}</h4>
+	                              <p class="m0">Folio MV</p>
+	                           </div>
+	                           <div class="col-xs-3">
+	                              <h4 class="m0">{{recibo.Recibo_fecExp}}</h4>
+	                              <p class="m0">Fecha Expedición</p>
+	                           </div>
+	                          <!--  <div class="col-xs-3">
+	                              <h3 class="m0">{{recibo.Recibo_total | currency }}</h3>
+	                              <p class="m0">Total</p>
+	                           </div> -->
+	                           <div class="col-xs-2">
+	                              <h4 class="m0">{{30 | currency}}</h4>
+	                              <p class="m0">Comisión</p>
+	                           </div>
+	                           <div class="col-xs-2">
+	                               <em class="fa fa-fw fa-times"></em>
+	                              <p class="m0">Pagada</p>
+	                           </div>
+	                        </div>
+	                     </div>
+             	 		</div>
+				  	</div>
+				</div>
+				<div class="row" ng-show="mensajeSin">
+					<div  class="col-xs-12 ">
+						{{mensajeSin}}	
+					</div>					
+				</div>
+				<div class="row" ng-show="cargador">
+					<div  class="col-xs-12 ">
+						 <div  align="center">
+                            <img ng-src="imgs/cuadrito.gif">
+                   		 </div>
+					</div>					
+				</div>
+		    	
+		    </div>
+				
+
+		</div>
+
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Detalle de cuenta</h4>
+		      </div>
+		      <div class="modal-body">
+		        ...
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+</div>
+<script type="text/javascript">
+       $('#fecha1').datetimepicker({
+        pickTime: false,                 //en/disables the time picker
+        language:'es'                  //sets language locale
+    });
+        $('#fecha2').datetimepicker({
+        pickTime: false,                 //en/disables the time picker
+        language:'es'                  //sets language locale
+    });
+</script>

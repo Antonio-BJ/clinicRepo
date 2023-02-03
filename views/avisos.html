@@ -1,0 +1,114 @@
+<div ng-init="inicio()">	
+		<div class="panel panel-primary" >
+		    <div class="panel-heading">
+		     	<h4>Subir Avisos</h4>
+		    </div>
+			<br><br>
+			<form name="avisosRH" ng-submit="guardarAvisoRH()" novalidate>
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						<div class="input-group">
+							<span class="input-group-addon">Título: </span>
+							<input type="text" class= "form-control" ng-model="avisos.titulo" name="titulo" required mayusculas >
+						</div>
+						<div class="validacion" role="alert" ng-if="interacted(avisosRH.titulo)" ng-messages="avisosRH.titulo.$error">
+			              	<div ng-message="required">campo requerido</div>
+			            </div>
+					</div>		
+				</div>	
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						<div class="input-group">
+							<span class="input-group-addon">Texto corto: </span>
+							<input type="text" class= "form-control" name="textCorto" ng-model="avisos.textCorto" required mayusculas>
+						</div>
+						<div class="validacion" role="alert" ng-if="interacted(avisosRH.textCorto)" ng-messages="avisosRH.textCorto.$error">
+			              	<div ng-message="required">campo requerido</div>
+			            </div>
+					</div>		
+				</div>
+				<div class="row">			
+					<div class="col-md-10 col-md-offset-1">
+						<div class="input-group">
+							<span class="input-group-addon">pdf </span>
+						</div>
+						<input type="file" name="archivoPdf" ng-file-select="onFileSelect_xml($files)">                
+						<div ng-file-drop="onFileSelect_xml($files)" class="drop-box"  ng-file-drag-over-class="optional-css-class-name-or-function" ng-show="dropSupported">Arrastra tu archivo
+						</div>
+						<div class="validacion" role="alert" ng-if="interacted(avisosRH.archivoPdf)" ng-messages="avisosRH.archivoPdf.$error">
+			              	<div ng-message="required">campo requerido</div>
+			            </div>
+						<div ng-file-drop-available="dropSupported=true" ng-show="!dropSupported">
+							No soportado!
+						</div>
+					</div>     				
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+	                    <div ng-show="cargador1" align="center">
+	                            <img ng-src="imgs/cargador.gif">
+	                    </div>
+	                </div>
+	            </div>
+
+				<div class="row" ng-show="duplicado">			
+					<div class="col-md-10 col-md-offset-1">
+						<div class="alert alert-warning">Ya existe un archivo con ese nombre.</div>
+					</div>     				
+				</div>
+				<div class="row" ng-show="errors">			
+					<div class="col-md-10 col-md-offset-1">
+						<div class="alert alert-danger">No se ha popido subir el archivo, inténtelo nuevamente.</div>
+					</div>     				
+				</div>	
+				<div class="row" ng-show="errorTipo">			
+					<div class="col-md-10 col-md-offset-1">
+						<div class="alert alert-danger">Solo puedes subir archivos PDF.</div>
+					</div>     				
+				</div>		
+				<!--<div class="row">			
+					<div class="col-md-10 col-md-offset-1">
+						<div class="input-group">
+							<span class="input-group-addon">adjunto </span>
+						</div>
+						<input type="file" name="archivoAdjunto" ng-file-select="onFileSelect_xml1($files)">                
+						<div ng-file-drop="onFileSelect_xml1($files)" class="drop-box"  ng-file-drag-over-class="optional-css-class-name-or-function" ng-show="dropSupported">Arrastra tu archivo
+						</div>
+						<div ng-file-drop-available="dropSupported=true" ng-show="!dropSupported">
+							No soportado!
+						</div>
+					</div>     				
+				</div>
+
+				<div class="row" ng-show="duplicado1">			
+					<div class="col-md-10 col-md-offset-1">
+						<div class="alert alert-warning">Ya existe un archivo con ese nombre.</div>
+					</div>     				
+				</div>
+				<div class="row" ng-show="errors1">			
+					<div class="col-md-10 col-md-offset-1">
+						<div class="alert alert-danger">No se ha popido subir el archivo, inténtelo nuevamente.</div>
+					</div>     				
+				</div>	
+				<div class="row" ng-show="errorTipo1">			
+					<div class="col-md-10 col-md-offset-1">
+						<div class="alert alert-danger">Solo puedes subir archivos PDF.</div>
+					</div>     				
+				</div>		
+				-->
+				<div class="row" ng-show="exito">			
+					<div class="col-md-10 col-md-offset-1">
+						<div class="alert alert-success">Aviso guardado con éxito.</div>
+					</div>     				
+				</div>
+				
+				<div class="row">			
+					<div class="col-md-10 col-md-offset-1">
+						<div class="input-group">
+			                <input type="submit" name="guardaAcc" id="guardaAcc" class="btn btn-primary" value="Subir aviso" />
+		              	</div>
+					</div>     				
+				</div>
+			</form>	
+		</div>
+</div>

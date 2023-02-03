@@ -1,0 +1,209 @@
+<div class="container" style="width: 100%">     
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<label>Cuestionarios Faltantes</label>
+		</div> 
+		<div class="Panel-body">
+			<div class="row">
+				<div class="col-md-12">
+					<h1>Parámetros de búsqueda</h1>
+				</div>
+			</div>
+			<div class="row">
+				<form ng-submit="buscaParametros()">
+					<div class="col-md-4" align="left">
+						<div class="input-group">
+		                 <span class="input-group-addon">Nombre: </span>	                 
+		                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.nombre" class= "form-control" mayusculas >	                 
+	          			</div>
+					</div>
+					<div class="col-md-4">
+						<div class="input-group">
+		                 <span class="input-group-addon">Folio: </span>	                 
+		                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.folio" class= "form-control" mayusculas>	                  
+	          			</div>
+					</div>
+					<div class="col-md-4" align="right">
+		                <div class="form-group">
+		                    <input type="submit" id="btnenvioprimero" class="btn btn-primary" value="Buscar">
+		                </div>
+		            </div>
+	            </form>
+			</div>
+			<div  ng-show="error" class="row mianimacion">
+				<div class="col-md-12">
+					<div class="alert alert-warning">No se encontraron coincidencias.</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+                    <div ng-show="cargador1" align="center">
+                            <img ng-src="imgs/cargador.gif">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+				<div class="col-md-12" ng-show="listaFolPar">
+					<table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" >
+						<tr>          
+							<th width="10%"><b>Folio</b></th>
+							<th width="10%"><b>Aseguradora</b></th>
+							<th width="15%"><b>Fecha</b></th>         
+							<th width="20%"><b>A.Paterno</b></th>
+							<th width="15%"><b>A.Materno</b></th>
+							<th width="20%"><b>Nombre(s)</b></th>
+							<th width="10%"><b>Observaciones</b></th>
+							<th width="10%"><b>Cancelado</b></th>						
+						</tr>
+						<tr ng-repeat="listado in listaFolPar">							
+							<td ng-show="listado.Exp_cancelado==1">{{listado.Exp_folio}}</td>
+							<td ng-hide="listado.Exp_cancelado==1"><a href="" ng-click="mandaPortada(listado.Exp_folio)">
+							{{listado.Exp_folio}}</a></td>	
+							<td>{{listado.Cia_nombrecorto}}</td>
+							<td>{{listado.Fecha}}</td>
+							<td>{{listado.Exp_paterno}}</td>
+							<td>{{listado.Exp_materno}}</td>
+							<td>{{listado.Exp_nombre}}</td>
+							<td>{{listado.Exp_obs}}</td>
+							<td ng-show="listado.Exp_cancelado==1"><img ng-src="imgs/ok.jpg" width="18"></td>
+							<td ng-hide="listado.Exp_cancelado==1"><img ng-src="imgs/cancelar.png" width="26"></td>
+							<td ng-show="listado.Exp_cancelado==1">Documentos</td>
+							<td ng-hide="listado.Exp_cancelado==1"><a href="" ng-click="mandaDocumentos(listado.Exp_folio)" >Documentos</a></td>
+							<td  ng-hide="listado.Exp_solCancela=='S'"><a href="" ng-hide="listado.Exp_cancelado==1" ng-click="abreModalCancelacion(listado.Exp_folio)"  ><img ooltip-placement="buttom" tooltip-trigger tooltip="Solicitud de cancelación de folio" ng-src="imgs/cancelar.png" width="30"></a></td>
+							<td ng-show="listado.Exp_solCancela=='S'"><img ng-src="imgs/enviado.png" width="24"></td>
+						</tr>
+					</table>
+				</div>
+			</div>	
+			<br>
+			<div class="row">
+			<div class="col-md-12">
+                    <div ng-show="cargador" align="center">
+                            <img ng-src="imgs/cargador.gif">
+                    </div>
+                </div>
+				<div class="col-md-12" ng-show="sinCuestionario">
+					<table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive">
+						<tr>							        
+							<th width="10%"><b>Folio</b></th>
+							<th width="10%"><b>Aseguradora</b></th>
+							<th width="15%"><b>Fecha</b></th>         
+							<th width="15%"><b>A.Paterno</b></th>
+							<th width="15%"><b>A.Materno</b></th>
+							<th width="20%"><b>Nombre(s)</b></th>
+							<!-- <th width="10%"><b>Observaciones</b></th> -->
+							<th width="25%"></th>					
+						</tr>
+						<tr ng-repeat="folios in sinCuestionario">							
+							<td ng-show="folios.Exp_cancelado==1">{{folios.Exp_folio}}</td>
+							<td ng-hide="folios.Exp_cancelado==1"><a href="" ng-click="mandaPortada(folios.Exp_folio)">{{folios.Exp_folio}}</a></td>							
+							<td>{{folios.Cia_nombrecorto}}</td>
+							<td>{{folios.Fecha}}</td>
+							<td>{{folios.Exp_paterno}}</td>
+							<td>{{folios.Exp_materno}}</td>
+							<td>{{folios.Exp_nombre}}</td>
+							<!-- <td>{{folios.Exp_obs}}</td> -->
+							<td><a href="http://medicavial.net/CuAtencion/#/login?folio={{folios.Exp_folio}}">Ir al cuestionario &nbsp;<i class="fa fa-external-link" aria-hidden="true"></i></a></td>
+<!-- 							<td ng-show="folios.Exp_cancelado==1"><img ng-src="imgs/ok.jpg" width="18"></td>
+							<td ng-hide="folios.Exp_cancelado==1"><img ng-src="imgs/cancelar.png" width="26"></td>				
+							<td ng-show="folios.Exp_cancelado==1">Documentos</td>
+							<td ng-hide="folios.Exp_cancelado==1"><a href="" ng-click="mandaDocumentos(folios.Exp_folio)" >Documentos</a></td>
+							<td ng-hide="folios.Exp_solCancela=='S'"><a href="" ng-hide="folios.Exp_cancelado==1" ng-click="abreModalCancelacion(folios.Exp_folio)"  ><img ooltip-placement="buttom" tooltip-trigger tooltip="Solicitud de cancelación de folio" ng-src="imgs/cancelar.png" width="30"></a></td>
+							<td ng-show="folios.Exp_solCancela=='S'"><img ng-src="imgs/enviado.png" width="24"></td> -->
+						</tr>
+					</table>
+
+
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel">Solicitud de cancelación para el folio <b>{{folioModal}}</b></h4>
+					      </div>
+					      <div class="modal-body">
+					        <div class="container" style="width:100%;" id="verFormato">
+									<div class="panel panel-primary">    								      
+								      <div class="panel-body">
+								      
+									<form name="enviaSolCancelacion" id="enviaSolCancelacion" ng-submit="enviaDatosCancelacion()">												
+										<br>
+										<div class="row" id="campoFol">
+											<div class="col-md-12" align="left">
+												<div class="input-group">
+								              <span class="input-group-addon">Motivo de cancelaci&oacute;n: (catálogo)</span> 
+								               <select name="catCancel" id="catCancel" class= "form-control" ng-model="datos.motivoCat" required ng-options="canc.CAC_cve as canc.CAC_nombre for canc in catalogoCancelados">
+								               		<option value=""> *Seleccione </option> 
+								               </select>
+
+								            </div>
+											</div>				            
+										</div>		
+										<br>
+										<div class="row" id="campoFol">
+											<div class="col-md-12" align="left">
+												<div class="input-group">
+								              <span class="input-group-addon">Motivo de cancelaci&oacute;n:</span> 
+								               <input type="text" class="form-control" name="motivo" ng-model="datos.motivo" id="motivo" required mayusculas>        
+								            </div>
+											</div>				            
+										</div>
+										<br>
+										
+										<div class="row" id="campoFol">
+											<div class="col-md-12" align="left">
+												<div class="input-group">
+								              <span class="input-group-addon">Folio sustituto:</span> 
+								               <input type="text" class="form-control" name="folioSus" ng-model="datos.folioSus" id="folioSus" mayusculas>        
+								            </div>
+											</div>				            
+										</div>
+										<br>
+										<div class="row" id="campoObs">
+											<div class="col-md-12" align="left">
+												<div class="input-group">
+								              <span class="input-group-addon">Observaciones:</span> 
+								               <input type="text" class="form-control" name="Obs" ng-model="datos.Obs" id="Obs" mayusculas>        
+								            </div>
+											</div>				            
+										</div>
+										<br>
+										
+										<div class="row" ng-show="cargador2">
+											<div class="col-md-12">
+							                    <div  align="center">
+							                            <img ng-src="imgs/cargador.gif">
+							                    </div>
+							                </div>
+							            </div>
+										<div class="row" ng-show="verMensaje">
+											<div class="col-md-12" align="center">
+												<div class="alert alert-success">La solicitud se envió con éxito.</div>
+											</div>				            
+										</div>
+										
+										<div class="row" id="campoObs">
+											<div class="col-md-12" align="left">
+												<div id="resultado">
+													
+												</div>
+											</div>				            
+										</div>										
+									</form>
+									</div>
+								</div>
+					        </div>
+					      
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+					        <input ng-disabled="bloqueoboton" form="enviaSolCancelacion" type="Submit" class="btn btn-primary" id="botonEnvio"  value="Enviar solicitud" />
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					<!--    fin del modal   -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

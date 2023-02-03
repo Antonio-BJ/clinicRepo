@@ -1,0 +1,130 @@
+<div class="container" style="width:100%">
+	<div class="row" ng-hide="cargador1">
+		<div class="col-md-2" align="center">
+			<button type="button" ng-click="irDocumentos()" id="btn-addProcMedicos" class="btn btn-primary" >Documentos</button>
+		</div>
+		<div class="col-md-3" align="center">
+			<button type="button" ng-click="imprimirNota()" id="btn-addProcMedicos" class="btn btn-success" >Imprime Nota Médica</button>
+		</div>
+
+		<div class="col-md-3" align="center">
+			<button type="button" ng-click="imprimirReceta()" id="btn-addProcMedicos" class="btn btn-success" >Imprime Receta</button>
+		</div>		
+		<!--<div class="col-md-3" align="center">
+			<button type="button" ng-click="imprimirReceta()" id="btn-addProcMedicos" class="btn btn-success" >Imprime Receta</button>
+		</div>-->
+		<div class="col-md-4" align="center">
+			<a type="button" href="#/solicitud/{{folio}}" id="btn-addProcMedicos" class="btn btn-success">Generar Solicitud de Autorización</a>
+		</div>
+	</div>
+	<div class="row" ng-hide="cargador1">
+		
+		<div class="col-md-12" align="center">
+			<button type="button" ng-click="verificaSolicitudCE(folio)" id="btn-addProcMedicos" class="btn btn-success">Solicitud Corta Estancia</button>
+		</div>
+	</div>
+	<!--<div class="row"> 
+        <div class="col-md-4">	
+    	  <div class="hidden" >
+            <qr id="qr" text="string" type-number="6" correction-level="Q" size="100"></qr>
+          </div>         
+	          <receta data="datos"></receta>
+        </div>
+    </div>--> 
+    <div class="row" ng-show="verConsent">
+		<div class="col-md-offset-3 col-md-6" align="center">
+			<div class="alert alert-warning"> <big>Para tu protección legal ¿deseas imprimir un consentimiento informado?</big><br><br>
+				<button class="btn btn-primary" ng-click="verConsent=false">
+					No
+				</button>
+				&nbsp;&nbsp;&nbsp;
+				<button class="btn btn-primary" ng-click="imprimirConcentimiento()">
+					Si
+				</button>
+			</div>
+		</div>
+	</div> 
+	<br><br><br>
+	<div class="row"> 
+        <div class="col-md-12">
+	          <div ng-show="cargador1" align="center">
+	            <img ng-src="imgs/cargador.gif">
+	          </div>
+        </div>
+    </div> 
+
+         <!--     MODAL PARA SOLICITUDES DE CORTA ESTANCIA  ---------------------------------------------------------------->
+
+<div class="modal fade" id="SolicitarCortaEstancia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	   <form name="validaFactura" ng-submit="solicitarFormatos()">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Corta Estancia</h4>
+		      </div>
+	      	<div class="modal-body">
+	      		<div class="row" ng-hide="verSolicitudCE">
+		       		 <div class="col-md-12" align="center">                        
+                            <span class="alert alert-warning">No se ha hecho la solicitud de formatos de corta estancia</span>
+                                                                           
+                    </div>                    
+                </div>
+                <br>
+			<div class="mianimacion" ng-show="verSolicitudCE">	      	
+		      	<div class="row">
+		       		 <div class="col-md-6">                        
+                        <div class="cajaInputArriba">
+                            <span>Motivo</span>
+                        </div>
+                        <textarea rows="3" id="mecLesion" ng-model="solicitudCE.motivo" name="mecLesion"  onpaste="return false" style="resize:none; width:100%" required mayusculas></textarea>                                                               
+                     </div>                             
+                    <div class="col-md-6" >
+                       <div class="cajaInputArriba">
+                            <span>Tiempo estimado de estancia</span>
+                        </div>
+                        <div class="bordeInput">
+							<label class="radio-inline c-radio">
+							<input type="radio" name="Emb" id="Emb" value="4" ng-model="solicitudCE.tiempo" required/>
+							<span class="fa fa-circle"></span>4</label>
+							<label class="radio-inline c-radio">
+							<input type="radio" name="Emb" id="Emb" value="8" ng-model="solicitudCE.tiempo" required/>
+							<span class="fa fa-circle"></span>8</label>     
+							<label class="radio-inline c-radio">
+							<input type="radio" name="Emb" id="Emb" value="12" ng-model="solicitudCE.tiempo" required/>
+							<span class="fa fa-circle"></span>12</label>
+							<label class="radio-inline c-radio">
+							<input type="radio" name="Emb" id="Emb" value="24" ng-model="solicitudCE.tiempo" required/>
+							<span class="fa fa-circle"></span>24</label>         
+                     	</div>
+                    </div>
+                </div>
+               <div class="row">
+                     	<div class="col-md-12" align="right">                     		
+                  			<button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>   				
+                  			<button type="submit" class="btn btn-primary">Agregar</button>
+                     	</div>
+             	</div>
+               </form> 
+                <div class="row" ng-show="cargador1">
+                    <div class="col-md-12">
+                        <div  align="center">
+                                <img ng-src="imgs/cargador.gif">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="mensajeExito">
+                    <div class="col-md-12">
+                        <div class="alert alert-success">Se validó correctamente</div>
+                    </div>
+                </div>               
+            </div> 
+            <div class="row" ng-hide="verSolicitudCE">
+                     	<div class="col-md-12" align="right">                     		
+                  			<button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>   			
+                  			<input type="button" value="Solicitar" class="btn btn-primary" ng-click="verFormularioSolicitud()">                 			
+                     	</div>
+     		</div>                            
+         </div>
+
+</div>

@@ -1,0 +1,76 @@
+<div class="container" style="width: 100%">     
+  <br>
+	<div class="panel panel-primary">
+    <div style="width:100%; background:gray;color:white">
+			<h2>Historia Clínica <b><label>{{folio}}</label></b></h2>
+		</div>
+		<div class="Panel-body">
+			<div class="row">
+				<div class="col-md-12">
+					<wizard on-finish="finished()" hide-indicators="true">
+            <wz-step title="Datos Paciente">                
+              <ng-include src="'views/historiaClinicaMovil/datosPaciente.html'"></ng-include>                              
+            </wz-step>
+          </wizard>
+				</div>
+			</div>
+
+      <!-- Modal DESCLUB-->
+      <div class="modal fade" id="comoLlegoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Como se enteró el paciente de MédicaVial</h4>
+            </div>
+
+            <div class="modal-body">
+              <form id="llego" name="llego" ng-submit="guardarComoLLego()">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="radio">
+                      <label><input type="radio" name="optradio" ng-model='seEntero' value="1" required>Periódicos</label>
+                    </div>
+                    <div class="radio">
+                      <label><input type="radio" name="optradio" ng-model='seEntero' value="2" required>Redes sociales</label>
+                    </div>
+                    <div class="radio">
+                      <label><input type="radio" name="optradio" ng-model='seEntero' value="3" required>Correo</label>
+                    </div>
+                    <div class="radio">
+                      <label><input type="radio" name="optradio" ng-model='seEntero' value="4" required>Otros</label>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+              <div class="row" ng-show="mensajeLlego">
+                <div class="col-md-12 alert alert-danger" >
+                  <label class="" for="">{{mensajeLlego}}</label>
+                </div>                  
+              </div>
+
+              <div class="modal-footer">                
+                <button type="submit" form="llego" class="btn btn-primary">Guardar</button>               
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <!--<div class="modal fade" id="modalHistoriaClinicaMovil" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header"></div>
+        <div class="modal-body" style="text-align: justify">
+          <p align="justify" style="font-size:1.2em">Buen día, soy el o la Dr. {{medico}} de Atención Médica Inmediata y lo estaré atendiendo por medio de esta videollamada. <br><br>¿Es usted {{nombre}}?<br><br> ¿Cómo se encuentra el día de hoy? <br><br> Le haré unas breves preguntas para completar su historía clínica.<br><br> <b style="font-size: 2em;"> Importante</b> <i> verlo a los ojos, mantener una actitud cálida y escuchar activamente para crear una buena relación interpersonal con él.</i></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>-->
+</div>

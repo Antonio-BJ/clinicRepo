@@ -1,0 +1,120 @@
+
+<form name="Nota Medica" Id="Nota Medica" ng-submit="enviaDatos()">
+  <div class="container" style="width: 100%">   
+
+    <div class="panel panel-primary">    
+      <div class="panel-heading">
+        <label>Datos del paciente</label>
+      </div>
+      <div class="panel-body">
+        <div class="row"> 
+          <div class="col-md-3">   
+            <div class="input-group">
+              <span class="input-group-addon">Folio: </span>
+              <input type="text" class="form-control" value="{{folio}}" disabled>
+            </div>
+            <br/>
+          </div>    
+          <div class="col-md-6">   
+            <div class="input-group">
+              <span class="input-group-addon">Nombre: </span>
+              <input type="text" class="form-control" value="{{nombre}}" disabled>
+            </div>
+          </div>    
+        </div>
+        <div class="row">
+          <div class="col-md-6">   
+            <div class="input-group">
+              <span class="input-group-addon">Fecha de Nacimiento: </span>                      
+              <input for="element_4_1" type="text" class="form-control" name="fecnac" id="fecnac" required=""   ng-model="datos.fecnac" data-format="dd/MM/yyyy" data-date="datos.fecnac"  ng-blur="calculaFecha()">
+            </div>
+          </div>
+          <div class="col-md-2">   
+            <div class="input-group">
+              <span class="input-group-addon">Años: </span>                  
+              <input for="element_4_1" type=text class= "form-control" ng-model="datos.anios" name="txtedad" id="txtedad" required="" onkeypress="return soloNumeros(event)" maxlength="3" value="{{anios}}" >
+            </div>
+          </div>
+          <div class="col-md-2">   
+            <div class="input-group">
+              <span class="input-group-addon">Meses: </span>                  
+              <input for="element_4_1" type=text class= "form-control" id="txtmeses" ng-model="datos.meses" class= "form-control" name="txtmeses" value="{{meses}}" >
+            </div>
+          </div>    
+          <div class="col-md-2">   
+            <div class="input-group">
+              <span class="input-group-addon">Sexo: </span> 
+              <span class="input-group-addon">                 
+              <input type='radio' name='sexo' id='sexo' value='M' ng-model="datos.sexo" required="" />  M <input type='radio' name='sexo' id='sexo' value='F' ng-model="datos.sexo" required=""/>  F
+              </span>
+            </div>
+          </div>           
+        </div>
+        <br/>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">Tipo de trabajo:</span>
+              <select required="required" ng-model="datos.ocu" name="Ocupacion" id="Ocupacion"   class= "form-control"   style="width: 150px;" ng-options="ocu.Ocu_clave as ocu.Ocu_nombre  for ocu in ocupacion">
+                <option value=""> *Seleccione </option>                
+              </select>                             
+            </div>    
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">Estado civil:</span>
+              <select required="required" ng-model="datos.edoC" name="EdoCivil" id="EdoCivil" class= "form-control"  style="width: 150px;" ng-options="estadoC.Edo_clave as estadoC.Edo_nombre  for estadoC in edoCivil">
+                <option value=""> * Seleccione </option>
+                
+              </select>
+            </div>    
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">Teléfono:</span>                  
+              <input type="text" name="telefono" ng-model="datos.tel"  class= "form-control" id="telefono" required="" maxlength="15" >
+            </div>
+          </div>          
+        </div>
+        <br/>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-addon">E-mail:</span>
+                <input type="email" ng-model="datos.mail" name="mail" id="mail" class= "form-control" required="" maxlength="35" >
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-addon">Obs.MedicoReligiosas:</span>
+                <input type="text" name="Religion" ng-model="datos.obs" required="" class= "form-control" id="Religion">
+              </div>
+            </div>
+        </div>      
+        <br/>
+        <div class="row">
+          <div class="col-md-10">
+          </div>
+          <div class="col-md-2">
+            <input type="Submit" class="btn btn-primary btn-lg"  value="Siguiente" />
+          </div>
+        </div>     
+      </div>
+    </div>  
+  </div> 
+</form>
+
+<script type="text/javascript">
+       $('#fecnac').datetimepicker({ 
+        pickDate: true,                 //en/disables the date picker
+        pickTime: false,                 //en/disables the time picker     
+        showToday: true,                 //shows the today indicator
+        language:'es'                  //sets language locale
+
+    });
+</script>
+
+
+
+
+  

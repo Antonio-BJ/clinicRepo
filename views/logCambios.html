@@ -1,0 +1,82 @@
+<h2>Log de modificaciones al sistema</h2>
+
+<div align="center" ng-show="cargador==true">
+	<img src="imgs/cargador3.gif">
+</div>
+
+<div ng-hide="cargador==true">
+	<!-- TRIGGER Y MODAL -->
+	<br><br>
+	<div align="right">
+		<button type="button" class="btn btn-primary btn-lg" style="margin-right: 6em;" ng-click="abreModal()">
+			<i class="glyphicon glyphicon-plus"></i>
+		  	Registrar modificación
+		</button>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="modalModificacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+		    <form name="modificaciones" ng-submit="nuevoCambio()">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Registro de modificación al sistema</h4>
+		      </div>
+		      <div class="modal-body">
+		      	
+			        <div class="input-group" style="width:100%;">
+			        	<label for="modificacion">Modificación:</label>
+					  	<input type="text" class="form-control" id="modificacion" ng-model="datosCambio.nombre" mayusculas required>
+					</div>
+
+					<br><br>
+					<div class="form-group">
+					  <label for="descripcion">Descripción de la modificación:</label>
+					  <textarea class="form-control" rows="5" id="descripcion" ng-model="datosCambio.descripcion" required></textarea>
+					</div>
+				
+		      </div>
+		      <div ng-show="carga==true" align="center">
+		      	<img src="imgs/cargador3.gif" width="30em;">
+		      </div>
+
+		      <div ng-show="carga==false">
+		      	<br><br>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+		        <input type="submit" class="btn btn-primary" value="Agregar" />
+		        <!-- <button type="submit" class="btn btn-primary">Guardar</button> -->
+		      </div>
+		     </form>
+	    </div>
+	  </div>
+	</div>
+	<!-- TERMINA MODAL -->
+
+	<br><br>
+	<hr>
+	  <table class="table table-striped table-hover table-bordered table-responsive" style="width: 95%; margin: auto;">
+	    <thead>
+	      <tr>
+	        <th>#</th>
+	        <th>Nombre</th>
+	        <th>Descripción</th>
+	        <th>Fecha</th>
+	        <th>Usuario</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr ng-repeat="x in listadoCambios">
+	        <td>{{x.logID}}</td>
+	        <td>{{x.logNombre}}</td>
+	        <td>{{x.logDescripcion}}</td>
+	        <td>{{x.logFecha | limitTo:10 | date:"d/MMM/y"}}</td>
+	        <td>{{x.logUsuario}}</td>
+	      </tr>
+	    </tbody>
+	  </table>
+</div>
+
+<br><br><br><br>

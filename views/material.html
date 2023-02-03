@@ -1,0 +1,299 @@
+<div ng-init="inicio()">
+
+	<h1>Formatos</h1>
+	<div class="row" ng-show="esMedico='si'">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">Atención y Beneficios para pacientes particulares</h3>
+		      </div>
+		      <div class="panel-body">
+					<div class="list-group">
+						<a href="" class="list-group-item" ng-click="abreVideo(28)">Video 1</a>
+					</div>
+					<div class="list-group">
+						<a href="" class="list-group-item" ng-click="abreVideo(29)">Video 2</a>
+					</div>
+					<div class="list-group">
+						<a href="" class="list-group-item" ng-click="abreVideo(30)">Video 3</a>
+					</div>
+					<div class="list-group">
+						<a href="" class="list-group-item" ng-click="abreVideo(31)">Video 4</a>
+					</div>
+					<div class="list-group">
+						<a href="" class="list-group-item" ng-click="abreVideo(32)">Video 5</a>
+					</div>
+		      </div>
+		    </div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">Inducción</h3>
+		      </div>
+		      <div class="panel-body">
+		        	<div class="list-group">
+					  <a href="" class="list-group-item" ng-click="abreVideo(26)">Inducción Clínicas</a>
+					</div>
+					<div class="list-group">
+						<a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLScb22xVdSqdtiReEisEDzrjUPAdUn3VriEJSXX6X86qhj5HRQ/viewform" class="list-group-item">Link Cuestionario de Inducción</a>
+					</div>
+					<div class="list-group">
+						<a href="" class="list-group-item" ng-click="abreVideo(27)">Sistema de Vacaciones</a>
+					</div>
+		      </div>
+		    </div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">Unidades para salida de paquete</h3>
+		      </div>
+		      <div class="panel-body">
+		        	<div class="list-group">
+						<a target="_blank" href="archivos/unidades_para_salida_de_paquete.xlsx" class="list-group-item">Unidades para salida de paquete 04/02/2020</a>
+					</div>
+		      </div>
+		    </div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">Formatos prediseñados</h3>
+		      </div>
+		      <div class="panel-body">
+		        	<div class="list-group">
+					  <a target="_blank" href="{{ documento.ubicacion }}" class="list-group-item" ng-repeat="documento in documentos">{{ documento.nombre }}</a>
+					  <a target="_blank" href="{{ consentimiento.ubicacion }}" class="list-group-item" ng-repeat="consentimiento in consentimientos">{{ consentimiento.nombre }}</a>
+					</div>
+		      </div>
+		    </div>
+		</div>
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">Ejercicios en casa</h3>
+		      </div>
+		      <div class="panel-body">
+		        	<div class="list-group">
+					  	<a target="_blank" href="{{ ejercicio.ubicacion }}" class="list-group-item" ng-repeat="ejercicio in ejercicios">{{ ejercicio.nombre }}</a>
+					</div>
+		      </div>
+		    </div>
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">Membresía MedicaVial</h3>
+		      </div>
+		      <div class="panel-body">
+		        	<a target="_blank" href="archivos/MANUAL_INSTALACION_Y_USO_DE_IMPRESORA_ZEBRA.pdf" class="list-group-item">Manual de instalación y uso de impresora ZABRA</a>
+		        	<a target="_blank" href="archivos/Membresias.docm" class="list-group-item">Documento para generar membresía</a>
+		        	<a target="_blank" href="archivos/Membresia.pdf" class="list-group-item">Solicitud de Membresía Familiar</a>
+		      </div>		     
+		    </div>
+		</div>
+	</div>
+	
+	<div class="row">		
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">Normas y políticas de recursos rumanos</h3>
+		      </div>
+		      <div class="panel-body">
+		        	<div class="list-group">
+					  <a target="_blank" href="archivos/politicas_aliato_medica_vial.pdf" class="list-group-item"  >Normas y políticas</a>					  
+					</div>
+		      </div>
+		    </div>			
+		</div>		
+
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">Normas y políticas de coordinación médica</h3>
+		      </div>
+		      <div class="panel-body">
+		        	<div class="list-group">
+					  <a target="_blank" href="archivos/politica_coordinacion_medica.pdf" class="list-group-item"  >Política para autorizaciones</a>	
+					  <a target="_blank" href="archivos/solicitud_de_atencion_extemporanea.xlsx" class="list-group-item"  >Carta extemporanea</a>				  
+					</div>
+		      </div>
+		    </div>			
+		</div>		
+		
+	</div>
+	<div class="row">
+			<div class="col-md-6">
+			<div class="panel panel-primary">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">Bonos a clínicas</h3>
+		      </div>
+		      <div class="panel-body">
+		        	<div class="list-group">
+		        		<a href="" class="list-group-item" ng-click="abreVideo(1)">1.-Objetivo y mecánica de bono. por LIC. MARIANA SANCHEZ</a>					  						
+						<a href="" class="list-group-item" ng-click="abreVideo(2)">2.- Cero quejas MARICURZ FLOREZ</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(3)">3.- Número de faltas y retardos LIC. MARIANA SANCHEZ</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(4)">4.- Inventario LIC. ANGELICALOZANO</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(5)">5.- Expedientes completos ING. ALFREDO GUTIERREZ</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(6)">6.- Ventas particulares LIC. HUGO ZARICH</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(7)">7.- Tiempo de espera ING. ALFREDO GUTIERREZ</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(8)">8.- Sondeo de calidad LIC. MARIANA SANCHEZ</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(9)">9.- Reglamento de clínicas ANGELICA MERCADO</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(10)">10.- Requisitos por persona_LIC. MARIANA SANCHEZ</a>
+					</div>
+
+
+
+		      </div>
+		    </div>	
+
+		    <div id="pruebaModal" class="modal fade">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <button type="button" class="close" ng-click="pausarVideo()" data-dismiss="modal" aria-hidden="true">&times;</button>
+			                <h4 class="modal-title">{{titulo}}</h4>
+			            </div>
+			            <div class="modal-body">
+
+			            <div ng-include="ruta"></div>	
+			             		
+			            </div>
+			            <div class="modal-footer">
+			                <button type="button" ng-click="pausarVideo()" class="btn btn-default" data-dismiss="modal">Cerrar</button>			                
+			            </div>
+			        </div>
+			    </div>
+			</div>			
+					
+					
+			
+		</div>
+
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">Inducción MV - Aliato</h3>
+		      </div>
+		      <div class="panel-body">
+		        	<div class="list-group">
+		        		<a href="" class="list-group-item" ng-click="abreVideo(11)">1.- Introducción</a>					  						
+						<a href="" class="list-group-item" ng-click="abreVideo(12)">2.- El Camino de MV</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(13)">3.- Beneficios</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(14)">4.- El Colaborador de MV</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(15)">5.- Políticas de Vestimenta y de la Empresa</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(16)">6.- Clientes y Pacientes</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(17)">7.- Factores de Exito</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(18)">8.- Juegos y Conclusión</a>						
+						<a target="_blank" href="archivos/cuadernillo_de_ejercicios.pdf" class="list-group-item"><b>9.- Inducción - cuadernillo de ejercicios</b></a>
+					</div>
+
+
+
+		      </div>
+		    </div>	
+
+		    <div id="pruebaModal" class="modal fade">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <button type="button" class="close" ng-click="pausarVideo()" data-dismiss="modal" aria-hidden="true">&times;</button>
+			                <h4 class="modal-title">{{titulo}}</h4>
+			            </div>
+			            <div class="modal-body">
+
+			            <div ng-include="ruta"></div>	
+			             		
+			            </div>
+			            <div class="modal-footer">
+			                <button type="button" ng-click="pausarVideo()" class="btn btn-default" data-dismiss="modal">Cerrar</button>			                
+			            </div>
+			        </div>
+			    </div>
+			</div>			
+					
+					
+			
+		</div>
+			
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">Servicio al cliente</h3>
+		      </div>
+		      <div class="panel-body">
+		        	<div class="list-group">
+		        		<a href="" class="list-group-item" ng-click="abreVideo(19)">1.- Introducción</a>					  						
+						<a href="" class="list-group-item" ng-click="abreVideo(20)">2.- Experiencia Wow 1</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(21)">3.- Experiencia Wow 2</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(22)">4.- WESTJET</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(23)">5.- Servicio al cliente experiencia wow 3</a>		
+						<a href="" class="list-group-item" ng-click="abreVideo(24)">6.- 5 vitales del servicio</a>
+						<a href="" class="list-group-item" ng-click="abreVideo(25)">6.- Curso la microempresa</a>
+						
+					</div>
+
+
+
+		      </div>
+		    </div>	
+
+		    <div id="pruebaModal" class="modal fade">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <button type="button" class="close" ng-click="pausarVideo()" data-dismiss="modal" aria-hidden="true">&times;</button>
+			                <h4 class="modal-title">{{titulo}}</h4>
+			            </div>
+			            <div class="modal-body">
+
+			            <div ng-include="ruta"></div>	
+			             		
+			            </div>
+			            <div class="modal-footer">
+			                <button type="button" ng-click="pausarVideo()" class="btn btn-default" data-dismiss="modal">Cerrar</button>			                
+			            </div>
+			        </div>
+			    </div>
+			</div>			
+		</div>
+	</div>
+	<div class="row">
+			<div class="col-md-6">
+			<div class="panel panel-primary">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">Procedimientos</h3>
+		      </div>
+		      <div class="panel-body">
+		        	<div class="list-group">
+					  <a target="_blank" href="archivos/Manual_de_entrega_de_constancia_medica_ABA.doc" class="list-group-item"  >Proceso constancia médica ABA</a>
+					  <a target="_blank" href="archivos/Procedimiento_Thona.pdf" class="list-group-item"  >Proceso atención médica THONA</a>
+					</div>
+		      </div>
+		    </div>
+			
+		</div>
+			<div class="col-md-6">
+			<div class="panel panel-primary">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">Guías técnicas</h3>
+		      </div>
+		      <div class="panel-body">
+		        	<div class="list-group">
+					  <a target="_blank" href="{{ escaner.ubicacion }}" class="list-group-item" ng-repeat="escaner in escaners">{{ escaner.nombre }}</a>
+					   <a target="_blank" href="{{ manual.ubicacion }}" class="list-group-item" ng-repeat="manual in manuales">{{ manual.nombre }}</a>
+					</div>
+		      </div>
+		    </div>
+		</div>
+			
+	</div>
+</div>

@@ -1,0 +1,125 @@
+<div class="container" style="width: 100%">     
+<br>
+  <!--<div style="font-size:12px;color:red">
+              Actalización. Favor de borrar el historial de su navegador y reiniciar el sistema <br>para poder ver reflejados los cambios.
+              </div>
+-->
+	<div class="panel panel-primary">
+    <div style="width:100%; background:gray;color:white">
+    <div class="row">
+      <div class="col-md-10" style="padding-top:1.2em" >
+        <button ng-show="regresar" ng-click="regresaWizard()" style="background:transparent; border:0px"><img src="imgs/flecha.jpg" width="35" height="35" class="img-circle" /></button>
+      
+         <label for="" style="font-size:20px">Informe Médico de Seguimiento <b>{{folio}}</b></label>
+      </div>
+      <div class="col-md-2 cajaInputcompleto" align="center" ng-show='verAltaMedica'>
+          <span></span>
+          <div class="checkbox c-checkbox">
+              <label>
+              <input type="checkbox" ng-model="altaMedica" ng-true-value="1" ng-false-value="0">
+              <span class="fa fa-check"></span>Alta médica vial</label>
+          </div> 
+      </div>      
+    </div>
+		</div>
+                        
+        <div class="progress progress-striped">
+          <div class="progress-bar progress-bar-info" role="progressbar"
+               aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100"
+               style="width:{{progreso}}%">
+            <label>{{progreso}}%</label>
+          </div>         
+        </div>
+
+		<div class="Panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<wizard on-finish="finished()" current-step="paso" hide-indicators="true">                          
+              <wz-step title="1">
+                <ng-include src="'views/subsecuencia/subsecuencia.html'"></ng-include>
+              </wz-step>
+              <wz-step title="2">
+                <ng-include src="'views/subsecuencia/EstudiosSolicitadosSub.html'"></ng-include>
+              </wz-step>
+              <wz-step title="3">
+                <ng-include src="'views/subsecuencia/diagnosticoSub.html'"></ng-include>
+              </wz-step>
+              <!--<wz-step title="">
+               <ng-include src="'views/subsecuencia/suministrosSub.html'"></ng-include>
+              </wz-step>-->
+              <wz-step title="4">
+               <ng-include src="'views/subsecuencia/suministroSymio.html'"></ng-include>
+              </wz-step>
+              <!--<wz-step title="5">
+                <ng-include src="'views/subsecuencia/otrosEstudios.html'"></ng-include>
+              </wz-step>-->
+              <wz-step title="6">
+                <ng-include src="'views/subsecuencia/pronostico.html'"></ng-include>
+              </wz-step>
+              <wz-step title="7">
+                <ng-include src="'views/subsecuencia/imprimeNota.html'"></ng-include>
+              </wz-step>
+              <!--<wz-step title="Proc. Médicos">
+                <ng-include src="'views/notaMedica/procMedicos.html'"></ng-include>
+              </wz-step>
+              <wz-step title="">
+                <ng-include src="'views/notaMedica/diagnostico.html'"></ng-include>
+              </wz-step>
+              <wz-step title="">
+                <ng-include src="'views/notaMedica/suministros.html'"></ng-include>
+              </wz-step>
+              <wz-step title="">
+                <ng-include src="'views/notaMedica/pronostico.html'"></ng-include>
+              </wz-step>
+              <wz-step title="">
+                <ng-include src="'views/notaMedica/imprimeNota.html'"></ng-include>
+              </wz-step>-->
+            </wizard>
+					</div>
+				</div>
+			
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalSubsecuencias" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header modal-header-warning">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">¡AVISO!</h4>
+      </div>
+      <div class="modal-body">
+        <h4>Está a punto de registrar la <b>Subsecuencia # {{noSubsec}}</b></h4>
+        <h4><b class="text-warning">{{mensaje}}</b></h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="irDocumentos()">Cancelar</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal" ng-click="guardaAutorizacion()">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+.modal-header-warning {
+  color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #f0ad4e;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+</style>
+
+<script type="text/javascript">
+/*$('#modalSubsecuencias').modal({
+  backdrop: 'static', 
+  keyboard: false});*/
+</script>

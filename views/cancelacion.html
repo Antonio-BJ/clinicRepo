@@ -1,0 +1,382 @@
+<style type="text/css">
+	
+	.button {
+    -moz-appearance: button;
+    /* Firefox */
+    -webkit-appearance: button;
+    /* Safari and Chrome */
+    padding: 10px;
+    margin: 10px;
+    width: 100px;
+}
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 200px;
+    height: 65px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
+.dragover {
+    border: 5px dashed blue;
+}
+</style>
+
+
+<div class="container" style="width: 100%"> 
+
+
+
+<div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title" align="center">Cancelación / Activación de folios MV</b></h3>
+      </div>
+    
+
+                <div class="Panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Parámetros de búsqueda</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <form name="paramentros" id="parametros" ng-submit="buscaParametros()">
+                            <div class="col-md-4" >
+                                <div class="input-group" style="width: 100%;">
+                                 <span >Nombre: </span>	                 
+                                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.nombre" class= "form-control" mayusculas >	                 
+                                  </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                 <span >Folio: </span>	                 
+                                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.folio" folio="buscaParametros()" class= "form-control" mayusculas>        
+                                  </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                 <span >Poliza: </span>	                 
+                                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.poliza"  class= "form-control" mayusculas>        
+                                  </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                 <span >Siniestro: </span>	                 
+                                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.siniestro"  class= "form-control" mayusculas>        
+                                  </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                 <span >Reporte: </span>	                 
+                                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.reporte"  class= "form-control" mayusculas>        
+                                  </div>
+                            </div>
+        
+                        </form>
+
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-2 col-md-offset-10" align="right">
+                            <div class="form-group">
+                                <input type="submit" form="parametros" id="btnenvioprimero" class="btn btn-primary btn-block" value="Buscar">
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="buscar">
+                        <loading2></loading2>
+                    </div>
+                    <div ng-hide="buscar">
+                        <div  ng-show="error" class="row mianimacion">
+                            <div class="col-md-12">
+                                <div class="alert alert-warning">No se encontraron coincidencias.</div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="listaFolPar">
+                            <div class="col-md-12">
+                                <table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive">
+                                    <tr>          
+                                        <th ng-click="predicate = 'Exp_folio'; reverse=!reverse"><b>Folio</b></th>
+                                        <th ng-click="predicate = 'Cia_nombrecorto'; reverse=!reverse"><b>Aseguradora</b></th>
+                                        <th ng-click="predicate = 'Fecha'; reverse=!reverse"><b>Fecha</b></th>         
+                                        <th ng-click="predicate = 'Exp_paterno'; reverse=!reverse"><b>Nombre</b></th>
+                                        <th ng-click="predicate = 'Exp_poliza'; reverse=!reverse"><b>Poliza</b></th>
+                                        <th ng-click="predicate = 'Exp_siniestro'; reverse=!reverse"><b>Siniestro</b></th>
+                                        <th ng-click="predicate = 'Exp_reporte'; reverse=!reverse"><b>Reporte</b></th>
+                                        <th ng-click="predicate = 'Exp_RegCompania'; reverse=!reverse"><b>Folio Electronico</b></th>
+                                        <th ng-click="predicate = 'REG_folioZima'; reverse=!reverse"><b>Folio Zima</b></th>
+                                        <th ng-click="predicate = 'Exp_obs'; reverse=!reverse"><b>Observaciones</b></th>
+                                        <th ng-click="predicate = 'Exp_obs'; reverse=!reverse"><b>Usu Canceló</b></th>
+                                        <th ng-click="predicate = 'Exp_obs'; reverse=!reverse"><b>Detalle</b></th>
+                                        <th ng-click="predicate = 'Exp_obs'; reverse=!reverse"><b>Estatus Cancelado</b></th>
+                                        <th ng-click="predicate = 'Exp_obs'; reverse=!reverse"><b>Cancelar/Activar</b></th>
+                                        					
+                                    </tr>
+                                    <tr ng-repeat="listado in listaFolPar | orderBy:predicate:reverse" >
+                                        <td><a href="" ng-click="mandaPortada(listado.Exp_folio)">{{listado.Exp_folio}}</a></td>
+                                        <td>{{listado.Cia_nombrecorto}}</td>
+                                        <td>{{listado.Fecha}}</td>
+                                        <td> {{listado.Exp_nombre}} {{listado.Exp_paterno}} {{listado.Exp_materno}}</td>
+                                        <td>{{listado.Exp_poliza}}</td>
+                                        <td>{{listado.Exp_siniestro}}</td>
+                                        <td>{{listado.Exp_reporte}}</td>
+                                        <td>{{listado.Exp_RegCompania}}</td>
+                                        <td>{{listado.REG_folioZima}}</td>
+                                        <td>{{listado.Exp_obs}}</td>
+                                        <td>{{listado.Usu_nombre}}</td>
+                                        <td><button class="btn btn-primary" ng-click="verDetalle(listado.Exp_folio, listado.Exp_cancelado)">Ver...</button></td>
+                                        <td ng-show="listado.Exp_solCancela=='S' && listado.Exp_cancelado!=1"><img ng-src="imgs/enviado.png" width="24"></td>
+                                        <td ng-show="listado.Exp_cancelado==1"><img ng-src="imgs/ok.jpg" width="30"></td>
+                                        <td ng-show="listado.Exp_cancelado==1"><a href="" ng-click="abreModalActivacion(listado.Exp_folio)"  ><img ooltip-placement="buttom" tooltip-trigger tooltip="Activación de folio" ng-src="imgs/ok.jpg" width="30"></a></td>
+                                        <td ng-hide="listado.Exp_cancelado==1 || listado.Exp_solCancela=='S'"><img ng-src="imgs/cancelar.png" width="26"></td>
+                                        <td  ng-show="listado.Exp_solCancela=='S' || listado.Exp_cancelado!=1"><a href="" ng-hide="listado.Exp_cancelado==1" ng-click="abreModalCancelacion(listado.Exp_folio)"  ><img ooltip-placement="buttom" tooltip-trigger tooltip="Solicitud de cancelación de folio" ng-src="imgs/cancelar.png" width="30"></a></td>
+                                        
+                                        
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>	
+                    </div>
+                </div>
+
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="myModalLabel">Solicitud de cancelación para el folio <b>{{folioModal}}</b></h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="container" style="width:100%;" id="verFormato">
+                                  <div class="panel panel-primary">    								      
+                                    <div class="panel-body">
+                                    
+                                  <form name="enviaSolCancelacion" id="enviaSolCancelacion" ng-submit="enviaDatosCancelacion()">												
+                                      <br>
+                                      <div class="row" id="campoFol">
+                                          <div class="col-md-12" align="left">
+                                              <div class="input-group">
+                                            <span class="input-group-addon">Motivo de cancelaci&oacute;n: (catálogo)</span> 
+                                             <select name="catCancel" id="catCancel" class= "form-control" ng-model="datos.motivoCat" required ng-options="canc.CAC_cve as canc.CAC_nombre for canc in catalogoCancelados">
+                                                     <option value=""> *Seleccione </option> 
+                                             </select>
+
+                                          </div>
+                                          </div>				            
+                                      </div>		
+                                      <br>
+                                      <div class="row" id="campoFol">
+                                          <div class="col-md-12" align="left">
+                                              <div class="input-group">
+                                            <span class="input-group-addon">Motivo de cancelaci&oacute;n:</span> 
+                                             <input type="text" class="form-control" name="motivo" ng-model="datos.motivo" id="motivo" required mayusculas>        
+                                          </div>
+                                          </div>				            
+                                      </div>
+                                      <br>
+                                      
+                                      <div class="row" id="campoFol">
+                                          <div class="col-md-12" align="left">
+                                              <div class="input-group">
+                                            <span class="input-group-addon">Folio sustituto:</span> 
+                                             <input type="text" class="form-control" name="folioSus" ng-model="datos.folioSus" id="folioSus" mayusculas>        
+                                          </div>
+                                          </div>				            
+                                      </div>
+                                      <br>
+                                      <div class="row" id="campoObs">
+                                          <div class="col-md-12" align="left">
+                                              <div class="input-group">
+                                            <span class="input-group-addon">Observaciones:</span> 
+                                             <input type="text" class="form-control" name="Obs" ng-model="datos.Obs" id="Obs" mayusculas>        
+                                          </div>
+                                          </div>				            
+                                      </div>
+                                      <br>
+                                      
+                                      <div class="row" ng-show="cargador2">
+                                          <div class="col-md-12">
+                                              <div  align="center">
+                                                      <img ng-src="imgs/cargador.gif">
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="row" ng-show="verMensaje">
+                                          <div class="col-md-12" align="center">
+                                              <div class="alert alert-success">La solicitud se envió con éxito.</div>
+                                          </div>				            
+                                      </div>
+                                      
+                                      <div class="row" id="campoObs">
+                                          <div class="col-md-12" align="left">
+                                              <div id="resultado">
+                                                  
+                                              </div>
+                                          </div>				            
+                                      </div>										
+                                  </form>
+                                  </div>
+                              </div>
+                          </div>
+                        
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+                          <input ng-disabled="bloqueoboton" form="enviaSolCancelacion" type="Submit" class="btn btn-primary" id="botonEnvio"  value="Enviar solicitud" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--    fin del modal   -->
+              </div>
+
+              <div class="modal fade" id="myModalActivacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Activacion de folio <b>{{folioModal}}</b></h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container" style="width:100%;" id="verFormato">
+                              <div class="panel panel-primary">    								      
+                                <div class="panel-body">
+                                
+                              <form name="enviaActivacion" id="enviaActivacion" ng-submit="enviaDatosActivacion()">												
+                                  <br>
+                                  <!-- <div class="row" id="campoFol">
+                                      <div class="col-md-12" align="left">
+                                          <div class="input-group">
+                                        <span class="input-group-addon">Motivo de activación (catálogo)</span> 
+                                         <select name="catCancel" id="catCancel" class= "form-control" ng-model="datos.motivoCat" required ng-options="canc.CAC_cve as canc.CAC_nombre for canc in catalogoCancelados">
+                                                 <option value=""> *Seleccione </option> 
+                                         </select>
+
+                                      </div>
+                                      </div>				            
+                                  </div>		
+                                  <br> -->
+                                  <div class="row" id="campoFol">
+                                      <div class="col-md-12" align="left">
+                                          <div class="input-group">
+                                        <span class="input-group-addon">Motivo de activación:</span> 
+                                         <input type="text" class="form-control" name="motivo" ng-model="datos.motivo" id="motivo" required mayusculas>        
+                                      </div>
+                                      </div>				            
+                                  </div>
+                                  <br>
+                                  
+                                  <!-- <div class="row" id="campoFol">
+                                      <div class="col-md-12" align="left">
+                                          <div class="input-group">
+                                        <span class="input-group-addon">Folio sustituto:</span> 
+                                         <input type="text" class="form-control" name="folioSus" ng-model="datos.folioSus" id="folioSus" mayusculas>        
+                                      </div>
+                                      </div>				            
+                                  </div> -->
+                                  <br>
+                                  <div class="row" id="campoObs">
+                                      <div class="col-md-12" align="left">
+                                          <div class="input-group">
+                                        <span class="input-group-addon">Observaciones:</span> 
+                                         <input type="text" class="form-control" name="Obs" ng-model="datos.Obs" id="Obs" mayusculas>        
+                                      </div>
+                                      </div>				            
+                                  </div>
+                                  <br>
+                                  
+                                  <div class="row" ng-show="cargador2">
+                                      <div class="col-md-12">
+                                          <div  align="center">
+                                                  <img ng-src="imgs/cargador.gif">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row" ng-show="verMensaje">
+                                      <div class="col-md-12" align="center">
+                                          <div class="alert alert-success">Se ha activado el folio con éxito.</div>
+                                      </div>				            
+                                  </div>
+                                  
+                                  <div class="row" id="campoObs">
+                                      <div class="col-md-12" align="left">
+                                          <div id="resultado">
+                                              
+                                          </div>
+                                      </div>				            
+                                  </div>										
+                              </form>
+                              </div>
+                          </div>
+                      </div>
+                    
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+                      <input ng-disabled="bloqueoboton" form="enviaActivacion" type="Submit" class="btn btn-primary" id="botonEnvio"  value="Enviar solicitud" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--    fin del modal   -->
+          </div>
+
+          <div class="modal fade" id="modalDetalle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Detalle de cancelación</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div ng-show='mensajeCancelado==""'>
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <th>Folio</th>
+                                <th>Usuario canceló</th>
+                                <th>Fecha cancelado</th>
+                            </tr>
+                            <tr>
+                                <td>{{detalleCancelacion.Exp_folio}}</td>
+                                <td>{{detalleCancelacion.Usu_nombre}}</td>
+                                <td>{{detalleCancelacion.Exp_fcancelado}}</td>
+                            </tr>
+                        </table>
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <th>Motivo Cancelación</th>
+                                
+                            </tr>
+                            <tr>
+                                <td>{{detalleCancelacion.Exp_mcancelado}}</td>
+                                
+                            </tr>
+                        </table>
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                               
+                                <th>Motivo Cancelación (catálogo)</th>
+                                <th>Folio sustituto en caso de ser duplicado</th>
+                            </tr>
+                            <tr>
+                               
+                                <td>{{detalleCancelacion.CAC_nombre}}</td>
+                                <td>{{detalleCancelacion.Exp_duplicado}}</td>
+                            </tr>
+                        </table>
+                </div>
+                  <div ng-show='mensajeCancelado!=""'>
+                    <div class="alert alert-success">{{mensajeCancelado}}</div>
+                    </div>
+                  </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+<!--                    fin de contenedor de formulario                             -->
+  </div>
+ 
+</div>

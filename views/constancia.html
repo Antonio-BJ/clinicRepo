@@ -1,0 +1,117 @@
+<style type="text/css">
+	
+	.button {
+    -moz-appearance: button;
+    /* Firefox */
+    -webkit-appearance: button;
+    /* Safari and Chrome */
+    padding: 10px;
+    margin: 10px;
+    width: 100px;
+}
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 200px;
+    height: 65px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
+.dragover {
+    border: 5px dashed blue;
+}
+</style>
+
+
+<div class="container" style="width: 100%"> 
+
+
+
+<div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title" align="center">Solicitud de constancia médica</h3>
+      </div>
+      <div class="panel-body">
+        
+<!--                   inicio contenedor de formulario                              -->
+
+
+        <div class="container" style="width:100%">
+                <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="container" style="width:100%;">
+                    <fieldset ng-disabled="formCambio">
+                        <form name="formConstancia" ng-submit="enviaDatos()" novalidate >
+                                
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="alert alert-warning">
+                                            <b>Este formato de solicitud deberá ser llenado solo cuando nuestro paciente solicite un comprobante de atención médica. Esta forma deberá: </b><br>
+                                            - ser llenada por la recepcionista con los datos y descripción que el lesionado indique.<br>
+                                            - Esta solicitud se envía directamente a la compañia de seguros por lo que deberá tener especial cuidado al llenarla.                                            
+                                        </div>
+                                    </div>                                    
+                                    <div class="col-xs-8 col-xs-offset-2">
+                                        <div id="msj1">
+                                            
+                                        </div>
+                                    </div>                          
+                                </div>                                
+                                
+                                <div class="row">                                           
+                                    <div class="col-xs-10 col-xs-offset-1">
+                                        <div class="input-group" align="left">
+                                            <span class="input-group-addon">Motivo de la solicitud: </span>                                        
+                                            <textarea class="form-control" ng-model="constancia.motivo" rows="3" style="width:100%" id="motivo" name="motivo"></textarea>
+                                        </div>
+                                        <div class="validacion" role="alert" ng-if="interacted(formularios.formCambioU.diagnostico)" ng-messages="formularios.formCambioU.diagnostico.$error">
+                                            <div ng-message="required">campo requerido</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-10 col-xs-offset-1">                          
+                                        <div class="input-group" align="left">
+                                            <span class="input-group-addon">Observaciones pertinentes <br> a la compañia de seguros: </span>                                                                  
+                                            <textarea   class="form-control" rows="3" style="width:100%" id="observaciones" ng-model="constancia.observaciones" name="observaciones"></textarea>
+                                        </div>
+                                    </div>
+                                </div>                                                                            
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-5" align="right">
+                                        <input type="submit" id="enviaCambioU" name="enviaCambioU" class='btn btn-primary' value="Enviar Solicitud">
+                                    </div>        
+                                </div>        
+                        </form>
+                        </fieldset>
+                        <div class="row" ng-show='cargador'> 
+                            <div class="col-md-12">
+                              <div ng-show="cargador" align="center" style="hight:10em;">
+                                <img ng-src="imgs/cargador.gif">
+                              </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-3 " align="left">
+                                <button class='btn btn-primary' ng-click="irDocumentos()">Documentos</button>
+                            </div>                              
+                        </div>      
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div ng-show="contanciaEnv" style="width:100%">
+                                    <div class="alert alert-success">La solicitud se envió correctamente</div>
+                                </div>
+                            </div>        
+                        </div>                        
+                </div><!-- End panel-body -->
+            </div><!-- End panel panel-default -->    
+        </div><!-- END container -->
+
+
+<!--                    fin de contenedor de formulario                             -->
+    </div>
+  </div>
+ 
+</div>

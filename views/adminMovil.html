@@ -1,0 +1,219 @@
+<div class="container">
+	<div class="content-wrapper">
+		<h3 >Inventario de kits</h3>
+		<div class="row">
+			<div class="col-md-6" >
+				<h3>Listado Lotes</h3>
+			</div>
+			<div class="col-md-6" align="right">
+				<button class="btn btn-default" ng-click="crearLote()">Crear Lote</button>
+			</div>
+		</div>
+		<div class="">
+
+		</div>
+
+		<div class="row" ng-show="listLotes">
+			<div class="col-md-12">
+				<div id="faq" role="tablist" aria-multiselectable="true">
+
+					<div class="panel panel-default" ng-repeat="lote in listLotes">
+					<div style="cursor: pointer" ng-click="listarKits(lote.LOT_clave)" class="panel-heading" role="tab" id="questionOne" data-toggle="collapse"  data-parent="#faq" data-target="#{{lote.LOT_clave}}" aria-expanded="false" aria-controls="answerOne">
+					<h5 class="panel-title" >
+					
+						Lote {{lote.LOT_clave}} de {{lote.Cia_nombrecorto}} con {{lote.LOT_noKits}} kits
+					
+					</h5>
+					</div>
+					<div id="{{lote.LOT_clave}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="questionOne">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<table class="table table-bordered table-light">
+									<tr>
+										<th>Clave kit</th>
+										<th>Fecha registro</th>
+										<th>Descontar por uso</th>
+										<th>Acuse</th>
+									</tr>
+									<tr ng-repeat=" kit in listKitsLote">
+										<td>{{kit.KIT_clave}}</td>
+										<td>{{kit.LOT_fecreg}}</td>
+										<td ng-if="kit.KIT_utilizado==0"><button class="btn btn-purple" data-toggle="modal" data-target="#{{lote.LOT_clave+1}}" ng-click="descontar.noKit=kit.KIT_clave">Descontar</button></td>
+										<td ng-if="kit.KIT_utilizado==1"><span class="alert alert-danger">El kit ya fue utilizado</span></td>
+										<td><button class="btn btn-warning">Imprimir</button></td>
+									</tr>
+
+								</table>
+							</div>
+						</div>
+						<!-- Modal -->
+						<div class="modal fade" id="{{lote.LOT_clave+1}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-lg" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Registrar kit utilizado</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								</div>
+								<div class="modal-body">
+								<form ng-submit="guardarKitOcupado()" name="formKitUtilizado" id="formKitUtilizado">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="kits">Clave de Asesoria </label>
+												<input type="text"  class="form-control" name="claveAsesoria" ng-model="descontar.claveAsesoria" id="claveAsesoria" required>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="compania">Ajustador</label>                                     
+												<select class="form-control" ng-model="descontar.ajustador" id="ajustador" name="ajustador"   ng-options="cia.Cia_clave as cia.Cia_nombrecorto for cia in listCompania" ng-disabled="vernuevoAjustador==true"  mayusculas>
+													<option value="">
+														Seleccione
+													</option>                                                
+												</select>
+											</div>
+										</div>
+										<div class="col-md-4"  style="padding-top: 1.6em;">
+											<button type="button" ng-click="vernuevoAjustador=true; descontar.ajustador=''" class="btn btn-primary">Agregar ajustador</button>
+										</div>
+									</div>
+									<div class="row" ng-show="vernuevoAjustador">
+										<div class="col-md-12">
+											<span class="">Datos de nuevo ajustador</span>
+											<hr>
+											
+										</div>
+									</div>
+									<div class="row" ng-show="vernuevoAjustador">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="kits">Nombre </label>
+												<input type="text"  class="form-control" name="nombreAjustador" ng-model="descontar.nombreAjustador" id="nombreAjustador" ng-required="vernuevoAjustador">
+											</div>
+										</div>
+
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="kits">Teléfono </label>
+												<input type="number" class="form-control" name="telAjustador" ng-model="descontar.telAjustador" id="telAjustador" ng-required="vernuevoAjustador">
+											</div>
+										</div>
+										
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="kits">Email </label>
+												<input type="mail"  class="form-control" name="mailAjustador" ng-model="descontar.mailAjustador" id="mailAjustador" ng-required="vernuevoAjustador">
+											</div>
+										</div>
+										
+									</div>
+								</form>
+								</div>
+								<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+								<button type="submit" form="formKitUtilizado"  class="btn btn-primary">Guardar</button>
+								</div>
+							</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12" align="right">
+								<button class="btn btn-primary" ng-click="surtirLote(lote.LOT_clave)">Surtir</button>
+								<button class="btn btn-success" ng-click="imprimirListadoLote(lote.LOT_clave)">Imprimir listado</button>
+							</div>
+						</div>
+					</div>
+					</div>
+					</div>
+					
+					</div>
+
+			</div>
+
+		</div>
+
+		
+		<!-- START panel-->
+
+		
+
+		
+
+
+
+
+
+		
+		<!-- END table-responsive-->
+		<!-- <div class="panel-footer">
+			<div class="row">
+				<div class="col-lg-2">
+					<div class="input-group">
+					<input type="text" placeholder="Buscar" class="input-sm form-control">
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-sm btn-default">Buscar</button>
+					</span>
+					</div>
+				</div>
+				<div class="col-lg-8"></div>
+				<div class="col-lg-2">
+					<div class="input-group pull-right">
+					<select class="input-sm form-control">
+						<option value="0">Bulk action</option>
+						<option value="1">Delete</option>
+						<option value="2">Clone</option>
+						<option value="3">Export</option>
+					</select>
+					<span class="input-group-btn">
+						<button class="btn btn-sm btn-default">Apply</button>
+					</span>
+					</div>
+				</div>
+			</div>
+		</div> -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h3 class="modal-title" id="exampleModalLabel">Lote</h3>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body" style="text-align: justify; color: coral;">
+			<form name="formuLote" id="formuLote" ng-submit="generarLote()">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="compania">Compañía</label>                                     
+							<select class="form-control" ng-model="formu.compania" id="compania" name="compania" required  ng-options="cia.Cia_clave as cia.Cia_nombrecorto for cia in listCompania" mayusculas>
+								<option value="">
+									Seleccione
+								</option>                                                
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="kits">No. de kits</label>
+							<input type="number" step="5" min="5" class="form-control" name="noKits" ng-model="formu.noKits" id="noKits" required>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+		  <button type="submit" class="btn btn-primary" form="formuLote">Generar lote</button>	
+		</div>
+	  </div>
+	</div>
+  </div>
+		</div>
+	</div>
+</div>

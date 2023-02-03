@@ -1,0 +1,157 @@
+<style type="text/css">
+	
+	.button {
+    -moz-appearance: button;
+    /* Firefox */
+    -webkit-appearance: button;
+    /* Safari and Chrome */
+    padding: 10px;
+    margin: 10px;
+    width: 100px;
+}
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 200px;
+    height: 65px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
+.dragover {
+    border: 5px dashed blue;
+}
+</style>
+<script> 
+    $(":file").filestyle({buttonText: " Seleccionar Archivo"});
+</script>
+
+<div class="container" ng-init="inicio()" style="width: 100%"> 
+<div class="panel panel-primary">
+      <div class="panel-heading">
+
+        <h3 class="panel-title" align="left"> <button ng-click="irDocumentos()" style="background:transparent; border:0px"><img src="imgs/flecha.jpg" width="35" height="35" class="img-circle" /></button>  Digitalización de Rayos X <b>{{folio}}</b></h3>
+        
+        <div ng-show="botonCorreo">
+          <br>
+          <button class="btn btn-default" ng-click="confirmarEnvio()">Enviar Rx a Paciente</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form ng-submit="guardaDigital()" >
+        <div class="row" >
+            <div class="col-md-2">
+                <div class="input-group">
+                  <span class="input-group-addon">No. Placas:</span>
+                  <select  class="form-control" ng-model="rx.noPlac"  id="escala" name="escala" required ng-options="NoPLacas.clave as NoPLacas.valor for NoPLacas in noPlacas">                                                        
+                  </select>
+                </div>
+
+            </div>
+            <div class="col-md-5" align="left">
+                <div style="width:97%">
+                    <input type="file" ng-file-select="onFileSelect_xml($files)" required>                
+                </div> 
+                <div class="progress" style="width:97%">
+                      <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: {{progressBar}}%">
+                        <span>{{progressBar}}%</span>
+                      </div>
+                </div>                    
+            </div>    
+             <div class="col-md-4" align="left">
+               <textarea class="form-control" rows="3" placeholder="Observaciones" ng-model="rx.inter" mayusculas></textarea>                
+            </div>             
+             <div class="col-md-1" align="center">
+                <input type="submit" class="btn btn-primary" value="Guardar">
+            </div>
+        </div>
+        </form>
+            <!--fin del row principal-->
+        <div class="row" ng-show="cargador">  
+            <div class="col-md-12">
+              <div  align="center">
+                <img ng-src="imgs/cargadorCuadro.gif">
+              </div>
+            </div>
+        </div>  
+         <div class="row"> 
+            <div class="col-md-12">
+              <div ng-show="msjerror" align="center">
+                <div class="alert alert-warning">No se pudo subir el archivo. revise la extención y tamaño del archivo</div>
+              </div>
+            </div>
+        </div>          
+        <div class="row mianimacion" ng-show="listaDigitales">
+          <div class="col-md-3 mianimacion"  ng-repeat="listadoRx in listaDigitales" align="center">
+              <div align="right">
+                <a href="" ng-click="eliminaDigital(listadoRx.Arc_cons,listadoRx.Arc_tipo)"><span class="glyphicon glyphicon-remove-sign"></span></a>
+              </div>
+              <a data-toggle="modal"  data-target="#{{listadoRx.Arc_cons}}" href="" id="mylink">
+                <img class="img-responsive img-thumbnail" alt="Cinque Terre" src="../../registro/{{listadoRx.Arc_Archivo}}" >              
+              </a>
+              <div class="modal fade" id="{{listadoRx.Arc_cons}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">{{listadoRx.Arc_Archivo}}</h4>
+                    </div>
+                    <div class="modal-body">
+                    
+                    <img src="../../registro/{{listadoRx.Arc_Archivo}}" style="width:100%; height:100%">               
+                    </div>
+                    <div class="modal-footer" align="left">                      
+                         Interpretacion: <b>{{listadoRx.Arc_interRX}}</b>                      
+                    </div>                               
+                  </div>
+                </div>
+              </div>
+          </div>          
+        </div>  
+        
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+        
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Confirmación de envio</h4>
+              </div>
+              <div class="modal-body">
+                <p>Paciente: {{datos.Exp_completo}}</p>
+                <form name="formMail" name="formMail" ng-submit="enviarCorreo()">
+                  <div ng-show="datos.Exp_mail==''">
+                      <span class="alert alert-danger">El Paciente no proporcionó correo en el registro</span><br><br><br>
+                      <div class="form-group">
+                        <label for="correon">Agregar correo para el envío</label>
+                        <input class="form-control" ng-model="correon"  type="mail" name="correon" id="correon" >
+                      </div>
+                  </div>
+                  <div ng-show="datos.Exp_mail">
+                    <label >Pudes modificar el correo, pero se guardará en un historial</label>
+                    <div class="form-group">
+                      <label for="correo">Correo:</label>
+                    <input class="form-control" type="mail" name="correo" id="correo" ng-model="correo" value="{{datos.Exp_mail}}">
+
+                  </div>
+                  </div>
+                </form>
+                <div ng-show="msjMail">
+                    <span class="alert alert-danger">{{msjMail}}</span>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button  form="formMail" ng-click="enviarCorreo()" class="btn btn-primary">Eviar correo </button>
+              </div>
+            </div>
+        
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+

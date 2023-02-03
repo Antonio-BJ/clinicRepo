@@ -1,0 +1,112 @@
+
+
+    <div class="row Titulo" >    
+
+        <button ng-click="regresaWizard()" style="background:transparent; border:0px"><img src="imgs/flecha.jpg" width="35" height="35" class="img-circle" /></button>    
+
+			<label style="font-size:18px">Nota Médica Covid <b>{{folio}}</b></label>
+
+    </div>
+
+		
+
+				<div class="row" >
+
+					<div class="col-md-12">
+
+						<wizard on-finish="finished()" current-step="paso" hide-indicators="true">                          
+
+              <wz-step title="1">
+
+                <ng-include src="'views/notaMedicaCovid/sigVitConfirm.html'"></ng-include>
+
+              </wz-step>
+
+              <wz-step title="2">
+
+                <ng-include src="'views/notaMedicaCovid/DatosdelAccidente.html'"></ng-include>
+
+              </wz-step>
+
+              <!--<wz-step title="3">
+
+                <ng-include src="'views/notaMedica/EmbarazoRed.html'"></ng-include>
+
+              </wz-step>-->
+
+              <!--<wz-step title="3">
+
+               <ng-include src="'views/notaMedica/LesionRed.html'"></ng-include>
+
+              </wz-step>-->
+
+              <!--<wz-step title="5">
+
+                <ng-include src="'views/notaMedica/EstadoGeneral.html'"></ng-include>
+
+              </wz-step>-->
+
+              <wz-step title="3">
+
+                <ng-include src="'views/notaMedicaCovid/EstudiosSolicitados.html'"></ng-include>
+
+              </wz-step>
+
+              <!--<wz-step title="7">
+
+                <ng-include src="'views/notaMedica/procMedicos.html'"></ng-include>
+
+              </wz-step>-->
+
+              <!--<wz-step title="8">
+
+                <ng-include src="'views/notaMedica/diagnostico.html'"></ng-include>
+
+              </wz-step>-->
+
+              <!--<wz-step title="9">
+
+                <ng-include src="'views/notaMedica/otrosEstudios.html'"></ng-include>
+
+              </wz-step>-->
+
+              <wz-step title="4">
+
+                <ng-include src="'views/notaMedicaCovid/suministroSymio.html'"></ng-include>
+
+              </wz-step>
+
+               <wz-step title="5">
+
+                <ng-include src="'views/notaMedicaCovid/lesionAdministrativa.html'"></ng-include>
+
+              </wz-step>
+
+              <!--<wz-step title="Suministros">
+
+                <ng-include src="'views/notaMedica/suministros.html'"></ng-include>
+
+              </wz-step>-->
+
+              <!--<wz-step title="11">
+
+                <ng-include src="'views/notaMedica/pronostico.html'"></ng-include>
+
+              </wz-step>-->
+
+              <wz-step title="6">
+
+                <ng-include src="'views/notaMedicaCovid/imprimeNota.html'"></ng-include>
+
+              </wz-step>
+
+            </wizard>
+
+					</div>
+
+				</div>
+
+			
+
+	
+

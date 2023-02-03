@@ -1,0 +1,445 @@
+<div class="container" style="width: 100%"> 
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title" align="center">Antecedentes Personales</h3>
+    </div>
+    <div class="panel-body">
+      <div class='row'>
+        <form ng-submit="agregaCronDeg()">
+          <div class='col-md-5'>
+            <div class='input-group'>
+              <span class='input-group-addon'>Cr&oacutenico-Degenerativos:</span>
+              <select name="PadecimientosCronicos" ng-model="padecimiento.nombre" id="PadecimientosCronicos" class="form-control" ng-options="pad.Pad_clave as pad.Pad_nombre for pad in padecimientos" required="">
+                <option value=""> * Seleccione </option>
+              </select>
+            </div>
+          </div>
+          <div class='col-md-5'>
+            <div class='input-group'>
+              <span class='input-group-addon'>Observaciones:</span>
+              <input type="text" name="ObsCronico" ng-model="padecimiento.obs" id="ObsCronico" class='form-control' required="">
+            </div>
+          </div>    
+          <div class='col-md-2'>
+            <div class='input-group'>                                       
+              <input type="submit"  Value="Agregar" class="btn btn-success">    
+            </div>
+          </div> 
+        </form>                                                     
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+           <div ng-show="listaPad" class="mianimacion">
+            <table class="table table-striped table-hover">
+              <tr>
+                <th width="10%"><b>#</b></th>
+                <th width="35%"><b>Padecimiento</b></th>
+                <th width="40%"><b>Observaciones</b></th>                
+                <th width="15%" align="right"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-show="listaPad" class="mianimacion" ng-repeat="padecimiento in listaPad">
+                <td>{{padecimiento.Hist_clave}}</td>
+                <td>{{padecimiento.Pad_nombre}}</td>
+                <td>{{padecimiento.Pad_obs}}</td>                
+                <td><input type="button" ng-click="borrarPadecimiento(padecimiento.Hist_clave)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+              </tr>
+            </table>
+          </div>   
+        </div>                             
+      </div>
+      <div class='row'>
+        <form ng-submit="guardaOtras()">
+          <div class='col-md-5'>
+            <div class='input-group'>
+              <span class='input-group-addon' >Otras enfermedades:</span>
+              <select name="Otras" ng-model="otras.enf" id="Otras" class="form-control" ng-options="oEnf.Otr_clave as oEnf.Otr_nombre for oEnf in otrasE" required="">
+                <option value=""> * Seleccione </option>
+              </select>
+            </div>
+          </div>
+          <div class='col-md-5'>
+            <div class='input-group'>
+              <span class='input-group-addon'>Observaciones:</span>
+              <input type="text" ng-model="otras.obs" name="ObsOtras" id="ObsOtras" class='form-control' required="">
+            </div>
+          </div>    
+          <div class='col-md-2'>
+            <div class='input-group'>  
+              <input type="submit" name="GuardaOtras" id="GuardaOtras" Value="Agregar" class="btn btn-success">                                       
+            </div>
+          </div>
+        </form>                                                      
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-12">
+          <div ng-show="listaOtras" class="mianimacion">
+            <table class="table table-striped table-hover">
+              <tr>
+                <th width="10%"><b>#</b></th>
+                <th width="35%"><b>Padecimiento</b></th>
+                <th width="40%"><b>Observaciones</b></th>                
+                <th width="15%" align="right"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-repeat="otras in listaOtras">
+                <td>{{otras.HistOt_clave}}</td>
+                <td>{{otras.Otr_nombre}}</td>
+                <td>{{otras.HistOt_obs}}</td>                
+                <td><input type="button" ng-click="borrarOtras(otras.HistOt_clave)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+              </tr>
+            </table>
+          </div>   
+        </div>
+      </div>   
+      <div class='row'>
+        <form ng-submit="guardaAlergia()">
+          <div class='col-md-5'>
+            <div class='input-group'>
+              <span class='input-group-addon' >Alergias:</span>
+              <select name="Alergias" ng-model="alergia.alergia" id="Alergias"  class='form-control' ng-options="aler.Ale_clave as aler.Ale_nombre for aler in alergias" required="">
+                <option value=""> * Seleccione </option>
+              </select>
+            </div>
+          </div>
+          <div class='col-md-5'>
+            <div class='input-group'>
+              <span class='input-group-addon'>Observaciones:</span>
+              <input type="text" name="ObsAlergias" ng-model="alergia.obs"  id="ObsAlergias" class='form-control' required="">
+            </div>
+          </div>    
+          <div class='col-md-2'>
+            <div class='input-group'>      
+              <input type="submit" name="GuardaAlergias" id="GuardaAlergias" Value="Agregar" class="btn btn-success" >                                      
+            </div>
+          </div>
+        </form>                                                       
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-12">
+          <div ng-show="listaAlergias" class="mianimacion">
+            <table class="table table-striped table-hover">
+              <tr>
+                <th width="10%"><b>#</b></th>
+                <th width="35%"><b>Alergia</b></th>
+                <th width="40%"><b>Observaciones</b></th>                
+                <th width="15%" align="right"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-repeat="alergias in listaAlergias">
+                <td>{{alergias.HistA_clave}}</td>
+                <td>{{alergias.Ale_nombre}}</td>
+                <td>{{alergias.Ale_obs}}</td>                
+                <td><input type="button" ng-click="borrarAlergia(alergias.HistA_clave)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+              </tr>
+            </table>
+          </div>   
+        </div>                          
+      </div>
+      <div class='row'>
+        <form ng-submit="guardaPadEspalda()">
+          <div class='col-md-5 text-right'>          
+            <div class='input-group'>
+                <span class='input-group-addon' > <b>Padecimientos espalda:</b></span>
+               <span class='input-group-addon'>
+                    <input type="radio" name="Espalda" id="Espalda" ng-model="padEsp1" value="Si"/>  Si <input type="radio" name="Espalda" id="Espalda" ng-model="padEsp1" value="No"  /> No
+               </span>
+            </div>                 
+          </div>
+          <div class='col-md-5' ng-show="padEsp1=='Si'" class="muestraderecha" >
+            <div class='input-group'>
+              <span class='input-group-addon'id="Oesp" >Observaciones:</span>   
+              <input type="text" name="ObsEspalda" ng-model="padEsp.obs" id="ObsEspalda" class='form-control' required="required">
+            </div>
+          </div>  
+          <div class='col-md-2' ng-show="padEsp1=='Si'" class="muestraderecha">
+            <div class='input-group'>
+              <input type="submit" Value="Agregar" class="btn btn-success" />
+            </div>                                 
+          </div>
+        </form>                                                    
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-12">
+          <div ng-show="listaPadEsp" class="mianimacion">
+            <table class="table table-striped table-hover">
+              <tr>
+                <th width="10%"><b>#</b></th>               
+                <th width="40%"><b>Observaciones</b></th>                
+                <th width="15%" align="right"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-repeat="padEsp in listaPadEsp">
+                <td>{{padEsp.HistE_clave}}</td>               
+                <td>{{padEsp.Esp_obs}}</td>                
+                <td><input type="button" ng-click="eliminaPadEspalda(padEsp.HistE_clave)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+              </tr>
+            </table>
+          </div>   
+        </div>
+      </div>
+      <div class='row'>
+        <form ng-submit="guardaTratQui()">
+          <div class='col-md-5'>
+            <div class='input-group'>
+              <span class='input-group-addon'><b>Ha recibido tratamiento<br/> Quiropractico:<sub>(Huesero)</sub></b></span>
+              <span class='input-group-addon'>
+                <input type="radio" name="Quiro" ng-model="quiro" id="Quiro" value="Si"/> Si <input type="radio" name="Quiro" id="Quiro" ng-model="quiro" value="No" /> No
+              </span>
+            </div>    
+          </div>
+          <div class='col-md-5' ng-show="quiro=='Si'" class="muestraderecha">
+            <div class='input-group'>
+            <span class='input-group-addon'  id="Oplan" >Observaciones:</span>   
+            <input type="text" name="ObsPlan" ng-model="quiropractico.obs" id="ObsPlan" Class='form-control' required="" >                          
+            </div>
+          </div>  
+          <div class='col-md-2' ng-show="quiro=='Si'" class="muestraderecha">
+            <div class='input-group'>
+              <input type="submit"  Value="Agregar" class="btn btn-success"/>                             
+            </div>                                 
+          </div>
+        </form>                                                 
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-12">
+          <div ng-show="listaTratQui" class="mianimacion">
+            <table class="table table-striped table-hover">
+              <tr>
+                <th width="10%"><b>#</b></th>               
+                <th width="40%"><b>Observaciones</b></th>                
+                <th width="15%" align="right"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-repeat="tratQui in listaTratQui">
+                <td>{{tratQui.HistoriaQ_clave}}</td>               
+                <td>{{tratQui.Quiro_obs}}</td>                
+                <td><input type="button" ng-click="eliminaTratQui(tratQui.HistoriaQ_clave)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+              </tr>
+            </table>
+          </div>   
+        </div>
+      </div>
+      <div class='row'>
+        <form ng-submit="guardaPlantillas()">
+          <div class='col-md-5'>
+          <div class='input-group'>
+            <span class='input-group-addon'><b>Ha usado plantillas:</b></span>
+            <span class='input-group-addon' >
+            <input type="radio" name="Plan" id="Plan" ng-model="plant" value="Si"/> Si <input type="radio" name="Plan" id="Plan" ng-model="plant" value="No" /> No
+            </span>
+          </div>    
+          </div>
+          <div class='col-md-5' ng-show="plant=='Si'" class="muestraderecha">
+            <div class='input-group'>
+            <span class='input-group-addon' id="Oplan" >Observaciones:</span>   
+            <input type="text" name="ObsPlan" id="ObsPlan" ng-model="plantillas.obs" Class='form-control' >                          
+            </div>
+          </div>  
+          <div class='col-md-2' ng-show="plant=='Si'" class="muestraderecha">
+            <div class='input-group'>
+              <input type="submit" name="GuardaPlan" id="GuardaPlan" Value="Agregar" class="btn btn-success"/>                             
+            </div>                                 
+          </div>
+        </form>                                                    
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-12">                                       
+          <div ng-show="listaPlantillas" class="mianimacion">
+            <table class="table table-striped table-hover">
+              <tr>
+                <th width="10%"><b>#</b></th>               
+                <th width="40%"><b>Observaciones</b></th>                
+                <th width="15%" align="right"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-repeat="planti in listaPlantillas">
+                <td>{{planti.HistP_clave}}</td>               
+                <td>{{planti.Plantillas_obs}}</td>                
+                <td><input type="button" ng-click="eliminaPlantillas(planti.HistP_clave)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+              </tr>
+            </table>
+          </div>   
+        </div>
+      </div>
+      <div class='row'>
+        <form ng-submit="guardaTratamiento()">
+          <div class='col-md-5'>
+            <div class='input-group'>
+              <span class='input-group-addon' ><b>Tratamientos:</b></span>
+              <span class='input-group-addon' >
+              <input type='radio' name='Tratamiento' ng-model="trat" id="Tratamiento" value='Si' /> Si <input type='radio' name='Tratamiento' id="Tratamiento" ng-model="trat" value='No'/> No
+              </span>
+            </div>    
+          </div>
+          <div class='col-md-5' ng-show="trat=='Si'" class="muestraderecha">
+            <div class='input-group'>
+              <span class='input-group-addon' id="Otrat" >Observaciones:</span>   
+              <input type="text" name="ObsTratamiento" id="ObsTratamiento" ng-model="tratamiento.obs" required="" Class='form-control'>                                                           
+            </div>
+          </div>  
+          <div class='col-md-2' ng-show="trat=='Si'" class="muestraderecha">
+            <div class='input-group'>
+              <input type="submit" name="GuardaTrat" id="GuardaTrat" Value="Agregar" class="btn btn-success"/>                                      
+            </div>                                 
+          </div>
+        </form>                                                    
+      </div>
+      <br/>                      
+      <div class="row">
+        <div class="col-md-12">
+          <div ng-show="listaTratamientos" class="mianimacion">
+            <table class="table table-striped table-hover">
+              <tr>
+                <th width="10%"><b>#</b></th>               
+                <th width="40%"><b>Observaciones</b></th>                
+                <th width="15%" align="right"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-repeat="trata in listaTratamientos">
+                <td>{{trata.HistT_clave}}</td>               
+                <td>{{trata.HistT_obs}}</td>                
+                <td><input type="button" ng-click="eliminaTratamiento(trata.HistT_clave)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+              </tr>
+            </table>  
+        </div>
+      </div>    
+      <div class='row'>
+        <form ng-submit="guardaIntervenciones()">
+          <div class='col-md-5'>
+            <div class='input-group'>
+              <span class='input-group-addon' ><b>Intervenciones <br/> Quirurgicas:</b></span>
+              <span class='input-group-addon' >
+              <input type='radio' name='Operaciones' ng-model="inter" Id="Operaciones" value='Si'/> Si <input type='radio' name='Operaciones' Id="Operaciones" ng-model="inter" value='No'/> No
+              </span>
+            </div>    
+          </div>
+          <div class='col-md-5' ng-show="inter=='Si'" class="muestraderecha">
+            <div class='input-group'>
+              <span class='input-group-addon' id="Oqui" >Observaciones:</span>  
+              <input type="text" name="ObsOperaciones" ng-model="intervenciones.obs" id="ObsOperaciones" Class='form-control' required="">                                                                                         
+            </div>
+          </div>  
+          <div class='col-md-2' ng-show="inter=='Si'" class="muestraderecha">
+            <div class='input-group'>
+              <input type="submit"  name="GuardaOpe" id="GuardaOpe" Value="Agregar" class="btn btn-success">                                  
+            </div>                                 
+          </div>
+        </form>                                                    
+      </div>                                
+      <div class="row">
+        <div class="col-md-12">
+          <div ng-show="listaIntervenciones" class="mianimacion">
+            <table class="table table-striped table-hover">
+              <tr>
+                <th width="10%"><b>#</b></th>               
+                <th width="40%"><b>Observaciones</b></th>                
+                <th width="15%" align="right"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-repeat="inter in listaIntervenciones">
+                <td>{{inter.HistO_clave}}</td>               
+                <td>{{inter.HistO_obs}}</td>                
+                <td><input type="button" ng-click="eliminaIntervencion(inter.HistO_clave)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+              </tr>
+            </table>  
+          </div>                             
+        </div>
+      </div>
+      <div class='row'>
+        <form ng-submit="guardaDeporte()">
+          <div class='col-md-5'>
+            <div class='input-group'>
+              <span class='input-group-addon' ><b>Deportes:</b></span>
+              <span class='input-group-addon' >
+                <input type='radio' name='Deporte' ng-model="dep" ID="Deporte" value='Si' /> Si <input type='radio' name='Deporte' Id="Deporte" ng-model="dep" value='No' /> No
+              </span>
+            </div>    
+          </div>
+          <div class='col-md-5'  ng-show="dep=='Si'" class="muestraderecha">
+            <div class='input-group'>
+              <span class='input-group-addon' id="Odep" >Observaciones:</span>  
+              <input type="text" name="ObsDeporte" ng-model="deporte.obs" id="ObsDeporte" Class='form-control' required=""/>                                                                                      
+            </div>
+          </div>  
+          <div class='col-md-2' ng-show="dep=='Si'" class="muestraderecha">
+            <div class='input-group'>
+              <input type="submit" name="GuardaDep" id="GuardaDep" Value="Agregar" class="btn btn-success">                                                           
+            </div>                                 
+          </div>
+        </form>                                                      
+      </div>    
+      <div class="row">
+        <div class="col-md-12">
+          <div ng-show="listaDeportes" class="mianimacion">
+            <table class="table table-striped table-hover">
+              <tr>
+                <th width="10%"><b>#</b></th>               
+                <th width="40%"><b>Observaciones</b></th>                
+                <th width="15%" align="right"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-repeat="Depo in listaDeportes">
+                <td>{{Depo.HistD_clave}}</td>               
+                <td>{{Depo.Dep_obs}}</td>                
+                <td><input type="button" ng-click="eliminaDeporte(Depo.HistD_clave)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+              </tr>
+            </table>  
+          </div>     
+        </div>        
+      </div>
+      <div class='row'>
+        <form ng-submit="guardaAdiccion()">
+          <div class='col-md-5'>
+            <div class='input-group'>
+              <span class='input-group-addon' style='width:185px;'><b>Adicciones:</b></span>
+              <span class='input-group-addon' style='width:150px;' >
+                <input type='radio' name='Adiccion' ng-model="adic" ID="Adiccion" value='Si'/> Si <input type='radio' name='Adiccion' Id="Adiccion" ng-model="adic" value='No' /> No
+              </span>
+            </div>    
+          </div>
+          <div class='col-md-5' ng-show="adic=='Si'" class="muestraderecha">
+            <div class='input-group'>
+              <span class='input-group-addon' id="Oacc" >Observaciones:</span>  
+              <input type="text" name="ObsAdiccion" ng-model="adiccion.obs" id="ObsAdiccion" Class='form-control' required="">                                                                                                        
+            </div>
+          </div>  
+          <div class='col-md-2' ng-show="adic=='Si'" class="muestraderecha">
+            <div class='input-group'>
+              <input type="submit" name="GuardaAdi" id="GuardaAdi" Value="Agregar" class="btn btn-success"  >                                                                                       
+            </div>                                 
+          </div>
+        </form>                                                    
+      </div>   
+      <div class="row">
+        <div class="col-md-12">
+         <div ng-show="listaAdicciones" class="mianimacion">
+            <table class="table table-striped table-hover">
+              <tr>
+                <th width="10%"><b>#</b></th>               
+                <th width="40%"><b>Observaciones</b></th>                
+                <th width="15%" align="right"><b>Eliminar</b></th>
+              </tr>
+              <tr ng-repeat="adic in listaAdicciones">
+                <td>{{adic.HistA_clave}}</td>               
+                <td>{{adic.Adic_obs}}</td>                
+                <td><input type="button" ng-click="eliminaAdiccion(adic.HistA_clave)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+              </tr>
+            </table>  
+          </div>     
+        </div>    
+      </div>      
+      <div class="row">
+        <div class="col-md-10">
+        </div>
+        <div class="col-md-2">
+          <input type="button" ng-click="accidentesAnteriores()" class="btn btn-primary btn-lg"  value="Siguiente" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+

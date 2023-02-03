@@ -1,0 +1,982 @@
+<div ng-init="inicio()">
+
+    <div class="row">
+
+        <div class="col-lg-12">
+          <!-- START panel-->
+          <div class="panel panel-primary">
+             <div class="panel-heading">Registro de Cita</div>
+             <div class="panel-body">
+                        
+              <div class="col-md-3">
+                    <label for="unidades"> Tipo Cita </label>
+                    <select  class="form-control" ng-model="datos.tipocita" ng-options="tcita.clave as tcita.nombre for tcita in tcita" ng-change="Buscar()" mayusculas
+                    >
+                      <option value=""> -- Tipo Cita -- </option>
+                    </select>
+              </div>
+              
+
+             <div class="row">
+
+                <div class="col-md-4">
+
+                  <div ng-show="mensaje" class="alert  animate-show text-center" ng-class="tipoalerta">{{mensajebloqueo}}</div>
+
+                </div>
+
+             </div>
+             <br>
+
+          <div class="row" ng-show="varcalendario">
+
+                  <div class="col-lg-2">
+                      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#preregistro" ng-click="limpia()" >
+                        Crear Cita
+                      </button>
+                  </div>
+
+                  <div class="col-lg-2">
+                      <button type="button" class="btn btn-warning" ng-click="list = true">
+                        Descarga Listado
+                      </button>
+                  </div>
+
+                  <div class="col-md-3" ng-show="list">
+                    <input type="text" class="form-control" placeholder="Fecha Inicio" ng-model="formato.fechaini" data-date-format="YYYY-MM-DD" id="fechaini">
+                  </div>
+                  <div class="col-md-3" ng-show="list">
+                    <input type="text" class="form-control" placeholder="Fecha Fin" ng-model="formato.fechafin" data-date-format="YYYY-MM-DD" id="fechafin">
+                  </div>
+                  <div class="col-lg-2" ng-show="list">
+                      <button type="button" class="btn btn-primary glyphicon glyphicon-download" tooltip-placement="bottom" tooltip="Descarga tu Listado"ng-click="descargapdf()">
+                        
+                      </button>
+                  </div>
+
+<!--                   <div class="span8 calendar" ng-model="eventSources" ui-calendar="uiConfig.calendar" id="calendar"></div>  -->
+
+                <div class="span8 calendar" ng-model="eventSources" ui-calendar="uiConfig.calendar" id="calendar"></div> 
+
+                <br><br>
+                
+<!--                 <div class="col-lg-2" style="padding-top:1em">
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#citasdia">
+                      Citas del Dia
+                    </button>
+                </div> -->
+
+                <div class="widget" >
+                    <div class="widget-title" align="center"><h4><strong> Resultados: {{ datos.fechamostrar }} Unidad: {{ informacion.unidad}}</strong></h4></div> 
+                    <div class="widget-body" max-width: "800px" min-width: "700px">
+                        <div ng-show="cargando">
+                            <loading></loading>
+                        </div>
+                        <div ng-hide="cargando" class="tabla table-responsive">
+                          <table  datatable="" dt-options="dtOptions"  dt-columns="dtColumns" class="table table-striped table-bordered">
+                                
+                          </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>        
+
+          </div>
+
+
+          </div>
+
+             <div class="panel-footer"></div>
+          </div>
+          <!-- END panel-->
+
+          <!-- <div id="myPopover"></div> -->
+
+<!--           /////////////////////////////////////////////// MODALES //////////////////////////////////////////////
+ --><ul id="wizard">
+
+        <div id="preregistro" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <form name="Aut" novalidate>
+              <div class="modal-content">
+                <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                      <h4 class="modal-title">Preregistro</h4>
+                </div>
+                  <div class="modal-body">
+
+                      <div class="row">
+
+                          <div class="col-md-3">
+                              <div class="input-group">
+                                <span class="input-group-addon">#</span>
+                                <input type="text" class="form-control" ng-model="datos.folio" placeholder="Folio" folio>
+                              </div>
+                          </div>
+                          <div class="col-md-3">
+                                  <button type="button" class="btn btn-primary glyphicon glyphicon-header" tooltip-placement="bottom" tooltip="Busqueda dentro de la Clinica" ng-click="B_clinica()"> Buscar </button>
+                          </div>
+                          <div class="col-md-3">
+                                  <button type="button" class="btn btn-success glyphicon glyphicon-floppy-disk" tooltip-placement="bottom" tooltip="Registra Paciente en caso de no recordar Folio o sea primera vez que agenda cita" ng-click="muestra_tab()"> Nuevo Paciente </button>
+                          </div>
+<!--                           <div class="col-md-3">
+                              <div class="input-group">
+                                <span class="input-group-addon glyphicon glyphicon-road"></span>
+                                <input type="text" class="form-control" ng-model="datos.telefono" placeholder="Telefono" numeros>
+                              </div>
+                          </div> -->
+<!--                           <div class="col-md-3">
+                              <div class="input-group">
+                                <span class="input-group-addon glyphicon glyphicon glyphicon-file"></span>
+                                <input type="text" class="form-control" ng-model="datos.fnacimiento" data-date-format="YYYY-MM-DD" placeholder="Fecha Nacimiento" id="fnacimiento">
+                              </div>
+                          </div> -->
+
+                      </div>
+
+<!--                       <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                  <span class="input-group-addon glyphicon glyphicon-user"></span>
+                                  <input type="text" class="form-control" ng-model="datos.lesionado" placeholder="Paciente" mayusculas>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <select ng-disabled="edicion" class="form-control" ng-model="datos.cliente" ng-options="cliente.id as cliente.nombre for cliente in clientes" required>
+                                  <option value="">Cliente</option>
+                                </select>
+                            </div>
+                      </div> -->
+
+                      <div ng-show="mensaje1" class="alert  animate-show text-center" ng-class="tipoalerta">{{mensaje1}}</div>
+
+                      <div class="row">
+<!--                         <div class="col-md-3">
+                                  <button type="button" class="btn btn-warning  glyphicon glyphicon-user" tooltip-placement="bottom" tooltip="En caso de " ng-click="B_clinica()"> Primera vez </button>
+                        </div> -->
+
+
+
+<!-- 
+                        <div class="col-md-3">
+                                  <button type="button" class="btn btn-warning glyphicon glyphicon-header" tooltip-placement="bottom" tooltip="Busqueda en todas las Clinicas" ng-click="B_todasclinica()"> Todas las Clinicas </button>
+                        </div> -->
+
+                      </div>
+
+                      <li ng-show="(current == 0)">
+
+                      <div class="row" ng-show="consult">
+                          <div class="col-lg-12">
+
+                            <h3> Los primeros 5 Registros </h3>
+
+                            <div class="table-responsive tabla">
+                              <table class="table table-hover table-bordered">
+                                <thead>
+                                  <tr class="active">
+                                        <th><a href="" ng-click="predicate = 'folio'; reverse=!reverse">Folio</a></th>
+                                        <th><a href="" ng-click="predicate = 'nombre'; reverse=!reverse">Nombre</a></th>
+                                        <th><a href="" ng-click="predicate = 'edad'; reverse=!reverse">Edad</a></th>
+                                        <th><a href="" ng-click="predicate = 'telefono'; reverse=!reverse">Telefono</a></th>
+                                        <th><a href="" ng-click="predicate = 'siniestro'; reverse=!reverse">Siniestro</a></th>
+                                        <th><a href="" ng-click="predicate = 'poliza'; reverse=!reverse">Poliza</a></th>
+                                        <th><a href="" ng-click="predicate = 'reporte'; reverse=!reverse">Reporte</a></th>
+                                        <th><a href="" ng-click="predicate = 'cliente'; reverse=!reverse">Cliente</a></th>
+                                        <th><a href="" ng-click="predicate = 'unidad'; reverse=!reverse">Unidad</a></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr  ng-repeat="lesionado in lesionados | orderBy:predicate2:reverse2 | filter:filtro">
+                                        
+                                        <td>
+                                          <button type="button" class="btn btn-link" ng-click="siguiente(lesionado.folio)">{{lesionado.folio}}</button>
+                                        </td>
+                                        <td>{{lesionado.nombre}}</td>
+                                        <td>{{lesionado.edad}}</td>
+                                        <td>{{lesionado.telefono}}</td>
+                                        <td>{{lesionado.siniestro}}</td>
+                                        <td>{{lesionado.poliza}}</td>
+                                        <td>{{lesionado.reporte}}</td>
+                                        <td>{{lesionado.cliente}}</td>
+                                        <td>{{lesionado.unidad}}</td>
+
+                                  </tr>
+                                </tbody>
+                              </table>
+                          </div>
+
+                          </div>
+                        </div>
+                      </li>
+
+                      <div class="row" ng-show="reglesionado">
+                        
+                        <div class="col-lg-12"> 
+
+                            <div ng-show="mensajeFolio" class="alert  animate-show text-center" ng-class="tipoalerta1">{{mensajeFolio}} 
+                            </div>
+
+                           <div class="widget">
+                                <div class="widget-title"><i class="glyphicon glyphicon-search"></i>Registro de Paciente</div>
+                                <div class="widget-body">
+
+                                    <div class="row">
+
+                                        <div class="col-md-5">
+                                            <label for="inciso">Nombre : </label>
+                                            <input type="text" ng-disabled="edita" id="inciso" class="form-control"  ng-model="registro.nombre"  mayusculas >
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <label for="inciso">Edad : </label>
+                                            <input type="text" ng-disabled="edita" id="inciso" class="form-control"  ng-model="registro.edad" numeros>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="inciso">Telefono</label>
+                                            <input type="text" ng-disabled="edita" id="inciso" class="form-control"  ng-model="registro.telefono"  numeros>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6" ng-class="{'has-error':!reg}">
+                                            <label for="inciso">Correo Electronico</label>
+                                            <input type="text" ng-disabled="edita" id="inciso" class="form-control"  ng-model="registro.correo" >
+                                        </div>
+                                      
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-3">
+                                            <label for="inciso">Siniestro : </label>
+                                            <input type="text" ng-disabled="edita" id="inciso" class="form-control"  ng-model="registro.siniestro">
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="inciso">Poliza : </label>
+                                            <input type="text" ng-disabled="edita" id="inciso" class="form-control"  ng-model="registro.poliza">
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="inciso">Reporte : </label>
+                                            <input type="text" ng-disabled="edita" id="inciso" class="form-control"  ng-model="registro.reporte">
+                                        </div>
+
+                                        <div class="col-md-3">
+                                              <label for="unidad">Cliente</label>
+                                              <select ng-disabled="edita" class="form-control" ng-model="registro.cliente" ng-options="cliente.id as cliente.nombre for cliente in clientes" required>
+                                                <option value="">Cliente</option>
+                                              </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div clas="row">
+
+                                      <div class="col-md-4">
+                                            <label for="unidades"> Unidad </label>
+                                            <select  class="form-control"  ng-model="registro.uni" ng-options="uni.id as uni.unidad for uni in unidades" 
+                                             >
+                                              <option value=""> -- Unidad -- </option>
+                                            </select>
+                                      </div>               
+
+                                    </div>
+
+                                    <br><br><br><br>
+
+                                      <div ng-show="mensajeregistro" class="alert  animate-show text-center" ng-class="tipoalerta">{{mensajeregistro}} 
+                                      </div>
+
+                              <div class="row">
+
+                                  <div class="col-md-3" ng-show="btnactualiza">
+
+                                      <div class="text-center">
+                                          <button type="button" class="btn btn-primary" ng-click="Guardar()" ng-disabled="inactiva">Confirma Datos</button>
+                                      </div>
+
+                                  </div>
+                                  <div class="col-md-3" ng-show="btnguarda">
+
+                                      <div class="text-center">
+                                          <button type="button" class="btn btn-primary" ng-click="Nuevo()" ng-disabled="inactiva">Guardar</button>
+                                      </div>
+
+                                  </div>
+
+                                    <div class="col-md-3">
+
+                                      <div class="text-center">
+                                          <button type="button" ng-show="btcrea" class="btn btn-danger" ng-click="creacita()">
+                                            Registra Cita
+                                          </button>
+
+                                      </div>
+
+                                    </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  
+                      <div ng-show="mensaje2" class="alert  animate-show text-center" ng-class="tipoalerta">{{ mensaje2 }}</div>
+
+                      <div class="modal-footer">
+                      </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </ul>
+
+
+          <div id="telefono" class="modal fade">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Telefonos de la Unidad</h4>
+                </div>
+                <div class="modal-body">
+                    
+                    <div class="row">
+                      <div class="col-md-6">
+
+                        <strong> Unidad: {{ informacion.unidad }} </strong>
+
+                      </div>
+                      <div class="col-md-6">
+
+                        <strong>Telefono (s): {{ informacion.telefono }}</strong>
+
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12">
+
+                        <strong>Dirección: {{ informacion.calle }} {{ informacion.colonia }}</strong>
+
+                      </div>
+
+
+                    </div>
+                
+                </div>
+                <div class="modal-footer">
+
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+          </div><!-- /.modal -->
+
+          <div id="foto" class="modal fade bs-example-modal-lg">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Foto de la Unidad</h4>
+                </div>
+                <div class="modal-body">
+
+                  <div>
+                    <div id="slides_control">
+                      <div>
+                        
+                          <slide ng-repeat="slide in slides">
+                            <img ng-src="{{slide.image}}" width='450' height='250'>
+                          </slide>
+                      </div>
+                    </div>
+                  </div> 
+ 
+              </div>
+            </div>
+          </div>
+        </div>
+
+<!--         <div id="mapa" class="modal fade bs-example-modal-lg">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Google Maps</h4>
+                    </div>
+                    <div class="modal-body">
+
+                    <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+
+                     <markers models="map.markers" coords="'self'" options="'options'" isLabel="true"> </markers>
+
+                    </ui-gmap-google-map> 
+
+     
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+
+
+            <div id="creacita" class="modal fade bs-example-modal-lg">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Agendar Cita</h4>
+                    </div>
+                    <div class="modal-body">
+
+                      <div class="row">
+                        <div class="col-md-4">
+
+                          <label for="descripcion">N° Cita</label>
+                          <input name="ncita" id="ncita" class="form-control " ng-model="citareg.clavecita" ng-disabled="editacita"></input>
+                          
+                        </div>
+                      </div>      
+
+                      <div class="row">
+
+                          <div class="col-md-4">
+                            <label for="folio">Fecha Seleccionada</label>
+                            <input type="text" class="form-control" ng-model="citareg.fecha" data-date-format="YYYY-MM-DD" id="fechaAt">
+                          </div>
+
+                          <div class="col-md-4">
+                            <label for="folio">Hora Seleccionada</label>
+                            <input type="text" class="form-control" ng-model="citareg.horacita" data-date-format="HH:mm" id="creahoracita">
+                          </div>
+
+
+
+                          <div class="col-md-4">
+                              <label for="horario">Duración de la Cita:</label>
+                              <select  class="form-control" ng-model="citareg.duracion">
+
+                                <option value=""> -- </option>
+                                <option value="15"> 00:15 </option>
+                                <option value="20"> 00:20 </option>
+                                <option value="30" ng-selected="selected" > 00:30 </option>
+                                <option value="40"> 00:40 </option>
+                                <option value="50"> 00:50 </option>
+                                <option value="60"> 01:00 </option>
+
+                              </select>
+                          </div>
+                      </div>
+
+                      <div class="row">
+
+                        <div class="col-md-3">
+                                <label for="unidades"> Tipo de Cita </label>
+                                <select  class="form-control" ng-model="citareg.tipocita" ng-options="tcita.clave as tcita.nombre for tcita in tcita">
+                                  <option value=""> Tipo de Cita </option>
+                                </select>
+                        </div>
+
+                        <div class="col-md-8">
+
+                          <label for="descripcion">Observación</label>
+                          <textarea name="descripcion" id="descripcion" class="form-control " ng-model="citareg.observacion" rows="5"></textarea>
+                          
+                        </div>
+                      </div>
+              
+                        <div class="row">
+
+                          <div class="col-md-8">
+
+                            <button type="button" class="btn btn-primary" ng-click="guardaCita()" >Guardar Cita</button>
+                            
+                          </div>
+
+
+                          <div class="col-md-6">
+
+                            <button type="button" class="btn btn-warning glyphicon glyphicon-plus" ng-click="agregaCita()" data-toggle="tooltip" data-placement="right" title="Te permite agregar otra cita para el mismo Paciente" >Agregar Cita</button>
+                            
+                          </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                      <div ng-show="mensajecita" class="alert  animate-show text-center" ng-class="tipoalerta">{{ mensajecita }}</div>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div id="detallepaciente" class="modal fade bs-example-modal-lg">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Detalle de Información del Paciente</h4>
+                    </div>
+                      <div class="modal-body">
+
+                        <ul class="nav nav-pills">
+
+                          <li role="presentation" class="active"><a data-target="#tab-one" data-toggle="tab">Detalle del Cita</a> </li>
+                          <li role="presentation"><a data-target="#tab-two" data-toggle="tab">Editar Cita</a></li>
+
+                        </ul>
+
+                        <hr>
+
+                        <div class="tab-content">
+
+                          <div role="tabpanel" class="tab-pane active" id="tab-one">
+
+                            <div class="row">
+                              <div class="col-md-3">
+
+                                N° Cita: <strong>{{ detalle.cita }}</strong>
+
+                              </div>
+                              <div class="col-md-5">
+
+                                Folio: <strong>{{ detalle.folio }}</strong>
+
+                              </div>
+                            </div>
+
+                            <div class="row">
+
+                              <div class="col-md-8">
+
+                                Nombre: <strong>{{ detalle.nombrepaciente }} </strong>
+
+                              </div>
+
+                              <div class="col-md-4">
+
+                                Edad: <strong>{{ detalle.info.PRE_edad }}</strong>
+
+                              </div>
+                            </div>
+
+                            <div class="row">
+
+                              <div class="col-md-5">
+
+                                Fecha de la Cita: <strong>{{ detalle.fechacita }}</strong>
+
+                              </div>
+
+                              <div class="col-md-5">
+
+                                Hora de la Cita: <strong>{{ detalle.horacita }}</strong>
+
+                              </div>
+
+                            </div>
+
+                            <div class="row">
+
+                              <div class="col-md-6">
+
+                                Duración de Cita: <strong>{{ detalle.duracioncita }}</strong>
+
+                              </div>
+
+                              <div class="col-md-6">
+
+                                Tipo de Cita: <strong>{{ detalle.tipocita }}</strong>
+
+                              </div>
+
+                            </div>
+
+                            <div class="row" >
+
+                              <div class="col-md-6">
+
+                                 <button type="button" class="btn btn-danger" ng-click="cancelar=1">Cancela Aqui</button>
+
+                              </div>
+
+                            </div>
+
+                            <div class="row" ng-show="cancelar==1">
+                              <div class="col-md-12">
+
+                                <label for="descripcion">Motivo de Cancelación</label>
+                                  <textarea name="cancelacion" id="cancelacion" class="form-control" ng-model="detalle.cancelacion" rows="5"></textarea>
+
+                              </div>
+
+                              <div ng-show="mensajecancela" class="alert  animate-show text-center" ng-class="tipoalerta">{{ mensajecancela }}</div>
+
+                              <div class="row">
+                                <button type="button" class="btn btn-danger" ng-click="cancelaCita()">Cancelar Cita</button>
+                              </div>
+                            </div>
+
+                          </div>
+
+                          <div role="tabpanel" class="tab-pane" id="tab-two">
+
+                            <div class="row">
+                                <div class="col-md-4">
+
+                                  <label for="descripcion">N° Cita</label>
+                                  <input name="ncita" id="ncita" class="form-control " ng-model="detalle.cita" ng-disabled="editact"></input>
+                                  
+                                </div>
+                              </div>      
+
+                              <div class="row">
+
+                                  <div class="col-md-4">
+                                    <label for="folio">Fecha Seleccionada</label>
+                                    <input type="text" class="form-control" ng-model="detalle.fechacita" data-date-format="YYYY-MM-DD" id="fechaAt">
+                                  </div>
+
+                                  <div class="col-md-4">
+                                    <label for="folio">Hora Seleccionada</label>
+                                    <input type="text" class="form-control" ng-model="detalle.horacita" data-date-format="HH:mm" id="horacita">
+                                  </div>
+
+
+
+                                  <div class="col-md-4">
+                                      <label for="horario">Duración de la Cita:</label>
+                                      <select  class="form-control" ng-model="detalle.duracioncita">
+
+                                        <option value=""> -- </option>
+                                        <option value="15"> 00:15 </option>
+                                        <option value="20"> 00:20 </option>
+                                        <option value="30"> 00:30 </option>
+                                        <option value="40"> 00:40 </option>
+                                        <option value="50"> 00:50 </option>
+                                        <option value="60"> 01:00 </option>
+
+                                      </select>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+
+                                <div class="col-md-4">
+                                        <label for="unidades"> Tipo de Cita </label>
+                                        <select  class="form-control" ng-model="detalle.tipocitaclave" ng-options="tcita.clave as tcita.nombre for tcita in tcita">
+                                          <option value=""> Tipo de Cita </option>
+                                        </select>
+                                </div>
+
+                                <div class="col-md-8">
+
+                                  <label for="descripcion">Observación</label>
+                                  <textarea name="descripcion" id="descripcion" class="form-control " ng-model="detalle.obscita" rows="5"></textarea>
+                                  
+                                </div>
+                              </div>
+                      
+                                <div class="row">
+
+                                  <div class="col-md-8">
+
+                                    <button type="button" class="btn btn-primary" ng-click="actualizacita()">Actualizar Cita</button>
+                                    
+                                  </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                              <div ng-show="mensajeactualiza" class="alert  animate-show text-center" ng-class="tipoalerta">{{ mensajeactualiza }}</div>
+
+                            </div>
+
+
+
+
+
+                          </div>
+
+                        </div>
+
+                      </div>
+                </div>
+              </div>
+
+
+      <div id="info" class="modal fade bs-example-modal-lg">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Información</h4>
+              </div>
+              <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                      Envía información de la Clinica por correo.
+
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                      <label for="descripcion">Correo</label>
+                      <input name="ncita" id="ncita" class="form-control " ng-model="datos.correo"></input>
+                      
+                    </div>
+                </div>   
+
+                <div class="row">
+
+                  <button type="button" class="btn btn-primary" ng-click="enviainformacion()">Enviar</button>
+
+                </div>                   
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="citasdia" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <form name="Aut" novalidate>
+            <div class="modal-content">
+              <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                    <h4 class="modal-title">Busqueda de Citas</h4>
+              </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="button" class="btn-lg btn-primary" ng-click="bpaciente=1">Busqueda x Paciente</button>
+                        </div>
+
+                        <div class="col-md-4">
+                            <button type="button" class="btn-lg btn-primary" ng-click="citasdia()">Citas del Dia</button>
+                        </div>
+
+                        <div class="col-md-4">
+                            <button type="button" class="btn-lg btn-primary" ng-click="descargapdf()">Descarga PDF</button>
+                        </div>
+                    </div>
+
+                    <div  ng-show="bpaciente==1">
+
+                      <div class="panel panel-default">
+                        <div class="panel-heading">Buscar</div>
+                        <div class="panel-body">
+
+                      <div class="row">
+                              <div class="col-md-6">
+                                  <div class="input-group">
+                                    <span class="input-group-addon glyphicon glyphicon-user"></span>
+                                    <input type="text" class="form-control" ng-model="bcita.lesionado" placeholder="Paciente" mayusculas>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <select  class="form-control" ng-model="bcita.tipocita" ng-options="tcita.clave as tcita.nombre for tcita in tcita" data-toggle="tooltip" data-placement="right" title="Solo las Citas del Dia">
+                                    <option value=""> Tipo de Cita </option>
+                                  </select>
+                              </div>
+                      </div>
+
+                        <div ng-show="mensajebusqueda" class="alert  animate-show text-center" ng-class="tipoalerta">{{mensajebusqueda}}</div>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                                    <button type="button" class="btn btn-success" tooltip-placement="bottom" tooltip="Busqueda" ng-click="busquedacitas()">Busqueda </button>
+                          </div>
+  <!--                         <div class="col-md-3">
+                                    <button type="button" class="btn btn-info" tooltip-placement="bottom" tooltip="Busqueda" ng-click="citasdia()">Citas del Dia</button>
+                          </div> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                      <div class="row">
+                          <div class="col-lg-12">
+
+                            <div class="table-responsive tabla">
+                              <table class="table table-hover table-bordered">
+                                <thead>
+                                  <tr class="active">
+                                        <th><a href="" ng-click="predicate = 'fecha'; reverse=!reverse">Fecha</a></th>
+                                        <th><a href="" ng-click="predicate = 'hora'; reverse=!reverse">Hora</a></th>
+                                        <th><a href="" ng-click="predicate = 'duracion'; reverse=!reverse">Duración</a></th>
+                                        <th><a href="" ng-click="predicate = 'tipocita'; reverse=!reverse">Tipo Cita</a></th>
+                                        <th><a href="" ng-click="predicate = 'folio'; reverse=!reverse">Folio</a></th>
+                                        <th><a href="" ng-click="predicate = 'paciente'; reverse=!reverse">Paciente</a></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr  ng-repeat="generalcita in generalcitas | orderBy:predicate:reverse | filter:filtro">
+                                        
+                                        <td>{{generalcita.fecha}}</td>
+                                        <td>{{generalcita.hora}}</td>
+                                        <td>{{generalcita.duracion}}</td>
+                                        <td>{{generalcita.tipocita}}</td>
+                                        <td>{{generalcita.folio}}</td>
+                                        <td>{{generalcita.paciente}}</td>
+
+                                  </tr>
+                                </tbody>
+                              </table>
+                          </div>
+
+                          </div>
+                        </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+
+
+
+<style>
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    font-size: 14px;
+  }
+
+  #top {
+    background: #eee;
+    border-bottom: 1px solid #ddd;
+    padding: 0 10px;
+    line-height: 40px;
+    font-size: 12px;
+  }
+
+  #calendar {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 10px;
+  }
+
+ .angular-google-map-container { height: 400px;}
+
+ html, body, #map-canvas  {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#map-canvas {
+  width:500px;
+  height:480px;
+}
+
+ map, div[map] {display:block; width:500px; height:300px;}
+
+</style>
+
+<script>
+  $('#fechaAt').datetimepicker({
+
+      pickDate: true,                 //en/disables the date picker
+      pickTime: false,                 //en/disables the time picker     
+      showToday: true,                 //shows the today indicator
+      language:'es'                  //sets language locale
+
+    });
+    $('#horacita').datetimepicker({
+
+        format: 'HH:mm:ss',
+        pickDate: false,                 //en/disables the date picker
+        pickTime: true, 
+        pick12HourFormat: true
+
+    });
+    $('#creahoracita').datetimepicker({
+
+        format: 'HH:mm:ss',
+        pickDate: false,                 //en/disables the date picker
+        pickTime: true, 
+        pick12HourFormat: true
+
+    });
+    $('#fnacimiento').datetimepicker({
+
+      pickDate: true,                 //en/disables the date picker
+      pickTime: false,                 //en/disables the time picker     
+      showToday: true,                 //shows the today indicator
+      language:'es'                  //sets language locale
+
+    });
+
+</script>
+
+    <script type='text/ng-template' id='myModalContent.html'>
+        <div class='modal-header'>
+            <h3 class='modal-title'>Google Maps</h3>
+        </div>
+        <div class='modal-body'>
+            <map center='[{{$parent.lat}}, {{$parent.lng}}]' zoom-control='true' zoom='15'> 
+
+            <info-window position='[{{$parent.lat}}, {{$parent.lng}}]' visible="true">
+              <span> Esta Aqui  </span>
+            </info-window>
+
+            </map>
+        </div>
+        <div class='modal-footer'>
+            <button class='btn btn-primary' ng-click='ok()'>OK</button>
+            <button class='btn btn-warning' ng-click='cancel()'>Cancel</button>
+        </div>
+    </script>
+
+<script>
+
+    $('#fechaini').datetimepicker({
+
+      pickDate: true,                 //en/disables the date picker
+      pickTime: false,                 //en/disables the time picker     
+      showToday: true,                 //shows the today indicator
+      language:'es'                  //sets language locale
+
+    });
+
+
+    $('#fechafin').datetimepicker({
+
+      pickDate: true,                 //en/disables the date picker
+      pickTime: false,                 //en/disables the time picker     
+      showToday: true,                 //shows the today indicator
+      language:'es'                  //sets language locale
+
+    });
+
+</script>
+
+
+
+
+

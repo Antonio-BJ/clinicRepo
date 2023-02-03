@@ -1,0 +1,319 @@
+@font-face {
+  font-family: 'SourceSansPro';
+  src:url('../fonts/fuente/SourceSansPro-Light.eot');
+  src:url('../fonts/fuente/SourceSansPro-Light.eot') format('embedded-opentype'),
+    url('../fonts/fuente/SourceSansPro-Light.woff') format('woff'),
+    url('../fonts/fuente/SourceSansPro-Light.ttf') format('truetype'),
+    url('../fonts/fuente/SourceSansPro-Light.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body{
+
+	font-family: 'SourceSansPro', sans-serif;
+}
+
+h1{
+
+	margin-left: 15px;
+}
+
+
+.contenedor{
+	position: relative;
+}
+
+.duda {
+
+	border-right: none;
+	font-size: 18px;
+	position: absolute;
+	right: -5px;
+	top: 190px;
+	z-index: 999;
+}
+
+.edicion{
+	font-size: 25px;
+	height: 100px;
+	padding-left: 1em;
+	text-align: left;
+}
+
+.fondo{
+	padding: 1em;
+	background: #eee;
+}
+
+.largo{
+	width: 200%;
+}
+
+.login{
+	
+	margin: 3em auto;
+	width: 30%;
+
+}
+
+.loginheader{
+
+	background: #005FAB;
+	border-radius: 8px 8px 0 0;
+	border-bottom: 5px solid #2C539E;
+	color: #ECE5FF;
+	font-size: 30px;
+	font-weight: lighter;
+	padding: 0.6em;
+	margin-top: 1em;
+}
+
+.loginbody{
+	background: white;
+	padding: 2em 2em 0.5em 2em;
+	border-left: 1px solid lightgray;
+	border-right: 1px solid lightgray;
+}
+
+.loginfooter{
+	background: white;
+	padding: 1em 2em;
+	border-radius: 0 0 8px 8px;
+	border-right: 1px solid lightgray;
+	border-left: 1px solid lightgray;
+	border-bottom: 1px solid lightgray;
+}
+
+.linea{
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.tabla{
+	width: 100%;
+	overflow-x:auto; 
+}
+
+.tabla2{
+	height: 400px;
+	overflow-y:auto; 
+}
+
+.titulo{
+
+}
+
+#informacion{
+	width: 2000px!important;
+}
+
+
+#estatusinfo{
+
+	background: #3F4C6B;
+	color: white;
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	height: 35px;
+	padding: 0.5em 0.5em 1em 0.5em;
+	margin: 0 auto;
+}
+
+#page-wrapper.oculto {
+ 	padding-left: 0; 
+}
+
+.reporte .row > div{
+	margin-bottom: 0!important;
+}
+
+/* estilos para graficas */
+
+.graficas{
+	
+	height:400px;
+	width:100%; 
+}
+
+.graficas a{
+	
+	display: none!important;
+}
+
+.graficalarga{
+	
+	height:600px;
+	width:100%; 
+}
+
+.graficalarga a{
+	
+	display: none!important;
+}
+
+.logo{
+	padding-right: 25px;
+	width: 100%;
+}
+.logo img{
+
+	background: #aaa;
+	border-radius: 0.5em;
+	box-shadow: 2px 2px 10px rgba(0,0,0,1);
+	margin-top: 0.5em;
+	max-height: 150px;
+	max-width: 200px;
+	padding: 0.2em;
+	
+}
+
+.border-bottom{
+	border-bottom: 1px solid lightgray;
+}
+
+.usuario{
+	float: right;
+	font-size: 17px;
+	margin-top: 19px;
+	margin-right: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+
+.form-horizontal .control-label {
+ 	text-align: left; 
+}
+
+/*#chartdiv-1{
+	
+	height:400px;
+	width:100%; 
+}
+
+#chartdiv-1 a{
+	
+	display: none!important;
+}*/
+
+.amChartsDataSetSelector
+{
+    font-size:12px;
+    font-family:verdana,helvetica,arial,sans-serif;
+}
+
+.amChartsPeriodSelector
+{
+    font-size:12px;
+    font-family:verdana,helvetica,arial,sans-serif;
+}
+
+.amChartsButtonSelected
+{
+   background-color:#CC0000;
+   border-style:solid;
+   border-color:#CC0000;
+   border-width:1px;
+   color:#FFFFFF;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+   margin: 1px;
+   outline: none;
+   box-sizing: border-box;
+}
+
+.amChartsButton
+{
+    color: #000000;
+    background: transparent;
+    opacity: 0.7;
+    border: 1px solid rgba(0, 0, 0, .3);
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+   margin: 1px;
+   outline: none;
+   box-sizing: border-box;
+}
+
+.amChartsCompareList
+{
+   border-style:solid;
+   border-color:#CCCCCC;
+   border-width:1px;
+}
+
+.amChartsCompareList div
+{
+   -webkit-box-sizing: initial;
+   box-sizing: initial;
+}
+
+.amChartsInputField
+{
+
+}
+
+.amChartsLegend
+{
+
+}
+
+.amChartsPanel
+{
+
+}
+
+
+/*Tableta*/
+@media screen and (max-width: 63.125em) {
+     
+	.login{
+	
+		width: 50%;
+
+	}
+
+}
+
+
+/*Movil*/
+@media screen and (max-width: 37.5em) {
+    
+	.login{
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	.loginheader {
+
+		 border-radius: 0; 
+
+	}
+
+	.loginbody {
+		background: transparent;
+		padding: 1.5em 1.5em;
+		border-left:none;
+		border-right:none; 
+	}
+
+	.loginfooter {
+
+		padding: 1em 1.5em;
+		border-radius: none; 
+		border-right: none; 
+		border-left: none; 
+
+	}
+
+}
+
+/*
+cornflowerblue
+dimgrey
+#aaa
+*/

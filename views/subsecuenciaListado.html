@@ -1,0 +1,32 @@
+
+  <div class="container" style="width:100%" >
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title" align="center"> Subsecuencias del Expediente {{folio}}</h3>
+      </div>
+      <div class="panel-body"> 
+        <div class="row" align="center" >
+            <div class="col-md-12" ng-hide="cargador">
+              <div id="tab-one" class="tab-pane active">
+                 <table class="table table-bordered table-hover" ng-hide="cargador" align="center">                   
+                    <tbody>
+                        <tr ng-repeat="sub in subsecuencias">
+                            <td align="center" width="50%"><a ng-click="imprimirSubList(sub.Sub_cons)"><b>Subsecuencia {{sub.Sub_cons}}</b></a></td>
+                            <td align="center" width="50%"><a ng-click="imprimirRecetaSubse(sub.Sub_cons)"><b>Receta {{sub.Sub_cons}}</b></a></td>                            
+                        </tr>                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+            <!--fin del row principal-->
+        <div class="row"> 
+            <div class="col-md-12">
+              <div ng-show="cargador" align="center">
+                <img ng-src="imgs/cargador.gif">
+              </div>
+            </div>
+        </div>                 
+      </div>
+    </div>
+  </div>
+

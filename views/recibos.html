@@ -1,0 +1,196 @@
+<style type="text/css">
+  .left{
+    text-align: left;
+    width: fit-content;
+  }
+</style>
+<div>
+	<h2 style="width: 94%; margin: auto;">Recibos</h2>
+	<form name="ventasSinReg" id="ventasSinReg" ng-submit="buscaRecibo()" style="width: 94%; margin: auto;">
+		<br>
+		<div class="row">
+			<div class="col-md-2">
+          <div class="input-group ">
+              <span>Recibo:</span>
+              <input type="text" ng-model="consulta.recibo" name="recibo" id="recibo" class= "form-control">
+          </div>                         
+      </div>
+      
+
+			<div class="col-md-3">
+				<div ng-show="uniClave==8" class="input-group " style="width:90%">
+            <span>Fecha: </span>
+            <input type="date" ng-model="consulta.fecha" name="fecha" id="fecha" class= "form-control">
+            </select>
+        </div>  
+			</div>
+
+      <div class="col-md-3">
+        <div ng-show="uniClave==8" class="input-group " style="width:90%">
+            <span>Folio MV: </span>
+            <input type="text" ng-model="consulta.folio" name="folio" id="folio" class= "form-control">
+            </select>
+        </div>  
+      </div>
+
+      <div class="col-md-3">
+        <div ng-show="uniClave==8" class="input-group " style="width:90%">
+          <span>Médico: </span>
+          <select name="medico" id="medico" ng-model="consulta.medico" class="form-control"  ng-options="listado.NOMBRE for listado in listaMedicos">
+              <option value=""> </option>
+          </select>
+          </div>
+      </div>
+
+			<div class="col-md-3" align="center">
+        <br>
+				<div class="input-group" style="width:100%">
+            <input type="Submit" class="btn btn-primary btn-md" value="Buscar"/>     
+        </div>  
+			</div>
+		</div>
+	</form>
+  <div  id="cargador" class="row">
+    <div class="col-md-12">
+      <div  align="center">
+        <img ng-src="imgs/cargador.gif">
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default" ng-hide="listadoReporte" >
+    <div class="row" >
+      <div class="col-md-12">
+        <table  align="center"  style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" style="width: 100%">
+          <tr>          
+            <th width="2%"><b>#</b></th>
+            <th width="15%" ><b>Nombre</b></th>         
+            <th width="10%" ><b>FOLIO MV</b></th>
+            <th width="8%" ><b>Unidad</b></th>            
+            <th width="12%"><b>Fecha del Recibo</b></th>
+            <th width="7%"><b>Folio de Recibo</b></th>
+            <th width="6%"><b>Total</b></th>
+            <th width="10%" ><b>Pago</b></th>
+            <th width="10%" ><b>Tipo Recibo</b></th>
+            <th width="6%"><b>Imprimir</b></th>
+            
+          </tr>
+          <tbody >
+            <tr ng-repeat="listado in listadoR">
+              <td style="color: #aaa">{{$index + 1}}</td>
+              <td >{{listado.NOMBRE}}</td>
+              <td >{{listado.FOLIOMV}}</td>
+              <td >{{listado.UNIDAD}}</td>
+              <td>{{listado.FECHA_RECIBO}}</td>
+              <td >{{listado.RECIBO}}</td>
+              <td style="font-weight: bold">{{listado.TOTAL | currency}}</td>
+              <td >{{listado.FORMA_PAGO}}</td>
+              <td >{{listado.TIPO_RECIBO}}</td>
+              <td>
+                <a href="" ng-click="reimprimirRecibo(listado.FOLIOMV,listado.FOLIO_RECIBO, listado.SERIE)">
+                   <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Imprimir recibo">
+                      <em class="fa fa-circle fa-stack-2x text-success"></em>
+                      <em class="fa fa-print fa-stack-1x fa-inverse text-white"></em>
+                   </span>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+    </div>
+  </div>
+  <br ng-show="cargador">
+  <div class="row" ng-show="cargador">
+    <div class="col-md-12">
+      <div  align="center">
+        <img ng-src="imgs/cargador.gif">
+      </div>
+    </div>
+  </div>    
+  <hr ng-show="listadoReporte">
+
+  <div class="panel panel-default" ng-show="listadoReporte" style="width: 100%; margin: auto;">
+    <div class="row" ng-show="listadoReporte">
+      <div class="col-md-12">
+        <table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" style="width: 100%">
+          <tr>          
+            <th width="2%"><b>#</b></th>
+            <th width="15%"><b>Nombre</b></th>
+            <th  width="15%"><b>Médico</b></th>                     
+            <th width="10%" ><b>FOLIO MV</b></th>
+            <th width="8%" ><b>Unidad</b></th>            
+            <th width="12%"><b>Fecha del Recibo</b></th>
+            <th width="7%"><b>Folio de Recibo</b></th>
+            <th width="6%"><b>Total</b></th>
+            <th width="10%" ><b>Pago</b></th>
+            <th width="10%" ><b>Tipo Recibo</b></th>
+            <th width="6%"><b>Imprimir</b></th>
+            
+          </tr>
+          <tr ng-repeat="listado in listadoReporte">
+            <td style="color: #aaa">{{$index + 1}}</td>
+            <td >{{ listado.NOMBRE }}</td>
+            <td >{{listado.NomMedico}}</td>
+            <td >{{listado.FOLIOMV}}</td>
+            <td >{{listado.UNIDAD}}</td>
+            <td>{{listado.FECHA_RECIBO}}</td>
+            <td >{{listado.RECIBO}}</td>
+            <td style="font-weight: bold">{{listado.TOTAL | currency}}</td>
+            <td >{{listado.FORMA_PAGO}}</td>
+            <td >{{listado.TIPO_RECIBO}}</td>
+            <td>
+              <a href="" ng-click="reimprimirRecibo(listado.FOLIOMV,listado.FOLIO_RECIBO, listado.SERIE)">
+                 <span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Imprimir recibo">
+                    <em class="fa fa-circle fa-stack-2x text-success"></em>
+                    <em class="fa fa-print fa-stack-1x fa-inverse text-white"></em>
+                 </span>
+              </a>
+            </td>
+          </tr>
+        </table>
+        
+      </div>
+    </div>
+            
+    <br><br>
+
+    <div class="row" ng-show="cargaRep">
+      <div class="col-md-12">
+        <div  align="center">
+          <img ng-src="imgs/cargador.gif">
+        </div>
+      </div>
+    </div>
+
+    <br><br><br>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+       $('#fecha1').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+        $('#fecha2').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+
+        $('#hora1').datetimepicker({
+            pickDate: false,
+            format: 'LT',
+            locale: 'mx',
+            language:'es',
+            startTime: '12:00',
+        });
+
+        $('#hora2').datetimepicker({
+            pickDate: false,
+            format: 'LT',
+            locale: 'mx',
+            language:'es',
+            startTime: '12:00',
+        });
+</script>

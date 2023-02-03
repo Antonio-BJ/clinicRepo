@@ -1,0 +1,79 @@
+<form ng-submit="guardaAccAnt()">
+  <div class="container" style="width: 100%"> 
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title" align="center">Accidentes Anteriores</h3>
+      </div>    
+      <div class="panel-body">
+        <div class="row">
+          <form guardaAccAnt()>  
+            <div class="col-md-3" >
+              <div class="input-group">
+                 <span class="input-group-addon" style="height:35px">Accidente: </span>
+                 <span class="input-group-addon">
+                    <input type='radio' name='Accidente' ng-model="acc.opc" id="Accidente" value='Si' Checked />Si <input type='radio' name='Accidente' ng-model="acc.opc" id="Accidente" value='No'  />No
+                  </span>
+              </div>
+            </div>        
+            <div class="col-md-3" >
+              <div class="input-group">
+                <span class="input-group-addon">Lugar: </span>
+                <!--<select name="Lugar" id="Lugar" class="requerido" style="width: 150px;">-->
+                <select name="Lugar" id="Lugar" ng-model="acc.lugar"  class= "form-control" ng-options="lug.Lug_clave as lug.Lug_nombre for lug in lugar" required="">
+                  <option value=""> * Seleccione </option>               
+                </select>
+              </div>
+            </div>          
+            <div class="col-md-5" >
+              <div class="input-group">
+                <span class="input-group-addon">Observaciones: </span>
+                <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="acc.obs" class= "form-control" >
+              </div>
+            </div>
+            <div class="col-md-1" >
+              <div class="input-group">
+                <input type="submit" name="guardaAcc" id="guardaAcc" class="btn btn-success" value="Agregar" />
+              </div>
+            </div>
+          </form> 
+        </div>
+        <br/>
+        <br/>
+        <!-- *******************-->
+        <div class="row">
+          <div class="col-md-12">
+            <div ng-show="listAccAnt" class="mianimacion">
+              <table class="table table-striped table-hover">
+                <tr>                
+                  <th width="30%"><b>Accidente</b></th>
+                  <th width="35%"><b>Lugar</b></th>
+                  <th width="40%"><b>Observaciones</b></th>                
+                  <th width="15%" align="right"><b>Eliminar</b></th>
+                </tr>
+                <tr ng-show="listAccAnt" class="mianimacion" ng-repeat="accAnt in listAccAnt">
+                  <td>{{accAnt.Acc_estatus}}</td>
+                  <td>{{accAnt.Lug_nombre}}</td>
+                  <td>{{accAnt.Acc_obs}}</td>                
+                  <td><input type="button" ng-click="eliminaAccAnt(accAnt.HistAcc_clave)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+                </tr>
+              </table>
+            </div>              
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10">
+          </div>
+          <div class="col-md-2">
+            <input type="Button" class="btn btn-primary btn-lg"  value="Siguiente" ng-click="vitalesSig()" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!--   **************************-->
+
+
+
+

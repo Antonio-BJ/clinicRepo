@@ -1,0 +1,248 @@
+<div class="container" style="width: 100%"  ng-show="permisos.Per_NotaMedica=='S'"> 
+    
+ <div class="panel panel-primary">
+    <div class="panel-heading">
+    	<label>Disponibilidad Médico</label>
+    </div> 
+  	<div class="Panel-body">
+  		<br>
+	  	<div class="container" style="width:100%">
+	  		<div class="row" ng-show="estatus">
+	  			<div class="col-md-12">
+	  			<div class="alert alert-success">
+					<img src="{{imgEstatus}}" width="25">	<b>{{estatus}}</b>
+				</div>
+	  			</div>
+	  		</div>
+		  	 <div class="row" align="center">
+		  	 	<div class="col-md-3">
+		  	 		<button ng-disabled="iniTurno||cargador" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#inicioTurno">Inicio Turno</button>
+		  	 	</div>
+		  	 	<div class="col-md-3">
+		  	 		<button ng-disabled="iniPausa||cargador" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#inicioPausa">Inicio Pausa</button>
+		  	 	</div>
+		  	 	<div class="col-md-3">
+		  	 		<button ng-disabled="finPausa||cargador" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#finPausa">Fin Pausa</button>
+		  	 	</div>
+		  	 	<div class="col-md-3">
+		  	 		<button ng-disabled="finTurno||cargador" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#finTurno">Fin Turno </button>
+		  	 	</div>
+		  	 </div>
+		  	 <div class="row" ng-show="estatus">
+	  			<div class="col-md-3">
+				Inicio de Turno: {{fecInicioTurno}}
+	  			</div>
+	  		</div>
+	  		<div class="row">
+	  			<div class="col-md-12" align="center">
+				<button ng-disabled="iniPausa" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#resetearRegistro">Resetear registro</button>
+	  			</div>
+	  		</div>
+	  		<div class="row" ng-show="mensajeFin">
+	  			<div class='col-md-12 alert alert-success' align="center">				           
+                	<label >Turno Finalizado</label>
+          		</div>    
+	  		</div>	
+	  	 </div>
+  	</div>
+  	<div class="modal fade" id="inicioTurno" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Inicio Turno</h4>
+	      </div>
+	       	<form ng-submit="guardaInicioTurno()">  
+	  		  <div class="modal-body"> 	  		   		
+	  		  		<div class="row">
+	  		  			<div class='col-md-12'>
+				            <div class='input-group'>
+				              <span class='input-group-addon'>Estatus:</span>
+				              <input type="text" name="estatus" ng-model="turno.estatus" id="estatus" class='form-control' required mayusculas>
+				            </div>
+				          </div>    
+	  		  		</div>
+	  		  		<div class="row" ng-show="cargador">
+	  		  			<div class='col-md-12' align="center">				           
+                            <img ng-src="imgs/cargador.gif">                                                 
+			          	</div>    
+	  		  		</div>	  	
+	  		  		  		  			
+	     	  </div>
+	     	  <div class="modal-footer">	      	
+		        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+		        <input type="submit" class="btn btn-default"  value="Guardar">
+		      </div>
+	      </form>
+	      </div>    	
+	    </div>
+  	</div>
+  	  	<div class="modal fade" id="inicioPausa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Inicio Pausa</h4>
+	      </div>
+	       	<form ng-submit="guardaInicioPausa()">  
+	  		  <div class="modal-body"> 	  		   		
+	  		  		<div class="row">
+	  		  			<div class='col-md-12'>
+				            <div class='input-group'>
+				              <span class='input-group-addon'>Estatus:</span>
+				              <input type="text" name="estatus" ng-model="turno.estatus" id="estatus" class='form-control' required mayusculas>
+				            </div>
+				          </div>    
+	  		  		</div>
+	  		  		<div class="row" ng-show="cargador">
+	  		  			<div class='col-md-12' align="center">				           
+                            <img ng-src="imgs/cargador.gif">                                                 
+			          	</div>    
+	  		  		</div>	  		  			
+	     	  </div>
+	     	  <div class="modal-footer">	      	
+		        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+		        <input type="submit" class="btn btn-default"  value="Guardar">
+		      </div>
+	      </form>
+	      </div>    	
+	    </div>
+  	</div>
+  	  	<div class="modal fade" id="finPausa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Fin Pausa</h4>
+	      </div>
+	       	<form ng-submit="guardaFinPausa()">  
+	  		  <div class="modal-body"> 	  		   		
+	  		  		<div class="row">
+	  		  			<div class='col-md-12'>
+				            <div class='input-group'>
+				              <span class='input-group-addon'>Estatus:</span>
+				              <input type="text" name="estatus" ng-model="turno.estatus" id="estatus" class='form-control' required mayusculas>
+				            </div>
+				          </div>    
+	  		  		</div>
+	  		  		<div class="row" ng-show="cargador">
+	  		  			<div class='col-md-12' align="center">				           
+                            <img ng-src="imgs/cargador.gif">                                                 
+			          	</div>    
+	  		  		</div>	  		  			
+	     	  </div>
+	     	  <div class="modal-footer">	      	
+		        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+		        <input type="submit" class="btn btn-default"  value="Guardar">
+		      </div>
+	      </form>
+	      </div>    	
+	    </div>
+  	</div>
+  	<div class="modal fade" id="finTurno" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Fin Turno</h4>
+	      </div>
+	       	<form ng-submit="guardaFinTurno()">  
+	  		  <div class="modal-body"> 	  		   		
+	  		  		<div class="row">
+	  		  			<div class='col-md-12'>
+				            <div class='input-group'>
+				              <span class='input-group-addon'>Estatus:</span>
+				              <input type="text" name="estatus" ng-model="turno.estatus" id="estatus" class='form-control' required mayusculas>
+				            </div>
+				          </div>    
+	  		  		</div>
+	  		  		<div class="row" ng-show="cargador">
+	  		  			<div class='col-md-12' align="center">				           
+                            <img ng-src="imgs/cargador.gif">                                                 
+			          	</div>    
+	  		  		</div>	  		  			
+	     	  </div>
+	     	  <div class="modal-footer">	      	
+		        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+		        <input type="submit" class="btn btn-default"  value="Guardar">
+		      </div>
+	      </form>
+	      </div>    	
+	    </div>
+  	</div>
+
+  	<div class="modal fade" id="resetearRegistro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Resetear Registro</h4>
+	      </div>
+	       	<form ng-submit="enviaReseteoTurno()">  
+	  		  <div class="modal-body"> 	  		   		
+	  		  		<div class="row">
+	  		  			<div class='col-md-12'>
+				            <div class='input-group'>
+				              <span class='input-group-addon'>Motivo de Reseteo de Turno:</span>
+				              <input type="text" name="estatus" ng-model="turno.estatus" id="estatus" class='form-control' required mayusculas>
+				            </div>
+				          </div>    
+	  		  		</div>
+	  		  		<div class="row" ng-show="cargador">
+	  		  			<div class='col-md-12' align="center">				           
+                            <img ng-src="imgs/cargador.gif">                                                 
+			          	</div>    
+	  		  		</div>	  		  			
+	     	  </div>
+	     	  <div class="modal-footer">	      	
+		        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+		        <input type="submit" class="btn btn-default"  value="Guardar">
+		      </div>
+	      </form>
+	      </div>    	
+	    </div>
+  	</div>
+
+</div>
+</div>
+<p><br></p>
+
+<!-- MÉDICOS DISPONIBLES -->
+<div class="container" style="width: 100%"  ng-show="permisos.Per_registro=='S'">
+	<div class="panel panel-primary">
+  		<div class="panel-heading">
+  			<label>Médicos disponibles</label>
+  		</div>
+  		<div class="Panel-body">
+  			<div class="container" style="width:100%">
+  				<div class="row" ng-show="listado">
+  					<table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+  						<thead>
+  							<tr>
+  								<th>#</th>
+  								<th>Nombre</th>
+  								<th>Estatus</th>
+  								<th>Hora de entrada</th>
+  								<th>Disponibilidad</th>
+  							</tr>
+  						</thead>
+  						<tbody>
+  							<tr ng-repeat="valor in listado">
+  								<td>{{$index+1}}</td>
+  								<td>{{valor.Med_nombre + ' ' + valor.Med_paterno + ' ' +valor.Med_materno}}</td>
+  								<td>{{valor.Estatus_obsEstatus}}</td>
+  								<td>{{valor.Estatus_inicioTurno.substring(10,19)}}</td>
+  								<td><img src="{{imgEstatus}}" width="15" /></td>
+  							</tr>
+  						</tbody>
+  					</table>
+  				</div>
+  				<div class="row" ng-hide="listado">
+  					<br>
+  					<div class="alert alert-success" align="center">No hay médicos disponibles.</div>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+</div>
+<!-- MÉDICOS DISPONIBLES -->

@@ -1,0 +1,255 @@
+<style type="text/css">
+
+	
+
+	.button {
+
+    -moz-appearance: button;
+
+    /* Firefox */
+
+    -webkit-appearance: button;
+
+    /* Safari and Chrome */
+
+    padding: 10px;
+
+    margin: 10px;
+
+    width: 100px;
+
+}
+
+.drop-box {
+
+    background: #F8F8F8;
+
+    border: 5px dashed #DDD;
+
+    width: 200px;
+
+    height: 65px;
+
+    text-align: center;
+
+    padding-top: 25px;
+
+    margin: 10px;
+
+}
+
+.dragover {
+
+    border: 5px dashed blue;
+
+}
+
+</style>
+
+
+
+
+
+<div class="container" style="width: 100%"> 
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+
+      <div class="panel-heading">
+
+        <h3 class="panel-title" align="center">Digitalización de Documentos para el folio <b>{{folio}}</b></h3>
+
+      </div>
+
+      <div class="panel-body">
+
+        <form ng-submit="guardaDigital()">
+
+        <div class="row" >
+
+            <div class="col-md-4">
+
+                <div class="input-group">
+
+                  <span class="input-group-addon">tipo:</span>
+
+                  <select ng-model="digital.tipo"  class="form-control" ng-model="rehabilitacionForm.escala"  id="escala" name="escala" required ng-options="tipoDocumento.TID_claveint as tipoDocumento.TID_nombre group by tipoDocumento.TID_docMV for tipoDocumento in listadoTipoDocumento" mayusculas>
+
+                            <option value="">- Seleccione - </option>                                
+
+                  </select>
+
+                </div>
+
+
+
+            </div>
+
+            <div class="col-md-5">
+
+                <input type="file" ng-file-select="onFileSelect_xml($files)" required>                
+
+                <div ng-file-drop="onFileSelect_xml($files)" class="drop-box"  ng-file-drag-over-class="optional-css-class-name-or-function"
+
+                ng-show="dropSupported">Arrastra tu archivo
+
+
+
+                </div>
+
+                <div ng-file-drop-available="dropSupported=true" 
+
+                ng-show="!dropSupported">HTML5 Drop File is not supported!
+
+                </div>
+
+
+
+
+
+            </div>             
+
+             <div class="col-md-3">
+
+                <input type="submit" class="btn btn-primary" value="Guardar">
+
+            </div>
+
+        </div>
+
+        </form>
+
+            <!--fin del row principal-->
+
+        <div class="row"> 
+
+            <div class="col-md-12">
+
+              <div ng-show="cargador" align="center">
+
+                <img ng-src="imgs/cargador.gif">
+
+              </div>
+
+            </div>
+
+        </div>  
+
+         <div class="row"> 
+
+            <div class="col-md-12">
+
+              <div ng-show="msjerror" align="center">
+
+                <div class="alert alert-warning">No se pudo subir el archivo. revise la extención y tamaño del archivo (1.5 MB máximo)</div>
+
+              </div>
+
+            </div>
+
+        </div>  
+
+        <div class="row" ng-show="listaDigitales"> 
+
+            <div class="col-md-12">
+
+                    <table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" >
+
+                        <tr>          
+
+                            <th width="10%"><b>Contador</b></th>
+
+                             <th width="15%"><b>Tipo</b></th>         
+
+                            <th width="10%"><b>Archivo</b></th>                                                       
+
+                            <th width="15%"><b>Fecha</b></th>       
+
+                            <th width="10%"><b>Usuario</b></th>
+
+                            <th width="10%"><b>Eliminar</b></th>                    
+
+                        </tr>
+
+                        <tr ng-repeat="listado in listaDigitales">                            
+
+                            <td>{{listado.Arc_cons}}</td>
+
+                            <td>{{listado.TID_nombre}}</td>
+
+                            <td ng-hide="(listado.Uni_clave==232||listado.Uni_clave==249||listado.Uni_clave==125||listado.Uni_clave==110||listado.Uni_clave==266||listado.Uni_clave==65||listado.Uni_clave==185||listado.Uni_clave==269||listado.Uni_clave==301)&&listado.Arc_tipo!=31" ><a href="../../registro/{{listado.Arc_Archivo}}" target="_blank">{{listado.Arc_Archivo}}</a></td>  
+                            <td ng-show="(listado.Uni_clave==232||listado.Uni_clave==249||listado.Uni_clave==125||listado.Uni_clave==110||listado.Uni_clave==266||listado.Uni_clave==65||listado.Uni_clave==185||listado.Uni_clave==269||listado.Uni_clave==301)&&listado.Arc_tipo!=31" ><a href="../../registro/{{listado.Arc_Archivo+'/'+listado.Arc_clave}}" target="_blank">{{listado.Arc_Archivo}}</a></td>                            
+
+                            <td>{{listado.Arc_fecreg}}</td>
+
+                            <td>{{listado.USU_login}}</td>
+
+                            <td><input type="button" ng-click="eliminaDigital(listado.Arc_cons,listado.Arc_tipo)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+
+                            
+
+                        </tr>
+
+                    </table>
+
+            </div>
+
+        </div>
+
+         <div class="row">
+
+            <div class="col-md-3 " align="left">
+
+                <button class='btn btn-primary' ng-click="irDocumentos()">Documentos</button>
+
+            </div>                              
+
+        </div> 
+
+         <div class="modal fade" id="myModal" role="dialog">
+
+            <div class="modal-dialog modal-sm">
+
+              <div class="modal-content">
+
+                <div class="modal-header">
+
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>                  
+
+                </div>
+
+                <div class="modal-body">
+
+                  <p>El tamaño de archivo es muy grande (1.5 MB máximo).</p>
+
+                </div>
+
+                <div class="modal-footer">
+
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+
+                  <!--<button type="button" class="btn btn-default" ng-click="subirArchivo()">Aceptar</button>-->
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>                
+
+      </div>
+
+    </div>
+
+  </div>
+
+ 
+
+</div>
+

@@ -1,0 +1,257 @@
+<div class="container" style="width: 100%">     
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+		</div> 
+		<div class="Panel-body">
+			<div class="row">
+				<div class="col-md-12" align="center">
+					<h1>Monitor Cuestionario del  01 - 11 - 2016 al {{fecha}}</h1>
+				</div>				
+			</div>
+			<ul class="nav nav-tabs">
+			<div class="row">	
+				<div class="col-lg-4 col-md-6">
+                  <!-- START panel-->
+                  <div class="panel panel-warning">
+                     <div class="panel-heading">
+                        <div class="row">
+                           <div class="col-xs-3">
+                              <em class="fa fa-tasks fa-5x"></em>
+                           </div>
+                           <div class="col-xs-9 text-right">
+                              <div class="text-lg">{{conteos.contSinCaptura}}</div>
+                              <p class="m0">Sin Captura</p>
+                           </div>
+                        </div>
+                     </div>
+                     <button data-target="#tab-one" ng-click="verSinCaptura()"  data-toggle="tab" class="panel-footer bg-dark bt0 clearfix btn-block mianimacion"  >
+                        <span class="pull-left">Ver Detalle</span>
+                        <span class="pull-right">
+                           <em class="fa fa-chevron-circle-right"></em>
+                        </span>
+                     </button>
+                  </div>
+                  <!-- END panel-->
+               </div>		
+               
+               <div class="col-lg-4 col-md-6">
+                  <!-- START panel-->
+                  <div class="panel panel-green">
+                     <div class="panel-heading">
+                        <div class="row">
+                           <div class="col-xs-3">
+                              <em class="fa fa-tasks fa-5x"></em>
+                           </div>
+                           <div class="col-xs-9 text-right">
+                              <div class="text-lg">{{conteos.contCaptura}}</div>
+                              <p class="m0">Capturados</p>
+                           </div>
+                        </div>
+                     </div>
+                     <button data-target="#tab-three" ng-click="verCapturados()"  data-toggle="tab" class="panel-footer bg-dark bt0 clearfix btn-block mianimacion">
+                        <span class="pull-left">Ver Detalle</span>
+                        <span class="pull-right">
+                           <em class="fa fa-chevron-circle-right"></em>
+                        </span>
+                     </button>
+                  </div>
+                  <!-- END panel-->
+               </div>
+               <div class="col-lg-4 col-md-6">
+                  <!-- START panel-->
+                  <div class="panel panel-primary">
+                     <div class="panel-heading">
+                        <div class="row">
+                           <div class="col-xs-3">
+                              <em class="fa fa-tasks fa-5x"></em>
+                           </div>
+                           <div class="col-xs-9 text-right">
+                              <div class="text-lg">{{conteos.contTodas}}</div>
+                              <p class="m0">Total</p>
+                           </div>
+                        </div>
+                     </div>
+                     <button data-target="#tab-four" ng-click="VerTodos()"  data-toggle="tab" class="panel-footer bg-dark bt0 clearfix btn-block mianimacion">
+                        <span class="pull-left">Ver Detalle</span>
+                        <span class="pull-right">
+                           <em class="fa fa-chevron-circle-right"></em>
+                        </span>
+                     </button>
+                     <!-- END panel-->
+                  </div>
+               </div>
+               
+            </div>
+            </ul>
+			<!--<div class="row">
+				<form ng-submit="buscaParametros()">
+					<div class="col-md-4" align="left">
+						<div class="input-group">
+		                 <span class="input-group-addon">Nombre: </span>	                 
+		                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.nombre" class= "form-control" mayusculas >	                 
+	          			</div>
+					</div>
+					<div class="col-md-4">
+						<div class="input-group">
+		                 <span class="input-group-addon">Folio: </span>	                 
+		                    <input type="text" name="ObsAccidente" id="ObsAccidente" ng-model="busca.folio" class= "form-control" mayusculas>	                  
+	          			</div>
+					</div>
+					<div class="col-md-4" align="right">
+		                <div class="form-group">
+		                    <input type="submit" id="btnenvioprimero" class="btn btn-primary" value="Buscar">
+		                </div>
+		            </div>
+	            </form>
+			</div>
+			<div  ng-show="error" class="row mianimacion">
+				<div class="col-md-12">
+					<div class="alert alert-warning">No se encontraron coincidencias.</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+                    <div ng-show="cargador1" align="center">
+                            <img ng-src="imgs/cargador.gif">
+                    </div>
+                </div>
+            </div>-->
+			<div class="row" >
+          <div class="col-md-12">
+            
+            <div class="tab-content " >
+              	<div id="tab-one" class="tab-pane mianimacion" ng-show="verContenedor">              
+					<div class="row">
+					<div class="col-md-12">
+						<label>Sin Captura</label>
+					</div>
+						<div class="col-md-12" ng-show="sinCuestionario">
+							<table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive">
+								<tr>							        
+									<th width="10%"><b>Folio</b></th>
+									<th width="10%"><b>Aseguradora</b></th>
+									<th width="15%"><b>Fecha</b></th>         
+									<th width="15%"><b>A.Paterno</b></th>
+									<th width="15%"><b>A.Materno</b></th>
+									<th width="20%"><b>Nombre(s)</b></th>
+									<!-- <th width="10%"><b>Observaciones</b></th> -->
+									<th width="25%"></th>					
+								</tr>
+								<tr ng-repeat="folios in sinCuestionario">							
+									<td ng-show="folios.Exp_cancelado==1">{{folios.Exp_folio}}</td>
+									<td ng-hide="folios.Exp_cancelado==1"><a href="" ng-click="mandaPortada(folios.Exp_folio)">{{folios.Exp_folio}}</a></td>							
+									<td>{{folios.Cia_nombrecorto}}</td>
+									<td>{{folios.Fecha}}</td>
+									<td>{{folios.Exp_paterno}}</td>
+									<td>{{folios.Exp_materno}}</td>
+									<td>{{folios.Exp_nombre}}</td>
+									<!-- <td>{{folios.Exp_obs}}</td> -->
+									<td><a href="http://medicavial.net/CuAtencion/#/login?folio={{folios.Exp_folio}}">Ir al cuestionario &nbsp;<i class="fa fa-external-link" aria-hidden="true"></i></a></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+			        <div class="row" ng-show='cargador'> 
+						<div class="col-md-12">
+						  <div ng-show="cargador" align="center" style="hight:10em;">
+						    <img ng-src="imgs/cargador.gif">
+						  </div>
+						</div>
+			        </div>   
+				</div>
+				<div id="tab-three" class="tab-pane mianimacion" ng-show="verContenedor" >
+					<div class="row"> 
+						<div class="col-md-12">
+							<label>Capturados</label>
+						</div>
+						<div class="col-md-12" >
+							<table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive">
+								<tr>							        
+									<th width="10%"><b>Folio</b></th>
+									<th width="10%"><b>Aseguradora</b></th>
+									<th width="15%"><b>Fecha</b></th>         
+									<th width="15%"><b>A.Paterno</b></th>
+									<th width="15%"><b>A.Materno</b></th>
+									<th width="20%"><b>Nombre(s)</b></th>
+									
+											
+								</tr>
+								<tr ng-repeat="folios in conCuestionario">							
+									<td ng-show="folios.Exp_cancelado==1">{{folios.Exp_folio}}</td>
+									<td ng-hide="folios.Exp_cancelado==1"><a href="" ng-click="mandaPortada(folios.Exp_folio)">{{folios.Exp_folio}}</a></td>							
+									<td>{{folios.Cia_nombrecorto}}</td>
+									<td>{{folios.Fecha}}</td>
+									<td>{{folios.Exp_paterno}}</td>
+									<td>{{folios.Exp_materno}}</td>
+									<td>{{folios.Exp_nombre}}</td>									
+								</tr>
+							</table>							
+						</div>
+					</div>
+					<div class="row" ng-show='cargador'> 
+						<div class="col-md-12">
+						  <div ng-show="cargador" align="center" style="hight:10em;">
+						    <img ng-src="imgs/cargador.gif">
+						  </div>
+						</div>
+			        </div>      
+				</div>
+
+              <div id="tab-four" class="tab-pane">
+              <div class="row"> 
+              			<div class="col-md-12">
+							<label>Todos</label>
+						</div>
+						<div class="col-md-12" >
+							<table   align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive">
+								<tr>							        
+									<th width="10%"><b>Folio</b></th>
+									<th width="10%"><b>Aseguradora</b></th>
+									<th width="15%"><b>Fecha</b></th>         
+									<th width="15%"><b>A.Paterno</b></th>
+									<th width="15%"><b>A.Materno</b></th>
+									<th width="20%"><b>Nombre(s)</b></th>
+									<th width="15%"><b>Capturado</b></th>
+									
+											
+								</tr>
+								<tr ng-repeat="folios in Todo">							
+									<td data-title="'Folio MV'" sortable="'Exp_folio'" ng-show="folios.Exp_cancelado==1">{{folios.Exp_folio}}</td>
+									<td data-title="'Folio MV'" sortable="'Exp_folio'" ng-hide="folios.Exp_cancelado==1"><a href="" ng-click="mandaPortada(folios.Exp_folio)">{{folios.Exp_folio}}</a></td>							
+									<td data-title="'Compañia'" sortable="'Cia_nombrecorto'">{{folios.Cia_nombrecorto}}</td>
+									<td data-title="'Fecha'" sortable="'Fecha'">{{folios.Fecha}}</td>
+									<td data-title="'Ap. Paterno'" sortable="'Exp_paterno'">{{folios.Exp_paterno}}</td>
+									<td data-title="'Ap. Materno'" sortable="'Exp_materno'">{{folios.Exp_materno}}</td>
+									<td data-title="'Nombre'" sortable="'Exp_nombre'">{{folios.Exp_nombre}}</td>
+									<td data-title="'Capturado'" sortable="'capturado'" ng-show="folios.capturado=='no'">
+										<span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Cancelar folio">
+                                          <em class="fa fa-circle fa-stack-2x text-danger"></em>
+                                          <em class="fa fa-close fa-stack-1x fa-inverse text-white"></em>
+                                       </span>
+									</td>
+									<td data-title="'Capturado'" sortable="'capturado'" ng-hide="folios.capturado=='no'">
+										<span class="fa-stack fa-lg" tooltip-placement="buttom" tooltip-trigger tooltip="Cancelar folio">
+                                          <em class="fa fa-circle fa-stack-2x text-success"></em>
+                                          <em class="fa fa-check fa-stack-1x fa-inverse text-white"></em>
+                                       </span>
+									</td>
+																	
+								</tr>
+							</table>							
+						</div>
+					</div>
+					<div class="row" ng-show='cargador'> 
+						<div class="col-md-12">
+						  <div ng-show="cargador" align="center" style="hight:10em;">
+						    <img ng-src="imgs/cargador.gif">
+						  </div>
+						</div>
+			        </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+	</div>
+</div>

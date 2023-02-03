@@ -1,0 +1,53 @@
+<form name="formularios.sigysinsub" ng-submit="guardaSigYSinSub()" novalidate>
+  <div class="container" style="width:100%" >
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title" align="center"> Subsecuencia No. {{noSubsec}}</h3>
+      </div>
+      <div class="panel-body"> 
+        <div class="row" align="center">                    
+          <div class="col-md-6">
+            <div class="container" style="width:100%"  >
+              <div class="panel panel-default" style="width:100%">
+                <div class="panel-heading">
+                  <h3 class="panel-title" align="center"> Signos y sintomas</h3>
+                </div>
+                <textarea rows="6" class="form-control" ng-model="sub.sigYSin" name="sigYSin" id="sigYSin" onpaste="return false" style="resize:none; border: none;" required mayusculas ng-disabled="cargador"></textarea>
+              </div>
+              <div class="validacion" role="alert" ng-if="interacted(formularios.sigysinsub.sigYSin)" ng-messages="formularios.sigysinsub.sigYSin.$error">
+                <div ng-message="required">campo requerido</div>            
+              </div>
+            </div> 
+          </div>            
+          <div class="col-md-6">
+            <div class="container" style="width:100%"  >
+              <div class="panel panel-default" style="width:100%">
+                <div class="panel-heading">
+                  <h3 class="panel-title" align="center"> Evolución</h3>
+                </div>
+                <textarea rows="6" class="form-control" name="evo" ng-model="sub.evo" id="evo" onpaste="return false" style="resize:none; border: none;" required mayusculas ng-disabled="cargador"></textarea>
+              </div>
+              <div class="validacion" role="alert" ng-if="interacted(formularios.sigysinsub.evo)" ng-messages="formularios.sigysinsub.evo.$error">
+                <div ng-message="required">campo requerido</div>            
+              </div>
+            </div> 
+          </div>
+        </div><!--fin del row principal-->
+        <div class="row"> 
+            <div class="col-md-12">
+              <div ng-show="cargador" align="center">
+                <img ng-src="imgs/cargador.gif">
+              </div>
+            </div>
+        </div>         
+        <div class="row">
+          <div class="col-md-10">
+          </div>
+          <div class="col-md-2">
+            <input type="submit" name="guardaProno" id="guardaProno" class="btn btn-success"  value="Guardar" ng-disabled="cargador"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

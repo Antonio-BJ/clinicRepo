@@ -1,0 +1,227 @@
+
+
+  <div class="container" style="width: 100%">   
+
+    <div class="panel panel-primary">    
+      <div class="panel-heading">
+        <label>Datos del paciente</label>
+      </div>
+      <div class="panel-body">
+      <form name="formularios.pac" ng-submit="enviaDatos()" novalidate>
+        <div class="row"> 
+          <div class="col-md-3">   
+            <div class="input-group">
+              <span class="input-group-addon">Folio: </span>
+              <input type="text" class="form-control" value="{{folio}}" disabled>
+            </div>
+            <br/>
+          </div>    
+          <div class="col-md-6">   
+            <div class="input-group">
+              <span class="input-group-addon">Nombre: </span>
+              <input type="text" class="form-control" value="{{nombre}}" disabled>
+            </div>
+          </div>    
+        </div>
+        <div class="row">
+          <div class="col-md-6">   
+            <div class="input-group">
+              <span class="input-group-addon">Fecha de Nacimiento: </span>                      
+              <input for="element_4_1" type="text" class="form-control" name="fecnac" id="fecnac" required   ng-model="datos.fecnac" data-date-format="DD-MM-YYYY" data-date="datos.fecnac"  data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }"  ng-blur="calculaFecha()" disabled>               
+            </div>
+            <div class="validacion" role="alert" ng-if="interacted(formularios.pac.fecnac)" ng-messages="formularios.pac.fecnac.$error">
+              <div ng-message="required">campo requerido</div>
+            </div>
+          </div>
+          <div class="col-md-2">   
+            <div class="input-group">
+              <span class="input-group-addon">Años: </span>                  
+              <input for="element_4_1" type=text class= "form-control" ng-model="datos.anios" name="txtedad" id="txtedad"  onkeypress="return soloNumeros(event)" maxlength="3" value="{{anios}}" >
+            </div>
+          </div>
+          <div class="col-md-2">   
+            <div class="input-group">
+              <span class="input-group-addon">Meses: </span>                  
+              <input for="element_4_1" type=text class= "form-control" id="txtmeses" ng-model="datos.meses" class= "form-control" name="txtmeses" value="{{meses}}" >
+            </div>
+          </div>    
+          <div class="col-md-2">   
+            <div class="input-group">
+              <span class="input-group-addon">Sexo: </span> 
+              <span class="input-group-addon">                 
+              <input type='radio' name='sexo' id='sexo' value='M' ng-model="datos.sexo" required />  M <input type='radio' name='sexo' id='sexo' value='F' ng-model="datos.sexo" required/>  F
+              </span>              
+            </div>
+              <div role="alert" class="validacion" ng-if="interacted(formularios.pac.sexo)" ng-messages="formularios.pac.sexo.$error">
+              <div ng-message="required">campo requerido</div>
+            </div>  
+          </div>  
+                
+        </div>
+        <br/>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">Tipo de trabajo:</span>
+              <select required ng-model="datos.ocu" name="ocu" id="ocu"   class= "form-control"   style="width: 150px;" ng-options="ocu.Ocu_clave as ocu.Ocu_nombre  for ocu in ocupacion" mayusculas>
+                <option value=""> *Seleccione </option>                
+              </select>                             
+             
+            </div> 
+             <div class="validacion" role="alert" ng-if="interacted(formularios.pac.ocu)" ng-messages="formularios.pac.ocu.$error">
+                <div ng-message="required">campo requerido</div>
+              </div>   
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">Estado civil:</span>
+              <select ng-model="datos.edoC" name="edoC" id="edoC" class= "form-control"  style="width: 150px;" ng-options="estadoC.Edo_clave as estadoC.Edo_nombre  for estadoC in edoCivil" required mayusculas>
+                <option value=""> * Seleccione </option>                
+              </select>
+              
+            </div>
+            <div class="validacion" role="alert" ng-if="interacted(formularios.pac.edoC)" ng-messages="formularios.pac.edoC.$error">
+                <div ng-message="required">campo requerido</div>
+              </div>    
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">Teléfono:</span>                  
+              <input type="text" name="tel" ng-model="datos.tel"  class= "form-control" id="tel" required >
+              <div class="validacion" role="alert" ng-if="interacted(formularios.pac.tel)" ng-messages="formularios.pac.tel.$error">
+                <div ng-message="required">campo requerido</div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+  Agregar más teléfonos
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Teléfonos</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-5">
+          <div class="input-group">                
+            <label class="input-group-addon">Tipo Teléfono:</label>
+            <select   style="width:100%" ng-model="telefonos.tipo" class= "form-control" class="form-control" >
+                <option value=""> * Seleccione tipo </option>
+                <option value="1">Particular</option>
+                <option value="2">Oficina</option>
+                <option value="3">M&oacute;vil</option>
+                <option value="4">Otro</option>                            
+            </select>
+          </div> 
+            <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.tel)" ng-messages="etapa1.tel.$error">
+              <div ng-message="required">Se requiere el valor del tipo de teléfono</div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="input-group">  
+            <label class="input-group-addon">No. Teléfono:</label>                    
+            <input  type="text" style="width:100%" ng-model="telefonos.telefono"  class="form-control" id="numeroTel" name="numeroTel" > 
+            <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.numeroTel)" ng-messages="etapa1.numeroTel.$error">
+              <div ng-message="required">Se requiere el valor del número de teléfono</div>
+            </div>
+            </div> 
+          </div>  
+          <div class="col-md-2">  
+            <button type="button" ng-click="agregaTel()" class="btn btn-info">Agregar</button>
+            </div> 
+          </div> 
+          <div class="row" ng-show="msjTel">
+             <div class="col-md-12">
+                <div  class="validacion">
+                    Los campos son obligatorios
+                </div>
+             </div>
+           </div> 
+          <div class="row" ng-show="listTelefonos">
+             <div class="col-md-12">
+               <table class="table table-striped table-hover">
+                <tr>
+                  <th width="10%"><b>#</b></th>
+                  <th width="40%"><b>Tipo</b></th>
+                  <th width="40%"><b>Telefono</b></th>                  
+                  <th width="10%"><b>Eliminar</b></th>                  
+                </tr>
+                <tr ng-repeat="tels in listTelefonos">
+                  <td>{{tels.Tel_cont}}</td>
+                  <td>{{tels.Tel_tipo}}</td>
+                  <td>{{tels.Tel_numero}}</td>
+                  <td><input type="button" ng-click="borrarTels(tels.Tel_cont)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+                </tr>
+              </table>
+                
+             </div>
+           </div> 
+        </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+          </div>          
+        </div>
+        <br/>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-addon">E-mail:</span>
+                <input type="email" ng-model="datos.mail" name="mail" id="mail" class= "form-control" maxlength="50" ng-pattern="/^[a-z]+[a-z0-9._-]+@[a-z]+\.(gov$|gob.mx$|mx$|com.mx$|net$|com$|org$|gob$|edu.mx$|edu$|edu.com$|es|eu|cr|ru|fr|do|gt|sv|cl|co|cn|ar|bo|ec|py|pe|uy|ve|gov|info|int|jobs|mil|mobi|museum|name|pro|tel|travel|fm|tv|tk|$)/">                
+              </div>
+              <div class="validacion" role="alert" ng-if="interacted(formularios.pac.mail)" ng-messages="formularios.pac.mail.$error">                
+                  <div ng-message="pattern">email incorrecto</div>
+                </div> 
+            </div>
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-addon">Obs.MedicoReligiosas:</span>
+                <input type="text" name="obs" ng-model="datos.obs" required class= "form-control" id="Religion">
+                
+              </div>
+                <div class="validacion" role="alert" ng-if="interacted(formularios.pac.obs)" ng-messages="formularios.pac.obs.$error">
+                <div ng-message="required">campo requerido</div>
+              </div>
+                <input type="checkbox" ng-change="obsRelig()" ng-model="defaultRelig.obsReligDefault">                                                             
+              <label>Ninguna</label>                                                      
+             
+              
+            </div>
+        </div>
+        <div class="row"> 
+          <div class="col-md-12">
+            <div ng-show="cargador" align="center">
+              <img ng-src="imgs/cargador.gif">
+            </div>
+          </div>
+        </div>      
+        <br/>
+        <div class="row">
+          <div class="col-md-10">
+          </div>
+          <div class="col-md-2">
+            <input type="Submit" class="btn btn-primary btn-lg"  value="Siguiente" />
+          </div>
+        </div>
+        </form>     
+      </div>
+    </div>  
+  </div> 
+
+<script type="text/javascript">
+       $('#fecnac').datetimepicker({ 
+        pickDate: true,                 //en/disables the date picker
+        pickTime: false,                 //en/disables the time picker     
+        showToday: true,                 //shows the today indicator
+        language:'es'                  //sets language locale
+
+    });
+</script>

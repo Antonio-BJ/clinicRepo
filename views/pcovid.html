@@ -1,0 +1,179 @@
+<style type="text/css">
+  .left{
+    text-align: left;
+    width: fit-content;
+  }
+</style>
+<div>
+	<h2 style="width: 94%; margin: auto;">Pacientes Covid</h2>
+  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 id="anio"style="width: 94%; margin: auto;">Total de pacientes por año:</h3>
+    </div>
+    <div class="col-md-5">
+      <h3 id="mes"style="width: 94%; margin: auto;">Total de pacientes por mes:</h3>
+    </div>
+  </div>
+  <hr>
+	<form name="ventasSinReg" id="ventasSinReg" ng-submit="buscapacientes()" style="width: 94%; margin: auto;"> 
+    <div style="float:right"> <h5 >Total de registros:<b id="nr"></b></h5></div>
+		<br>
+		<div class="row">
+			<div class="col-md-3">
+        <div class="input-group " style="width:90%">
+          <span>Unidad: </span>
+          <select name="uni" id="uni" ng-model="consulta.unidad" class="form-control"  ng-options="uni.Uni_clave as uni.Uni_nombrecorto  for uni in listadoUnidades">
+              <option value=""> </option>
+          </select>
+        </div>                     
+      </div>
+      
+
+			<div class="col-md-3">
+				<div  class="input-group " style="width:90%">
+            <span>Fecha inicio: </span>
+            <input type="date" ng-model="consulta.fecha" name="fecha" id="fecha" class= "form-control">
+            </select>
+        </div>  
+			</div>
+      <div class="col-md-3">
+				<div class="input-group " style="width:90%">
+            <span>Fecha fin: </span>
+            <input type="date" ng-model="consulta.fechaf" name="fechaf" id="fechaf" class= "form-control">
+            </select>
+        </div>  
+			</div>
+			<div class="col-md-3" align="center">
+        <br>
+				<div class="input-group" style="width:100%">
+            <input type="Submit" class="btn btn-primary btn-md" value="Buscar"/>     
+        </div>  
+			</div>
+		</div>
+	</form>
+  <div  id="cargadorpc" class="row">
+    <div class="col-md-12">
+      <div  align="center">
+        <img ng-src="imgs/cargador.gif">
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default" ng-hide="listadoPC1" >
+    <div class="row" >
+      <div class="col-md-12">
+        <table id="tablapacientes" align="center"  style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" style="width: 100%">
+          <tr>          
+            <th width="2%"><b>#</b></th>
+            <th width="10%"><b>Folio</b></th>
+            <th width="10%"><b>Unidad</b></th>
+            <th width="10%"><b>Aseguradora</b></th>
+            <th width="15%"><b>Fecha</b></th>         
+            <th width="12%"><b>A.Paterno</b></th>
+            <th width="13%"><b>A.Materno</b></th>
+            <th width="20%"><b>Nombre(s)</b></th>
+            <th width="5%"><b>Observaciones</b></th>
+            
+          </tr>
+          <tbody >
+            <tr ng-repeat="listado in listadoPC">
+              <td style="color: #aaa">{{$index + 1}}</td>
+              <td>{{listado.Exp_folio}}</td>
+              <td>{{listado.Unidad}}</td>
+              <td>{{listado.Cia_nombrecorto}}</td>
+              <td>{{listado.Fecha}}</td>
+              <td>{{listado.Exp_paterno}}</td>
+              <td>{{listado.Exp_materno}}</td>
+              <td>{{listado.Exp_nombre}}</td>
+              <td>{{listado.Exp_obs}}</td>
+             
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+    </div>
+   
+  </div>
+  <br ng-show="cargador">
+  <div class="row" ng-show="cargador">
+    <div class="col-md-12">
+      <div  align="center">
+        <img ng-src="imgs/cargador.gif">
+      </div>
+    </div>
+  </div>    
+  <hr ng-show="listadoPC1">
+
+  <div class="panel panel-default" ng-show="listadoPC1" style="width: 100%; margin: auto;">
+    <div class="row" ng-show="listadoPC1">
+      <div class="col-md-12">
+        <table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" style="width: 100%">
+          <tr>          
+            <th width="2%"><b>#</b></th>
+            <th width="10%"><b>Folio</b></th>
+            <th width="10%"><b>Unidad</b></th>
+            <th width="10%"><b>Aseguradora</b></th>
+            <th width="15%"><b>Fecha</b></th>         
+            <th width="12%"><b>A.Paterno</b></th>
+            <th width="13%"><b>A.Materno</b></th>
+            <th width="20%"><b>Nombre(s)</b></th>
+            <th width="5%"><b>Observaciones</b></th>
+            
+          </tr>
+          <tr ng-repeat="listado in listadoPC1">
+            <td style="color: #aaa">{{$index + 1}}</td>
+            <td>{{listado.Exp_folio}}</td>
+            <td>{{listado.Unidad}}</td>
+            <td>{{listado.Cia_nombrecorto}}</td>
+            <td>{{listado.Fecha}}</td>
+            <td>{{listado.Exp_paterno}}</td>
+            <td>{{listado.Exp_materno}}</td>
+            <td>{{listado.Exp_nombre}}</td>
+            <td>{{listado.Exp_obs}}</td>
+          </tr>
+        </table>
+        
+      </div>
+    </div>
+   
+
+  </div>
+  <div class="col-md-10" align="center">
+    <br><br>
+    <button type="button" class="btn btn-success btn-lg" ng-click="descargar()">
+      <span class="glyphicon glyphicon-download-alt"></span> Descargar a excel
+    </button>
+  </div>
+</div>
+
+<br><br>
+<br><br><br>
+
+
+<script type="text/javascript">
+       $('#fecha1').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+        $('#fecha2').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+
+        $('#hora1').datetimepicker({
+            pickDate: false,
+            format: 'LT',
+            locale: 'mx',
+            language:'es',
+            startTime: '12:00',
+        });
+
+        $('#hora2').datetimepicker({
+            pickDate: false,
+            format: 'LT',
+            locale: 'mx',
+            language:'es',
+            startTime: '12:00',
+        });
+</script>

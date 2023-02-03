@@ -1,0 +1,61 @@
+<div style="margin: auto; width: 96%">
+	<div class="row">
+		<div class="col-md-10">
+			<h2>Solicitud de Plantillas</h2>
+
+			<h4>Folio del paciente: {{folio}}</h4>
+
+			<h5><i class="fa fa-calendar" aria-hidden="true"></i> &nbsp;&nbsp;Fecha de entrega estimada: {{datosSolicitud.fechaEntrega | date:"d/MMM/y"}}</h5>
+
+			<br>
+
+			<h4>Características de las plantillas:</h4>
+		</div>
+
+		<div class="col-md-2" align="right">
+			<a href="#/documentos"><img src="imgs/back.png" width="45" tooltip-placement="left" tooltip-trigger tooltip="Regresar a Documentos"></a>
+		</div>
+	</div>
+
+	<form name="plantillas" ng-submit="enviarSolicitud()">
+		<div class="row">
+			<div class="col-md-5">
+				<div class="input-group">
+				  <span class="input-group-addon" id="basic-addon1">Material</span>
+				  <input type="text" class="form-control" placeholder="* Especifique material de fabricación" ng-model="datosSolicitud.material" required mayusculas>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-5">
+				<div class="input-group">
+				  <span class="input-group-addon" id="basic-addon1">Medida</span>
+				  <input type="number" class="form-control" placeholder="* ESPECIFIQUE MEDIDA" min="0" step="0.5" ng-model="datosSolicitud.medida" required>
+				  <span class="input-group-addon" id="basic-addon1">cm.</span>
+				</div>
+			</div>
+		</div>
+
+		<br><br>
+
+		<div class="row">
+			<div class="col-md-12">
+			  <div class="form-group">
+			    <label for="espe">Especificaciones:</label>
+			    <textarea class="form-control" id="espe" rows="3" placeholder="* Especificaciones adicionales" ng-model="datosSolicitud.especificaciones" required mayusculas></textarea>
+			  </div>
+			</div>
+		</div>
+
+		<br><br>
+		
+		<div class="row">
+			<div class="col-md-12" align="center">
+				<button type="submit" class="btn btn-primary btn-lg" ng-disabled="msjBoton=='Solicitud Enviada'">
+					{{msjBoton}}
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

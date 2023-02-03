@@ -1,0 +1,127 @@
+
+
+    <div id="hastaArriba" class="row Titulo" >    
+
+      <div class="col-md-12">
+
+        <button ng-show="estatusNot>5" ng-click="regresaWizard()" style="background:transparent; border:0px"><img src="imgs/flecha.jpg" width="35" height="35" class="img-circle" /></button>    
+
+      <label style="font-size:18px">Nota Médica Móvil  <b>{{folio}}</b></label>
+    </div>
+
+    </div>
+
+		
+
+				<div class="row" >
+
+					<div class="col-md-12">
+
+						<wizard on-finish="finished()" current-step="paso" hide-indicators="true">                          
+
+              <wz-step title="1">
+
+                <ng-include src="'views/notaMedicaMovil/sigVitConfirm.html'"></ng-include>
+
+              </wz-step>
+
+              <wz-step title="2">
+
+                <ng-include src="'views/notaMedicaMovil/DatosdelAccidente.html'"></ng-include>
+
+              </wz-step>
+
+              <!--<wz-step title="3">
+
+
+                <ng-include src="'views/notaMedica/EmbarazoRed.html'"></ng-include>
+
+              </wz-step>-->
+
+              <!--<wz-step title="3">
+
+               <ng-include src="'views/notaMedica/LesionRed.html'"></ng-include>
+
+              </wz-step>-->
+
+              <!--<wz-step title="5">
+
+                <ng-include src="'views/notaMedica/EstadoGeneral.html'"></ng-include>
+
+              </wz-step>-->
+
+              <wz-step title="3">
+
+                <ng-include src="'views/notaMedicaMovil/EstudiosSolicitados.html'"></ng-include>
+
+              </wz-step>
+
+              <!--<wz-step title="7">
+
+                <ng-include src="'views/notaMedica/procMedicos.html'"></ng-include>
+
+              </wz-step>-->
+
+              <!--<wz-step title="8">
+
+                <ng-include src="'views/notaMedica/diagnostico.html'"></ng-include>
+
+              </wz-step>-->
+
+              <!--<wz-step title="9">
+
+                <ng-include src="'views/notaMedica/otrosEstudios.html'"></ng-include>
+
+              </wz-step>-->
+
+              <!-- <wz-step title="4">
+                <ng-include src="'views/notaMedicaMovil/suministroSymio.html'"></ng-include>
+              </wz-step> -->
+
+               <!-- <wz-step title="5">
+                <ng-include src="'views/notaMedicaMovil/lesionAdministrativa.html'"></ng-include>
+              </wz-step> -->
+              <!--<wz-step title="Suministros">
+                <ng-include src="'views/notaMedica/suministros.html'"></ng-include>
+              </wz-step>-->
+              <!--<wz-step title="11">
+                <ng-include src="'views/notaMedica/pronostico.html'"></ng-include>
+              </wz-step>-->
+
+              <wz-step title="4">
+
+                <ng-include src="'views/notaMedicaMovil/imprimeNota.html'"></ng-include>
+
+              </wz-step>
+
+            </wizard>
+
+          </div>
+          
+            <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Aviso</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: justify; color: coral;">
+        <h3>Script de Nota Médica</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+  
+      </div>
+      </div>
+    </div>
+    </div>
+
+				</div>
+
+			
+
+	
+

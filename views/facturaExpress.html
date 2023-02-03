@@ -1,0 +1,62 @@
+<div ng-init="inicio()">	
+		<div class="panel panel-primary" >
+		    <div class="panel-heading">
+		     	<h4>Listado de Folios Pendientes para Facturación Express</h4>
+		    </div>
+			<br><br>
+			<form name="avisosRH" ng-submit="guardarAvisoRH()" novalidate>
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						<div class='input-group'>
+				              <span class='input-group-addon'>Unidad:</span>
+				              <select name="Unidad" ng-model="unidad" id="PadecimientosCronicos" class="form-control" ng-options="unidad.Uni_clave as unidad.Uni_nombrecorto for unidad in listadoUnidades" ng-change="listadoFoliosUnidad()">
+				                <option value=""> - Seleccione -</option>
+				              </select>
+			            </div>
+						<div class="validacion" role="alert" ng-if="interacted(avisosRH.titulo)" ng-messages="avisosRH.titulo.$error">
+			              	<div ng-message="required">campo requerido</div>
+			            </div>
+					</div>		
+				</div>
+				<div class="row" ng-show="cargador">
+                        <div class="col-md-12">
+                            <div  align="center">
+                                    <img ng-src="imgs/cargador.gif">
+                            </div>
+                        </div>
+                    </div>	
+				<div class="row" ng-show="listadoFolioUnidad">			
+					<div class="col-md-12">
+						<table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive">
+							<tr>          
+								<th width="10%" ng-click="predicate = 'Fact_folio'; reverse=!reverse"><b>No. factura</b></th>
+								<th width="10%" ng-click="predicate = 'Exp_folio'; reverse=!reverse"><b>Folio</b></th>
+								<th width="10%" ng-click="predicate = 'Exp_siniestro'; reverse=!reverse"><b>Siniestro</b></th>         
+								<th width="10%" ng-click="predicate = 'Cia_nombrecorto'; reverse=!reverse"><b>Aseguradora</b></th>
+								<th width="10%" ng-click="predicate = 'Uni_nombrecorto'; reverse=!reverse"><b>Unidad</b></th>
+								<th width="10%" ng-click="predicate = 'Fecha'; reverse=!reverse"><b>Fecha</b></th>
+								<th width="10%" ng-click="predicate = 'Exp_paterno'; reverse=!reverse"><b>A. paterno</b></th>				
+								<th width="10%" ng-click="predicate = 'Exp_materno'; reverse=!reverse"><b>A. materno</b></th>				
+								<th width="10%" ng-click="predicate = 'Exp_nombre'; reverse=!reverse"><b>Nombre</b></th>					
+								<th width="10%" ng-click="predicate = 'Exp_obs'; reverse=!reverse"><b>Observaciones</b></th>
+								<th width="10%" ng-click="predicate = 'Exp_obs'; reverse=!reverse"><b></b></th>					
+							</tr>
+							<tr ng-repeat="listado in listadoFolioUnidad">								
+								<td>{{listado.Fact_folio}}</td>
+								<td>{{listado.Exp_folio}}</td>
+								<td>{{listado.Exp_siniestro}}</td>
+								<td>{{listado.Cia_nombrecorto}}</td>
+								<td>{{listado.Uni_nombrecorto}}</td>
+								<td>{{listado.Fecha}}</td>
+								<td>{{listado.Exp_paterno}}</td>
+								<td>{{listado.Exp_materno}}</td>
+								<td>{{listado.Exp_nombre}}</td>
+								<td>{{listado.Exp_obs}}</td>
+								<td><a href="" ng-click="mandaDocumentos(listado.Exp_folio)" >Documentos</a></td>
+							</tr>
+						</table>
+					</div>     				
+				</div>											
+			</form>	
+		</div>
+</div>

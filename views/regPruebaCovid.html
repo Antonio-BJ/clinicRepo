@@ -1,0 +1,260 @@
+<div ng-init="inicio()">
+	<div class="panel panel-info mianimacion" style="width: 85%; margin: auto;">
+		<div class="panel-heading">
+			<h4 style="margin-left:1%;"><b>Registro de Prueba Covid:</b></h4>
+		</div>
+		<div class="panel-body">
+
+	      	<fieldset>
+		        <form name="etapa1" ng-submit="guardaEtapa1()" novalidate>
+
+		          <div class="row">
+		            <div class="col-md-4">
+		              <div class="form-group">
+		                <label>Nombre(s): </label>
+		                <input type="text" class="form-control" id="nom" name="nombre" ng-model="datos.nombre" value="{{estadoUltimo[0].Exp_nombre}}" required mayusculas  >
+		                <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.nombre)" ng-messages="etapa1.nombre.$error">
+		                  <div ng-message="required">Se requiere el valor del nombre</div>
+		                </div>
+		              </div>
+		            </div>
+
+		            <div class="col-md-4">
+		              <div class="form-group">
+		                <label>A.Paterno:</label>
+		                <input type="text" ng-model="datos.pat" class="form-control" id="pat" name="pat" value="{{estadoUltimo[0].Exp_paterno}}" required mayusculas  >
+		                <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.pat)" ng-messages="etapa1.pat.$error">
+		                  <div ng-message="required">Se requiere el valor del apellido paterno</div>
+		                </div>
+		              </div>
+		            </div>
+
+		            <div class="col-md-4">
+		              <div class="form-group">
+		                <label>A. Materno:</label>
+		                <input type="text" ng-model="datos.mat" class="form-control" id="mat" name="mat" value="{{estadoUltimo[0].Exp_materno}}" required mayusculas>
+		                <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.mat)" ng-messages="etapa1.mat.$error">
+		                  <div ng-message="required">Se requiere el valor del apellido materno</div>
+		                </div>
+		              </div>
+		            </div>
+		          </div><br>
+
+		          <div class="row">
+		            <div class="col-md-4">
+		              <div class="form-group">
+		                <label>Fecha de nacimiento:</label>
+		                <input type="text" ng-disabled="edicion"  data-date-viewmode="years" data-date-format="DD-MM-YYYY"  class= "form-control" name="fecnac" id="fecnac" ng-model="datos.fecnac" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" value="{{estadoUltimo[0].Exp_fechaNac}}" required mayusculas ng-pattern="/^(\d{2})-(\d{2})-(\d{4})$/">
+		                <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.fecnac)" ng-messages="etapa1.fecnac.$error">
+		                  <div ng-message="required">Se requiere el valor de la fecha de nacimiento</div>
+		                  <div ng-message="pattern">Formato incorrecto (dd-mm-aaaa)</div>
+		                </div>
+		                <div class="alert alert-danger" ng-show="msjfecha">
+		                  <div>Parámetros incorrectos de edad (1 a 120 años)</div>
+		                </div>
+		              </div>
+		            </div>
+
+		            <div class="col-md-2">
+		              <div class="form-group">
+		                <label >Sexo: </label>
+		                <span class="form-control">
+		                <input type='radio' name='sexo' id='sexo' value='M' ng-model="datos.sexo" required />  M <input type='radio' name='sexo' id='sexo' value='F' ng-model="datos.sexo" required/>  F
+		                </span>
+		                <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.sexo)" ng-messages="etapa1.sexo.$error">
+		                  <div ng-message="required">Dato requerido</div>
+		                </div>
+		              </div>
+		            </div>
+
+		            <div class="col-md-4">
+		              <div class="form-group">
+		                <label>CURP: </label>
+		                <input type="text"  name="curp" id="curp"  ng-model="datos.curp" class="form-control" ng-required="!checked" value="{{estadoUltimo[0].RFC_rfc}}">
+		                <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.curp)" ng-messages="etapa1.curp.$error">
+		                  <div ng-message="required">Se requiere el valor del CURP</div>
+		                </div>
+		              </div><br>
+
+		              <!--<div ng-show="veCupon" class="mianimacion">
+		                <a href="javascript:nuevaventana('imgs/cupon.jpg')"> Ver cupón de descuento</a>
+		              </div>-->
+		            </div>
+
+		          <div class="row" id="renglonEmail">
+
+		            <div class="col-md-4">
+		              <div class="form-group">
+		                <label>E-Mail: </label>
+		                <input type="text"  name="correo" id="correo" ng-pattern="/^[a-z]+[a-z0-9._-]+@[a-z]+\.(gov$|gob.mx$|mx$|com.mx$|net$|com$|org$|gob$|edu.mx$|edu$|edu.com$|es|eu|cr|ru|fr|do|gt|sv|cl|co|cn|ar|bo|ec|py|pe|uy|ve|gov|info|int|jobs|mil|mobi|museum|name|pro|tel|travel|fm|tv|tk|$)/" ng-model="datos.correo" class="form-control" ng-required="!checked" value="{{estadoUltimo[0].Exp_mail}}">
+		                <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.correo)" ng-messages="etapa1.correo.$error">
+		                  <div ng-message="required">Se requiere el valor del correo</div>
+		                  <div ng-message="pattern">email incorrecto</div>
+		                </div>
+		              </div><br>
+
+		              <!--<div ng-show="veCupon" class="mianimacion">
+		                <a href="javascript:nuevaventana('imgs/cupon.jpg')"> Ver cupón de descuento</a>
+		              </div>-->
+		            </div>
+
+		            <div class="col-md-3">
+		              <label>Tipo Teléfono:</label>
+		              <select name="tel" id="tel" ng-model="datos.tel" style="width:100%" required="" class="form-control" value="{{estadoUltimo[0].Exp_tipoTel}}">
+		                <option value=""> * Seleccione tipo </option>
+		                <option value="1">PARTICULAR</option>
+		                <option value="2">OFICINA</option>
+		                <option value="3">MOVIL</option>
+		                <option value="4">OTRO</option>
+		              </select>
+		              <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.tel)" ng-messages="etapa1.tel.$error">
+		                <div ng-message="required">Se requiere el valor del tipo de teléfono</div>
+		              </div>
+		            </div>
+
+		            <div class="col-md-3">
+		              <label>No. Teléfono:</label>
+		                <input  type="text" style="width:100%" ng-model="datos.numeroTel"  class="form-control" id="numeroTel" name="numeroTel" ng-pattern="/^[0-9]{6,12}$/" value="{{estadoUltimo[0].Exp_telefono}}" required>
+		                <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.numeroTel)" ng-messages="etapa1.numeroTel.$error">
+		                  <div ng-message="required">Se requiere el valor del número de teléfono</div>
+		                  <div ng-message="pattern">valor numérico de 6 a 12 dígitos</div>
+		                </div>
+		            </div>
+		          </div><br>
+		          </div>
+
+		          <div class="row-left">
+		            <div class="col-md-4">
+		              <div class="form-group">
+		                <input type="submit" ng-disabled="desactivaBoton" value="Guardar" ng-hide="btnGuardar" id="btnenvioprimero" class="btn btn-primary">
+		              </div>
+		            </div>
+		          </div>
+
+		          <div class="row">
+		            <div class="col-md-12">
+		              <div ng-show="cargador" align="center">
+		                <img ng-src="imgs/cargador.gif">
+		              </div>
+		            </div>
+
+		            <div class="col-md-12">
+		              <div ng-show="mensaje">
+		                {{mensaje}}
+		              </div>
+		            </div>
+		          </div>
+		        </form>
+		      </fieldset>
+
+		</div>
+	</div>
+			
+</div>
+
+<div class="modal fade" id="modalBuscaPaciente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Busqueda Paciente</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <label>Por favor ingrese el FolioMV o el nombre del paciente</label>
+
+            <form ng-submit="buscaXFolioMv()">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </span>
+                  <input type="text" class="form-control" placeholder="Búsqueda por FolioMV" aria-describedby="basic-addon1" ng-model="busca.folio" mayusculas>
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary" type="success" ng-disabled="busca.folio=='' || busca.buscando">
+                      <!-- <i class="fa fa-search" aria-hidden="true"> </i>--> Buscar
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+
+            <form ng-submit="buscaXnombre()">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon" id="bnombre">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </span>
+                  <input type="text" class="form-control" placeholder="Búsqueda por nombre" aria-describedby="bnombre" ng-model="busca.nombre" mayusculas>
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary" type="success" ng-disabled="busca.nombre=='' || busca.buscando">
+                      <!-- <i class="fa fa-search" aria-hidden="true"></i> --> Buscar
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-md-12 text-center text-info" ng-if="busca.buscando">
+            <i class="fa fa-cog fa-spin fa-2x"></i>
+            <p>Buscando</p>
+          </div>
+        </div>
+
+        <div class="row" ng-if="busca.datos != null">
+          <div class="col-md-12">
+            <table class="table table-condensed">
+              <tr>
+                <th>FolioMv</th>
+                <th>Paciente</th>
+                <th>Unidad</th>
+                <th></th>
+              </tr>
+              <tr ng-repeat="busqueda in busquedaa.datos">
+                <td>{{ busqueda.folioMV }}</td>
+                <td>
+                  {{ busqueda.nombreCompleto }}
+                </td>
+                <td>
+                  {{ busqueda.PAS_telefono }}
+                </td>
+
+                  <button ng-if="ordenRh.datosOrden != null" type="button"
+                          class="btn btn-success" data-dismiss="modal" ng-click="prellenaReg( busqueda )">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="regNuevo()">
+            Registra Nuevo
+          </button>
+          <button class="btn btn-danger" ng-click="regresaPagina()">
+            Cancelar
+          </button>
+          <!--<button ng-if="ordenRh.datosOrden != null" type="button"
+                class="btn btn-success" data-dismiss="modal" ng-click="prellenaOrden( ordenRh.datosOrden[0] )">
+            Seleccionar
+          </button> -->
+
+
+
+          <!--<button ng-if="prereg.seleccion == null" type="button"
+                  class="btn btn-info" data-dismiss="modal" >No encontrado</button>
+            <button ng-if="prereg.seleccion != null" type="button"
+                    class="btn btn-warning" data-dismiss="modal" >No corresponde</button>
+            <button ng-if="prereg.seleccion != null" type="button"
+                  class="btn btn-success" data-dismiss="modal" ng-click="prellenado( prereg.seleccion )">
+                  Seleccionar
+          </button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

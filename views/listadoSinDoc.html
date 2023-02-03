@@ -1,0 +1,87 @@
+<div ng-init="inicio()">	
+	<form name="comentarioRH" ng-submit="generaReporteSinDoc()">
+		<div class="panel panel-primary" >
+		    <div class="panel-heading">
+		      <h2  align="center"> Listado de folios sin documentación</h2>
+		    </div>
+		    <div class="panel-body">
+			<div class="row">
+					<!-- div class="col-md-3">
+						<div class="input-group cajaInputcompleto" style="width:100%">
+                            <span>Compañia: </span>
+                            <select name="llega" id="llega" ng-model="reporte.compania" class="form-control" ng-options="compania.Cia_clave as compania.Cia_nombrecorto  for compania in listadoCompania" mayusculas>   <option value=""> * Seleccione </option>                        
+                            </select>
+                        </div>                       
+					</div>					
+					<div class="col-md-3" ng-show="permisos.Per_registro=='S'">
+						<div class="input-group cajaInputcompleto" style="width:100%">
+                            <span>Unidad: </span>
+                            <select name="llega" id="llega" ng-model="reporte.unidad" class="form-control" ng-options="unidades.Uni_clave as unidades.Uni_nombrecorto  for unidades in listadoUnidades" mayusculas>   <option value=""> * Seleccione </option>                        
+                            </select>
+                        </div>  
+					</div> -->
+
+					<div class="col-md-6" align="center" style="padding-top:1em">
+						<div class="input-group" style="width:100%" >
+		                    <input type="button" ng-click="exportarReporte()" class="btn btn-primary btn-lg"  value="Exportar a Excel"/>     
+		                </div>  
+					</div>
+					<div class="col-md-6" align="center" style="padding-top:1em">
+						<div class="input-group" style="width:100%">
+                            <input type="Submit" class="btn btn-primary btn-lg"  value="Generar Reporte"/>     
+                        </div>  
+					</div>
+				</div>
+				<div class="row" ng-show="cargador">
+					<div class="col-md-12">
+	                    <div  align="center">
+	                            <img ng-src="imgs/cargador.gif">
+	                    </div>
+	                </div>
+	            </div>
+				<div class="row" ng-show="listadoSinCla">
+				<div class="col-md-12" >
+					<table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" style="width: 100%">
+						<tr>          
+							<th width="10%"><b>Unidad</b></th>
+							<th width="10%"><b>Aseguradora</b></th>
+							<th width="10%"><b>Folio</b></th>													
+							<th width="20%"><b>Nombre</b></th>
+							<th width="15%"><b>Fecha Registro</b></th>         
+							<th width="15%"><b>Poliza</b></th>
+							<th width="10%"><b>Siniestro</b></th>
+							<th width="10%"><b>Reporte</b></th>
+							<th width="10%"><b>Dias de atraso</b></th>
+							
+						</tr>
+						<tr ng-repeat="listado in listadoSinCla">							
+							<td>{{listado.Uni_nombrecorto}}</td>
+							<td>{{listado.Cia_nombrecorto}}</td>
+							<td>{{listado.Exp_folio}}</td>
+							<td>{{listado.Exp_completo}}</td>
+							<td>{{listado.Exp_fecreg}}</td>
+							<td>{{listado.Exp_poliza}}</td>
+							<td>{{listado.Exp_siniestro}}</td>
+							<td>{{listado.Exp_reporte}}</td>
+							<td>{{listado.diasAtraso}}</td>
+							
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="row" ng-show="mensaje">
+				<div class="col-md-12">
+					<div class="alert alert-warning">...</div>
+				</div>
+			</div>
+			<div class="row" ng-show="listadoSinCla">
+				<div class="col-md-12" align="center">
+						<div class="input-group" style="width:100%">
+		                    <input type="button" ng-click="exportarReporte()" class="btn btn-primary btn-lg"  value="Exportar a Excel"/>     
+		                </div>  
+				</div>
+			</div>
+				</div>	
+		</div>
+	</form>
+</div>

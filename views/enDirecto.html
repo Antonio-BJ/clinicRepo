@@ -1,0 +1,46 @@
+<div ng-init="inicio()">
+
+	
+	<form name="comentarioRH" ng-submit="enviaDatosRH()" novalidate>
+
+		<div class="panel panel-primary" >
+	    <div class="panel-heading">
+	      <h3 class="panel-title" align="center"> <h1>En Directo</h1></h3>
+	    </div>
+
+
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<h1>Estamos cerca de tí:</h1>
+			</div>		
+			<div align="center" class="col-md-10 col-md-offset-1">
+				<A HREF="mailto:endirecto@medicavial.com.mx">
+				<h1><b>endirecto@medicavial.com.mx</b></h1></A>
+			</div>
+
+			<div class="col-md-10 col-md-offset-1">
+				<h3>para comunicarte directamente con dirección general,
+					o sí prefieres platica con recursos humanos.</h3>
+			</div>
+
+			<div class="col-md-10 col-md-offset-1">
+				<textarea class="form-control" rows="6" name="comentario" ng-model="comentario.comentario" onpaste="return false" style="resize:none; width:100%" required mayusculas></textarea>
+				<div class="validacion" role="alert" ng-if="interacted(comentarioRH.comentario)" ng-messages="comentarioRH.comentario.$error">
+	              <div ng-message="required">campo requerido</div>            
+	            </div>
+			</div>
+			<div class="col-md-12">
+		          <div ng-show="cargador" align="center">
+		            <img ng-src="imgs/cargador.gif">
+		          </div>
+		        </div>       
+			<div class="col-md-10 col-md-offset-1" ng-show="enviado">
+				<div class="alert alert-success">Tu mensaje fue enviado correctamente</div>
+			</div>
+			<div align="right" class="col-md-10 col-md-offset-1">
+				<input type="submit" class="btn btn-primary btn-lg btn-block" value="Enviar mensaje">
+			</div>
+		</div>
+	</div>
+	</form>
+</div>

@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+   <link rel="shortcut icon" sizes="16x16 24x24 32x32 48x48 64x64" href="http://medicavial.net/mvnuevo/favicon.ico">
+  <link rel="apple-touch-icon" sizes="57x57" href="http://medicavial.net/mvnuevo/favicon-57.png">
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="http://medicavial.net/mvnuevo/favicon-57.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="http://medicavial.net/mvnuevo/favicon-72.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="http://medicavial.net/mvnuevo/favicon-114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="http://medicavial.net/mvnuevo/favicon-120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="http://medicavial.net/mvnuevo/favicon-144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="http://medicavial.net/mvnuevo/favicon-152.png">
+  <meta name="application-name" content="mvnuevo MV">
+  <meta name="msapplication-TileImage" content="http://medicavial.net/mvnuevo/favicon-144.png">
+  <meta name="msapplication-TileColor" content="#2A2A2A" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Registro Médica Vial | Unidades Propias</title>
+  <link rel='stylesheet' href='modules/agenda/jquery-ui.min.css'/>
+  <link rel="stylesheet" href="lib/bootstrap.min.css" />
+  <link rel="stylesheet" href="lib/font-awesome.min.css" />
+  <link rel="stylesheet" href="lib/animate.css" />
+  <link rel="stylesheet" href="lib/angular-wizard.min.css" />
+  <link rel="stylesheet" href="lib/datepicker.css" />
+  <link rel="stylesheet" href="lib/ekko-lightbox.min.css" />
+  <link rel="stylesheet" href="lib/datatables.bootstrap.min.css"/>
+  <link rel="stylesheet" href="lib/dataTables.colReorder.css"/>
+  <link rel="stylesheet" href="lib/dataTables.colVis.css"/>
+  <link rel="stylesheet" href="lib/dataTables.tableTools.css"/>
+  <link rel="stylesheet" href="lib/barcode.css" />
+  <link rel="stylesheet" href="css/dashboard/dashboard.css" />
+  <link rel="stylesheet" href="css/themes/blue.css" />
+  <link rel="stylesheet" href="css/animaciones.css" />
+  <link rel="stylesheet"  href="modules/agenda/fullcalendar.css" />
+  <link rel="stylesheet" href="modules/ngDialog.min.css" />
+  <link rel="stylesheet" href="modules/ngDialog-theme-default.min.css" />
+  <link rel="stylesheet" href="modules/ngDialog-theme-plain.min.css" />
+  <link rel="stylesheet" href="modules/angular-notify.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/default.css" />
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="modules/sweetalert.css" /> 
+  <link rel="stylesheet" href="css/misEstilos.css">
+  <link rel="stylesheet" href="css/tooltips.css">
+  <link href="lib/c3.min.css" rel="stylesheet" type="text/css"/>
+  <script src="lib/prefixfree.min.js"></script>
+  <!--[if lt IE 9]>
+      <script>
+          location.href="http://www.medicavial.net/mvnuevo/navegadorviejo.html";
+      </script>
+  <![endif]-->
+</head>
+<body class="ng-cloak">
+    <div id="page-wrapper" ng-class="{'active': toggle, 'oculto':cerrar}">
+
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper" ng-show="username">
+        <ul class="sidebar">
+          <li class="sidebar-main">
+            <a href="" ng-click="toggleSidebar()">
+              MedicaVial
+              <span class="menu-icon glyphicon glyphicon-transfer"></span>
+            </a>
+          </li>
+          <li class="sidebar-title"><span>MENU</span></li>
+          <li class="sidebar-list">
+            <a href="#/home">Inicio <span class="menu-icon fa fa-home"></span></a>
+          </li>
+          <li class="sidebar-list" ng-show="permisos.Per_registro=='S'">
+            <a href="#/registro">Registro de Paciente<span class="menu-icon glyphicon glyphicon-folder-open"></span></a>
+          </li>
+         <li class="sidebar-list" ng-show="permisos.Per_busca == 'S'&&permisos.Per_buscarUnidades ==''">
+            <a href="#/busqueda">Búsqueda <span class="menu-icon glyphicon glyphicon-search"></span></a>
+          </li>
+          <li class="sidebar-list" ng-show="permisos.Per_buscarUnidades =='S'&&permisos.Per_busca == ''">
+            <a href="#/busqueda/unidad">Búsqueda X Unidad<span class="menu-icon glyphicon glyphicon-search"></span></a>
+          </li>         
+          <li  class="sidebar-list" ng-show="permisos.Per_busca == 'S'&&permisos.Per_buscarUnidades =='S'"><a href=""  ng-click="bus = !bus"> Búsqueda <span class="menu-icon" ng-class="{'glyphicon glyphicon-chevron-right': bus, 'glyphicon glyphicon-chevron-down': !bus}"></span></a></li>
+              <div collapse="bus" style="background:#001a30;">  
+                  <li class="sidebar-list" ng-show="permisos.Per_busca == 'S'&&permisos.Per_buscarUnidades =='S'">
+                    <a href="#/busqueda">Búsqueda <span class="menu-icon glyphicon glyphicon-search"></span></a>
+                  </li>
+                  <li class="sidebar-list" ng-show="permisos.Per_busca == 'S'&&permisos.Per_buscarUnidades =='S'">
+                    <a href="#/busqueda/unidad">Búsqueda X Unidad<span class="menu-icon glyphicon glyphicon-search"></span></a>
+                  </li>
+              </div>  
+          <li  class="sidebar-list"><a href=""  ng-click="admin = !admin"> Solicitudes <span class="menu-icon" ng-class="{'glyphicon glyphicon-chevron-right': admin, 'glyphicon glyphicon-chevron-down': !admin}"></span></a></li>
+              <div collapse="admin" style="background:#001a30;">  
+                  <li class="sidebar-list" ng-hide="cordinacion == 1">
+                    <a href="#/solicitud" ng-click="cargar()">Nueva Solicitud <span class="menu-icon glyphicon glyphicon-send"></span></a>
+                  </li>
+                  <li class="sidebar-list">
+                    <a href="#/solicitudes">Sol. Pendientes<span class="menu-icon glyphicon glyphicon-tasks"></span></a>
+                  </li>
+              </div>   
+          <!--<li class="sidebar-list" ng-show="usrLogin=='algo'">
+                    <a href="" data-toggle="modal"  data-target="#Insidencias">Agregar incidencias <span class="menu-icon glyphicon glyphicon-arrow-up"></span></a>
+                  </li> 
+          -->
+          <li class="sidebar-list" >
+                    <a href="" data-toggle="modal" data-target="#InsidenciasAdjunto">Agregar incidencias<span class="menu-icon glyphicon glyphicon-plus-sign"></span></a>
+                  </li> 
+          <li  class="sidebar-list"><a href=""  ng-click="docs = !docs"> Ayuda <span class="menu-icon" ng-class="{'glyphicon glyphicon-chevron-right': docs, 'glyphicon glyphicon-chevron-down': !docs}"></span></a></li>
+              <div collapse="docs" style="background:#001a30;">  
+                  <li class="sidebar-list">
+                    <a href="#/material">Documentos de Apoyo <span class="menu-icon glyphicon glyphicon-list-alt"></span></a>
+                  </li>
+                  <!--<li class="sidebar-list">
+                    <a href="#/directorio">Directorio <span class="menu-icon glyphicon glyphicon-book"></span></a>
+                  </li>-->
+                  <li class="sidebar-list">
+                    <a href="#/enDirecto">En directo <span class="menu-icon glyphicon glyphicon-thumbs-up"></span></a>
+                  </li>
+              </div> 
+
+          <li  class="sidebar-list" ng-show="permisos.Per_cabina =='S'"><a href=""  ng-click="adminis = !adminis"> Administración <span class="menu-icon" ng-class="{'glyphicon glyphicon-chevron-right': adminis, 'glyphicon glyphicon-chevron-down': !adminis}"></span></a></li>
+              <div collapse="adminis" style="background:#001a30;">  
+                  <li class="sidebar-list" ng-show="permisos.Per_cabina =='S'">
+                    <a href="#/avisos">Subir aviso <span class="menu-icon glyphicon glyphicon-arrow-up"></span></a>
+                  </li>                  
+              </div> 
+              
+          <li  class="sidebar-list" ng-show="permisos.Per_cabina =='S'"><a href=""  ng-click="imagenes = !imagenes"> Imagenes de ayuda <span class="menu-icon" ng-class="{'glyphicon glyphicon-chevron-right': imagenes, 'glyphicon glyphicon-chevron-down': !imagenes}"></span></a></li>
+              <div collapse="imagenes" style="background:#001a30;">  
+                  <li class="sidebar-list">
+                    <a href="" data-toggle="modal" ng-show="permisos.Per_cabina =='S'" data-target="#Imagen1">Imagen 1 <span class="menu-icon glyphicon glyphicon-arrow-up"></span></a>
+                  </li> 
+                  <li class="sidebar-list">
+                    <a href="" data-toggle="modal" ng-show="permisos.Per_cabina =='S'" data-target="#Imagen2">Imagen 2 <span class="menu-icon glyphicon glyphicon-arrow-up"></span></a>
+                  </li> 
+              </div> 
+           <li class="sidebar-list" >
+            <a href="#/calendario">Agenda de citas<span class="menu-icon glyphicon glyphicon-calendar"></span></a>
+          </li> 
+           <li class="sidebar-list" ng-show="permisos.Per_FactExp=='S'">
+            <a href="#/facturaExpress">Facturación Express<span class="menu-icon glyphicon glyphicon-folder-open"></span></a>
+          </li> 
+          <li class="sidebar-list" ng-show="permisos.Per_registro=='S'" >
+            <a href="#/reportes">Reportes<span class="menu-icon glyphicon glyphicon-list"></span></a>
+          </li>
+            <li class="sidebar-list" ng-show="permisos.Per_cabina =='S'">
+            <a href="#/reporteQualitas">Reporte Qualitas<span class="menu-icon glyphicon glyphicon-list"></span></a>
+          </li>
+
+          <li class="sidebar-list" ng-show="permisos.Per_cabina =='S'">
+            <a href="#/listadoSinDoc">Sin Documentación<span class="menu-icon glyphicon glyphicon-list"></span></a>
+          </li> 
+          <li class="sidebar-list" ng-show="permisos.Per_registro=='S'||permisos.Per_NotaMedica=='S'">
+            <a href="#/estatusMedico" >Disponibilidad Médico<span class="menu-icon glyphicon glyphicon-folder-open"></span></a>
+          </li>  
+          <li class="sidebar-list" ng-show="permisos.Per_admin =='S'">
+            <a href="#/logCambios">Log de Cambios<span class="menu-icon fa fa-code"></span></a>
+          </li>  
+          <!-- <li class="sidebar-list" ng-show="permisos.Per_registro=='S'">
+            <a href="" data-toggle="modal"  data-target="#crearMembresia">Crear Membresía<span class="menu-icon glyphicon glyphicon-folder-open"></span></a>
+          </li>--> 
+          <li  class="sidebar-list" ng-show="permisos.Per_registro=='S'"><a href=""  ng-click="membresia = !membresia"> Membresía <span class="menu-icon" ng-class="{'glyphicon glyphicon-chevron-right': membresia, 'glyphicon glyphicon-chevron-down': !membresia}"></span></a></li>
+              <div collapse="membresia" style="background:#001a30;">  
+                  <li class="sidebar-list">
+                    <a href="" data-toggle="modal" ng-show="permisos.Per_registro=='S'" data-target="#crearMembresia">Crear Membresía <span class="menu-icon glyphicon glyphicon-pencil"></span></a>
+                  </li> 
+                  <li class="sidebar-list">
+                    <a href="" data-toggle="modal" ng-show="permisos.Per_registro=='S'" data-target="#buscarMembresia">Buscar Membresía<span class="menu-icon glyphicon glyphicon-search"></span></a>
+                  </li>
+                  <li class="sidebar-list">
+                    <a href="#/reporteMembresias" ng-show="permisos.Per_registro=='S'">Reporte Membresías <span class="menu-icon glyphicon glyphicon-list"></span></a>
+                  </li> 
+              </div> 
+                     
+            <li  class="sidebar-list" ng-show="permisos.Per_registro =='S'"><a href=""  ng-click="particulares = !particulares"> Particulares <span class="menu-icon" ng-class="{'glyphicon glyphicon-chevron-right': particulares, 'glyphicon glyphicon-chevron-down': !particulares}"></span></a></li>
+              <div collapse="particulares" style="background:#001a30;">  
+                   <li class="sidebar-list">
+                    <a href="#/ventasSinRegistro">Ventas sin Registro<span class="menu-icon glyphicon glyphicon-shopping-cart"></span></a>
+                  </li> 
+                  <li class="sidebar-list" ng-show="permisos.Per_registro=='S'">
+                    <a href="#/listadoItemsParticulares">Listado Items<span class="menu-icon fa fa-search"></span></a>
+                  </li> 
+                   <li class="sidebar-list" ng-show="permisos.Per_monitor=='S'">
+                  <a href="#/cobranzaParticulares">Cobranza Particulares<span class="menu-icon fa fa-usd"></span></a>
+                </li>
+                  <li class="sidebar-list" ng-show="permisos.Per_monitor=='S'">
+                    <a href="#/controlParticulares">Control Particulares<span class="menu-icon glyphicon   glyphicon-list-alt"></span></a>
+                  </li>
+                  <li class="sidebar-list" ng-show="permisos.Per_registro=='S'">
+                    <a href="#/reporteParticulares">Reporte Particulares<span class="menu-icon glyphicon glyphicon-folder-open"></span></a>
+                  </li>                      
+                  <li class="sidebar-list" ng-show="permisos.Per_registro=='S'">
+                    <a href="#/reportePartExtendido">Listado Particulares<span class="menu-icon fa fa-calendar"></span></a>
+                  </li> 
+
+                  <li class="sidebar-list" ng-show="permisos.Per_registro=='S'">
+                    <a href="#/reporteItemsParticulares">Reporte de Items <span class="menu-icon fa fa-list"></span></a>
+                  </li> 
+
+                  <li class="sidebar-list" ng-show="permisos.Per_registro=='S'">
+                    <a href="#/reporteVentasSinReg">Ventas sin Registro <span class="menu-icon fa fa-bar-chart"></span></a>
+                  </li> 
+              </div> 
+
+             
+          
+          <!--<li class="sidebar-list" ng-show="permisos.Per_registro=='S'">
+            <a href="" data-toggle="modal"  data-target="#crearMembresia">Crear Membresía<span class="menu-icon glyphicon glyphicon-folder-open"></span></a>
+          </li>-->             
+         
+          <!--<li class="sidebar-list">
+            <a href="http://registro.medicavial.com.mx">Vista Tradicional <span class="menu-icon glyphicon glyphicon-time"></span></a>
+          </li>-->
+          <!-- 
+          <li class="sidebar-list">
+            <a href="#/home">Reportes <span class="menu-icon glyphicon glyphicon-signal"></span></a>
+          </li>
+          <li class="sidebar-list">
+            <a href="#/home">Incidencias <span class="menu-icon glyphicon glyphicon-plus-sign"></span></a>
+          </li>
+          <li ng-show="administrador" class="sidebar-list">
+            <a href=""  ng-click="admin = !admin"> Administrador <span class="menu-icon" ng-class="{'glyphicon glyphicon-chevron-right': admin, 'glyphicon glyphicon-chevron-down': !admin}"></span>
+            </a>
+          </li>
+          <div collapse="admin">  
+              <li class="sidebar-list">
+                <a href="#/usuarios"> Usuarios <span class="menu-icon fa fa-users"></a>
+              </li>
+          </div> -->
+
+          <li class="sidebar-title separator"><span>Accesos</span></li>
+
+          <li class="sidebar-list">
+            <a href="http://www.medicavial.com.mx" target="_blank">MedicaVial <span class="menu-icon">MV</span></a>
+          </li>
+          <!-- <li class="sidebar-list">
+            <a href="#" target="_blank">Reportes Estadisticos <span class="menu-icon fa fa-bar-chart-o"></span></a>
+          </li> -->
+        </ul>
+        <div class="sidebar-footer">           
+            <div class="col-xs-6">
+              <a href="#/about" target="_blank">
+                Acerca de..
+              </a>
+            </div>
+            <div class="col-xs-6">
+              <a href="#/soporte">
+                Soporte
+              </a>
+            </div>
+        </div>
+      </div>
+      <!-- Header Bar -->
+      <div class="row header" ng-class="{'active': toggle, 'oculto':cerrar}" ng-show="username">
+        <div class="col-xs-12 border-bottom">
+          <div class="meta pull-left">
+            <div class="page">
+              Registro Médica Vial
+            </div>
+            <div class="breadcrumb-links">
+             <!-- <div style="font-size:12px;color:red">
+              Actalización. Favor de borrar el historial de su navegador y reiniciar el sistema <br>para poder ver reflejados los cambios.
+              </div>
+              -->
+            </div>
+            
+          </div>
+          <div class="user pull-right">
+            <div class="item dropdown">
+              <a href="#" class="dropdown-toggle">
+                <img ng-src="imgs/avatar.jpg">
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li class="dropdown-header">
+                  Usuario <br>
+                  <div class="visible-xs">
+                      <strong>Nombre del Usuario</strong>
+                  </div>
+                </li>
+                <li class="divider"></li>
+                <li class="link">
+                  <a href="#/perfil">
+                    Perfil
+                  </a>
+                </li>
+                <li class="link">
+                  <a href="#/aperturaExp">
+                    Registro de Paciente
+                  </a>
+                </li>
+                <li class="link">
+                  <a href="#/solicitud">
+                    Nueva Solicitud
+                  </a>
+                </li>
+                <li class="divider"></li>
+                <li class="link">
+                  <a href="" ng-click="logout()">
+                    Cerrar Sesion
+                  </a>
+                </li>
+              </ul>               
+            </div>
+            <div class="usuario hidden-xs">
+              {{username}}
+            </div>
+            <div class="item dropdown">
+             <a href="#" class="dropdown-toggle">
+                <i class="fa fa-bell-o"></i>
+                <div class="label label-danger">{{noAviso}}</div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li class="dropdown-header">
+                  Notificationes
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="#/solicitudes">Solicitudes Pendientes</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>      
+
+      <!-- End Header Bar -->
+      <!-- End Sidebar -->
+      <div id="content-wrapper">
+        <div class="page-content">
+
+
+          <div class="contenedor">
+            <div ng-view class="paginas"></div>  
+          </div>
+          
+             <div class="modal fade" id="Insidencias" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Incidencias</h4>
+                </div>
+                <div class="modal-body">
+                  <form ng-submit="guardaInsidencia()">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="input-group">                
+                        <label class="input-group-addon">Tipo de incidencia:</label>
+                        <select   style="width:100%" ng-model="incidencias.tipo" class= "form-control" class="form-control" required mayusculas>
+                            <option value=""> * SELECCIONE </option>
+                            <option value="1">Equipo Rx</option>
+                            <option value="2">Personal</option>
+                            <option value="3">Equipo de Computo</option>
+                            <option value="4">Sistema</option>                            
+                            <option value="5">Medicamentos</option>                          
+                            <option value="6">Ortesis</option>                              
+                            <option value="7">Médico Tratante</option>                              
+                            <option value="8">Cabina</option>
+                            <option value="9">Rehabilitación</option>   
+                            <option value="10">Normatividad</option>                              
+                            <option value="11">Mantenimiento</option>                              
+                            <option value="12">Otro</option>                                
+                        </select>
+                      </div>                                         
+                    </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-group">                
+                          <label class="input-group-addon">Severidad:</label>
+                            <select   style="width:100%" ng-model="incidencias.severidad" class= "form-control" class="form-control" required mayusculas>
+                                <option value=""> * Seleccione </option>
+                                <option value="1">Baja</option>
+                                <option value="2">Regular</option>
+                                <option value="3">Alta</option>                          
+                            </select>
+                        </div>                                         
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-group">                
+                          <label class="input-group-addon">Observaciones:</label>
+                          <textarea class="form-control" name="" id="" cols="30" rows="3" ng-model="incidencias.observaciones"></textarea>
+                        </div>                                         
+                      </div>
+                    </div>                    
+                    <div class="row" ng-show="msjTel">
+                       <div class="col-md-12">
+                          <div  class="validacion">
+                              Los campos son obligatorios
+                          </div>
+                       </div>
+                     </div>
+                     <div class="row" ng-show="cargadorInc">
+                        <div class="col-md-12">
+                            <div  align="center">
+                                    <img ng-src="imgs/cargadorCuadro.gif">
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row" ng-show="msjIncidencia">
+                       <div class="col-md-12">
+                          <div  class="alert alert-success" >
+                              La incidencia se agregó correctamente.
+                          </div>
+                       </div>
+                     </div>                     
+                  </div>
+                
+                <div class="modal-footer">                  
+                  <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+                  <button ng-disabled="btnEnvio" type="submit" class="btn btn-info">Agregar</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+<div class="modal fade" id="InsidenciasAdjunto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Incidencias con adjunto</h4>
+                </div>
+                <div class="modal-body">
+                  <form ng-submit="guardaInsidenciaAdjunto()">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="input-group">                
+                        <label class="input-group-addon">Tipo de incidencia:</label>
+                        <select   style="width:100%" ng-model="incidencias.tipo" class= "form-control" class="form-control" required mayusculas>
+                            <option value=""> * Seleccione </option>
+                            <option value="1">Equipo Rx</option>
+                            <option value="2">Personal</option>
+                            <option value="3">Equipo de Computo</option>
+                            <option value="4">Sistema</option>                            
+                            <option value="5">Medicamentos</option>                          
+                            <option value="6">Ortesis</option>                              
+                            <option value="7">Médico Tratante</option>                              
+                            <option value="8">Cabina</option>
+                            <option value="9">Rehabilitación</option>   
+                            <option value="10">Normatividad</option>                              
+                            <option value="11">Mantenimiento</option>                              
+                            <option value="13">Coordinación Médica</option>                              
+                            <option value="14">Respuesta de Unidad</option>                              
+                            <option value="15">Cobranza</option>                              
+                            <option value="12">Otro</option>                                
+                        </select>
+                      </div>                                         
+                    </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-group">                
+                          <label class="input-group-addon">Severidad:</label>
+                            <select   style="width:100%" ng-model="incidencias.severidad" class= "form-control" class="form-control" required mayusculas>
+                                <option value=""> * Seleccione </option>
+                                <option value="1">Baja</option>
+                                <option value="2">Regular</option>
+                                <option value="3">Alta</option>                          
+                            </select>
+                        </div>                                         
+                      </div>
+                    </div>
+                    <div class="row" ng-hide="cargadorArchivo">
+                      <div class="col-md-12">
+                        <div class="input-group">                
+                          <label class="input-group-addon">Adjunto:</label>
+                          <input class="form-control" type="file" ng-file-select="onFileSelect_xml($files)">  
+                        </div>                                         
+                      </div>
+                    </div>                               
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-group">                
+                          <label class="input-group-addon">Observaciones:</label>
+                          <textarea class="form-control" name="" id="" cols="30" rows="3" ng-model="incidencias.observaciones" mayusculas></textarea>
+                        </div>                                         
+                      </div>
+                    </div>    
+                     <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-group">                
+                          <label class="input-group-addon">Acciones tomadas: <br> (solución)</label>
+                          <textarea class="form-control" name="" id="" cols="30" rows="3" ng-model="incidencias.acciones" mayusculas></textarea>
+                        </div>                                         
+                      </div>
+                    </div>
+                    <div class="row" ng-show="cargadorInc">
+                        <div class="col-md-12">
+                            <div align="center">
+                                <img ng-src="imgs/cargadorCuadro.gif">
+                            </div>
+                        </div>
+                    </div>                                               
+                    <div class="row" ng-show="msjTel">
+                       <div class="col-md-12">
+                          <div  class="validacion">
+                              Los campos son obligatorios
+                          </div>
+                       </div>
+                     </div>
+                     <div class="row" ng-show="cargador1">
+                        <div class="col-md-12">
+                            <div  align="center">
+                                    <img ng-src="imgs/cargador.gif">
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row" ng-show="msjIncidencia">
+                       <div class="col-md-12">
+                          <div  class="alert alert-success" >
+                              La incidencia se agregó correctamente.
+                          </div>
+                       </div>
+                     </div>                     
+                  </div>
+                
+                <div class="modal-footer">                  
+                  <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+                  <button ng-disabled="btnEnvio" type="submit" class="btn btn-info">Agregar</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+                <!-- MODAL CREAR MEMBRESÍA               ---------------------------------------------------------------->
+
+<div class="modal fade" id="crearMembresia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Generar Membresía</h4>
+        </div>
+        <div class="modal-body"> 
+        <div>
+         
+          <fieldset ng-hide="mensajeMembresia">
+             <form  name="membresiaForm" id="membresiaForm" ng-submit="crearMembresia()" novalidate>
+            <div class="row">
+                        <div class="col-md-4">                          
+                          <div class="form-group">
+                            <label class="control-label" for="nombre">Nombre: </label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" ng-model="membresia.nombre" required mayusculas>
+                              <div class="validacion" role="alert" ng-if="interacted(membresiaForm.nombre)" ng-messages="membresiaForm.nombre.$error">
+                                <div ng-message="required">Campo obligatorio </div>
+                              </div>   
+                          </div> 
+                                                                                      
+                        </div>
+                        <div class="col-md-4">
+                           <div class="form-group">
+                            <label class="control-label" for="apaterno">Apellido paterno: </label>
+                            <input type="text" class="form-control" id="apaterno" name="apaterno" ng-model="membresia.apanterno" required mayusculas>
+                              <div class="validacion" role="alert" ng-if="interacted(membresiaForm.apaterno)" ng-messages="membresiaForm.apaterno.$error">
+                                <div ng-message="required">Campo obligatorio </div>
+                              </div>
+                          </div>                                                                 
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="control-label" for="amaterno">Apellido materno: </label>
+                            <input type="text" class="form-control" id="amaterno" name="amaterno" ng-model="membresia.amaterno" required mayusculas>
+                              <div class="validacion" role="alert" ng-if="interacted(membresiaForm.amaterno)" ng-messages="membresiaForm.amaterno.$error">
+                                <div ng-message="required">Campo obligatorio </div>
+                              </div>   
+                          </div>                                        
+                        </div>
+                      </div> 
+                      <div class="row">
+                        <div class="col-md-4">
+                           <div class="form-group">
+                            <label class="control-label" for="email">Correo electrónico: </label>
+                            <input type="text" class="form-control" id="email" name="email" ng-model="membresia.email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.(gov$|gob.mx$|mx$|com.mx$|net$|com$|org$|gob$|edu.mx$|edu$|edu.com$)/" required>
+                            <div class="validacion" role="alert" ng-if="interacted(membresiaForm.email)" ng-messages="membresiaForm.email.$error">
+                              <div ng-message="required">Campo obligatorio</div>
+                              <div ng-message="pattern">email incorrecto</div>
+                            </div>       
+                          </div>                                         
+                        </div>
+                        <div class="col-md-4">
+                           <div class="form-group">
+                            <label class="control-label" for="telefono">Teléfono: </label>
+                            <input type="text" class="form-control" id="telefono" name="telefono"  ng-model="membresia.telefono" ng-pattern="/^[0-9]{6,12}$/" required>
+                            <div class="validacion" role="alert" ng-if="interacted(membresiaForm.telefono)" ng-messages="membresiaForm.telefono.$error">
+                              <div ng-message="required">Campo obligatorio</div>
+                              <div ng-message="pattern">valor numérico de 6 a 12 dígitos</div>
+                            </div> 
+                          </div>                                         
+                        </div>
+                        <div class="col-md-4">
+                           <div class="form-group">
+                            <label class="control-label" for="codPos">Código postal: </label>
+                            <input  type="text" class="form-control" id="codPos" name="codPos" ng-model="membresia.codPos" ng-change="verificaCodigo()" minlength="5" maxlength="5" required>
+                            <div class="validacion" role="alert" ng-if="interacted(membresiaForm.codPos)" ng-messages="membresiaForm.codPos.$error">
+                              <div ng-message="required">Se requiere el valor del código postal</div>
+                              <div ng-message="number">valor numérico</div>
+                              <div ng-message="maxlength">5 cifras</div>
+                              <div ng-message="minlength">5 cifras</div>
+                            </div>
+                            <div class="alert alert-danger" ng-show="codigoE">código inexistente</div> 
+                          </div>                                         
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                           <div class="form-group">
+                            <label class="control-label" for="email">¿Cómo se enteró?: </label>
+                            <textarea class="form-control" name="obs" id="obs" cols="30" rows="3" ng-model="membresia.obs" required mayusculas></textarea>
+                            <div class="validacion" role="alert" ng-if="interacted(membresiaForm.obs)" ng-messages="membresiaForm.obs.$error">
+                              <div ng-message="required">Campo obligatorio</div>                              
+                            </div>   
+                          </div>                                         
+                        </div>                        
+                      </div> 
+                      </form> 
+                      <div class="row">
+                         <div class="col-lg-12">
+                            <!-- START panel-->
+                            <div class="panel panel-default">
+                               <div class="panel-heading">Referencias</div>
+                               <div class="panel-body">
+                                  <form  name="referenciasForm" id="referenciasForm" ng-submit="agregaParentezco()" novalidate>
+                                    <div class="row">
+                                    <div class="col-md-4">                          
+                                      <div class="form-group">
+                                        <label class="control-label" for="nombre">Nombre completo: </label>
+                                        <input type="text" class="form-control" id="nombreRef" name="nombreRef" ng-model="referencia.nombre" required mayusculas> 
+                                          <div class="validacion" role="alert" ng-if="interacted1(referenciasForm.nombreRef)" ng-messages="referenciasForm.nombreRef.$error">
+                                            <div ng-message="required">Campo obligatorio</div>                       
+                                          </div>                                       
+                                      </div>                                                                
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
+                                        <label class="control-label" for="apaterno">Correo Electronico: </label>
+                                        <input type="email" class="form-control" name="email" id="email" ng-model="referencia.email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.(gov$|gob.mx$|mx$|com.mx$|net$|com$|org$|gob$)/" required>
+                                         <div class="validacion" role="alert" ng-if="interacted1(referenciasForm.email)" ng-messages="referenciasForm.email.$error">
+                                            <div ng-message="required">Campo obligatorio</div>
+                                            <div ng-message="pattern">email incorrecto</div>
+                                          </div>                                         
+                                      </div>                                                                 
+                                    </div>
+                                    <div class="col-md-2">
+                                      <div class="form-group">
+                                        <label class="control-label" for="telefono">Teléfono: </label>
+                                        <input type="text" class="form-control" name="telefono" id="telefono" ng-model="referencia.telefono" ng-pattern="/^[0-9]{6,12}$/" required>
+                                        <div class="validacion" role="alert" ng-if="interacted1(referenciasForm.telefono)" ng-messages="referenciasForm.telefono.$error">
+                                          <div ng-message="required">Campo obligatorio</div>
+                                          <div ng-message="pattern">valor numérico de 6 a 12 dígitos</div>
+                                        </div> 
+                                      </div>                                        
+                                    </div>
+                                    <div class="col-md-2">
+                                      <div class="form-group">
+                                        <label class="control-label" for="amaterno">Parentesco: </label>
+                                        <input type="text" class="form-control" name="parent" id="parent" ng-model="referencia.parentezco" required mayusculas>
+                                         <div class="validacion" role="alert" ng-if="interacted1(referenciasForm.parent)" ng-messages="referenciasForm.parent.$error">
+                                            <div ng-message="required">Campo obligatorio</div>                       
+                                          </div>     
+                                      </div>                                        
+                                    </div>
+                                    </div>
+                                    <div class="row" align="right">
+                                    <div class="col-md-12">
+                                      <div class="form-group">                                        
+                                        <input type="submit" value="Agregar"   class="btn btn-default">
+                                      </div>                                        
+                                    </div>
+                                    </div>
+                                    <div class="row" ng-show="veTabla">
+                                      <div class="col-md-12">
+                                        <div class="table-responsive">
+                                           <table class="table table-striped table-bordered table-hover">
+                                              <thead>
+                                                 <tr>
+                                                    <th>#</th>
+                                                    <th>Nombre</th>
+                                                    <th>Correo Electrónico</th>
+                                                    <th>Parentezco</th>
+                                                 </tr>
+                                              </thead>
+                                              <tbody>
+                                                 <tr ng-repeat="referencia in sumaReferencia">
+                                                    <td>{{referencia.cont}}</td>
+                                                    <td>{{referencia.nombre}}</td>
+                                                    <td>{{referencia.email}}</td>
+                                                    <td>{{referencia.parentezco}}</td>
+                                                 </tr>                                                
+                                              </tbody>
+                                           </table>
+                                        </div>
+                                      </div>
+                                    </div>                                    
+                                  </form>
+                               </div>                              
+                            </div>
+                            <!-- END panel-->
+                         </div>
+                      </div>                                                                                            
+          </div>
+          </fieldset>  
+          <fieldset ng-show="mensajeMembresia">
+            <div class="row">
+              <div class="col-md-6">
+                  <div class="image">
+                      <img src="imgs/membresia.png" alt="Membresía" style="position: relative;width: 100%;">
+                     
+                  </div>  
+              </div>
+              <div class="col-md-6">                    
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Datos de membresía</div>
+                      <div class="panel-body">
+                        <p class="alert alert-warning">Favor de copiar los siguientes datos para poder imprimir su membresía</p>
+                      </div>                     
+                      <table class="table">
+                        <tr>
+                          <td align="right">Nombre: </td>
+                          <td align="left"><b>{{nombreMem}}</b></td>
+                        </tr>
+                        <tr>
+                          <td align="right">Folio: </td>
+                          <td align="left"><b>{{serieMem}}-{{folioMem}}</b></td>
+                        </tr>
+                        <tr>
+                          <td align="right">Miembro desde: </td>
+                          <td align="left"><b>{{anioMem}}</b></td>
+                        </tr>
+                      </table>
+                    </div>
+                   
+              </div>  
+            </div>
+                        
+          </fieldset>               
+          <div class="row" ng-show='cargadorMem'> 
+                <div class="col-md-12">
+                  <div ng-show="cargador" align="center" style="hight:10em;">
+                    <img ng-src="imgs/cargador.gif">
+                  </div>
+                </div>
+          </div>        
+        </div>
+        <div class="modal-footer">          
+          <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" >Cerrar</button>          
+          <input type="submit"  ng-hide="mensajeMembresia" form="membresiaForm" value="Crear membresía" class="btn btn-default btn-lg">         
+          <input type="button" ng-click="reactivarFormulario()" ng-show="mensajeMembresia" value="Crear otra membresía" class="btn btn-default btn-lg">         
+        </div>
+        </div>      
+      </div>
+    </div>
+
+<!-- FIN DE MODAL PARA CREAR MEMBRESÍA  ---------------------------------------------------------------->
+
+<div class="modal fade" id="buscarMembresia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Buscar Membresía</h4>
+                </div>
+                <div class="modal-body">
+                         
+<!------------------------------------------------------------------------------------------------------>                    
+
+        
+      <div class="row">
+        <div class="col-md-12" align="center" ng-show="convenio==3" style="width:100%">               
+        <label class="alert alert-info">Búsqueda de membresía medicavial por folio o por nombre</label> 
+        </div>            
+      </div>   
+      <form ng-submit="buscarMembresia()">
+      <div class="row" >
+        <div class="col-md-3">        
+          <div class="input-group">
+                  <span class="input-group-addon">Folio: </span>
+                  <input type="text" name="folio" id="folio" ng-model="mem.folio" class= "form-control" >
+                </div>
+            </div>
+        <div class="col-md-7">        
+        <div class="input-group">
+                  <span class="input-group-addon">Nombre: </span>
+                  <input type="text" name="nombre" id="nombre" ng-model="mem.nombre" class= "form-control" >
+                </div>
+        </div>
+        <div class="col-md-2" align="right">                        
+        <button class="btn btn-primary">Buscar</button>
+        </div>              
+      </div>  
+      </form>
+      <div class="row" ng-show='cargadorListMem'> 
+            <div class="col-md-12">
+              <div ng-show="cargador" align="center" style="hight:10em;">
+                <img ng-src="imgs/cargador.gif">
+              </div>
+            </div>
+      </div>
+      <div class="row" ng-show="listadoMemebresias">                     
+                     <div class="col-md-12">
+                        <div class="panel panel-default">
+                           <div class="panel-heading">
+                              <div class="panel-title">Folios encontrados</div>
+                           </div>
+                           <!-- START list group-->
+                           <div class="list-group">
+                              <!-- START list group item-->
+                              <div class="list-group-item" ng-repeat="listado in listadoMemebresias | orderBy:predicate:reverse">
+                                 <div class="media">
+                                  
+                                    
+                                    <div class="media-body clearfix">
+                                       <div class="media-heading text-warning m0">{{listado.mem_folio}} - {{listado.mem_serie}} ---- <label class="media-heading text-danger m0"> {{listado.mem_nombre}} </label>
+                    <small class="text-muted pull-right">{{listado.mem_fecreg}}</small> 
+                                       </div>                                                                                                                   
+                                    </div>
+                                    
+                                 </div>
+                              </div>
+                              <!-- END list group item-->                                                            
+                           </div>
+                           <!-- END list group-->
+                           <!-- START panel footer-->
+                           <div class="panel-footer clearfix">
+                              <a href="#" class="pull-left">
+                                 <small></small>
+                              </a>
+                           </div>
+                           <!-- END panel-footer-->
+                        </div>
+                     </div>
+                  </div>
+
+<!-------------------------------------------------------------------------------------------------->
+                </div>                               
+                </form>
+              </div>
+            </div>
+          </div>
+
+<!-- FIN DE MODAL PARA CREAR MEMBRESÍA  ---------------------------------------------------------------->
+
+
+
+            <div class="modal fade" id="Imagen1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Imagen 1</h4>
+                </div>
+                <div class="modal-body">
+                <img src="imgs/imagen1.jpg" style="width:100%; height:100%">               
+                </div>                               
+                </form>
+              </div>
+            </div>
+          </div>
+
+           <div class="modal fade" id="Imagen2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Imagen 1</h4>
+                </div>
+                <div class="modal-body">
+                <img src="imgs/imagen2.jpg" style="width:100%; height:100%">               
+                </div>                               
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+
+            
+          <!-- End Main Content -->
+        </div><!-- End Page Content -->
+      </div><!-- End Content Wrapper -->
+    </div><!-- End Page Wrapper -->
+
+    <script src="lib/html2canvas.js"></script>
+    <script src="lib/jquery.min.js"></script>
+    <script src="modules/agenda/moment.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>  
+    <script src="lib/jquery.dataTables.min.js"></script>
+    <script src="lib/dataTables.colReorder.js"></script>
+    <script src="lib/dataTables.colVis.js"></script>
+    <script src="lib/dataTables.tableTools.js"></script>
+    <script src="modules/angular-file-upload-shim.min.js"></script>  
+    <script src="lib/d3.min.js" charset="utf-8"></script>
+    <script src="lib/c3.min.js"></script>   
+    <script src="lib/angular.min.js"></script> 
+    <script src="modules/agenda/calendar.js"></script>    
+    <script src="modules/agenda/fullcalendar.js"></script>    
+    <script src="modules/agenda/gcal.js"></script> 
+    <script src='modules/agenda/lang-all.js'></script>      
+    <script src="lib/jspdf.debug.js"></script>
+    <script src="lib/jspdf.plugin.addhtml.js"></script>
+    <script src="lib/qrcode.min.js"></script>
+    <script src="lib/angular-qr.min.js"></script>
+    <script src="lib/barcodeGenerator.js"></script>
+    <script src="lib/moment-with-langs.min.js"></script>
+    <script src="lib/bootstrap-datetimepicker.min.js"></script>
+    <script src="lib/bootstrap-tooltip.js"></script>
+    <script src="lib/bootstrap-confirmation.js"></script>
+    <script src="lib/bootstrap-popover.js"></script>
+    <script src="lib/lodash.js"></script>
+    <script src="lib/ekko-lightbox.min.js"></script>
+    <script src="lib/bootstrap-filestyle.js"> </script>
+    <script src="modules/angular-datatables.min.js"></script>
+    <script src="modules/ng-bootstrap-tpls.min.js"></script>
+    <script src="modules/angular-animate.min.js"></script>
+    <script src="modules/angular-webstorage.min.js"></script>
+    <script src="modules/angular-cookies.min.js"></script>
+    <script src="modules/angular-route.min.js"></script>
+    <script src="modules/angular-wizard.min.js"></script>
+    <script src="modules/angular-messages.min.js"></script>
+    <script src="modules/angular-deckgrid.min.js"></script>
+    <script src="modules/angular-file-upload.min.js"></script>
+    <script src="modules/ngDialog.min.js"></script>
+    <script src="modules/angular-idle.min.js"></script>
+    <script src="modules/angular-notify.js"></script>
+    <script src="modules/bumpbox-2.0.1-min.js"></script>
+    <script src="modules/mootools.js"></script>
+    <script src="modules/flowplayer.min.js"></script>    
+    <script src="modules/angular-sanitize.js"></script>    
+    <script src="modules/Common.js"></script>
+    <script src="modules/agenda/angular-spinner.js"></script> 
+    <script src="modules/angularjs-dropdown-multiselect.js "></script> 
+    <script src="lib/angular-filter.min.js"></script> 
+    <script src="modules/sweetalert.min.js"></script>     
+    <script src="modules/ng-sweet-alert.js"></script> 
+    <script src="modules/c3-angular.min.js"></script>             
+    <script src="app/app.js"></script>
+    <script src="app/directives/cargando.js"></script>
+    <script src="app/directives/textos.js"></script>
+    <script src="app/directives/ng-radial-gauge-dir.js"></script>
+    <script src="app/services/d3-serv.js"></script>
+    <script src="app/controllers/solicitudCtrl.js"></script>
+    <script src="app/controllers/loginCtrl.js"></script>
+    <script src="app/controllers/homeCtrl.js"></script>
+    <script src="app/controllers/aperturaExpCtrl.js"></script>
+    <script src="app/controllers/productoCtrl.js"></script>
+    <script src="app/controllers/registraCtrl.js"></script>
+    <script src="app/controllers/portadaCtrl.js"></script>
+    <script src="app/controllers/busquedaCtrl.js"></script>
+    <script src="app/controllers/documentosCtrl.js"></script>
+    <script src="app/controllers/historiaClinicaCtrl.js"></script>
+    <script src="app/controllers/signosVitalesCtrl.js"></script>
+    <script src="app/controllers/signosVitalesSubCtrl.js"></script>
+    <script src="app/controllers/notaMedicaCtrl.js"></script>
+    <script src="app/controllers/subsecuenciaCtrl.js"></script>
+    <script src="app/controllers/subsecuenciaListadoCtrl.js"></script>
+    <script src="app/controllers/rehabilitacionCtrl.js"></script>
+    <script src="app/controllers/rehabilitacionFormCtrl.js"></script>
+    <script src="app/controllers/reciboParticularCtrl.js"></script>
+    <script src="app/controllers/solicitudFacturaCtrl.js"></script>
+    <script src="app/controllers/digitalizacionCtrl.js"></script>
+    <script src="app/controllers/cambioUnidadCtrl.js"></script>
+    <script src="app/controllers/constanciaCtrl.js"></script>
+    <script src="app/controllers/enDirectoCtrl.js"></script>
+    <script src="app/controllers/avisosCtrl.js"></script>
+    <script src="app/controllers/calendarioCtrl.js"></script>
+    <script src="app/controllers/facturaExpressCtrl.js"></script>
+    <script src="app/controllers/reportesCtrl.js"></script>
+    <script src="app/controllers/registroCtrl.js"></script>
+    <script src="app/controllers/reporteQualitasCtrl.js"></script>
+    <script src="app/controllers/convenioCtrl.js"></script>
+    <script src="app/controllers/infoConvenioCtrl.js"></script>
+    <script src="app/controllers/listadoSinDocCtrl.js"></script>
+    <script src="app/controllers/estatusMedicoCtrl.js"></script>
+    <script src="app/controllers/notaSoapCtrl.js"></script>
+    <script src="app/controllers/reporteMembresiasCtrl.js"></script>
+    <script src="app/controllers/ventasSinRegistroCtrl.js"></script>
+    <script src="app/controllers/informeRehabilitacionCtrl.js"></script>
+    <script src="app/controllers/listaInfRehabCtrl.js"></script>
+    <script src="app/controllers/listadoItemsParticularesCtrl.js"></script>
+    <script src="app/controllers/cobranzaParticularesCtrl.js"></script>
+    <script src="app/controllers/controlParticularesCtrl.js"></script>
+    <script src="app/controllers/logCambiosCtrl.js"></script>
+    <script src="app/controllers/rayosXCtrl.js"></script>
+    <script src="app/controllers/reporteParticularesCtrl.js"></script>
+    <script src="app/controllers/reportePartExtendidoCtrl.js"></script>
+    <script src="app/controllers/reporteItemsParticularesCtrl.js"></script>
+    <script src="app/controllers/reporteVentasSinRegCtrl.js"></script>
+</body>
+</html>

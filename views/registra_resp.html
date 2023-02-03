@@ -1,0 +1,910 @@
+<div class="container" ng-init="inicio()" style="width: 100%">
+      <div class="panel panel-primary">
+                <div class="panel-heading">
+                         <h3 class="panel-title" >Apertura de Expediente</h3>
+                </div>   
+
+         <div class="panel-body">
+            <fieldset ng-disabled="primeraEtapa">
+            <form name="etapa1" ng-submit="guardaEtapa1()" novalidate>
+            <div class="row">
+               
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <img ng-src="imgs/logosregmv/{{rutaImgCom}}"  title="ASEGURADORA">                       
+                        <input type="hidden" name="ase" id="ase" value="" >
+                        <input type="hidden" name="pro" id="pro" value="" >
+                    </div>
+                </div>
+                <div class="col-md-4" align="center">
+                    <div class="form-group">
+                        <div ng-show="veCDB"  style="padding-top:1.5em;">
+                            <img ng-src="api/codigos/{{folio}}.png"  title="folio">
+                        </div>                                           
+                    </div>
+                </div>
+                <div class="col-md-4" align="right">
+                    <div class="form-group">
+                    <img ng-src="imgs/producto/{{rutaImgPro}}"  title="producto">                                                            
+                    </div>
+                </div>
+            </div><br>
+
+            <div class="row">
+                <div class="form-group">
+                  
+                    <div class="col-md-10">
+                       <h3> <label>Datos del Paciente</label></h3><br>                                               
+                    </div>
+                    <div class="col-md-2 cajaInputcompleto" ng-show="banortePersonal" align="center">
+                      <div class="checkbox c-checkbox">
+                          <label>
+                          <input type="checkbox" ng-model="datos.esChedraui" ng-true-value="1" ng-false-value="0">
+                          <span class="fa fa-check"></span>¿Es Chedraui?</label>
+                      </div>                                        
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Nombre(s): </label>
+                        <input type="text" class="form-control" id="nom" name="nombre" ng-model="datos.nombre" required mayusculas>
+                        <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.nombre)" ng-messages="etapa1.nombre.$error">
+                          <div ng-message="required">Se requiere el valor del nombre</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>A.Paterno:</label>
+                        <input type="text" ng-model="datos.pat" class="form-control" id="pat" name="pat" required  mayusculas>
+                        <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.pat)" ng-messages="etapa1.pat.$error">
+                          <div ng-message="required">Se requiere el valor del apellido paterno</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>A. Materno:</label>
+                        <input type="text" ng-model="datos.mat" class="form-control" id="mat" name="mat" required mayusculas>
+                        <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.mat)" ng-messages="etapa1.mat.$error">
+                          <div ng-message="required">Se requiere el valor del apellido materno</div>
+                        </div>
+                    </div>
+                </div>  
+            </div><br> 
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Fecha de nacimiento:</label>                        
+                        <input type="text" ng-disabled="edicion"  data-date-viewmode="years" data-date-format="DD-MM-YYYY"  class= "form-control" name="fecnac" id="fecnac" ng-model="datos.fecnac" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" required mayusculas>
+                        <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.fecnac)" ng-messages="etapa1.fecnac.$error">
+                          <div ng-message="required">Se requiere el valor de la fecha de nacimiento</div>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="col-md-4">                
+                        <label>Tipo Teléfono:</label>
+                        <select name="tel" id="tel" ng-model="datos.tel" style="width:100%" required="" class="form-control" >
+                            <option value=""> * Seleccione tipo </option>
+                            <option value="1">Particular</option>
+                            <option value="2">Oficina</option>
+                            <option value="3">M&oacute;vil</option>
+                            <option value="4">Otro</option>                            
+                        </select> 
+                        <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.tel)" ng-messages="etapa1.tel.$error">
+                          <div ng-message="required">Se requiere el valor del tipo de teléfono</div>
+                        </div>
+
+                        
+
+                </div> 
+                <div class="col-md-4">  
+                    <label>No. Teléfono:</label>                    
+                        <input  type="text" style="width:100%" ng-model="datos.numeroTel"  class="form-control" id="numeroTel" name="numeroTel" ng-pattern="/^[0-9]{6,12}$/" required> 
+                        <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.numeroTel)" ng-messages="etapa1.numeroTel.$error">
+                          <div ng-message="required">Se requiere el valor del número de teléfono</div>
+                          <div ng-message="pattern">valor numérico de 6 a 12 dígitos</div>
+                        </div> 
+                    </div> 
+            </div>
+            <br>
+            <div class="row" id="renglonEmail">
+                <div class="col-md-4">
+                    <div class="form-group">
+                                               
+                         <label>E-Mail: </label>                        
+                            <input type="text"  name="correo" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.(gov$|gob.mx$|mx$|com.mx$|net$|com$|org$|gob$)/" ng-model="datos.correo" class="form-control" ng-required="!checked">  
+                            <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.correo)" ng-messages="etapa1.correo.$error">
+                          <div ng-message="required">Se requiere el valor del correo</div>
+                          <div ng-message="pattern">email incorrecto</div>
+                        </div>                             
+                        <label>                           
+                                <input class="checkbox-inline" id="checkSinCorreo" ng-model="checked" type="checkbox" data-toggle="confirmation" data-placement="right" data-btn-ok-label="Si"  title="Si el usuario no proporciona el correo perderá los cupones de descuento, ¿Desea continuar?" data-popout="true"> Sin correo                        
+                        </label>
+                        
+                    </div>
+                    <br>
+                     <div ng-show="veCupon" class="mianimacion">
+                         <a href="javascript:nuevaventana('imgs/cupon.jpg')"> Ver cupón de descuento</a> 
+                    </div>  
+                </div>
+                <div class="col-md-4" >
+                      <div class="form-group">
+                        <label>Código postal: </label>
+                        <input type="number" class="form-control" id="cod" name="codPostal" ng-model="datos.codPostal"  ng-change="verificaCodigo()" minlength="5" maxlength="5" required>
+                         <div class="alert alert-danger" role="alert" ng-if="interacted(etapa1.codPostal)" ng-messages="etapa1.codPostal.$error">
+                          <div ng-message="required">Se requiere el valor del código postal</div>
+                          <div ng-message="number">valor numérico</div>
+                          <div ng-message="maxlength">5 cifras</div>
+                          <div ng-message="minlength">5 cifras</div>
+                        </div> 
+                        <div class="alert alert-danger" ng-show="codigoE">código inexistente</div>
+                       
+                    </div>
+                </div>
+                <div class="col-md-4" align="center" style="padding-top:2em">
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                          Agregar más teléfonos
+                        </button>
+                    <table class="table table-bordered" ng-show="veTabla">
+                      <tr>
+                        <th width="10%"><b>#</b></th>
+                        <th width="45%"><b>Tipo</b></th>
+                        <th width="45%"><b>Teléfono</b></th>                                                      
+                      </tr>
+                      <tr ng-repeat="tels in sumaTel">  
+                      <td>{{tels.cont}}</td>                                           
+                        <td>{{tels.tipoLe}}</td>
+                        <td>{{tels.tel}}</td>
+                       
+                      </tr>
+                    </table>    
+                    <!-- Modal -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Agregar Teléfonos</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col-md-5">
+                                      <div class="input-group">                
+                                        <label class="input-group-addon">Tipo Teléfono:</label>
+                                        <select   style="width:100%" ng-model="telefonos.tip" class= "form-control" class="form-control" >
+                                            <option value=""> * Seleccione tipo </option>
+                                            <option value="1">Particular</option>
+                                            <option value="2">Oficina</option>
+                                            <option value="3">M&oacute;vil</option>
+                                            <option value="4">Otro</option>                            
+                                        </select>
+                                      </div>                                         
+                                      </div>
+                                      <div class="col-md-5">
+                                        <div class="input-group">  
+                                        <label class="input-group-addon">No. Teléfono:</label>                    
+                                        <input  type="text" style="width:100%" ng-model="telefonos.tel"  class="form-control" id="numTel" name="numTel" >                                         
+                                        </div> 
+                                      </div>  
+                                      <div class="col-md-2">  
+                                        <button type="button" ng-click="agregaTel()" class="btn btn-info">Agregar</button>
+                                        </div> 
+                                      </div> 
+                                      <div class="row" ng-show="msjTel">
+                                         <div class="col-md-12">
+                                            <div  class="validacion">
+                                                Los campos son obligatorios
+                                            </div>
+                                         </div>
+                                       </div> 
+                                      <div class="row" ng-show="sumaTel">
+                                         <div class="col-md-12">
+                                           <table class="table table-striped table-hover">
+                                            <tr>
+                                              <th width="10%"><b>#</b></th>
+                                              <th width="40%"><b>Tipo</b></th>
+                                              <th width="40%"><b>Telefono</b></th>                  
+                                              <th width="10%"><b>Eliminar</b></th>                  
+                                            </tr>
+                                            <tr ng-repeat="tels in sumaTel">  
+                                            <td>{{tels.cont}}</td>                                           
+                                              <td>{{tels.tipoLe}}</td>
+                                              <td>{{tels.tel}}</td>
+                                              <td><input type="button" ng-click="eliminaTelefono($index+1)" class="btn btn-danger btn-xs" value='Eliminar'/></td>
+                                            </tr>
+                                          </table>
+                                            
+                                         </div>
+                                       </div> 
+                                    </div>
+                                  
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>                
+                </div>
+            </div>   
+            <div class="row">
+              <div class="col-md-12" align="center" style="padding-top:2em">                    
+                    <!-- Modal -->
+                            <div class="modal fade" id="modalDuplicado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Posibles duplicados</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                  
+                                      <div class="list-group" ng-repeat="folios in listadoFolDupli">
+                                        <label class="list-group-item">                                          
+                                          <div class="row">
+                                            <div class="col-md-6" align="left">
+                                              <h4 class="list-group-item-heading active"><b>Folio: {{folios.Exp_folio}}</b></h4>
+                                            </div> 
+                                            <div class="col-md-6" align="right" style="font-size:12px">
+                                              {{folios.Exp_fecreg}}
+                                            </div>                                            
+                                          </div>
+                                          <div class="row">
+                                            <div class="col-md-4" align="left">
+                                              <p class="list-group-item-text">Nombre: <b>{{folios.Exp_completo}}</b> </p>    
+                                            </div>
+                                            <div class="col-md-4" align="left">
+                                              <p class="list-group-item-text">Compañia: <b>{{folios.Cia_nombrecorto}}</b> </p>
+                                            </div>
+                                            <div class="col-md-4" align="left">
+                                              <p class="list-group-item-text">Unidad: <b>{{folios.Uni_nombrecorto}}</b></p>
+                                            </div> 
+                                          </div>
+                                          <div class="row">
+                                            <div class="col-md-4" align="left">
+                                              <p class="list-group-item-text">Póliza: <b>{{folios.Exp_poliza}}</b> </p>    
+                                            </div>
+                                            <div class="col-md-4" align="left">
+                                              <p class="list-group-item-text">Reporte: <b>{{folios.Exp_reporte}}</b> </p>
+                                            </div>
+                                            <div class="col-md-4" align="left">
+                                              <p class="list-group-item-text">Siniestro: <b>{{folios.Exp_siniestro}}</b></p>
+                                            </div> 
+                                          </div>
+                                          <div class="row">                                            
+                                            
+                                          </div>
+                                        </label>
+                                      </div>
+                                      <!--<div class="row" ng-show="sumaTel">
+                                         <div class="col-md-12">
+                                           <table class="table table-striped table-hover">
+                                            <tr>
+                                              <th width="10%"><b>Folio</b></th>
+                                              <th width="40%"><b>Nombre</b></th>
+                                              <th width="40%"><b>Compañia</b></th>                  
+                                              <th width="10%"><b>Unidad</b></th>
+                                              <th width="10%"><b>Fecha</b></th>                  
+                                            </tr>
+                                            <tr ng-repeat="folios in listadoFolDupli">  
+                                            <td>{{folios.Exp_folio}}</td>                                           
+                                              <td>{{folios.Exp_completo}}</td>
+                                              <td>{{folios.Cia_nombrecorto}}</td>
+                                              <td>{{folios.Uni_nombrecorto}}</td>
+                                              <td>{{folios.Exp_fecreg}}</td>                                              
+                                            </tr>
+                                          </table>                                            
+                                         </div>
+                                       </div> -->
+                                    </div>
+                                  
+                                  <div class="modal-footer">
+                                  <div class="row">
+                                    <div class="col-md-6" align="left">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+                                    </div>
+                                    <div class="col-md-6" align="rigth">
+                                      <button type="button" class="btn btn-default" ng-click="registroValidado()"  >Registrar</button>
+                                    </div>
+                                    
+                                  </div>
+                                    
+                                  </div>
+                                </div>
+                              </div>
+                            </div>                
+                </div>
+            </div>     
+            <div class="row">
+                <div class="col-md-4">
+                <div class="form-group">
+                    <input type="submit" ng-disabled="desactivaBoton" ng-hide="btnGuardar" id="btnenvioprimero" class="btn btn-primary">
+                </div>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div ng-show="cargador" align="center">
+                            <img ng-src="imgs/cargador.gif">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                <div ng-show="mensaje">
+                        {{mensaje}}
+                </div>
+            </div>
+            </div>
+            </form> 
+            </fieldset>     
+            <div id="validacionCortesia" ng-show="autoriza" class="mianimacion">
+                <form id="registraCortesia" ng-submit="registraCortesia()">
+                    <div class="row">                    
+                        <div class="col-md-6">
+                            <label><h3>Quien Autoriza</h3></label>
+                            <div class="radio">
+                              <label>
+                                <input type="radio" ng-model="cor.autoriza" name="optionsRadios" id="optionsRadios3" value="1" required>
+                                José Abraham Sánchez
+                              </label>
+                            </div>   
+                            <div class="radio">
+                              <label>
+                                <input type="radio" ng-model="cor.autoriza" name="optionsRadios" id="optionsRadios1" value="2" required>
+                                José Sánchez
+                              </label>
+                            </div>
+                            <div class="radio">
+                              <label>
+                                <input type="radio" ng-model="cor.autoriza" name="optionsRadios" id="optionsRadios2" value="3" required>
+                                Xavier Sánchez
+                              </label>
+                            </div>
+                                                    
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">                
+                              <label><h3>Quien manda</h3></label>
+                              <select   style="width:100%" ng-model="cor.manda" class= "form-control" class="form-control" required>
+                                  <option value=""> * Seleccione </option>
+                                  <option value="1">José Abraham Sánchez</option>
+                                  <option value="2">José Sánchez</option>
+                                  <option value="3">Xavier Sánchez</option>
+                                  <option value="4">Alma Martínez</option>                            
+                                  <option value="5">Alfredo Guerrero</option>                            
+                                  <option value="6">Alfredo Gutiérrez</option>                            
+                                  <option value="7">Sergio Cisneros</option>
+                                  <option value="8">Sergio Romero</option>
+                                  <option value="9">Hugo Zarich</option>
+                                  <option value="10">Enrique Pérez Gárate</option>
+                                  <option value="11">Alejandra Meade</option>
+                                  <option value="12">Salvador Aurrecoechea</option>
+                              </select>
+                            </div>        
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Observaciones:</label>
+                                <textarea class="form-control" ng-model="cor.obs" name="obsCort" id="obsCort" onpaste="return false" style="resize:none;" required=""  ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">                                
+                                <input type="submit" id="btnenvioCor" class="btn btn-primary"  value="Registrar Cortesía">
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row">
+                    <div class="col-md-12">
+                        <div ng-show="cargador1" align="center">
+                                <img ng-src="imgs/cargador.gif">
+                        </div>
+                    </div>
+                <div class="col-md-12">
+                <div ng-show="mensaje">
+                        {{mensaje}}
+                </div>
+            </div>
+            </div>
+                </form>               
+            </div>
+
+<!--           div para pacientes particulares despues de la etapa 1 -->
+            <div id="validacionParticulares" ng-show="divParticulares" class="mianimacion">
+                <form name="regParticular" ng-submit="registraParticular()"> 
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="alert alert-warning">Preguntar al paciente: <b>¿Cómo se enteró usted de nuestros servicios?</b></div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label><h3>Como se enteró:</h3></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            
+                              <label>
+                                <input type="radio" ng-selected="verificaRadio()" ng-model="obsPart.entero" name="optionsRadios" id="optionsRadios1" value="1">
+                                Tarjeta de descuento
+                              </label>
+                            
+                        </div>
+                        <div class="col-md-4 mianimacion" ng-show="ver1">
+                           <div class="form-group">
+                                <label>¿Cuál?</label>
+                                <input type="text" ng-model="obsPart.cualTar" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mianimacion" ng-show="ver1">
+                            <div class="form-group">
+                                <label>¿Quién envía?</label>
+                                <input type="text" ng-model="obsPart.quienEnvTar" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">                          
+                              <label>
+                                <input type="radio" ng-model="obsPart.entero" name="optionsRadios" id="optionsRadios2" value="2">
+                                Cupón de descuento
+                              </label>                          
+                      </div>                      
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">                         
+                              <label>
+                                <input type="radio" ng-model="obsPart.entero" name="optionsRadios" id="optionsRadios3" value="3">
+                                Folleto
+                              </label>                           
+                      </div>                      
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">                         
+                              <label>
+                                <input type="radio" ng-model="obsPart.entero" name="optionsRadios" id="optionsRadios4" value="4">
+                                Vale dirigido
+                              </label>                            
+                      </div> 
+                      <div class="col-md-4 mianimacion" ng-show="ver4">
+                            <div class="form-group">
+                                <label>¿Quién envía?</label>
+                                <input type="text" ng-model="obsPart.quienEnvVal" class="form-control">
+                            </div>
+                      </div>
+                      <div class="col-md-4 mianimacion" ng-show="ver4">
+                            <div class="form-group">
+                                <label>Folio</label>
+                                <input type="text" ng-model="obsPart.folioVale" class="form-control">
+                            </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">                         
+                              <label>
+                                <input type="radio" ng-model="obsPart.entero" name="optionsRadios" id="optionsRadios5" value="5">
+                                Guía / tarjeta de gastos médicos mayores
+                              </label>                          
+                      </div>                      
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">                        
+                              <label>
+                                <input type="radio" ng-model="obsPart.entero" name="optionsRadios" id="optionsRadios6" value="6">
+                                Médico
+                              </label>                           
+                      </div>                      
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">                          
+                              <label>
+                                <input type="radio" ng-model="obsPart.entero" name="optionsRadios" id="optionsRadios7" value="7">
+                                Calle
+                              </label>                            
+                      </div>                      
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">                          
+                              <label>
+                                <input type="radio" ng-model="obsPart.entero" name="optionsRadios" id="optionsRadios8" value="8">
+                                Recomendación de un paciente anterior
+                              </label>                          
+                      </div>                      
+                    </div>
+                     <div class="row">
+                      <div class="col-md-4">                          
+                              <label>
+                                <input type="radio" ng-model="obsPart.entero" name="optionsRadios" id="optionsRadios9" value="9">
+                                Internet
+                              </label>                            
+                      </div>
+                      <div class="col-md-4 mianimacion" ng-show="ver9">
+                           <div class="form-group">
+                                <label>¿Cuál?</label>
+                                <input type="text" ng-model="obsPart.cualPag" class="form-control">
+                            </div>
+                        </div>
+                    </div>                            
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Observaciones:</label>
+                                <textarea class="form-control" ng-model="obsPart.observacion" name="obsPart" id="obsPart" onpaste="return false" style="resize:none;" ></textarea>
+                            </div>
+                        </div>
+                    </div>                                      
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">                                
+                                <input type="submit" id="btnenvioCor" class="btn btn-primary"  value="Registrar">
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="validacionCort">                                
+                                
+                            </div>
+                        </div>
+                    </div> 
+                </form>               
+            </div>
+
+<!--                                fin del div para particulares     -->
+
+<!--                             div para empleados mv                    -->
+
+<div id="divEmpleado" ng-show="divEmpleado" class="mianimacion">
+                <form name="regEmpleado" ng-submit="registraEmpleado()">                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>No. Empleado</label>                    
+                        <input  type="text" style="width:100%" ng-model="empleado.noEmp"  class="form-control" id="numeroTel" name="numeroTel" required="" > 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Area</label>                    
+                        <input  type="text" style="width:100%" ng-model="empleado.area"  class="form-control" id="numeroTel" name="numeroTel" required="" > 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Jefe inmediato</label>                    
+                        <input  type="text" style="width:100%" ng-model="empleado.jefeInm"  class="form-control" id="numeroTel" name="numeroTel" required="" > 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Observaciones:</label>
+                                <textarea class="form-control" ng-model="empleado.obs" name="obs" id="obs" onpaste="return false" style="resize:none;" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">                                
+                                <input type="submit" id="btnenvioCor" class="btn btn-primary"  value="Registrar">
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="validacionCort">                                
+                                
+                            </div>
+                        </div>
+                    </div> 
+                </form>               
+            </div>
+
+
+
+<!--                             fin de div para empleados                   -->
+
+<div id="divConvenio" ng-show="divConvenio" class="mianimacion">
+                <form  ng-submit="registraConvenio()">                                        
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Observaciones:</label>
+                                <textarea class="form-control" ng-model="convenio.obs" name="obs" id="obs" onpaste="return false" style="resize:none;" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">                                
+                                <input type="submit" id="btnenvioCor" class="btn btn-primary"  value="Registrar">
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="validacionConv">                                
+                                
+                            </div>
+                        </div>
+                    </div> 
+                </form>               
+            </div>
+
+
+            <div id="validacionPaseMedico" ng-show="validaPase" class="mianimacion" style="width:100%">             
+	            <div class="row">
+	                <div class="col-md-12">
+	                    <div class="checkbox">
+	                      <label>
+	                        <input id="check1" ng-model="check1" type="checkbox">
+	                        El pase médico no presenta tachaduras ni enmendaduras  
+                            <button style="background:transparent; border:0px" tooltip-placement="right" tooltip-trigger tooltip="Debe comunicarse al 01-800-9991-222"><img src="imgs/signo.jpg" width="25" height="25" class="img-circle" /></button>
+	                      </label>
+	                    </div>
+	               	
+	                    <div class="checkbox">
+	                      <label>
+	                        <input id="check2" ng-model="check2" type="checkbox">
+	                        El pase médico se encuentra vigente  
+                            <button style="background:transparent; border:0px" tooltip-placement="right" tooltip-trigger tooltip="Debe comunicarse al 01-800-9991-222"><img src="imgs/signo.jpg" width="25" height="25" class="img-circle" /></button>
+                            </label>
+	                    </div>
+	               		
+	                    <div class="checkbox">
+	                      <label>
+	                        <input id="check3" ng-model="check3" type="checkbox">
+	                       Se corroboró la identidad del lesionado
+                           <button style="background:transparent; border:0px" tooltip-placement="right" tooltip-trigger tooltip="Debe comunicarse al 01-800-9991-222"><img src="imgs/signo.jpg" width="25" height="25" class="img-circle" /></button>
+                           </label>
+	                    </div>
+	                </div>
+	            </div>               
+	            <div class="row">
+	            	<div class="col-md-12" ng-hide="check1 && check2 && check3" class="mianimacion">	
+                        <div id="noAutorizacion" ng-show="validaInputAut" class="mianimacion">                   
+    						<label>
+    							<input ng-model="autorizacion" type="text" value="">
+    							     No. de Autorización <br>
+                                <small>*comunicarse a <b>ubicacion</b> al número <b>telefono</b> </small>
+                                                     
+    						</label>
+                        </div>	        
+                        <div ng-show="errorAut">
+                            <label>No existe el numero de autorización</label>
+                        </div>                                     
+						<input type="button" ng-hide="check1 && check2 && check3" id="activaForm" class="btn btn-info"  ng-click="validaAutorizacion()" value="Siguiente">	                       	                     	                    
+						<div id="msjAuth">{{respuesta}}</div>
+	                </div>
+	            </div>                
+            </div> 
+                     
+            <div id="datosSiniestro" name="datosSiniestro" ng-show="(check1 && check2 && check3)|| segundaEtapa" class="mianimacion" style="width:100%">
+             <form ng-submit="guardaEtapa2()" name="etapa2" novalidate>  
+            <div class="row">
+                <div class="form-group">
+
+                    <div class="col-md-12">
+                        <h3><label>Datos del Siniestro</label></h3>
+                    </div>
+                </div>
+            </div>
+            
+                <div class="row">
+                     
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Cobertura Afectada: </label>
+                        <select name="cobAfec" id="rie"  ng-model="datosSin.cobAfec" class= "form-control" required >
+                            <option value=""> * Seleccione </option>
+                            <option ng-repeat="cobertura in list" value="{{cobertura.RIE_clave}}">
+                                {{cobertura.RIE_nombre}}
+                            </option>                            
+                        </select>
+                        <div class="alert alert-danger" role="alert" ng-if="interacted1(etapa2.cobAfec)" ng-messages="etapa2.cobAfec.$error">
+                          <div ng-message="required">Se requiere el valor de la cobertura afectada</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">                    
+                     <div class="form-group">
+                        <label>Poliza:</label>
+                        <input type="text" class="form-control" id="pol" name="poliza" ng-model="datosSin.poliza" required  mayusculas>
+                        <div class="alert alert-danger" role="alert" ng-if="interacted1(etapa2.poliza)" ng-messages="etapa2.poliza.$error">
+                          <div ng-message="required">Se requiere el valor de la póliza</div>
+                        </div>
+                    </div>
+                 </div>
+                 
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{noCompania}}</label>
+                         <input id="noCia" name="noCia" type="text" ng-model="datosSin.noCia" class="form-control" mayusculas  />
+                     </div>
+                 </div>
+                </div>
+            <br>
+             <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Inciso  </label>
+                         <input id="inciso" name="inciso" ng-model="datosSin.inciso" type="text" class="form-control"  mayusculas/>
+                     </div>
+                </div>
+                 <div class="col-md-4" >
+                    <div class="form-group">
+                        <label>Siniestro:</label>
+                        <input type="text" class="form-control" name="siniestro" ng-model="datosSin.siniestro" ng-required="!valida" mayusculas>
+                        <div class="alert alert-danger" role="alert" ng-if="interacted1(etapa2.siniestro)" ng-messages="etapa2.siniestro.$error">
+                          <div ng-message="required">Se requiere el valor del siniestro</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Reporte:</label>
+                        <input type="text" class="form-control" name="reporte"  ng-model="datosSin.reporte" ng-required="!valida" mayusculas>
+                         <div class="alert alert-danger" role="alert" ng-if="interacted1(etapa2.reporte)" ng-messages="etapa2.reporte.$error">
+                          <div ng-message="required">Se requiere el valor del reporte</div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div class="row mianimacion" ng-show="mensajeError">
+                <div class="col-md-8 col-md-offset-4">
+                    <div class="alert alert-warning">Debe ingresar siniestro o reporte</div>    
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Fecha de expedición del pase:</label>
+                         <input type="text" ng-disabled="edicion"  data-date-viewmode="years" data-date-format="DD-MM-YYYY"  class= "form-control" name="fecExpedicion" id="fecExpedicion" ng-model="datosSin.fecExpedicion" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" required mayusculas>
+                        <div class="alert alert-danger" role="alert" ng-if="interacted(etapa2.fecExpedicion)" ng-messages="etapa2.fecExpedicion.$error">
+                          <div ng-message="required">Se requiere el valor de la fecha de expedición del pase</div>
+                        </div>    
+                </div>
+                <div class="col-md-4">
+                    <label>No. de orden:</label>
+                        <input type="text" class="form-control" name="orden"  ng-model="datosSin.orden">    
+                </div>
+                <div class="col-md-4" ng-show="ciaClave==19">
+                    <label>Bitácora:</label>
+                        <input type="text" class="form-control" name="bitacora"  ng-model="datosSin.bitacora">    
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Nombre del Ajustador:</label>
+                        <input type="text" ng-disabled="ilegible" class="form-control" name="ajustador" ng-model="datosSin.ajustador" ng-required="!ilegible">
+                        <div class="alert alert-danger" role="alert" ng-if="interacted1(etapa2.ajustador)" ng-messages="etapa2.ajustador.$error">
+                          <div ng-message="required">Se requiere el nombre del ajustador</div>
+                        </div>
+                        <label>                           
+                          <input class="checkbox-inline" id="checkSinCorreo" ng-model='ilegible' type="checkbox"> Ilegible                        
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Clave del ajustador:</label>
+                        <input type="text" class="form-control" name="cveAjustador" ng-model="datosSin.cveAjustador">                        
+                    </div>
+                </div>
+                <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Teléfono del ajustador:</label>
+                        <input type="text" class="form-control" name="telAjustador" ng-model="datosSin.telAjustador">                        
+                    </div>
+                </div> 
+            </div>
+            <br>         
+            <div class="row" ng-show="cveProd==2">
+              <div class="col-md-4">
+                <div class="radio">
+                  <label><input type="radio" ng-model="datosSin.deducible" value="1" name="optradio" ng-required="cveProd==2">Con deducible</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" ng-model="datosSin.deducible" value="0" name="optradio" ng-required="cveProd==2">Sin deducible</label>
+                </div>
+                <div class="alert alert-danger" role="alert" ng-if="interacted1(etapa2.optradio)" ng-messages="etapa2.optradio.$error">
+                          <div ng-message="required">Elige una opción</div>
+                        </div>
+              </div>
+              <div ng-show="datosSin.deducible==1"  class="col-md-4 mianimacion">
+                  <div class="form-group">
+                        <label>Deducible:</label>
+                        <input type="text" class="form-control" id="deducibleMonto" name="deducibleMonto" ng-model="datosSin.deducibleMonto" ng-required="datosSin.deducible==1" mayusculas>
+                        <div class="alert alert-danger" role="alert" ng-if="interacted1(etapa2.deducibleMonto)" ng-messages="etapa2.deducibleMonto.$error">
+                          <div ng-message="required">Se requiere deducible</div>
+                        </div>
+                    </div>
+              </div>
+              <div ng-show="datosSin.deducible==1"  class="col-md-4 mianimacion">
+                  <div class="form-group">
+                        <label>Observaciones al deducible:</label>
+                        <textarea class="form-control" name="obsDed" id="obsDed" ng-model="datosSin.obsDed" onpaste="return false" style="resize:none;" mayusculas ng-required="datosSin.deducible==1"></textarea>
+                        <div class="alert alert-danger" role="alert" ng-if="interacted1(etapa2.obsDed)" ng-messages="etapa2.obsDed.$error">
+                          <div ng-message="required">Se requiere la observación del deducible</div>
+                        </div>
+                    </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Folio de orden de atención:</label>
+                        <input type="text" class="form-control" id="folPase" name="folPase" ng-model="datosSin.folPase" required mayusculas>
+                        <div class="alert alert-danger" role="alert" ng-if="interacted1(etapa2.folPase)" ng-messages="etapa2.folPase.$error">
+                          <div ng-message="required">Se requiere el valor del folio de orden</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label>Observaciones:</label>
+                        <textarea class="form-control" name="obsexp" id="obsexp" ng-model="datosSin.obs" onpaste="return false" style="resize:none;" mayusculas ></textarea>
+                    </div>
+                </div>
+            </div>  
+            <div class="row">
+                <div class="col-md-2">
+                     <input type="submit" id="btnenvio" class="btn btn-primary"  value="Registrar">
+                </div>
+                <div class="col-md-2">
+                     <input type="reset" class="btn btn-danger"  value="Limpiar">
+                </div> 
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div ng-show="cargador1" align="center">
+                            <img ng-src="imgs/cargador.gif">
+                    </div>
+                </div>
+            </div>
+            </form> 
+
+ </div>            
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+       $('#fecnac').datetimepicker({
+
+        pickDate: true,                 //en/disables the date picker
+        pickTime: false,                 //en/disables the time picker     
+        showToday: true,                 //shows the today indicator
+        language:'es'                  //sets language locale        
+    });
+    $('#fecExpedicion').datetimepicker({
+
+        pickDate: true,                 //en/disables the date picker
+        pickTime: false,                 //en/disables the time picker     
+        showToday: true,                 //shows the today indicator
+        language:'es'                  //sets language locale        
+    });
+    $(function () {    
+    $('#checkSinCorreo').confirmation({
+        onConfirm: function() { $("#checkSinCorreo").prop("checked");
+                                $('#checkSinCorreo').confirmation('destroy');
+                                return false;},
+        onCancel: function() { }
+    });
+});
+
+function nuevaventana (URL){
+   window.open(URL,"ventana1","width=400,height=120,scrollbars=NO")
+}
+
+</script>

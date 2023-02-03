@@ -1,0 +1,271 @@
+<div ng-init="inicio()">
+		<div class="panel panel-primary" >
+		    <div class="panel-heading">
+		     	<h4>Listado Solo Rehabilitación</h4>		     	
+		    </div>			
+			<form name="reportees" ng-submit="enviaParametros()">
+				<br>
+				<div class="row">
+					<div class="col-md-4">
+                        
+                            <span>Fecha inicio</span>
+                            <input type="text" ng-model="reporte.fechaIni" name="fecha1" id="fecha1" class= "form-control" data-date-format="YYYY-MM-DD" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" required>
+                                             
+                    </div>
+                   
+
+                    <div class="col-md-4">
+                        
+                            <span>Fecha fin</span>
+                            <input type="text" ng-model="reporte.fechaFin" name="fecha2" id="fecha2" class= "form-control" data-date-format="YYYY-MM-DD" data-datetimepicker-confg="{ dropdownSelector: '.dropdown-toggle' }" required>
+                    
+                    </div>
+
+                    <div class="col-md-2" style="padding-top: 1.2em">                                                              
+                        <button type="submit" class="btn btn-primary">Aceptar</button>
+                    </div>
+				</div>				
+																
+            </form>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="checkbox c-checkbox" >
+                        <label>
+                        <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="juegoF.pa">
+                        <span class="fa fa-check"></span>Pase</label>
+                    </div>   
+                    <div class="checkbox c-checkbox" >
+                        <label>
+                        <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="juegoF.id">
+                        <span class="fa fa-check"></span>Identificación</label>
+                    </div>                                                				  
+                </div>
+                <div class="col-md-2">
+                    <div class="checkbox c-checkbox" >
+                        <label>
+                        <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="juegoF.cu">
+                        <span class="fa fa-check"></span>Cuestionario</label>
+                    </div>   
+                    <div class="checkbox c-checkbox" >
+                        <label>
+                        <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="juegoF.im">
+                        <span class="fa fa-check"></span>Informe Médico</label>
+                    </div>                                                				  
+                </div>
+                <div class="col-md-2">
+                    <div class="checkbox c-checkbox" >
+                        <label>
+                        <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="juegoF.rh">
+                        <span class="fa fa-check"></span>Formato RH</label>
+                    </div>   
+                    <div class="checkbox c-checkbox" >
+                        <label>
+                        <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="juegoF.ir">
+                        <span class="fa fa-check"></span>Informe RH</label>
+                    </div>                                                				  
+                </div>
+            </div>
+            <br ng-show="cargador">
+            <div class="row" ng-show="cargador">
+                <div class="col-md-12">
+                    <div  align="center">
+                        <img ng-src="imgs/cargador.gif">
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-show="mensaje">
+                <div class="col-md-12">
+                    <div  align="center">
+                        <div class="alert alert-warning">No existen folios agregados</div>
+                    </div>
+                </div>
+            </div>
+
+          <div >        
+            <hr ng-show="listadoReporte">
+         
+              <div class="row" ng-show="listadoReporte">
+                  <div class="col-md-12">
+                      <table  align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive" style="width: 100%">
+                          <tr>          
+                              <th width="8%" ><b>Fecha Registro</b></th>
+                              <th width="20%" ><b>Nombre del Paciente</b></th>
+                              <th width="8%" ><b>Folio</b></th>         
+                              <th width="6%" ><b>No. Sesiones</b></th>
+                              <th width="8%" ><b>Sesiones tomadas</b></th>
+                              <th width="15%" ><b>Compañia</b></th>  
+                              <th width="15%" ><b>Unidad</b></th>  
+                              <th width="5%" ><b>Semáforo</b></th>  
+                              <th width="10%" ><b>Detalle</b></th>       
+                              <th width="10%" ><b>Juego Fac.</b></th>                                                                         
+                          </tr>
+                          <tr ng-repeat="listado in listadoReporte" >                                                       
+                              <td >{{listado.Exp_fecreg | limitTo:10 | date:"d/MMM/y"}}</td>
+                              <td >{{listado.Exp_completo}}</td>
+                              <td >{{listado.Exp_folio}}</td>
+                              <td >{{listado.Total_sesiones}}</td>
+                              <td >{{listado.contador}}</td>                              
+                              <td >{{listado.Cia_nombrecorto}}</td>                                  
+                              <td >{{listado.Uni_nombrecorto}}</td>  
+                              <td ng-if="listado.compara=='error'"><img src="imgs/indicadores/error.png" style="width: 50%" alt=""></td>    
+                              <td ng-if="listado.contador == listado.Total_sesiones  && listado.compara=='correcto'"><img src="imgs/indicadores/completed.png" style="width: 50%" alt=""></td>    
+                              <td ng-if="listado.compara=='correcto' && listado.dias_transcurridos < 7"><img src="imgs/indicadores/verde.png" style="width: 50%" alt=""></td>   
+                              <td ng-if="listado.compara=='correcto' && listado.dias_transcurridos >= 7 && listado.dias_transcurridos < 14"><img src="imgs/indicadores/amarillo.png" style="width: 50%" alt=""></td>   
+                              <td ng-if="listado.compara=='correcto' && listado.dias_transcurridos > 14"><img src="imgs/indicadores/rojo.png" style="width: 50%" alt=""></td>   
+                              <td  ng-if="listado.contCarrito > 0"><button class="btn btn-primary" ng-click="abrirModalDetalle(listado.Exp_folio,listado.Exp_completo)">Detalle</button></td>                              
+                              <td  ng-if="listado.contCarrito == 0"><label class="alert alert-primary">Sin carrito</label></td>                              
+                              <td ><button class="btn btn-success" ng-click="imprimirJuegoFacturacion(listado.Exp_folio)">Imprimir JF</button></td>                              
+                          </tr>
+                      </table>
+                  </div>
+              </div>             
+<!--               <div class="row" ng-show="listadoReporte">
+                  <div class="col-md-6" align="center">
+                          <div class="input-group" style="width:100%">
+                              <input type="button" ng-click="excelReportesRed()" class="btn btn-success btn-lg"  value="Exportar a Excel"/>     
+                          </div>  
+                  </div>
+                  <div class="col-md-6" align="center">
+                          <div class="input-group" style="width:100%">
+                              <input type="button" ng-click="pdfReportesRed()" class="btn btn-danger btn-lg"  value="Generar PDF"/>     
+                          </div>  
+                  </div>
+              </div> -->
+            
+        </div>
+    </div>		
+</div>
+
+
+
+
+<!-- Modal indicaciones -->
+<div class="modal fade" id="modalReceta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"> 
+          Detalle de receta
+        </h4>
+      </div>
+      <div class="modal-body">
+        <h3><b>{{nombrePaciente}}</b></h3>
+        <h4 style="color: #777">{{folioMV}}</h4>
+        <div class="row">
+          <div class="col-md-12">
+<!--             <h2>{{nombrePaciente}}</h2>
+            <h4 style="color: #777">{{folioMV}}</h4> -->
+
+            <!-- <table align="center" style='font-size:13px;' class="table table-striped table-hover table-condensed table-responsive table-bordered" style="width: 100%">
+              <tr  class="alert alert-info">
+                <th width="35%">MEDICAMENTO</th>
+                <th width="65%">INDICACIONES</th>
+              </tr>
+              <tr ng-repeat="x in receta">
+                <td>{{x.NS_descripcion}}</td>
+                <td>{{x.NS_posologia}}</td>
+              </tr>
+            </table> -->
+
+            <div class="row" ng-show="listadoCarrito.length>0" >
+                <div class="col-md-12" >					
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h5>Listado Items</h5>
+                        </div>
+                        <div class="panel-body">
+                                <div class="row">																			
+                                    <div class="col-xs-12 text-left hover" ng-repeat="itemCarrito in listadoCarrito">
+                                        
+                                        <div class="text-right"><a ng-click="eliminarItemCartito(itemCarrito.ICC_id)"><em class="fa fa-times-circle fa-2x"></em> </a></div>
+                                        
+                                            <div class="col-md-6"><p class="m0">{{itemCarrito.CIS_nombre}}</p> </div>
+                                            <div class="col-md-6"><div class="text-right">{{itemCarrito.CIS_precio | currency}} </div></div>
+                                                                                                                                
+                                        <hr>									
+                                    </div>
+                                </div>
+                                <div class="row">										
+                                    <div class="col-xs-12 text-left">
+                                            <div class="col-md-6"><p class="m0">Total</p></div>
+                                            <div class="col-md-6"><div class="text-right"><h3>{{listadoCarrito[0].CCO_total | currency}} </h3> </div></div>
+                                                                                                                    
+                                    </div>
+
+                                </div>
+
+                                <div class="row">										
+                                    <div class="col-xs-12 text-right">
+                                            <button class="btn btn-primary" ng-click="cerrarRecibo()">Cerrar Recibo</button>
+                                    </div>
+                                </div>
+                        </div>										
+                        <!-- END panel-->
+                    </div>														
+                </div>
+            </div>
+            <div class="row" ng-show="verMsj">
+                <div class="col-md-12">
+                    <div class="alert alert-warning">No tiene agregado nada al carrito</div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+       $('#fecha1').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+        $('#fecha2').datetimepicker({         
+        pickTime: false,                 //en/disables the time picker            
+        language:'es'                  //sets language locale
+    });
+
+        $('#hora1').datetimepicker({
+            pickDate: false,
+            format: 'LT',
+            locale: 'mx',
+            language:'es',
+            startTime: '12:00',
+        });
+
+        $('#hora2').datetimepicker({
+            pickDate: false,
+            format: 'LT',
+            locale: 'mx',
+            language:'es',
+            startTime: '12:00',
+        });
+
+</script>

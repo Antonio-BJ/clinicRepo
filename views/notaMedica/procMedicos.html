@@ -1,0 +1,82 @@
+
+<div class="container" style="width: 100%"> 
+	
+	<div class="panel panel-primary">
+  		<div class="panel-heading">
+    		<h3 class="panel-title" align="center"><b>Procedimientos M&eacute;dicos</b></h3>
+  		</div><!-- End panel-heading -->
+  		<div class="panel-body">
+  		<form name="formularios.proce" ng-submit="guardaProcMedicos()" novalidate>
+    		<div class="row">
+				<div class="col-md-4">
+					<div class="input-group">
+						<span class="input-group-addon ">Procedimientos</span>
+						<CENTER>
+							<select  ng-model="procedimientos.procedimiento" name="procedimiento" class="form-control"   
+							ng-options="proc.Pro_clave as proc.Pro_nombre for proc in listaProced" required>
+								<option value=""> *Selecciona</option>
+								<option value="6"> Curaciones</option>
+								<option value="6"> Curaciones</option>
+								<option value="6"> Curaciones</option>
+								<option value="6"> Curaciones</option>
+							</select>
+						</CENTER>
+		            </div>
+		            <div class="validacion" role="alert" ng-if="interacted4(formularios.proce.procedimiento)" ng-messages="formularios.proce.procedimiento.$error">
+		              <div ng-message="required">campo requerido</div>            
+		            </div>
+				</div>    		
+				<div class="col-md-6">
+					<div class="input-group">
+						<span class="input-group-addon">Observaciones: </span>
+						<textarea class="form-control" ng-model="procedimientos.obs" rows="1" id="obs" name="obs" style="resize:none;" mayusculas></textarea>
+					</div>					
+				</div>
+				<div class="col-md-2">
+					<div class="input-group" align="right">
+						<input type="submit" id="btn-addProcMedicos" class="btn btn-success" value="Agregar">
+					</div>
+				</div>
+				
+    		</div><!-- End row --> 
+    		<div class="row"> 
+				<div class="col-md-12">
+					<div ng-show="cargador" align="center">
+						<img ng-src="imgs/cargador.gif">
+					</div>
+				</div>
+			</div>   
+    		<div class="row">
+	 			<div class="col-md-12">
+	 				<div ng-show="listaProcedimientos" class="mianimacion">
+	 					 <table id="TablaAlergias" width="100%" class="table table-striped table-hover">
+							<tr>
+								<th width="20%"><b>Procedimiento</b></th>
+								<th width="70%"><b>Observaciones<b/></th>
+								<th width="10%"><b>Eliminar</b></th>
+							</tr>
+							<tr ng-repeat="proc in listaProcedimientos">
+								<td>{{proc.Pro_nombre}}</td>
+								<td>{{proc.Nproc_obs}}</td>
+								<td><input type='button' class="btn btn-danger btn-xs" ng-click='eliminarProcedimiento(proc.Nproc_clave)' value='Eliminar'></td>
+							</tr>
+							</table>
+	 				</div>
+	 			</div>
+    		</div> 	
+		</form>	
+    		<div class="row">
+	 			<div class="col-md-2 col-md-offset-10">
+	 				<input type="button" class="btn btn-primary" value="Siguiente" ng-click="diagnosticoSig()">
+	 			</div>
+    		</div> 			    	
+  		</div><!-- End panel-body -->
+	</div><!-- End panel panel-default -->
+	
+	
+	<div id="resultadoPMR">		
+	</div>
+</div><!-- End container -->
+
+
+
